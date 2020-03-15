@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<htmL>
+
+<head>
+    <title>Amenities</title>
+    <link rel="stylesheet" type="text/css" href="/stylesheets/Amenities.css">
+    <link rel="stylesheet" type="text/css" href="/stylesheets/header.css">
+    <link rel="stylesheet" type="text/css" href="/stylesheets/animate.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0/css/fontawesome.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.7/css/all.css">
+    <script src="/javascripts/wow.min.js"></script>
+    <link rel = "icon" href ="/images/logo1circle.png" type = "image/x-icon"> 
+</head>
+
+<body>
+    <header class="HomePageMain">
+        <nav class="navbar navbar-expand-lg navbar-dark">
+            <div class="headerName" id="paraiso">
+                PARAISO HOTEL
+            </div>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <div class="mr-auto"></div>
+                <ul class="navbar-nav text-right">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/aboutUs">About Us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/hotel/rooms">Rooms</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/hotel/amenities">Amenities</a>
+                    </li>
+                    {{{logging}}}
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+<div class="headerTitlebg d-flex justify-content-center">
+    <div id="headerTitle">Amenities</div>
+</div>
+<main>
+    <div class="row mr-0 firstRow">
+        <div class="col-lg-6">
+            <a href="/hotel/spa">
+                <div class="hover hover-1 text-white rounded">
+                    <img src="/images/Amenities/Spa.jpg" class="firstImg">
+                    <div class="hover-1-content px-5 py-4 firstContent">
+                        <h3 class="hover-1-title text-uppercase font-weight-bold mb-0"> <span class="font-weight-light"></span>Spa</h3>
+                        <p class="hover-1-description font-weight-light mb-0">
+                            Rejuvinate in our world-class spa and choose from a variety of services in order to make your vacation worth-while</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-lg-6">
+            <a href="/hotel/pool">
+                <div class="hover hover-1 text-white rounded">
+                    <img src="/images/Amenities/pool.jpg" class="secondImg">
+                    <div class="hover-1-content px-5 py-4 secondContent">
+                        <h3 class="hover-1-title text-uppercase font-weight-bold mb-0"> <span class="font-weight-light"></span>Pool</h3>
+                        <p class="hover-1-description font-weight-light mb-0">
+                            Lounge by the pool and enjoy our custom-made drinks while overlooking the sunset</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+    <div class="row mr-0 secondRow pb-5">
+        <div class="col-lg-6">
+            <a href="/hotel/gym">
+                <div class="hover hover-1 text-white rounded">
+                    <img src="/images/Amenities/gym.jpg" class="firstImg">
+                    <div class="hover-1-content px-5 py-4 firstContent">
+                        <h3 class="hover-1-title text-uppercase font-weight-bold mb-0"> <span class="font-weight-light"></span>Gym</h3>
+                        <p class="hover-1-description font-weight-light mb-0">
+                            Enjoy our gym complete with all of the machines and tools that you need for your workout </p>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-lg-6">
+            <a href="/hotel/restaurant">
+                <div class="hover hover-1 text-white rounded">
+                    <img src="/images/Amenities/resto.jpg" class="secondImg">
+                    <div class="hover-1-content px-5 py-4 secondContent">
+                        <h3 class="hover-1-title text-uppercase font-weight-bold mb-0"> <span class="font-weight-light"></span>Kainan d'Paraiso</h3>
+                        <p class="hover-1-description font-weight-light mb-0">
+                            Indulge in our Filipino meals with a twist cooked by our own Filipino 5-star chef</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+</main>
+
+{{> (lookup . 'whichfooter') }}
+    <!-- Footer Links -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <script src="/javascripts/Home.js"></script>
+
+</body>
+
+</htmL>

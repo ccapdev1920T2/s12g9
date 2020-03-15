@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Customer Details</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0/css/fontawesome.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.7/css/all.css">
+    <link rel="stylesheet" href="/stylesheets/CustomDetails.css">
+    <link rel = "icon" href ="/images/logo1circle.png" type = "image/x-icon"> 
+</head>
+
+<body>
+    {{> (lookup . 'whichheader') }}
+        <div class="container">
+            <div class="row justify-content-center text-center mt-5">
+                <div id="details" class="p-3">
+                    <h1>Customer Details</h1>
+                </div>
+            </div>
+            <div class="container section-2" id="container">
+                <div class="row">
+                    <img src="/images/CustomDetails/land.jpg" alt="" />
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <h1><b>{{{fname}}} {{{lname}}}</b></h1>
+                        <span><i>Customer</i></span>
+                    </div>
+                </div>
+                <div class="row email">
+                    <h4 class="head">Email:</h4>
+                    <h4>{{{email}}}</h4>
+                </div>
+                <div class="row">
+                    <h4 class="head">Credit Card Number:</h4>
+                    <h4>{{{cardNumber}}}</h4>
+                </div>
+                <div class="row">
+                    <h4 class="head"> Room Type:</h4>
+                    <h4>{{{roomType}}}</h4>
+                </div>
+                <div class="row">
+                    <h4 class="head"> Number of adults in room:</h4>
+                    <h4>{{{numAdults}}}</h4>
+                </div>
+                <div class="row">
+                    <h4 class="head"> Number of kids in room:</h4>
+                    <h4>{{{numKids}}}</h4>
+                </div>
+            </div>
+        </div>
+
+        {{> (lookup . 'whichfooter') }}
+
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+            <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+            <script src="/javascripts/Home.js"></script>
+</body>
+
+</html>

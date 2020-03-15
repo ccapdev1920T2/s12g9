@@ -1,0 +1,183 @@
+@import url('https://fonts.googleapis.com/css?family=Actor&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Oswald&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Bungee+Shade|Satisfy&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Ubuntu&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Yeseva+One&display=swap');
+
+/* Navbar */
+
+header {
+    background-image: linear-gradient(rgba(70, 67, 67, 0.1), rgba(0, 0, 0, 0.1)), url("../images/Rooms/RoomHeader.jpeg");
+    height: 98vh;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    position: relative;
+    background-attachment: fixed;
+}
+/* Main */
+
+body {
+    background-color: #EEE7E4;
+}
+
+h2 {
+    color: black;
+    text-align: center;
+}
+
+.button {
+    color: #B7AFAF;
+}
+
+.card {
+    color: #B7AFAF;
+    width: 25vw;
+    min-height: 75vh;
+    min-width: 250px;
+    margin: 0;
+    margin-bottom: 10vh;
+    padding: 0;
+    box-shadow: 5px 5px 10px rgb(175, 165, 151);
+}
+
+#headerImage {
+    background-image: url("../images/Rooms/RoomHeader.jpeg");
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-size: cover;
+    /* background-repeat: no-repeat; */
+}
+
+#headerTitle {
+    position: absolute;
+    top: 54%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Yeseva One', cursive;
+    color: white;
+    font-size: 55px;
+}
+
+
+#firstRow {
+    margin: 50px 50px 0px 50px;
+}
+
+.card-img-top {
+    height: 30vh;
+    object-fit: cover;
+}
+
+.card-content {
+    height: 20vh;
+}
+
+#secondRow {
+    margin-left: 50px;
+    margin-right: 50px;
+}
+
+
+/* rotating */
+
+.flippingCardIn {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    transition: transform 0.8s;
+    transform-style: preserve-3d;
+    -o-transform-style: preserve-3d;
+    -o-transition: -o-transform 0.8s;
+    -moz-transform-style: preserve-3d;
+    -moz-transition: -moz-transform 0.8s;
+}
+
+.flippingCard:hover .flippingCardIn {
+    transform: rotateY(180deg);
+    -moz-transform: rotateY(180deg);
+    -webkit-transform: rotateY(180deg);
+    -o-transform: rotateY(180deg);
+}
+
+.front {
+    z-index: 2;
+    background-color:white;
+}
+
+.back {
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: rotateY(180deg);
+    -moz-transform: rotateY(180deg);
+    -webkit-transform: rotateY(180deg);
+    -o-transform: rotateY(180deg);
+    z-index: 0;
+    background-color:white;
+}
+
+.wifi {
+    width: 50px;
+    height: 50px;
+    background-image: url('../images/Rooms/hotelicons.png');
+    background-size: cover;
+    background-position: 0px 100px;
+}
+
+.phone {
+    width: 50px;
+    height: 50px;
+    background-image: url('../images/Rooms/hotelicons.png');
+    background-position: 0px 0px;
+}
+
+.fridge {
+    width: 50px;
+    height: 50px;
+    background-image: url('../images/Rooms/hotelicons.png');
+    background-position: 0px 200px;
+}
+
+.boiler {
+    width: 50px;
+    height: 50px;
+    background-image: url('../images/Rooms/hotelicons.png');
+    background-position: 0px 250px;
+}
+
+.safe {
+    width: 50px;
+    height: 50px;
+    background-image: url('../images/Rooms/hotelicons.png');
+    background-position: 0px 150px;
+}
+
+.tv {
+    width: 50px;
+    height: 50px;
+    background-image: url('../images/Rooms/hotelicons.png');
+    background-position: 0px 50px;
+}
+
+li {
+    list-style: none;
+}
+
+ul {
+    padding: 0;
+}
+
+ul li {
+    display: inline-block;
+}
+
+
+footer {
+    background-color: white;
+}

@@ -1,0 +1,91 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Oswald&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Yeseva+One&display=swap');
+
+/* Navbar */
+
+body{
+    margin: 0;
+    background-color: white;
+    font-family: 'Open Sans';
+    color: #2E4106;
+}
+
+header {
+    background-image: linear-gradient(rgba(70, 67, 67, 0.1), rgba(0, 0, 0, 0.1)), url("../images/Spa/head.jpeg");
+    height: 98vh;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    position: relative;
+    background-attachment: fixed;
+}
+
+
+#headerTitle {
+    position: absolute;
+    top: 54%;
+    left: 55%;
+    transform: translate(-130%, -50%);
+    font-family: 'Yeseva One', cursive;
+    color: white;
+    font-size: 55px;
+}
+
+.nav.nav-tabs {
+    margin: 30px;
+    height: 80px;
+    font-size: 17px;
+    letter-spacing: 3px;
+}
+
+main .tab-pane {
+    margin-bottom: 40px;
+}
+
+.card-body {
+    margin-left: 50px;
+    margin-right: 0px;
+    text-align: center;
+    background-color: #E9D0D0;
+    color: #AC5050;
+}
+
+main a {
+    text-decoration: none;
+    color: rgba(46, 65, 6, 1);
+    font-weight: 100;
+}
+
+main a:hover {
+    font-weight: 1000;
+    color: rgba(46, 65, 6, 1);
+}
+
+.nav-tabs .nav-link.active, .nav-tabs .nav-item.show .nav-link {
+     font-weight: bold;
+    color: rgb(46, 65, 6, 1);
+}
+
+
+.definition {
+    width: 700px;
+    text-align: center;
+    margin-left: 360px;
+}
+
+.tab-content img {
+    width: 700px;
+    box-shadow: 5px 5px 10px rgb(175, 165, 151);
+}
+
+main .col-md.text-center h2 {
+    margin-top: 10px;
+    font-size: 25px;
+    font-family: 'Yeseva One', cursive;
+}
+
+main .col-md.text-center h4 {
+    font-size: 18px;
+    font-family: 'Yeseva One', cursive;
+}

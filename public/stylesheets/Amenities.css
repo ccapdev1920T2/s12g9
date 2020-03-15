@@ -1,0 +1,120 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Oswald&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Yeseva+One&display=swap');
+body {
+    margin: 0;
+    font-family: 'Open Sans';
+}
+
+body .container-fluid {
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+.headerTitlebg {
+    background-image: linear-gradient(rgba(70, 67, 67, 0.1), rgba(0, 0, 0, 0.1)), url("../images/Amenities/sunset.jpeg");
+    height: 53vh;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    position: relative;
+    background-attachment: fixed;
+}
+
+#headerTitle {
+/*
+    position: absolute;
+    top: 54%;
+    left: 60%;
+*/
+    text-align: center;
+/*    transform: translate(-85%, -130%);*/
+    font-family: 'Yeseva One', cursive;
+    color: white;
+    font-size: 55px;
+     padding-top: 13%;
+}
+
+main {
+    margin-top: 30px;
+}
+
+main img {
+    margin-left: 30px;
+    margin-right: 30px;
+    margin-top: 50px;
+    border-radius: 20px;
+    height: 300px;
+}
+
+
+/*HOVER*/
+
+.hover {
+    overflow: hidden;
+    position: relative;
+    padding-bottom: 60%;
+}
+
+.hover-content {
+    position: relative;
+    z-index: 99;
+}
+
+.hover-1 img {
+    width: 50%;
+    position: absolute;
+    top: 0;
+    left: -5%;
+    transition: all 0.3s;
+    object-fit: cover;
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+}
+
+.hover-1-content {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    z-index: 99;
+    transition: all 0.4s;
+    width: 60%;
+}
+
+.hover-1-description {
+    transform: translateY(1.0rem);
+    transition: all 0.4s;
+    opacity: 0;
+}
+
+.hover-1:hover .hover-1-content {
+    bottom: 3rem;
+    width: 50%;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.hover-1:hover .hover-1-description {
+    opacity: 1;
+    transform: none;
+}
+
+.hover-1:hover img {
+    left: 0;
+}
+
+.hover-1:hover .hover-overlay {
+    opacity: 0;
+}
+
+.firstImg {
+    margin-left: 300px;
+}
+
+.hover-1-content.px-5.py-4.firstContent {
+    margin-left: 280px;
+}
+
+@media only screen and (max-width: 988px) {
+    main {
+        margin-bottom: 10px;
+    }
+}

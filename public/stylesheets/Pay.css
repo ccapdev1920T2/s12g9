@@ -1,0 +1,165 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Oswald&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Yeseva+One&display=swap');
+header {
+    background-image: linear-gradient(rgba(70, 67, 67, 0.1), rgba(0, 0, 0, 0.1)), url("../images/Pay/xcz.jpeg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 130vh;
+}
+
+.container.section-2 {
+    background-color: whitesmoke;
+    border-radius: 10px;
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+    overflow: hidden;
+    max-width: 700px;
+    height: 480px;
+    padding: 20px;
+}
+
+.form-container form {
+    background: transparent;
+    flex-direction: column;
+    padding: 25px;
+    height: 100%;
+    justify-content: center;
+}
+
+.form-container .form-group {
+    float: left;
+    margin-bottom: 15px;
+}
+
+form label {
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.container .form-container h1 {
+    text-align: center;
+    font-family: 'Open Sans', sans-serif;
+    color: #4c4e56;
+}
+
+.form-container input {
+    background: #eee;
+    border: none;
+    padding: 0px 16px;
+    line-height: 40px;
+    width: 100%;
+}
+
+.form-container select {
+    border: none;
+    background: #eee;
+}
+
+.form-container .owner {
+    width: 63%;
+    margin-right: 10px;
+}
+
+.form-container .CVV {
+    width: 35%;
+}
+
+.form-container #card-number-field {
+    width: 100%;
+}
+
+.form-container #expiration-date {
+    width: 49%;
+}
+
+.paymentWrap .paymentBtnGroup {
+    max-width: 50%;
+    margin: auto;
+}
+
+.paymentWrap .paymentBtnGroup .paymentMethod {
+    padding: 30px;
+    box-shadow: none;
+    position: relative;
+}
+
+.paymentWrap .paymentBtnGroup .paymentMethod.active {
+    outline: none !important;
+}
+
+.paymentWrap .paymentBtnGroup .paymentMethod.active .method {
+    border-color: rgb(239, 160, 126, 0.6);
+    outline: none !important;
+    box-shadow: 0px 3px 22px 0px rgb(46, 65, 6, 0.2);
+    ;
+}
+
+.paymentWrap .paymentBtnGroup .paymentMethod .method {
+    position: absolute;
+    right: 1px;
+    top: 1px;
+    bottom: 1px;
+    left: 1px;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    border: 2px solid transparent;
+    transition: all 0.5s;
+    float: none;
+}
+
+.paymentWrap .paymentBtnGroup .paymentMethod .method.visa {
+    background-image: url("../images/Pay/visa.png");
+}
+
+.paymentWrap .paymentBtnGroup .paymentMethod .method.master-card {
+    background-image: url("../images/Pay/master.png");
+}
+
+.paymentWrap .paymentBtnGroup .paymentMethod .method.discover {
+    background-image: url("../images/Pay/discover.png");
+}
+
+.paymentWrap .paymentBtnGroup .paymentMethod .method.american {
+    background-image: url("../images/Pay/american.png");
+}
+
+.footerNavWrap .btn{
+    background: #EFA07E;
+    color: #5A5E5A;
+    font-size: medium;
+    padding: 10px;
+    margin-left: 50px;
+    /* margin-right: 50px; */
+    float: none;
+}
+
+.btn.btn-lg.pull-left {
+    width: 130px;
+}
+
+.btn.btn-lg.pull-right {
+    float: right;
+    width: 130px;
+}
+
+
+.error-label.mr-auto {
+    color: #8D1515;
+    font-size: 12px;
+    font-style: italic;
+}
+
+.form-control:focus {
+    border-color: rgb(233, 208, 208, 1);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(233, 208, 208,1);
+    background-color: rgb(245, 245, 245, 0.8);
+}
+
+/* .border {
+    border: 0px;
+    margin: 0px;
+    background-color: #2E4106;
+    color: #2E4106;
+    height: 30px;
+} */

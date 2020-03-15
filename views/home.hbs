@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Hotel Paraiso</title>
+  <link rel="stylesheet" type="text/css" href="/stylesheets/Home.css">
+  <link rel="stylesheet" type="text/css" href="/stylesheets/header.css">
+  <link rel="stylesheet" type="text/css" href="/stylesheets/animate.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0/css/fontawesome.min.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.7/css/all.css">
+  <script src="/javascripts/wow.min.js"></script>
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
+  <link rel = "icon" href ="/images/logo1circle.png" type = "image/x-icon"> 
+</head>
+
+<body>
+<div class="container-fluid">
+  <header class="HomePageMain">
+    <nav class="navbar navbar-expand-lg navbar-dark">
+      <div class="headerName" id="paraiso">
+        PARAISO HOTEL
+      </div>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <div class="mr-auto"></div>
+        <ul class="navbar-nav text-right">
+          <li class="nav-item">
+            <a class="nav-link active" href="/">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/aboutUs">About Us</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/hotel/rooms">Rooms</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/hotel/amenities">Amenities</a>
+          </li>
+          {{!-- <li class="nav-item">
+            <a class="nav-link" href="/viewRooms">Book</a>
+          </li> --}}
+          {{{logging}}}
+        </ul>
+      </div>
+    </nav>
+    <!-- BOOKING -->
+    <div class="container">
+      <div class="row book">
+        <div class="container pt-n3 style">
+          <form id="Book" action="/viewRooms" method="POST" enctype="application/x-www-form-urlencoded">
+            <div class="ml14 d-flex justify-content-center">
+                                <span class="text-wrapper">
+                                    <span class="letters Booktitle">"A Perfect Place to Stay"</span>
+                                <span class="line"></span>
+                                </span>
+            </div>
+
+            <div class="title mt-2">Discover a hotel that defines a new dimension of luxury.</div>
+            <div class="form-row mt-4">
+              <div class="form-group col-md-2 col-12">
+                <input type="text" style="font-size:12px;" class="form-control form-control-sm" placeholder="Check in" onfocus="(this.type='date')" onblur="(this.type='text')" id="checkIn" name="checkIn"required>
+              </div>
+              <div class="form-group col-md-2 col-12">
+                <input type="text" style="font-size:12px;" class="form-control form-control-sm" placeholder="Check out" onfocus="(this.type='date')" onblur="(this.type='text')" id="checkOut" name="checkOut" required>
+              </div>
+              <div class="form-group col-md-2 col-12">
+                <input type="number" style="font-size:12px;" class="form-control form-control-sm" placeholder="No. of Rooms" id="room" min="0" name="nRooms" required>
+              </div>
+              <div class="form-group col-md-2 col-12">
+                <input type="number" style="font-size:12px;" class="form-control form-control-sm" placeholder="Adults" id="adult" min="0" name="nAdults" required>
+              </div>
+              <div class="form-group col-md-2 col-12">
+                <input type="number" style="font-size:12px;" class="form-control form-control-sm" placeholder="Kids" id="kid" min="0" name="nKids" required>
+              </div>
+              <div class="form-group col-md-2 col-12">
+                <input type="submit" class="btn btn-sm btn-outline-dark ml-md-2 ml-0 col-12 col-md-10" value="Book Now"></input>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <!-- END BOOKING -->
+  </header>
+</div>
+
+<main>
+  <section class="section-1">
+    <div class="container text-center">
+      <div class="row">
+        <div class="col-sm-12 col-md-4">
+          <div class="panel text-left" id="test">
+            <h1>Welcome!</h1>
+            <p>
+              Hotel Paraiso is a 5 star hotel that allows you to relax in luxury. This hotel is inspired by the beautiful islands of the Philippines as well as the resources it has to offer. Everything in this hotel is sourced from our own local suppliers. Plan your
+              vacation with us and see more of our beautiful Country.
+            </p>
+            <a href="/aboutUs" class="btn btn-secondary btn-lg" tabindex="-1" role="button" aria-disabled="true">Learn More</a>
+          </div>
+        </div>
+        <div class="d-none d-md-block col-md-4">
+          <img src="/images/Plant2.jpg" id="plant2">
+        </div>
+        <div class="d-none d-md-block col-4">
+          <img src="/images/plant1.jpeg" id="plant1">
+        </div>
+      </div>
+    </div>
+    <br><br><br>
+  </section>
+  <!--        FIXED IMAGE BACKGROUND-->
+  <figure>
+    <div class="fixed-wrap">
+      <div id="breakfastMenu">
+        <div class="container" id="breakfastHeader">
+          <h1 style="font-size: 5vw;">What's for Breakfast?</h1>
+        </div>
+        <div class="breakfastFood">
+          <div class="row">
+            <div class="col-sm-12 col-md-6">
+              <div class="panel text-left">
+                <h5 class="price">P350.00</h5>
+                <h4 class="foodName">Organic Pancakes</h4>
+                <h6 class="foodDef">These are homemade pancakes from all organic ingredients which are both healthy and yummy. One piece will make you fly up the sky.</h6>
+                <br>
+                <h5 class="price">P700.00</h5>
+                <h4 class="foodName">Tapsilog</h4>
+                <h6 class="foodDef">Served with two eggs and high quality angus beef, garlic rice or plain rice, chilled juice or coffee or hot choco.</h6>
+                <br>
+                <h5 class="price">P400.00</h5>
+                <h4 class="foodName">Daing na Bangus</h4>
+                <h6 class="foodDef">Milkfish served with eggs, garlic or plain rice or 2 pcs of toast, brewed coffee or juice or hot choco</h6>
+              </div>
+            </div>
+            <div class="col-sm-12 col-md-6 pb-4">
+              <div class="panel text-left">
+                <h5 class="price">P300.00</h5>
+                <h4 class="foodName">Pork Tocino</h4>
+                <h6 class="foodDef">High quality pork tocino with two eggs, garlic rice or plain rice, chilled juice or coffee or hot choco</h6>
+                <br>
+                <h5 class="price">P450.00</h5>
+                <h4 class="foodName">Vigan Longganisa</h4>
+                <h6 class="foodDef">3 pieces Vigan Longganisa served with egg, garlic rice or plain rice, chilled juice or coffee or hot choco</h6>
+                <br>
+                <h5 class="price">P200.00</h5>
+                <h4 class="foodName">Arroz Caldo</h4>
+                <h6 class="foodDef">Filipino rice and chicken heavily infused with ginger and garnished with toasted garlic, scallions, and black pepper, served with our own specialty bread.</h6>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </figure>
+  <!--        FOR THE SPA-->
+  <section class="section-2">
+    <div class="container">
+      <div class="panel text-center pt-4">
+        <h1>Rejuvenate in Paradise</h1>
+        <p>Enjoy a sauna right after a swim, or have a massage that works best for you. Tons of activities can be done in our five-star spa alone</p>
+      </div>
+      <div class="LPRectangle "></div>
+      <div class="DPRectangle "></div>
+      <img src="/images/Spa1.jpg" class="Spa1 ">
+      <img src="/images/Spa2.jpg" class="Spa2 ">
+      <img src="/images/Spa3.jpg" class="Spa3 ">
+    </div>
+  </section>
+
+</main>
+
+{{> (lookup . 'whichfooter') }}
+<!-- Footer -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.min.js"></script>
+<script src="/javascripts/Home.js"></script>
+<script src="/javascripts/AnimateLetters.js"></script>
+</body>
+
+</html>

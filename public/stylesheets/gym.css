@@ -1,0 +1,80 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Oswald&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Yeseva+One&display=swap');
+
+/* Navbar */
+
+header {
+    background-image: linear-gradient(rgba(70, 67, 67, 0.1), rgba(0, 0, 0, 0.1)), url("../images/Gym/head2.jpeg");
+    height: 98vh;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    position: relative;
+    background-attachment: fixed;
+}
+
+
+/* Main */
+
+#headerTitle {
+    position: absolute;
+    top: 54%;
+    left: 55%;
+    transform: translate(-120%, -50%);
+    font-family: 'Yeseva One', cursive;
+    color: white;
+    font-size: 55px;
+}
+
+.cardCarousel {
+    box-shadow: 5px 5px 10px rgb(175, 165, 151);
+    align-self: auto;
+}
+
+.carousel {
+    font-family: 'Yeseva One', cursive;
+    margin: 10px auto;
+    width: 80vw;
+    color: whitesmoke;
+    background: rgb(46, 65, 6, 0.8);
+}
+
+.card-title {
+    text-align: center;
+}
+
+.img {
+    height: 50vw;
+}
+
+.slick-prev:before,
+.slick-next:before {
+    color: #2E4106 !important;
+    font-weight: 900;
+    transition: all 1.5s ease;
+}
+
+.slick-dots li button:before {
+    font-size: 200px;
+    line-height: 20px;
+}
+
+img {
+    height: 80vh;
+    object-fit: cover;
+}
+
+.figure-2 {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("../images/tropicalLeaves.jpeg");
+    background-size: cover;
+    background-attachment: fixed;
+    min-height: 40vh;
+    margin-top: 10vh;
+}
+
+/* Footer */
+
+footer {
+    background-color: white;
+}

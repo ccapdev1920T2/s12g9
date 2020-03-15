@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Sign Up</title>
+    <link rel="stylesheet" href="/stylesheets/SignUp.css">
+    <link rel="stylesheet" type="text/css" href="stylesheets/animate.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0/css/fontawesome.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.7/css/all.css">
+    <link rel="stylesheet" type="text/css" href="/stylesheets/header.css">
+    <link rel = "icon" href ="/images/logo1circle.png" type = "image/x-icon"> 
+</head>
+
+<body>
+    <header class="HomePageMain">
+        <nav class="navbar navbar-expand-lg navbar-dark">
+            <div class="headerName" id="paraiso">
+                PARAISO HOTEL
+            </div>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <div class="mr-auto"></div>
+                <ul class="navbar-nav text-right">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/aboutUs">About Us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/hotel/rooms">Rooms</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/hotel/amenities">Amenities</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/signUp">Be a Member</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/signIn">Log In</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link bookBtn" href="/" tabindex="-1" aria-disabled="true">BOOK NOW</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <br><br><br><br><br><br>
+        <div class="row mb-4">
+            <div class="col-10 offset-1">
+                <div class="container" id="container">
+                    <div class="form-container sign-up-container">
+                        <!-- POST Adding to the db a new user -->
+                        <form method="POST">
+                            <h1 class="mb-5">Create account</h1>
+                            <br>
+                            <span class="error-label mr-auto">
+                                {{{generalError}}}
+                            </span>
+                            <input type="text" id="firstName" name="fname" placeholder="First Name" value="{{{data.fname}}}">
+                            <span class="error-label mr-auto" id="firstName-error">
+                                {{fnameError.msg}}
+                                {{!-- <% if(locals.fnameError) { %>
+                                    <i><%= fnameError.msg %></i>
+                                        <% } %> --}}
+                            </span>
+                            <input type="text" id="lastName" name="lname" placeholder="Last Name" value="{{{data.lname}}}">
+                            <span class="error-label mr-auto" id="lastName-error">
+                                {{lnameError.msg}}
+                                {{!-- <% if(locals.lnameError) { %>
+                                    <i><%= lnameError.msg %></i>
+                                        <% } %> --}}
+                            </span>
+                            <input type="email" id="email" name="email" placeholder="Email" value="{{{data.email}}}">
+                            <span class="error-label mr-auto" id="email-error">
+                                {{emailError.msg}}
+                                {{!-- <% if(locals.emailError) { %>
+                                    <i><%= emailError.msg %></i>
+                                        <% } %> --}}
+                            </span>
+                            <input type="password" id="password" name="password" placeholder="Password" value="{{{data.password}}}">
+                            <span class="error-label mr-auto" id="password-error">
+                                {{passwordError.msg}}
+                                {{!-- <% if(locals.passwordError) { %>
+                                    <i><%= passwordError.msg %></i>
+                                        <% } %> --}}
+                            </span>
+                            <input type="password" id="confirmPassword" name="cpassword" placeholder="Confirm Password" value="{{{data.cpassword}}}">
+                            <span class="error-label mr-auto" id="confirmPassword-error">
+                                {{cpasswordError.msg}}
+                                {{!-- <% if(locals.cpasswordError) { %>
+                                    <i><%= cpasswordError.msg %></i>
+                                        <% } %> --}}
+                            </span>
+                            <br>
+                            <h1 class="mb-5">Credit Card Information</h1>
+                            <div class=group1>
+                                <div class="form-group owner">
+                                    <input type="text" class="form-control" id="owner" name="owner" placeholder="Name of Card Owner" value="{{{data.owner}}}">
+                                </div>
+                                <span class="error-label mr-auto" id="owner-error">
+                                    {{ownerError.msg}}
+                                </span>
+                                <div class="form-group CVV">
+                                    <input type="text" class="form-control" id="cvv" name="cvv" placeholder="CVV" value="{{{data.cvv}}}">
+                                </div>
+                                <span class="error-label mr-auto" id="owner-error">
+                                    {{cvvError.msg}}
+                                </span>
+                                <div class="form-group" id="card-number-field">
+                                    <input type=text pattern="[0-9]{13,16}" id="credit-number" name="cardNumber" placeholder="Card Number" value="{{{data.cardNumber}}}">
+                                </div>
+                                <span class="error-label mr-auto" id="cardNum-error">
+                                    {{cardNumError.msg}}
+                                </span>
+                                <div class="form-group" id="expiration-date">
+                                    <label>Expiration Date</label>
+                                    <select name="month" value="{{{data.month}}}">
+                                        <option value="01" name="jan">January</option>
+                                        <option value="02" name="feb">February </option>
+                                        <option value="03" name="mar">March</option>
+                                        <option value="04" name="apr">April</option>
+                                        <option value="05" name="may">May</option>
+                                        <option value="06" name="jun">June</option>
+                                        <option value="07" name="jul">July</option>
+                                        <option value="08" name="aug">August</option>
+                                        <option value="09" name="sep">September</option>
+                                        <option value="10" name="oct">October</option>
+                                        <option value="11" name="nov">November</option>
+                                        <option value="12" name="dec">December</option>
+                                    </select>
+                                    <select name="year" value="{{{data.year}}}">
+                                        <option value="20" name="20"> 2020</option>
+                                        <option value="21" name="21"> 2021</option>
+                                        <option value="22" name="22"> 2022</option>
+                                        <option value="23" name="23"> 2023</option>
+                                        <option value="24" name="24"> 2024</option>
+                                        <option value="25" name="25"> 2025</option>
+                                    </select>
+                                </div>
+                                <div class="form-group" id="credit_cards">
+                                    <label>Card Type:</label>
+                                    <div class="paymentWrap">
+                                        <div class="btn-group paymentBtnGroup btn-group-justified" data-toggle="buttons">
+                                            <label class="btn paymentMethod">
+                                                <div class="method visa"></div>
+                                                <input type="radio" value="visa" name="ccprovider" checked>
+                                            </label>
+                                            <label class="btn paymentMethod active">
+                                                <div class="method master-card"></div>
+                                                <input type="radio" value="masterCard" name="ccprovider">
+                                            </label>
+                                            <label class="btn paymentMethod">
+                                                <div class="method discover"></div>
+                                                <input type="radio" value="discover" name="ccprovider">
+                                            </label>
+                                            <label class="btn paymentMethod">
+                                                <div class="method american"></div>
+                                                <input type="radio" value="american" name="ccprovider">
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <input type="submit" value="Sign Up" id="signUp">
+                            <br>
+                        </form>
+                        <img src="/images/SignUp/Draw.jpg" id="illustrationImg">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+   {{> (lookup . 'whichfooter') }}
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+        <script src="/javascripts/SignUp.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,91 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Oswald&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Yeseva+One&display=swap');
+body {
+    margin: 0;
+    font-family: 'Open Sans';
+    color: #625D5D;
+}
+
+body .container-fluid {
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+header {
+    background-image: linear-gradient(rgba(70, 67, 67, 0.4), rgba(0, 0, 0, 0.3)), url("../images/MemberBenefits/benefitsHeader.jpeg");
+    height: 103vh;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    position: relative;
+    background-attachment: fixed;
+}
+/*Header Title*/
+
+#headerTitle {
+    position: absolute;
+    top: 54%;
+    left: 55%;
+    transform: translate(-60%, -50%);
+    font-family: 'Yeseva One', cursive;
+    color: white;
+    font-size: 55px;
+}
+
+
+/*MAIN*/
+
+main {
+    background-color: #F0E9E3;
+    margin: 20px;
+    border-radius: 10px;
+    font-size: 15px;
+}
+
+.section-1 h1 {
+    letter-spacing: 10px;
+    color: #2E4106;
+    font-family: 'Oswald', sans-serif;
+}
+
+.section-1 .definition {
+    margin: 20px 150px 50px 150px;
+    background-color: white;
+    padding: 30px;
+    padding-left: 100px;
+    padding-right: 100px;
+    border-radius: 10px;
+    letter-spacing: 2px;
+}
+
+.text-justify.section-2 {
+    margin: 50px 150px 50px 150px;
+}
+
+.text-justify.section-2 h1 {
+    font-size: 20px;
+}
+
+table,
+th {
+    border-color: 2px solid #F0E9E3;
+}
+
+td {
+    border-bottom: 2px solid rgb(46, 65, 6, 1);
+}
+
+@media only screen and (max-width: 988px) {
+    .section-1 .definition {
+        margin: 20px 100px 50px 100px;
+        background-color: white;
+        padding-left: 40px;
+        padding-right: 40px;
+        border-radius: 10px;
+        letter-spacing: 2px;
+    }
+    .text-justify.section-2 {
+        margin: 50px 100px 50px 100px;
+    }
+}

@@ -1,0 +1,334 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Oswald&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Yeseva+One&display=swap');
+body {
+    margin: 0;
+    font-family: 'Open Sans';
+}
+
+body .container-fluid {
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+header {
+    background-image: linear-gradient(rgba(70, 67, 67, 0.1), rgba(0, 0, 0, 0.1)), url("../images/Beach.jpeg");
+    height: 103vh;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    position: relative;
+}
+
+
+/*BOOKING*/
+
+header .style {
+    background-color: transparent;
+    /*    opacity: 85%;*/
+    /*    border-radius: 10px;*/
+    /*    box-shadow: 10px 10px 10px rgb(175, 165, 151);*/
+    width: 80%;
+    margin-top: 20.5%;
+}
+
+header .form-control {
+    border-color: whitesmoke;
+    background-color: #A9A9A9;
+    opacity: 80%;
+    color: white;
+    /*    font-weight: bold;*/
+}
+
+#Book .btn {
+    border-radius: 0;
+    color: white;
+    border-color: #EFA07E;
+    background-color: #EFA07E;
+    font-size: 15px;
+    /*    font-weight: bold;*/
+}
+
+#Book .btn:hover {
+    color: white;
+    opacity: 80%;
+    background-color: #A9A9A9;
+    border-color: #A9A9A9;
+    font-size: 15px;
+    /*    font-weight: bold;*/
+}
+
+#Book label {
+    font-size: 15px;
+    font-style: bold;
+}
+
+#Book .Booktitle {
+    font-size: 55px;
+    text-align: center;
+    color: whitesmoke;
+    font-family: 'Yeseva One';
+    font-style: italic;
+    text-shadow: 0 2px 2px #888888;
+    letter-spacing: 5px;
+}
+
+#Book .title {
+    font-size: 20px;
+    text-align: center;
+    color: white;
+    font-style: italic;
+    text-shadow: 0 3px 3px #888888;
+    /*    text-shadow: 0 3px 3px #484848;*/
+    letter-spacing: 2px;
+    font-weight: 1000;
+}
+
+#Book .form-control::-webkit-input-placeholder {
+    font-size: 15px;
+    color: white;
+}
+
+#Book .form-control:focus {
+    border-color: #9EAFBA;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(158, 175, 186, 0.6);
+}
+
+#Book .btn-sm {
+    padding: 2px;
+}
+
+
+/*END OF BOOKING*/
+
+.section-1 {
+    background-color: #EEE7E4;
+}
+
+.section-1 h1 {
+    color: #2E4106;
+    font-size: 54px;
+    margin-top: 190px;
+    font-family: 'Yeseva One', cursive;
+}
+
+.section-1 p {
+    margin-top: 30px;
+    font-family: 'Open Sans';
+    line-height: 25px;
+    letter-spacing: 1px;
+    color: #737470;
+}
+
+.section-1 a {
+    margin-top: 30px;
+    text-align: left;
+    font-size: 18px;
+    font-family: 'Open Sans';
+    border: 3px solid #EFA07E;
+    padding: 15px;
+    color: white;
+    background-color: #EFA07E;
+}
+
+.section-1 img {
+    margin-top: 100px;
+    height: 500px;
+    width: auto;
+    box-shadow: 5px 5px 10px rgb(175, 165, 151);
+}
+
+#breakfastMenu {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("../images/Breakfast.jpeg");
+    background-size: cover;
+    background-attachment: fixed;
+    min-height: 100vh;
+}
+
+main figure .breakfastFood {
+    color: whitesmoke;
+    padding-top: 10%;
+    padding-left: 10%;
+    padding-right: 10%;
+}
+
+main figure #breakfastMenu h1 {
+    color: whitesmoke;
+    position: absolute;
+    font-size: 450%;
+    text-align: center;
+    margin-left: 200px;
+    padding-top: 5vh;
+    font-family: 'Yeseva One', cursive;
+}
+
+main figure .breakfastFood .price {
+    color: #EBC746;
+    margin-top: 4vh;
+}
+
+main figure .breakfastFood .panel {
+    margin-left: 3vw;
+}
+
+main figure .breakfastFood h6 {
+    padding-bottom: 10px;
+}
+
+.LPRectangle {
+    position: absolute;
+    width: 35vw;
+    height: 38vh;
+    background: #ECCFC3;
+    z-index: 0;
+    margin-left: 38vw;
+    margin-top: 9vh;
+}
+
+.DPRectangle {
+    position: absolute;
+    width: 27vw;
+    height: 43vh;
+    background: #E9D0D0;
+    margin-top: 50vh;
+    margin-left: 20vw;
+    z-index: 0;
+}
+
+.Spa1 {
+    position: absolute;
+    height: 48vh;
+    width: 23vw;
+    z-index: 3;
+    margin-top: 10vh;
+    margin-left: 13vw;
+    margin-bottom: 10px;
+    object-fit: cover;
+}
+
+.Spa2 {
+    position: absolute;
+    margin-top: 6vh;
+    margin-left: 43vw;
+    height: 33vh;
+    width: 360px;
+    z-index: 2;
+    object-fit: cover;
+}
+
+.Spa3 {
+    position: relative;
+    margin-top: 43vh;
+    margin-left: 30vw;
+    height: 45vh;
+    width: 310px;
+    z-index: 1;
+}
+
+.section-2 {
+    margin-top: 3vh;
+}
+
+.section-2 h1 p {
+    margin-top: -30vh;
+    background: #E4DED8;
+    text-align: center;
+}
+
+.section-2 h1 {
+    font-family: 'Yeseva One', cursive;
+    font-size: 5vh;
+    color: #13580C;
+}
+
+.section-2 p {
+    font-family: 'Actor', sans-serif;
+    font-size: 30px;
+    color: #13580C;
+    font-size: 2vh;
+}
+
+
+/*START OF FOOTER*/
+
+.figure-2 {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("../images/tropicalLeaves.jpeg");
+    background-size: cover;
+    background-attachment: fixed;
+    min-height: 40vh;
+    margin-top: 10vh;
+}
+
+@media only screen and (max-width: 988px) {
+    .section-1 .container .col-sm-12 img {
+        z-index: -1;
+    }
+    .Spa1 {
+        position: absolute;
+        height: 48vh;
+        width: 38vw;
+        z-index: 3;
+        margin-top: 10vh;
+        margin-left: 1vw;
+        margin-bottom: 10px;
+        object-fit: cover;
+    }
+    .Spa2 {
+        position: absolute;
+        margin-top: 11vh;
+        margin-left: 43vw;
+        height: 25vh;
+        width: 270px;
+        z-index: 2;
+        object-fit: cover;
+    }
+    .Spa3 {
+        position: relative;
+        margin-top: 43vh;
+        margin-left: 30vw;
+        height: 30vh;
+        width: 260px;
+        z-index: 1;
+    }
+    .DPRectangle {
+        position: absolute;
+        width: 27vw;
+        height: 24vh;
+        background: #E9D0D0;
+        margin-top: 50vh;
+        margin-left: 20vw;
+        z-index: 0;
+    }
+    header {
+        height: 760px;
+    }
+}
+
+/*ANIMATION OF TEXT*/
+.ml14 {
+  font-weight: 200;
+  font-size: 3.2em;
+}
+
+.ml14 .text-wrapper {
+  position: relative;
+  display: inline-block;
+  padding-top: 0.1em;
+  padding-right: 0.05em;
+}
+
+.ml14 .line {
+  opacity: 0;
+  position: absolute;
+  left: 0;
+  height: 2px;
+  width: 100%;
+  background-color: #fff;
+  transform-origin: 100% 100%;
+  bottom: 0;
+}
+
+.ml14 .letter {
+  display: inline-block;
+  line-height: 1em;
+}

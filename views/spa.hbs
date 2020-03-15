@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="/stylesheets/animate.css">
+    <link rel="stylesheet" type="text/css" href="/stylesheets/slick.css">
+    <link rel="stylesheet" type="text/css" href="/stylesheets/slick-theme.css">
+    <link rel="stylesheet" type="text/css" href="/stylesheets/spa.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.7/css/all.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0/css/fontawesome.min.css">
+    <link rel = "icon" href ="/images/logo1circle.png" type = "image/x-icon"> 
+</head>
+
+<body>
+    {{> (lookup . 'whichheader') }}
+<div>
+    <h4 id="headerTitle">Spa</h4>
+</div>
+
+<main>
+    <nav>
+        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+            <a class="nav-item nav-link" id="nav-aroma-tab" data-toggle="tab" href="#nav-aroma" role="tab" aria-controls="nav-aroma" aria-selected="true">Aromatherapy</a>
+            <a class="nav-item nav-link" id="nav-swedish-tab" data-toggle="tab" href="#nav-swedish" role="tab" aria-controls="nav-swedish" aria-selected="false">Classic Massage</a>
+            <a class="nav-item nav-link" id="nav-hilot-tab" data-toggle="tab" href="#nav-hilot" role="tab" aria-controls="nav-hilot" aria-selected="false">Hilot Massage</a>
+            <a class="nav-item nav-link" id="nav-stone-tab" data-toggle="tab" href="#nav-stone" role="tab" aria-controls="nav-stone" aria-selected="false">Stone Massage</a>
+        </div>
+    </nav>
+    <div class="tab-content" id="nav-tabContent">
+        <div class="tab-pane fade show active" id="nav-aroma" role="tabpanel" aria-labelledby="nav-aroma-tab">
+            <div class="tab-content text-center pt-4" id="nav-tabContent">
+                <div class="col-md text-center" class="tabImg">
+                    <img src="/images/Spa/aroma.jpeg" alt="aromatherapy" class="card-img" />
+                </div>
+                <div class="col-md text-center">
+                    <h2>Relax and unwind with essential oils of your choice.</h2>
+                    <h4>60 Minutes - <span>&#8369;</span>1500</h4>
+                    <h4>90 Minutes - <span>&#8369;</span>1750</h4>
+                </div>
+            </div>
+        </div>
+
+        <div class="tab-pane fade" id="nav-swedish" role="tabpanel" aria-labelledby="nav-swedish-tab">
+            <div class="col-md text-center pt-4" class="tabImg">
+                <img src="/images/Spa/classic.jpg" alt="massage" class="card-img" />
+            </div>
+            <div class="col-md text-center">
+                <h2>Hotel Paraiso offers a lot of different classic massages</h2>
+                <h4>Swedish (60 minutes) - <span>&#8369;</span>1870</h4>
+                    <h4>Shiatsu (60 minutes) - <span>&#8369;</span>1850</h4>
+                        <h4>Deep Tissue (60 minutes) - <span>&#8369;</span>1900</h4>
+                            <h4>Combination (90 minutes) - <span>&#8369;</span>2500</h4>
+            </div>
+        </div>
+
+        <div class="tab-pane fade" id="nav-hilot" role="tabpanel" aria-labelledby="nav-hilot-tab">
+            <div class="col-md text-center pt-4" class="tabImg">
+                <img src="/images/Spa/hilot.jpeg" id="hilotImg" alt="hilot" class="card-img" />
+            </div>
+            <div class="col-md text-center">
+                <h2>Hilot is a traditional Filipino massage known to relieve stress <br> and improve overall wellness</h2>
+                <h4>75 minutes - <span>&#8369;</span>2000</h4>
+            </div>
+        </div>
+
+        <div class="tab-pane fade" id="nav-stone" role="tabpanel" aria-labelledby="nav-stone-tab">
+            <div class="col-md text-center pt-4" class="tabImg">
+                <img src="/images/Spa/stone.jpg" alt="stone massage" class="card-img" />
+            </div>
+            <div class="col-md text-center">
+                <h2 class="card-text">Relieve muscle pain with our stone massage therapy</h2>
+                <h4>75 minutes - <span>&#8369;</span>2410</h4>
+            </div>
+        </div>
+    </div>
+</main>
+
+{{> (lookup . 'whichfooter') }}
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+<script src="/javascripts/Home.js"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+<script src="/javascripts/slick.js"></script>
+</body>
+
+</html>

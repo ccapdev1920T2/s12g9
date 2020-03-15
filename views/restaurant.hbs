@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="/stylesheets/animate.css">
+    <link rel="stylesheet" type="text/css" href="/stylesheets/slick.css">
+    <link rel="stylesheet" type="text/css" href="/stylesheets/slick-theme.css">
+    <link rel="stylesheet" type="text/css" href="/stylesheets/restaurant.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.7/css/all.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0/css/fontawesome.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
+    <link rel = "icon" href ="/images/logo1circle.png" type = "image/x-icon"> 
+</head>
+<body>
+{{> (lookup . 'whichheader') }}
+<!--
+    <div id="headerImage"></div>
+    <div>
+        <h4 id="headerTitle">Kainan D' Paraiso</h4>
+    </div>
+-->
+<div id="headerImage" class="d-flex justify-content-center">
+    <div id="headerTitle">Kainan D' Paraiso</div>
+</div>
+<div style="background-color: rgb(238, 231, 228,1);">
+    <div class="py-1 tabtitle">What's on the Menu:</div>
+</div>
+
+<div class="container-fluid mt-5">
+    <div class="row align-items-center">
+        <div class="col-md-6 col-12 mr-0">
+            <div class="container col-md-11">
+                <div class="carousel">
+                            <span class="cardCarousel">
+                                <div><img src="/images/Restaurant/Breakfast.jpg" class="card-img"><h2 class="card-title">Waffles</h2></div>
+                                <div><img src="/images/Restaurant/arroz.jpg" class="card-img"><h2 class="card-title">Arroz Caldo</h2></div>
+                                <div><img src="/images/Restaurant/tapsi.jpg" class="card-img"><h2 class="card-title">Tapsilog</h2></div>
+                            </span>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-12">
+            <div class="container menubody col-md-11 py-3">
+                <div id="menu" class="container pt-3 pb-2">
+                    <div class="container py-2 mr-3 mx-md-0" style="background-color: whitesmoke">
+                        <div class="row justify-content-center">
+                            <div style="text-align: center" class="menuhead">Start your day right with our selectable breakfast menu</div>
+                        </div>
+                        <div class="row justify-content-center">
+                            <div id="menu">All day breakfast menu:</div>
+                        </div>
+                    </div>
+                    <div class="row pt-4 pt-md-3">
+                        <div class="col-md-6 col-12">
+                            <div class="price">P350.00</div>
+                            <div class="foodname">Organic Waffles</div>
+                            <div class="describe">These are homemade waffles from all organic ingredients which are both healthy and yummy. One piece will make you fly up the sky.</div>
+                        </div>
+                        <div class="col-md-6 col-12 pt-md-0 pt-3">
+                            <div class="price">P300.00</div>
+                            <div class="foodname">Pork Tocino</div>
+                            <div class="describe">High quality pork tocino with two eggs, garlic rice or plain rice, chilled juice or coffee or hot choco</div>
+                        </div>
+                    </div>
+                    <div class="row pt-3">
+                        <div class="col-md-6 col-12">
+                            <div class="price">P700.00</div>
+                            <div class="foodname">Tapsilog</div>
+                            <div class="describe">Served with two eggs and high quality angus beef, garlic rice or plain rice, chilled juice or coffee or hot choco.</div>
+                        </div>
+                        <div class="col-md-6 col-12 pt-md-0 pt-3">
+                            <div class="price">P450.00</div>
+                            <div class="foodname">Vigan Longganisa</div>
+                            <div class="describe">3 pieces Vigan Longganisa served with egg, garlic rice or plain rice, chilled juice or coffee or hot choco</div>
+                        </div>
+                    </div>
+                    <div class="row pt-3 pb-md-0 pb-2">
+                        <div class="col-md-6 col-12">
+                            <div class="price">P400.00</div>
+                            <div class="foodname">Daing na Bangus</div>
+                            <div class="describe">Milkfish served with eggs, garlic or plain rice or 2 pcs of toast, brewed coffee or juice or hot choco</div>
+                        </div>
+                        <div class="col-md-6 col-12 pt-md-0 pt-3">
+                            <div class="price">P200.00</div>
+                            <div class="foodname">Arroz Caldo</div>
+                            <div class="describe">Filipino rice and chicken heavily infused with ginger and garnished with toasted garlic, scallions, and black pepper, served with our own specialty bread.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container-fluid mt-5">
+    <div class="row align-items-center">
+        <div class="col-md-6 col-12">
+            <div class="container menubody col-md-11 py-3">
+                <div id="menu" class="container pt-3 pb-2">
+                    <div class="container py-2 mr-3 mx-md-0" style="background-color: whitesmoke">
+                        <div class="row justify-content-center">
+                            <div style="text-align: center" class="menuhead">Enjoy a great meal with family and friends with our savory meals</div>
+                        </div>
+                        <div class="row justify-content-center">
+                            <div id="menu">Lunch and Dinner Menu:</div>
+                        </div>
+                    </div>
+                    <div class="row pt-4 pt-md-3">
+                        <div class="col-md-6 col-12">
+                            <div class="price">P350.00</div>
+                            <div class="foodname">Fresh Salad</div>
+                            <div class="describe">This is made from the freshest organic vegetables bought daily from the market. Ask your server what the salad today is!</div>
+                        </div>
+                        <div class="col-md-6 col-12 pt-md-0 pt-3">
+                            <div class="price">P600.00</div>
+                            <div class="foodname">Beef Kaldereta</div>
+                            <div class="describe">A tomato based beef stew simmered with carrots and potatoes. Served with rice.</div>
+                        </div>
+                    </div>
+                    <div class="row pt-3">
+                        <div class="col-md-6 col-12">
+                            <div class="price">P850.00</div>
+                            <div class="foodname">Steak</div>
+                            <div class="describe">Angus beef served in different cuts. Served with mixed vegetables and rice or mashed potatoes. Ask your server the available steaks for the day.</div>
+                        </div>
+                        <div class="col-md-6 col-12 pt-md-0 pt-3">
+                            <div class="price">P450.00</div>
+                            <div class="foodname">Pork Liempo</div>
+                            <div class="describe">Pork belly marinated in soy sauce, lemon, salt, pepper and garlic, grilled to perfection. Served with rice.</div>
+                        </div>
+                    </div>
+                    <div class="row pt-3 pb-md-0 pb-2">
+                        <div class="col-md-6 col-12">
+                            <div class="price">P500.00</div>
+                            <div class="foodname">Adobo</div>
+                            <div class="describe">Pork simmered in soy sauce and vinegar. Served with rice. A Filipino classic and our house specialty.</div>
+                        </div>
+                        <div class="col-md-6 col-12 pt-md-0 pt-3">
+                            <div class="price">P200.00</div>
+                            <div class="foodname">Chicken Pot Pie</div>
+                            <div class="describe">A classic comfort food made with chicken, corn, and carrots. Served with rice.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-12">
+            <div class="container col-md-11">
+                <div class="carousel">
+                            <span class="cardCarousel">
+                                <div><img src="/images/Restaurant/Salad.jpg" class="card-img"><h2 class="card-title">Salad</h2></div>
+                                <div><img src="/images/Restaurant/steak.jpg" class="card-img"><h2 class="card-title">Steak</h2></div>
+                                <div><img src="/images/Restaurant/adobo.jpg" class="card-img"><h2 class="card-title">Adobo</h2></div>
+                            </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    document.getElementsByClassName('tablinks')[0].click()
+    function openTab(evt, tabName) {
+        // Declare all variables
+        var i, tabcontent, tablinks;
+
+        // Get all elements with class="tabcontent" and hide them
+        tabcontent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
+
+        // Get all elements with class="tablinks" and remove the class "active"
+        tablinks = document.getElementsByClassName("tablinks");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+
+        // Show the current tab, and add an "active" class to the button that opened the tab
+        document.getElementById(tabName).style.display = "block";
+        evt.currentTarget.className += " active";
+    }
+</script>
+{{> (lookup . 'whichfooter') }}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+<script src="/javascripts/Home.js"></script>
+
+<script src="https://unpkg.com/popper.js@1.12.6/dist/umd/popper.js" integrity="sha384-fA23ZRQ3G/J53mElWqVJEGJzU0sTs+SvzG8fXVWP+kJQ1lwFAOkcUOysnlKJC33U" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/bootstrap-material-design@4.1.1/dist/js/bootstrap-material-design.js" integrity="sha384-CauSuKpEqAFajSpkdjv3z9t8E7RlpJ1UP0lKM/+NdtSarroVKu069AlsRPKkFBz9" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="crossorigin="anonymous"></script>
+<script src="/javascripts/slick.js"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('.cardCarousel').slick({
+            autoplay:true,
+            autoplaySpeed:2000,
+            infinite:true,
+            arrows:true,
+            dots: true,
+        });
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,369 @@
+@import url('https://fonts.googleapis.com/css?family=Actor&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Oswald&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Bungee+Shade|Satisfy&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Ubuntu&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Yeseva+One&display=swap');
+
+body{
+    margin: 0;
+    color: #737470;
+    background-color: white;
+    font-family: 'Open Sans';
+}
+
+.navbar {
+    width: 100%;
+    position: fixed;
+    z-index: 1000;
+}
+
+#paraiso {
+    text-align: center;
+    top: 1%;
+    left: 2%;
+    font-size: 300%;
+    text-shadow: 0 2px 5px rgba(255, 101, 47, .2);
+    letter-spacing: 10px;
+    color: whitesmoke;
+    font-family: 'Oswald', sans-serif;
+}
+
+.aligncenter{
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    background-color: whitesmoke;
+}
+
+#headerf{
+    font-family: 'Yeseva One', sans-serif;
+    font-size: 55px;
+    color: whitesmoke;
+/*    text-shadow: 2px 2px #202020;*/
+    padding-top: 30%;
+}
+  
+#paralax{
+    background-image: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1)), url("../images/AboutUs/night.jpg");
+    background-size: cover;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    height: 90vh;
+    background-position: center;
+}
+
+
+#myTab .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active{
+    background-color: rgb(46, 65, 6, 0.9)!important;
+    color: whitesmoke!important;
+}
+
+.nav-tabs .nav-link{
+    border: 0;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+
+.nav-tabs{
+    border-bottom: 0;
+}
+
+#myTab a{
+    font-family: 'Open Sans';
+    font-size: 18px;
+    letter-spacing: 4px;
+    color: #2E4106;
+    background-color: #eee7e4;
+    border-radius: 0;  
+}
+
+#myTab a:hover{
+    color: whitesmoke;
+    background-color: rgb(46, 65, 6, 0.6)!important;
+    margin: 0;
+}
+
+.tab-content .container{
+    margin-right: 0;
+    margin-left: 0;
+    padding: 0;
+    width: 100%;
+    max-width: 100%;
+}
+
+.container.tabs{
+    margin-right: 0;
+    margin-left: 0;
+    padding: 0;
+    width: 100%;
+    max-width: 100%;
+}
+
+
+.nav{
+    width: 100%;
+    background-color: #eee7e4;
+    border-bottom: 1px solid #eee7e4;
+}
+
+#header{
+    background-color: whitesmoke;
+    margin: 0;
+    background-position: 0px -100px;
+    width: 100%;
+    background-repeat: no-repeat;
+}
+
+#header .title{
+    font-family: 'Yeseva One';
+    text-align: center;
+    font-size: 40px;
+    padding-top: 5%;
+    color: #2E4106;
+}
+
+.row.style{
+    margin-right: 0;
+    margin-left: 0;
+}
+
+/*
+
+.flex{
+    display: flex;
+    justify-content: center;
+    padding-bottom: 5%;
+}
+*/
+
+
+.lineheight{
+    line-height: 200%;
+}
+
+#Story .style{
+    text-align: justify;
+    letter-spacing: 1px;
+    color: #737470;
+    font-family: 'Open Sans';
+    font-size: 13px;
+}
+
+.triangle {
+    width: 0; 
+    height: 0; 
+    border-left: 5vw solid transparent;
+    border-right: 5vw solid transparent;
+    border-top: 5vw solid whitesmoke;
+/*    opacity: 90%;*/
+    margin-left: auto;
+    margin-right: auto;
+    position: sticky;
+    position: -webkit-sticky;
+    top: 13%;
+    z-index: 2;
+}
+
+/*
+.parallax-window {
+    min-height: 400px;
+    background: transparent;
+}
+*/
+
+#Story #image{
+    background-image: linear-gradient(rgba(0, 0, 0, .3), rgba(0, 0, 0, .3)), url("../images/AboutUs/1.jpg");
+/*    background-image: linear-gradient(rgba(0, 0, 0, .3), rgba(0, 0, 0, .3)); */
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: 100% 100%;
+    background-size: cover;
+}
+
+#Story #image p{
+    font-size: 50px;
+    font-family: 'Yeseva One';
+    padding-top: 5%;
+    color: whitesmoke;
+    text-shadow: 2px 2px #202020;
+}
+
+.vl {
+    border-left: 0.3vw solid whitesmoke;
+    height: 100vh;
+    margin-left: 49.884%;
+    margin-top: 5%;
+}
+
+.v2 {
+    border-left: 0.3vw solid whitesmoke;
+    height: 54vh;
+    margin-left: 49.884%;
+    margin-top: 5%;
+}
+
+.clip{
+    clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+}
+
+.timelinestyle{
+    font-family: 'Open Sans';
+    font-size: 30px;
+    color: whitesmoke;
+    text-shadow: 2px 2px #202020;
+    letter-spacing: 4px;
+}
+
+.stimelinestyle{
+    font-family: 'Open Sans';
+    font-size: 20px;
+    color: whitesmoke;
+    text-shadow: 2px 2px #202020;
+    letter-spacing: 4px;
+    text-align: left;
+}
+
+.marginleft{
+    margin-left: 15%;
+}
+
+
+/*FOR TEAM*/
+.overlay {
+    background-color: #ECCFC3;
+    position: absolute;
+    bottom: -120px;
+    left: 0;
+    width: 100%;
+    padding: 10px;
+    text-align: center;
+    -webkit-transition: .4s;
+    transition:.4s;
+    z-index: -1;
+    opacity: 90%;
+}
+
+.cont:hover .overlay {
+  bottom: 0;
+}
+
+.cont{
+    overflow: hidden;
+    position: relative;
+}
+
+
+.text {
+    color: #2E4106;
+    font-size: 20px;
+    overflow: hidden;
+    font-family: 'Open Sans';
+    letter-spacing: 4px;
+}
+
+#Team a{
+    font-family: 'Open Sans';
+    font-size: 18px;
+    letter-spacing: 4px;
+    color: #737470;
+/*    background-color: #fff;*/
+    border-radius: 0;  
+}
+
+#Team a:hover{
+    color: whitesmoke;
+    background-color: #737470;
+    margin: 0;
+}
+
+/*FOR Contact Us*/
+#phone{
+    letter-spacing: 4px;
+    font-size: 20px;
+    text-align: center;
+}
+
+#Contact #image{
+    background-image: linear-gradient(rgba(70, 67, 67, 0.1), rgba(0, 0, 0, 0.1)), url("../images/AboutUs/email.jpg");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: 100% 100%;
+    background-size: cover;
+}
+
+.form-control{
+    border-color: rgb(245, 245, 245, 0.7);
+    background-color: rgb(245, 245, 245, 0.5);
+    color: rgb(46, 65, 6, 1);
+    font-weight: 1000;
+}
+
+#Contact label{
+     color: rgb(46, 65, 6, 1);
+    font-weight: 1000;
+}
+
+#Contact .btn{
+    background-color: transparent;
+    color: #FFFFFF;
+    font-family: 'Open Sans';
+    letter-spacing: 4px;
+    border-radius: 30px;
+}
+
+#Contact .btn:hover{
+    background-color: white;
+    color: black;
+}
+
+#Contact .form-control::-webkit-input-placeholder {
+    color: rgb(46, 65, 6, 1);
+    font-weight: 1000;
+}
+
+#Contact .form-control:focus {
+    border-color: rgb(233, 208, 208, 1);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(233, 208, 208, 0.6);
+    background-color: rgb(245, 245, 245, 0.8);
+}
+
+#Contact input:-internal-autofill-selected {
+    border-color: rgb(245, 245, 245, 0.7)!important;
+    background-color: rgb(245, 245, 245, 0.5)!important;
+    color: rgb(46, 65, 6, 1)!important;
+    font-weight: 1000!important;
+}
+
+#Contact #image .style{
+    font-size: 40px;
+    font-family: 'Yeseva One';
+    padding-top: 5%;
+    color: #fff;
+/*    text-shadow: 2px 2px #202020;*/
+}
+
+/*FOR LOCATION*/
+#Loc #image{
+    background-image: linear-gradient(rgba(0, 0, 0, .1), rgba(0, 0, 0, .1)), url("../images/AboutUs/map.jpg");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: 100% 100%;
+    background-size: cover;
+}
+
+#add{
+    letter-spacing: 4px;
+    font-size: 20px;
+    text-align: center;
+}
+
+/*CONTAINER*/
+.boxpart{
+    background-color: whitesmoke;
+}
+
+
+#image .row{
+    margin-left: 0px;
+    margin-right: 0px;
+}

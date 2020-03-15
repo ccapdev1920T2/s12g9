@@ -1,0 +1,32 @@
+/*HEADER*/
+.HomePageMain .navbar {
+    width: 100%;
+    position: fixed;
+    z-index: 1000;
+    font-family: 'Open Sans';
+    font-size: 15px;
+}
+
+.nav-link {
+    color: white;
+}
+
+.nav-item {
+    color: #fff;
+}
+
+.HomePageMain .navbar.scrolled {
+    background: #ECCFC3;
+    transition: all 0.3s ease-in-out 0s;
+}
+
+.HomePageMain #paraiso {
+    text-align: center;
+    top: 1%;
+    left: 2%;
+    font-size: 300%;
+    text-shadow: 0 2px 5px rgba(255, 101, 47, .2);
+    letter-spacing: 10px;
+    color: whitesmoke;
+    font-family: 'Oswald', sans-serif;
+}

@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<head>
+    <title>
+        About Us
+    </title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/stylesheets/aboutusBs.css">
+    <link rel="stylesheet" type="text/css" href="/stylesheets/header.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.7/css/all.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.7/css/all.css">
+    <link rel = "icon" href ="/images/logo1circle.png" type = "image/x-icon"> 
+</head>
+<body>
+    <header class="HomePageMain">
+        <nav class="navbar navbar-expand-lg navbar-dark">
+            <div class="headerName" id="paraiso">
+                PARAISO HOTEL
+            </div>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <div class="mr-auto"></div>
+                <ul class="navbar-nav text-right">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Home</a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/aboutUs">About Us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/hotel/rooms">Rooms</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/hotel/amenities">Amenities</a>
+                    </li>
+                    {{{logging}}}
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+<div id="paralax" class="d-flex justify-content-center">
+    <div id="headerf">About Us</div>
+</div>
+<div class ="container tabs">
+    <ul id="myTab" class="nav nav-tabs" role="tablist">
+        <li class="active nav-item">
+            <a class= "nav-link active p-md-3" data-toggle="tab" href="#Story">Our Story</a>
+        </li>
+        <li class ="nav-item">
+            <a class = "nav-link p-md-3" data-toggle="tab" href="#Team">Team</a>
+        </li>
+        <li class ="nav-item">
+            <a class = "nav-link  p-md-3" data-toggle="tab" href="#Contact">Contact</a>
+        </li>
+        <li class ="nav-item">
+            <a class = "nav-link  p-md-3" data-toggle="tab" href="#Loc">Location</a>
+        </li>
+    </ul>
+</div>
+
+<div class="tab-content">
+    <div id="Story" class="container tab-pane active">
+        <div id="header">
+            <div class ="col-xs-4 mx-auto title">
+                Paraiso Hotel
+            </div>
+
+            <img src="/images/AboutUs/hotel.svg" width="100%" height="1%">
+            <br><br>
+            <div class="container pb-2">
+                <div class="row style mx-md-5 mx-3">
+                    <div class="col-12 col-md-6">
+                        <span class ="lineheight">
+                        The famous Paraisof Hotel has been established since the 2000s, becoming a rising star of the new decade. Its location in Manila City cater to not only tourists, but also for fellow citizens who desire to rest admist the bustling, buzzling and busyness of the city. With the 20-story Paraiso Hotel, a taste of paradise can be experienced. Spa, pool and gym are all here to give full experience for the customers.
+                        </span>
+                    </div>
+                    <div class="col-12 col-md-6 pt-md-0 pt-3">
+                        <span class="lineheight">
+                        The hotel was founded by three college friends who suddenly had the urge to build a place for relaxation as they encountered burnouts while their stay in the capital city of the Philippines. Since then, the hotel has continue to blossom and has become one of the landmarks in Metro Manila.
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="aligncenter">
+            <div class ="triangle"></div>
+            <script src= "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js">
+            </script>
+            <script>
+                $(document).ready(function(){
+                    $(window).scroll(function(){
+                        $('.triangle').css("opacity", 1- $(window).scrollTop() / 2000)
+                    })
+                })
+            </script>
+            <script src="./javascripts/rellax.min.js"></script>
+            <script>
+                var rellax = new Rellax('.rellax', {
+                    center: true
+                });
+            </script>
+            <div id ="image">
+                <div class="container">
+                    <p class="col-xs-4 mx-auto text-center">2000</p>
+                    <div class = "row">
+                        <div class ="col-4 align-self-center justify-content-center d-none d-md-block">
+                            <img src="/images/AboutUs/college.jpg" width="80%" height="40%" class="clip">
+                            <div class = "timelinestyle ml-4">We entered college</div>
+                        </div>
+                        <div class = "col-4 d-md-none">
+                            <div class ="row pt-5">
+                                <div class = "stimelinestyle ml-5 align-self-start pr-n5">We were born</div>
+                            </div>
+                            <div class ="row pt-5">
+                                <div class = "stimelinestyle ml-5 align-self-center pr-n5">We entered college</div>
+                            </div>
+                            <div class ="row pt-5">
+                                <div class = "stimelinestyle ml-5 align-self-end pr-n5">We became friends</div>
+                            </div>
+                        </div>
+                        <div class = "col-4 d-md-none">
+                            <div class="v2"></div>
+                        </div>
+                        <div class = "col-4 d-none d-md-block">
+                            <div class="vl"></div>
+                        </div>
+                        <div class ="col-4 justify-content-center d-none d-md-block">
+                            <img src="/images/AboutUs/duck.jpg" width="80%" height="35%" class="clip">
+                            <div class = "timelinestyle marginleft mb-0 mb-md-5">We were born</div>
+                            <img src="/images/AboutUs/friends.jpg" width="80%" height="35%" class="clip mt-0 mt-md-5">
+                            <div class = "timelinestyle ml-4">We became friends</div>
+                        </div>
+                    </div>
+                    <!--
+                                        <div class = "row mx-auto"><p class="col-xs-4 mx-auto">TODAY</p></div>
+                                        <div class = "row justify-content-center"><img src="images/AboutUs/hotel.jpg" width="50%" height="35%" class="clip"></div>
+                    -->
+                </div>
+                <br><br><br><br><br><br><br>
+            </div>
+        </div>
+        <div class="boxpart py-4">
+            <img src="/images/AboutUs/hotel.svg" width="100%" height="1%">
+        </div>
+    </div>
+
+    <div id="Team" class="tab-pane fade container">
+        <div id="header" class="pb-4">
+            <div class ="col-xs-4 mx-auto title">
+                Our Team
+            </div>
+            <img src="/images/AboutUs/hotel.svg" width="100%" height="1%">
+            <div class="container p-5">
+                <div class="row">
+                    <div class="col-12 col-lg-4">
+                        <div class= "cont">
+                            <img src="/images/AboutUs/gwyneth1.jpg" alt="" width="100%">
+                            <div class="overlay mb-n2">
+                                <div class ="container">
+                                    <div class="row text"><div class="col-12">Gwyneth Ang</div></div>
+                                    <ul class="list-unstyled list-inline mt-2">
+                                        <li class="list-inline-item">
+                                            <a class="btn-floating btn-sm mx-1">
+                                                <i class="fab fa-facebook-f"></i>
+                                            </a>
+                                        </li>
+                                        <li class="list-inline-item">
+                                            <a class="btn-floating btn-sm rgba-white-slight mx-1">
+                                                <i class="fab fa-twitter"></i>
+                                            </a>
+                                        </li>
+                                        <li class="list-inline-item">
+                                            <a class="btn-floating btn-sm rgba-white-slight mx-1">
+                                                <i class="fab fa-google-plus-g"></i>
+                                            </a>
+                                        </li>
+                                        <li class="list-inline-item">
+                                            <a class="btn-floating btn-sm rgba-white-slight mx-1">
+                                                <i class="fab fa-linkedin-in"></i>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-4 pt-lg-0 pt-5">
+                        <div class= "cont">
+                            <img src="/images/AboutUs/ivy.jpg" alt="" width="100%">
+                            <div class="overlay mb-n2">
+                                <div class ="container">
+                                    <div class="row text"><div class="col-12">Ivy Tan</div></div>
+                                    <ul class="list-unstyled list-inline mt-2">
+                                        <li class="list-inline-item">
+                                            <a class="btn-floating btn-sm mx-1">
+                                                <i class="fab fa-facebook-f"></i>
+                                            </a>
+                                        </li>
+                                        <li class="list-inline-item">
+                                            <a class="btn-floating btn-sm rgba-white-slight mx-1">
+                                                <i class="fab fa-twitter"></i>
+                                            </a>
+                                        </li>
+                                        <li class="list-inline-item">
+                                            <a class="btn-floating btn-sm rgba-white-slight mx-1">
+                                                <i class="fab fa-google-plus-g"></i>
+                                            </a>
+                                        </li>
+                                        <li class="list-inline-item">
+                                            <a class="btn-floating btn-sm rgba-white-slight mx-1">
+                                                <i class="fab fa-linkedin-in"></i>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-4 pt-lg-0 pt-5">
+                        <div class= "cont">
+                            <img src="/images/AboutUs/chrissy.jpg" alt="" width="100%">
+                            <div class="overlay mb-n2">
+                                <div class ="container">
+                                    <div class="row text"><div class="col-12">Christianne Vinco</div></div>
+                                    <ul class="list-unstyled list-inline mt-2">
+                                        <li class="list-inline-item">
+                                            <a class="btn-floating btn-sm mx-1">
+                                                <i class="fab fa-facebook-f"></i>
+                                            </a>
+                                        </li>
+                                        <li class="list-inline-item">
+                                            <a class="btn-floating btn-sm rgba-white-slight mx-1">
+                                                <i class="fab fa-twitter"></i>
+                                            </a>
+                                        </li>
+                                        <li class="list-inline-item">
+                                            <a class="btn-floating btn-sm rgba-white-slight mx-1">
+                                                <i class="fab fa-google-plus-g"></i>
+                                            </a>
+                                        </li>
+                                        <li class="list-inline-item">
+                                            <a class="btn-floating btn-sm rgba-white-slight mx-1">
+                                                <i class="fab fa-linkedin-in"></i>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="Contact" class="tab-pane fade container">
+        <div id="header" class="bg pb-3">
+            <div class ="col-xs-4 mx-auto title">
+                Contact Us
+            </div>
+            <img src="/images/AboutUs/hotel.svg" width="100%" height="1%">
+            <br><br>
+            <div class="container pb-5">
+                <div class="row style mx-md-5 mx-3">
+                    <div class="col-12 justify-content-center" id="phone">
+                        <span class ="lineheight">
+                        Through Telephone Number: 7439-3871
+                        </span>
+                    </div>
+                </div>
+                <div class="row style mx-md-5 mx-3">
+                    <div class="col-12 justify-content-center" id="phone">
+                        <span class ="lineheight">
+                        Through Cellphone Number: +63 912-345-6789 
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id ="image">
+            <div class="container">
+                <div class="container style text-center">
+                    Email Us Your Concern
+                </div>
+                <div class ="p-5">
+                    <form class = "px-5" action="mailto:paraisohotel@gmail.com" method="POST" enctype="text/plain">
+                        <div class="form-row">
+                            <div class="form-group col-md-6 col-12">
+                                <input type="text" class="form-control" id="name" placeholder="Name" name="Name" required>
+                            </div>
+                            <div class="form-group col-md-6 col-12">
+                                <input type="number" class="form-control" id="memNum" placeholder="Membership Number" name="MembershipNumber">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6 col-12">
+                                <input type="email" class="form-control" id="email" placeholder="Email" name="Email" required>
+                            </div>
+                            <div class="form-group col-md-6 col-12">
+                                <input type="number" class="form-control" id="phoneNum" placeholder="Phone Number" min="09000000000" max="09999999999" name="PhoneNumber">
+                            </div>
+                        </div>
+                        <br>
+                        <div class="form-row">
+                            <div class="form-group col-md-4">
+                                <label for="concern">Reason of Concern:</label>
+                                <select id="inputConcern" class="form-control" name="ReasonOfConcern" required>
+                                    <option selected>Please select one</option>
+                                    <option>About Paraiso</option>
+                                    <option>Membership</option>
+                                    <option>Your Stay Experience</option>
+                                    <option>Special Request for Your Future Stay</option>
+                                    <option>About Amenities</option>
+                                    <option>About Rooms</option>
+                                    <option>Others</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="concern">Detailed Description:</label>
+                                <textarea class="form-control" id="comments" rows="3" name="Description" required></textarea>
+                            </div>
+                        </div>
+                        <div class="container mt-4">
+                            <div class="row">
+                                <div class="col text-center">
+                                    <input type="submit" class="btn btn-outline-light" value="Submit">
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="boxpart py-4">
+                <img src="/images/AboutUs/hotel.svg" width="100%" height="1%">
+            </div>
+        </div>
+    </div>
+
+    <div id="Loc" class="tab-pane fade container">
+        <div id="header" class="pb-3">
+            <div class ="col-xs-4 mx-auto title">
+                Address
+            </div>
+            <img src="/images/AboutUs/hotel.svg" width="100%" height="1%">
+            <br><br>
+            <div class="container pb-5">
+                <div class="row style mx-md-5 mx-3">
+                    <div class="col-12 justify-content-center" id="add">
+                        <span class ="lineheight">
+                        El Nido, Palawan
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id ="image">
+            <div class="container text-center p-5 bg">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d196303.73342893607!2d119.33833191202402!3d11.15126919616875!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x33b65515ef5c9e0f%3A0xfc4e665b599b0455!2sEl%20Nido%2C%20Palawan!5e0!3m2!1sen!2sph!4v1582953340466!5m2!1sen!2sph" width="600" height="450" frameborder="0" style="border:0;" allowfullscreen=""></iframe>
+            </div>
+        </div>
+        <div class="container">
+            <div class="boxpart py-4">
+                <img src="/images/AboutUs/hotel.svg" width="100%" height="1%">
+            </div>
+        </div>
+    </div>
+</div>
+{{> (lookup . 'whichfooter') }}
+<!-- Footer -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+<script src="/javascripts/Home.js"></script>
+
+<script src="https://unpkg.com/popper.js@1.12.6/dist/umd/popper.js" integrity="sha384-fA23ZRQ3G/J53mElWqVJEGJzU0sTs+SvzG8fXVWP+kJQ1lwFAOkcUOysnlKJC33U" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/bootstrap-material-design@4.1.1/dist/js/bootstrap-material-design.js" integrity="sha384-CauSuKpEqAFajSpkdjv3z9t8E7RlpJ1UP0lKM/+NdtSarroVKu069AlsRPKkFBz9" crossorigin="anonymous"></script>
+</body>
+</html>

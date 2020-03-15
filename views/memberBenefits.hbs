@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Hotel Paraiso</title>
+    <link rel="stylesheet" type="text/css" href="/stylesheets/Member.css">
+    <link rel="stylesheet" type="text/css" href="/stylesheets/header.css">
+    <link rel="stylesheet" type="text/css" href="/stylesheets/animate.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0/css/fontawesome.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.7/css/all.css">
+    <script src="/javascripts/wow.min.js"></script>
+    <link rel = "icon" href ="/images/logo1circle.png" type = "image/x-icon"> 
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
+</head>
+
+<body>
+     <header class="HomePageMain">
+        <nav class="navbar navbar-expand-lg navbar-dark">
+            <div class="headerName" id="paraiso">
+                PARAISO HOTEL
+            </div>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <div class="mr-auto"></div>
+                <ul class="navbar-nav text-right">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/aboutUs">About Us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/hotel/rooms">Rooms</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/hotel/amenities">Amenities</a>
+                    </li>
+                    {{{logging}}}
+                </ul>
+            </div>
+        </nav>
+    </header>
+<div>
+    <h4 id="headerTitle">Member Benefits</h4>
+</div>
+<main>
+    <div class="section-1 mt-5">
+        <div class="text-center head">
+            <br>
+            <h1>PARAISO HOTEL CLUB</h1>
+        </div>
+        <div class="definition">
+            <p>Paraiso Hotel Club, is one of the most comprehensive region-wide hotel, food and beverage loyalty programme across the country. The powerful dining and events programme features more choices and benefits for guests with exclusive access
+                and experiences with our partner companies across the globe. As a member of Paraiso Hotel Club, you gain access to our exclusive services for members as well get free hotel stay or buffet with your member points.</p>
+        </div>
+    </div>
+    <div class="text-justify section-2">
+        <div class="CardBenefits">
+            <div class="hotelBenefits">
+                <h1>
+                    Hotel Benefits
+                </h1>
+                <ul>
+                    <li>On presentation of the membership card, members will receive 20% off the Best Available Rate on any room category at Paraiso Hotel.</li>
+                    <li>Guaranteed Discount: A discounted, changeable & refundable rate is exclusively available for Paraiso Hotel Club memvers.</li>
+                    <li>Digital Check-In: Check-in, choose your room, and customize your stay from your mobile device up to 24 hours in advance.</li>
+                    <li>Late check-out</li>
+                    <li>2nd Guest stays free</li>
+                </ul>
+            </div>
+            <div class="diningBenefits">
+                <h1>
+                    Dining Benefits
+                </h1>
+                <ul>
+                    <li>30% off on food and beverage for up to 20 guests in participating restaurants </li>
+                    <li>20% off on hotel signature items: Cakes/ Steak/ Breakfast buffet</li>
+                    <li>Up to 20% discount off food & beverage bill per visit for a maximum group size of ten (10) persons when dining at any other participating restaurants.</li>
+                    <li>Members receive 20% off food and 15% off beverage for up to ten (10) persons when dining at participating international hotels</li>
+                </ul>
+            </div>
+            <div class="otherBenefits">
+                <h1>Other Benefits</h1>
+                <ul>
+                    <li>Up to 20% off on Private Celebratory Event</li>
+                    <li>Free massage at our spa on Birthday Month</li>
+                </ul>
+            </div>
+        </div>
+        <div class="points">
+            <br><br>
+            <div class="table">
+                <div class="text-center">
+                    <h3>Earn points with your every stay!</h3>
+                    <p>Whenever you stay in our resort, you earn points. The points is computed using the cost of your stay. For every 100 pesos spent, you earn 1 point!</p>
+                </div>
+                <br>
+                <h3>Where can you use your points</h3>
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th scope="col">Reward</th>
+                        <th scope="col">Points</th>
+                    </tr>
+                    <tbody>
+                    <tr>
+                        <td>Free breakfast buffet</td>
+                        <td>30,000</td>
+
+                    </tr>
+                    <tr>
+                        <td>One day stay (Deluxe Room)</td>
+                        <td>150,000</td>
+                    </tr>
+                    <tr>
+                        <td>Free spa treatment</td>
+                        <td>50,000</td>
+                    </tr>
+                    <tr>
+                        <td>Free lunch buffet</td>
+                        <td>50,000</td>
+                    </tr>
+                    <tr>
+                        <td>Free Dinner buffet</td>
+                        <td>60,000</td>
+                    </tr>
+                    <tr>
+                        <td>Free three meal buffet</td>
+                        <td>100,000</td>
+                    </tr>
+                    </tbody>
+                    </thead>
+                </table>
+                <br><br>
+            </div>
+        </div>
+    </div>
+</main>
+
+{{> (lookup . 'whichfooter') }}
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+<script src="/javascripts/Home.js"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+</body>
+
+</html>

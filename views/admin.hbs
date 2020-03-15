@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="/stylesheets/AdminPage.css">
+    <link rel="stylesheet" type="text/css" href="/stylesheets/header.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.7/css/all.css">
+    <link rel = "icon" href ="/images/logo1circle.png" type = "image/x-icon"> 
+
+</head>
+
+<body>
+    <header class="HomePageMain">
+        <nav class="navbar navbar-expand-lg navbar-dark">
+            <div class="headerName" id="paraiso">
+                PARAISO HOTEL
+            </div>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <div class="mr-auto"></div>
+                <ul class="navbar-nav text-right">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/aboutUs">About Us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/hotel/rooms">Rooms</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/hotel/amenities">Amenities</a>
+                    </li>
+                    {{{logging}}}
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <div id="image" class="page-header header-filter">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 mx-auto d-flex flex-column align-items-center">
+                    <div class="avatar mt-5">
+                        <img id="avatarImg" src="/images/logo1.png" class="img-fluid">
+                    </div>
+                    <br>
+                    <div class="title">ADMIN</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="main main-raised">
+        <div class="profile-content">
+            <div class="container">
+                <div class="row admin justify-content-center pt-5">
+                    Reservations for the day
+                    <img src="/images/AboutUs/hotel.svg" width="100%" height="1%">
+                </div>
+                <div class="row" id="admin">
+                    <div class="col-12 ml-auto mr-auto">
+                        <div class="container mt-3 list">
+                            <div class="row label mb-3 py-2">
+                                <div class="col-md-4">Room Type</div>
+                                <div class="col-md-4">Details</div>
+                                <div class="col-md-2">Payment</div>
+                                <div class="col-md-2"></div>
+                            </div>
+                            {{#each roomInfo}}
+                            <div class="row boxshadow mb-4">
+                                <div class="col-md-4 col-12 roomtype">
+                                    <img class="img-fluid" src="{{{img_src}}}">
+                                </div>
+                                <div class="col-md-4 col-12 align-self-center ml-md-n2 ml-0">
+                                    <div class="title col-md-10 col-12">{{{roomType}}}</div>
+                                    <div class="datetitle col-md-10 col-12">Check-In: {{{checkInDate}}} <br>Check-Out: {{{checkOutDate}}}</div>
+                                    <div class="container">
+                                        <div class="row mt-2 ml-1">
+                                            <div class="col-md-4 col-12 border3 pt-1">
+                                                ADULTS<br>
+                                                <span class="numbers">{{{numAdults}}}</span>
+                                            </div>
+                                            <div class="col-md-4 col-12 border3 pt-1">
+                                                KIDS<br>
+                                                <span class="numbers">{{{numKids}}}</span>
+                                            </div>
+                                            <div class="col-md-4 col-12 borderall pt-1">
+                                                ROOMS<br>
+                                                <span class="numbers">{{{numRooms}}}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <p class="col-md-10 col-12 mt-3 ml-1">*Additional Comments/Requests : {{{requests}}}</p>
+                                </div>
+                                <div class="col-md-2 col-12 align-self-center ml-md-n3 ml-0">
+                                    <div class="price">PHP {{{TOTAL}}}</div>
+                                </div>
+                                <div class="col-md-2 col-12 align-self-center py-3 py-md-0 text-center">
+                                    <a class="btn" type="button" href="/admin/customerDetails">Customer Details</a>
+                                </div>
+                                <div class="col-md-2 col-12 align-self-center py-3 py-md-0 text-center">
+                                    <form action="/customerDetails/{{bookingid}}" method="POST">
+                                        <input type="text" name="bookid">
+                                        <input class="btn" type="submit" href="/customerDetails" value="Customer Details">
+                                    </form>
+                                </div>
+                            </div>
+                            {{/each}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{> (lookup . 'whichfooter') }}
+        <!-- Footer -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+        <script src="/javascripts/Home.js"></script>
+
+        <script src="https://unpkg.com/popper.js@1.12.6/dist/umd/popper.js" integrity="sha384-fA23ZRQ3G/J53mElWqVJEGJzU0sTs+SvzG8fXVWP+kJQ1lwFAOkcUOysnlKJC33U" crossorigin="anonymous"></script>
+        <script src="https://unpkg.com/bootstrap-material-design@4.1.1/dist/js/bootstrap-material-design.js" integrity="sha384-CauSuKpEqAFajSpkdjv3z9t8E7RlpJ1UP0lKM/+NdtSarroVKu069AlsRPKkFBz9" crossorigin="anonymous"></script>
+</body>
+
+</html>

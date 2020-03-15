@@ -1,0 +1,76 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Oswald&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Yeseva+One&display=swap');
+body {
+    margin: 0;
+    font-family: 'Open Sans';
+}
+
+
+/* Navbar */
+
+header {
+    background-image: linear-gradient(rgba(70, 67, 67, 0.1), rgba(0, 0, 0, 0.1)), url("../images/Pool/pool.jpeg");
+    height: 98vh;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    position: relative;
+    background-attachment: fixed;
+}
+
+/* Main */
+
+#headerTitle {
+    position: absolute;
+    top: 54%;
+    left: 55%;
+    transform: translate(-120%, -50%);
+    font-family: 'Yeseva One', cursive;
+    color: white;
+    font-size: 55px;
+}
+
+.cardCarousel {
+    align-self: auto;
+}
+
+.carousel {
+    margin: 0 auto;
+    width: 80vw;
+    color: #333;
+    background: honeydew;
+}
+
+.card-title {
+    text-align: center;
+}
+
+.img {
+    height: 50vw;
+}
+
+.slick-prev:before,
+.slick-next:before {
+    color: black !important;
+    font-weight: 900;
+}
+
+.slick-dots li button:before {
+    font-size: 20px;
+    line-height: 20px;
+}
+
+img {
+    height: 80vh;
+    object-fit: cover;
+}
+
+h2 {
+    text-align: center;
+    margin-left: 150px;
+    margin-right: 150px;
+    background-color: #EFA07E;
+    font-family: 'Yeseva One';
+    color: white;
+}

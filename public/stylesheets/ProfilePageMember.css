@@ -1,0 +1,359 @@
+@import url('https://fonts.googleapis.com/css?family=Actor&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Oswald&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Bungee+Shade|Satisfy&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Ubuntu&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Yeseva+One&display=swap');
+
+body{
+    margin: 0;
+    background-color: white;
+    font-family: 'Open Sans';
+    color: #2E4106;
+}
+
+#image{
+    background-image: url("../images/ProfilePage/bich.jpeg");
+/*    background-image: linear-gradient(rgba(0, 0, 0, .3), rgba(0, 0, 0, .3)); */
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: 0 -200px;
+    background-size: cover;
+}
+
+.fixed-top {
+    position: fixed;
+    z-index: 1030;
+    left: 0;
+    right: 0;
+}
+
+.profile-page .page-header {
+    height: 380px;
+    background-position:center;
+}
+
+.page-header {
+    height: 100vh;
+    background-size: cover;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    display: flex;
+    align-items: center;
+}
+
+.main-raised {
+    margin: -60px 30px 0;
+    border-radius: 6px;
+    box-shadow: 0 16px 24px 2px rgba(0,0,0,.14), 0 6px 30px 5px rgba(0,0,0,.12), 0 8px 10px -5px rgba(0,0,0,.2);
+}
+
+.main {
+    background: #eee7e4;
+    position: relative;
+    z-index: 3;
+}
+
+.profile-page .profile {
+    text-align: center;
+}
+
+.img-raised {
+    box-shadow: 0 5px 15px -8px rgba(0,0,0,.24), 0 8px 10px -5px rgba(0,0,0,.2);
+}
+
+.avatar{
+    height: 8.5rem;
+    width: 8.5rem;
+    margin-bottom: -10%;
+}
+
+#avatarImg {
+    object-fit: cover;
+    height: 100%; 
+    width: 100%;
+    border-radius: 9999px;
+    transform: translate3d(0,-50%,0);
+    box-shadow: 0 5px 15px -8px rgba(0,0,0,.24), 0 8px 10px -5px rgba(0,0,0,.2);
+}
+
+.titlename {
+    margin-top: 30px;
+    margin-bottom: 25px;
+    min-height: 32px;
+    font-family: 'Yeseva One';
+}
+
+.nav-pills, .nav-tabs {
+    border: 0;
+    border-radius: 3px;
+    padding: 0 15px;
+}
+
+.nav .nav-item {
+    position: relative;
+    margin: 0 2px;
+}
+
+.nav-pills.nav-pills-icons .nav-item .nav-link {
+    border-radius: 4px;
+}
+
+.nav-pills .nav-item .nav-link.active {
+    background-color: rgb(46, 65, 6, 0.8);
+    box-shadow: 0 5px 20px 0 rgba(0,0,0,.2), 0 13px 24px -11px rgba(236,207,195,0.7);
+    color: whitesmoke;
+}
+
+.nav-pills .nav-item .nav-link {
+    line-height: 24px;
+    font-size: 12px;
+    min-width: 100px;
+    color: #2E4106;
+    transition: all .3s;
+    text-align: center;
+    letter-spacing: 1px;
+}
+
+.nav-pills .nav-item .nav-link:not(.active):hover {
+    background-color: rgba(200,200,200,.2);
+}
+
+.style{
+    display: block;
+    font-size: 30px;
+    padding: 15px 0;
+    letter-spacing: 1px;
+}
+
+/*TAB CONTENTS*/
+
+/*PROFILE*/
+
+#profile span {
+    margin-top: -20px;
+    color: #EFA07E;
+    letter-spacing: 1px;
+}
+
+#profile h4 {
+    margin-left: 30px;
+    color: #6F6666;
+    letter-spacing: 1px;
+    font-size: 15px;
+}
+
+#profile .container .row .head {
+    font-weight: bold;
+    color: #EFA07E;
+    letter-spacing: 1px;
+}
+
+/*CURRENT*/
+#current .boxshadow img{
+    height: 320px;
+    width: 350px;
+    object-fit: cover;
+}
+
+.list .label{
+    letter-spacing: 1px;
+    background-color: rgb(46, 65, 6, 0.9);
+    font-size: 11px;
+    padding-left: 1.2%;
+    color: white;
+    
+}
+
+.list .roomtype{
+    padding-left: 0;
+    padding-right: 0;
+}
+
+
+.list .boxshadow{
+/*    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);*/
+    box-shadow: 5px 5px 10px rgb(175, 165, 151);
+    background-color: whitesmoke;
+}
+
+.list .title{
+    color: #2E4106;
+    font-family: 'Yeseva One';
+    font-size: 35px;
+}
+
+.list p{
+    text-align:justify;
+    color: #2E4106;
+/*    padding-left: 5%;*/
+}
+
+.list .price{
+    font-weight: 1000;
+    color: #2E4106;
+    text-align: center;
+    
+}
+
+.list .btn{
+    letter-spacing: 1px;
+    border-radius: 30px;
+    color: black;
+    border-color: black;
+    background-color: transparent;
+}
+
+
+.list .btn:hover{
+    letter-spacing: 1px;
+    border-radius: 30px;
+    color: black;
+/*    border-color: #EFA07E;*/
+    background-color: #EFA07E;
+}
+
+#current .borderall{
+    border: 1px solid #2E4106;
+    text-align: center
+}
+
+#current .border3{
+    border-left: 1px solid #2E4106;
+    border-bottom: 1px solid #2E4106;
+    border-top: 1px solid #2E4106;
+    text-align: center
+}
+
+#current .numbers{
+    font-size: 30px;
+}
+
+#current p{
+    font-size: 12px;
+    font-style: italic;
+}
+
+/*PAST*/
+
+/*GrayScale*/
+.grayscale{
+    -webkit-filter: grayscale(100%);
+    filter: grayscale(100%);
+    -webkit-transition: .3s ease-in-out;
+    transition: .3s ease-in-out;
+}
+.grayscale:hover{
+    -webkit-filter: grayscale(0);
+    filter: grayscale(0);
+}
+
+.card-img-top {
+    width: 100%;
+    height: 18rem;
+    object-fit: cover;
+}
+
+.card{
+    border: 0px;
+}
+
+.card-body{
+    background-color: whitesmoke;
+}
+
+.card-title{
+    font-size: 15px;
+    color: #EFA07E;
+    letter-spacing: 1px;
+    font-weight: 1000;
+}
+
+#past .roomtype{
+    font-size: 25px;
+    font-family: 'Yeseva One';   
+}
+
+#past .price{
+    font-weight: 1000; 
+    font-size: 18px;
+    letter-spacing: 1px;
+}
+
+#past .spacing{
+    letter-spacing: 1px;
+}
+
+.container-fluid{
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+
+.tab-space {
+    padding: 18px 0 50px;
+}
+
+.profile-page .gallery {
+    margin-top: 3.213rem;
+    padding-bottom: 50px;
+}
+
+.tab-content>.active {
+    display: block;
+}
+
+/*FOOTER*/
+.figure-2 {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("../images/tropicalLeaves.jpeg");
+    background-size: cover;
+    background-attachment: fixed;
+    min-height: 40vh;
+    margin-top: 10vh;
+}
+
+@media only screen and (max-width: 988px){
+    #current .borderall{
+        border: 1px solid #2E4106;
+        text-align: center
+    }
+    
+    
+    #current .border3{
+        border-left: 1px solid #2E4106;
+        /* border-bottom: 1px solid #2E4106; */
+        border-top: 1px solid #2E4106;
+        border-right: 1px solid #2E4106;
+        text-align: center
+    }
+
+    #current .boxshadow img{
+        height: 400px;
+        width: 750px;
+        object-fit: cover;
+    }
+
+    .list .title{
+        color: #2E4106;
+        font-family: 'Yeseva One';
+        font-size: 35px;
+        text-align: center;
+    }
+
+    #current .card-title{
+        font-size: 15px;
+        color: #EFA07E;
+        letter-spacing: 1px;
+        font-weight: 1000;
+        text-align: center;
+    }
+
+    #current .container{
+        width: 100%;
+        padding-right: 15px;
+        padding-left: 0px;
+        margin-right: auto;
+        margin-left: auto;
+    }
+}
+

@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile Page</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="/stylesheets/ProfilePageMember.css">
+    <link rel="stylesheet" type="text/css" href="/stylesheets/header.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.7/css/all.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
+    <link rel = "icon" href ="/images/logo1circle.png" type = "image/x-icon"> 
+</head>
+<body class="profile-page">
+    <header class="HomePageMain">
+        <nav class="navbar navbar-expand-lg navbar-dark">
+            <div class="headerName" id="paraiso">
+                PARAISO HOTEL
+            </div>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <div class="mr-auto"></div>
+                <ul class="navbar-nav text-right">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/aboutUs">About Us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/hotel/rooms">Rooms</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/hotel/amenities">Amenities</a>
+                    </li>
+                    {{{logging}}}
+                </ul>
+            </div>
+        </nav>
+    </header>
+<div id = "image" class ="page-header header-filter"></div>
+<div class="main main-raised">
+    <div class="profile-content">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 mx-auto d-flex flex-column align-items-center">
+                    <div class="avatar">
+                        <img id="avatarImg" src="/images/ProfilePage/profile.png" class="img-fluid">
+                    </div>
+                    <div class="name d-flex flex-column align-items-center">
+                        <div style="text-align: center;">
+                            <p style="color:red">{{message}}</p>
+                        </div>
+                        <h3 class="titlename">{{name}}</h3>
+                        <h6>Membership Number: {{membershipNumber}}</h6>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-5">
+                <div class="col-12 ml-auto mr-auto">
+                    <div class="profile-tabs">
+                        <ul class="nav nav-pills nav-pills-icons justify-content-center" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" href="#profile" role="tab" data-toggle="tab">
+                                    <div class="material-icons style">Profile</div>
+                                    Information
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#current" role="tab" data-toggle="tab">
+                                    <div class="material-icons style">Current</div>
+                                    Reservations
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#past" role="tab" data-toggle="tab">
+                                    <div class="material-icons style">Past</div>
+                                    Reservations
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-content tab-space">
+                <div class="tab-pane active gallery" id="profile">
+                    <div class="container">
+                        <div class="row justify-content-start">
+                            <div class="col-lg-5 col-12 mx-auto pl-n2">
+                                <div class="row email justify-content-lg-start justify-content-center">
+                                    <i class="fas fa-envelope fa-2x mt-n2 mr-n2"></i>
+                                    <h4 class="head">Email:</h4>
+                                    <h4>{{email}}</h4>
+                                </div>
+                                <div class="row justify-content-lg-start justify-content-center pt-3">
+                                    <i class="fas fa-credit-card fa-2x mt-n2 mr-n2"></i>
+                                    <h4 class="head">Credit Card Number:</h4>
+                                    <h4>{{creditCard}}</h4>
+                                </div>
+                                <div class="row justify-content-lg-start justify-content-center fa-2x pt-3">
+                                    <i class="fas fa-user mt-n2 mr-n2"></i>
+                                    <h4 class="head"> Number of guests in room:</h4>
+                                    <h4>{{guests}}</h4>
+                                </div>
+                                <div class="row justify-content-lg-start justify-content-center fa-2x pt-3">
+                                    <i class="fas fa-star mt-n2 mr-n2"></i>
+                                    <h4 class="head"> Membership Points:</h4>
+                                    <h4>{{points}}</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane gallery" id="current">
+                    <div class="container mt-3 list">
+                        <div class="row label mb-3 py-2">
+                            <div class="col-md-4">Room Type</div>
+                            <div class="col-md-4">Details</div>
+                            <div class="col-md-2">Amount Paid</div>
+                            <div class="col-md-2"></div>
+                        </div>
+                        <div class="row boxshadow mb-4">
+                            <div class="col-md-4 col-12 roomtype">
+                                <img class="img-fluid" src ="/images/Rooms/juniorSuite.jpg">
+                            </div>
+                            <div class="col-md-4 col-12 align-self-center ml-md-n2 ml-0">
+                                <div class="title col-md-10 col-12">Junior Suite</div>
+                                <div class="card-title col-md-10 col-12">Check-In: December 25, 2019 <br>Check-Out: December 31, 2019</div>
+                                <div class="container">
+                                    <div class="row mt-2 ml-1">
+                                        <div class="col-md-4 col-12 border3 pt-1">
+                                            ADULTS<br>
+                                            <span class="numbers">1</span>
+                                        </div>
+                                        <div class="col-md-4 col-12 border3 pt-1">
+                                            KIDS<br>
+                                            <span class="numbers">1</span>
+                                        </div>
+                                        <div class="col-md-4 col-12 borderall pt-1">
+                                            ROOMS<br>
+                                            <span class="numbers">1</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p class="col-md-10 col-12 mt-3 ml-1">*Additional Comments/Requests : No smoking in the room. Wifi should be provided. 2 Twin</p>
+                            </div>
+                            <div class="col-md-2 col-12 align-self-center ml-md-n3 ml-0">
+                                <div class="price">PHP 9,712.00</div>
+                            </div>
+                            <div class="col-md-2 col-12 align-self-center py-3 py-md-0 text-center">
+                                <a class="btn" type="button" href="ProfilePageMember.html">Cancel Reservation</a>
+                            </div>
+                        </div>
+                        <div class="row boxshadow mb-4">
+                            <div class="col-md-4 col-12 roomtype">
+                                <img class="img-fluid" src ="/images/Rooms/executiveSuite.jpg">
+                            </div>
+                            <div class="col-md-4 col-12 align-self-center ml-md-n2 ml-0">
+                                <div class="title col-md-10 col-12">Executive Suite</div>
+                                <div class="card-title col-md-10 col-12">Check-In: December 15, 2019 <br>Check-Out: December 21, 2019</div>
+                                <div class="container">
+                                    <div class="row mt-2 ml-1">
+                                        <div class="col-md-4 col-12 border3 pt-1">
+                                            ADULTS<br>
+                                            <span class="numbers">3</span>
+                                        </div>
+                                        <div class="col-md-4 col-12 border3 pt-1">
+                                            KIDS<br>
+                                            <span class="numbers">1</span>
+                                        </div>
+                                        <div class="col-md-4 col-12 borderall pt-1">
+                                            ROOMS<br>
+                                            <span class="numbers">1</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p class="col-md-10 col-12 mt-3 ml-1">*Additional Comments/Requests : No smoking in the room. Wifi should be provided. 1 King. Breakfast buffet provided.</p>
+                            </div>
+                            <div class="col-md-2 col-12 align-self-center ml-md-n3 ml-0">
+                                <div class="price">PHP 12,172.00</div>
+                            </div>
+                            <div class="col-md-2 col-12 align-self-center py-3 py-md-0 text-center">
+                                <a class="btn" type="button" href="ProfilePageMember.html">Cancel Reservation</a>
+                            </div>
+                        </div>
+                        <div class="row boxshadow mb-4">
+                            <div class="col-md-4 col-12 roomtype">
+                                <img class="img-fluid" src ="/images/Rooms/grandSuite.jpg">
+                            </div>
+                            <div class="col-md-4 col-12 align-self-center ml-md-n2 ml-0">
+                                <div class="title col-md-10 col-12">Grand Suite</div>
+                                <div class="card-title col-md-10 col-12">Check-In: December 23, 2019 <br>Check-Out: December 25, 2019</div>
+                                <div class="container">
+                                    <div class="row mt-2 ml-1">
+                                        <div class="col-md-4 col-12 border3 pt-1">
+                                            ADULTS<br>
+                                            <span class="numbers">1</span>
+                                        </div>
+                                        <div class="col-md-4 col-12 border3 pt-1">
+                                            KIDS<br>
+                                            <span class="numbers">2</span>
+                                        </div>
+                                        <div class="col-md-4 col-12 borderall pt-1">
+                                            ROOMS<br>
+                                            <span class="numbers">1</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p class="col-md-10 col-12 mt-3 ml-1">*Additional Comments/Requests : No smoking in the room. Wifi should be provided. 2 Queen. All day buffet provided.</p>
+                            </div>
+                            <div class="col-md-2 col-12 align-self-center ml-md-n3 ml-0">
+                                <div class="price">PHP 15,899.00</div>
+                            </div>
+                            <div class="col-md-2 col-12 align-self-center py-3 py-md-0 text-center">
+                                <a class="btn" type="button" href="ProfilePageMember.html">Cancel Reservation</a>
+                            </div>
+                        </div>
+                        <div class="row boxshadow mb-4">
+                            <div class="col-md-4 col-12 roomtype">
+                                <img class="img-fluid" src ="/images/Rooms/executiveDeluxe.jpg">
+                            </div>
+                            <div class="col-md-4 col-12 align-self-center ml-md-n2 ml-0">
+                                <div class="title col-md-10 col-12">Executive Deluxe</div>
+                                <div class="card-title col-md-10 col-12">Check-In: December 17, 2019 <br>Check-Out: December 19, 2019</div>
+                                <div class="container">
+                                    <div class="row mt-2 ml-1">
+                                        <div class="col-md-4 col-12 border3 pt-1">
+                                            ADULTS<br>
+                                            <span class="numbers">2</span>
+                                        </div>
+                                        <div class="col-md-4 col-12 border3 pt-1">
+                                            KIDS<br>
+                                            <span class="numbers">2</span>
+                                        </div>
+                                        <div class="col-md-4 col-12 borderall pt-1">
+                                            ROOMS<br>
+                                            <span class="numbers">1</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p class="col-md-10 col-12 mt-3 ml-1">*Additional Comments/Requests : No smoking in the room. Wifi should be provided. 1 King. Dinner buffet provided.</p>
+                            </div>
+                            <div class="col-md-2 col-12 align-self-center ml-md-n3 ml-0">
+                                <div class="price">PHP 9,999.00</div>
+                            </div>
+                            <div class="col-md-2 col-12 align-self-center py-3 py-md-0 text-center">
+                                <a class="btn" type="button" href="ProfilePageMember.html">Cancel Reservation</a>
+                            </div>
+                        </div>
+                        <div class="row boxshadow mb-4">
+                            <div class="col-md-4 col-12 roomtype">
+                                <img class="img-fluid" src ="/images/Rooms/juniorSuite.jpg">
+                            </div>
+                            <div class="col-md-4 col-12 align-self-center ml-md-n2 ml-0">
+                                <div class="title col-md-10 col-12">Junior Suite</div>
+                                <div class="card-title col-md-10 col-12">Check-In: December 01, 2019 <br>Check-Out: December 02, 2019</div>
+                                <div class="container">
+                                    <div class="row mt-2 ml-1">
+                                        <div class="col-md-4 col-12 border3 pt-1">
+                                            ADULTS<br>
+                                            <span class="numbers">2</span>
+                                        </div>
+                                        <div class="col-md-4 col-12 border3 pt-1">
+                                            KIDS<br>
+                                            <span class="numbers">0</span>
+                                        </div>
+                                        <div class="col-md-4 col-12 borderall pt-1">
+                                            ROOMS<br>
+                                            <span class="numbers">1</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p class="col-md-10 col-12 mt-3 ml-1">*Additional Comments/Requests : No smoking in the room. Wifi should be provided. 1 King.</p>
+                            </div>
+                            <div class="col-md-2 col-12 align-self-center ml-md-n3 ml-0">
+                                <div class="price">PHP 9,760.00</div>
+                            </div>
+                            <div class="col-md-2 col-12 align-self-center py-3 py-md-0 text-center">
+                                <a class="btn" type="button" href="ProfilePageMember.html">Cancel Reservation</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane gallery" id="past">
+                    <div class="container">
+                        <div class="card-deck list pb-4">
+                            <div class="card boxshadow">
+                                <img class="card-img-top grayscale" src = "/images/Rooms/grandSuite.jpg">
+                                <div class="card-body">
+                                    <div class="row justify-content-center">
+                                        <i class="fas fa-calendar-check fa-2x mx-3 mt-n1 mb-2"></i>
+                                    </div>
+                                    <div class="row justify-content-center mt-2">
+                                        <div class="card-title">December 12, 2019 - December 15, 2019</div>
+                                    </div>
+                                    <div class="row justify-content-center roomtype mb-2">
+                                        Grand Suite
+                                    </div>
+                                    <div class="row justify-content-center spacing">
+                                        Adults : 1
+                                    </div>
+                                    <div class="row justify-content-center spacing">
+                                        Kids : 1
+                                    </div>
+                                    <div class="row justify-content-center mb-2 spacing">
+                                        Rooms : 1
+                                    </div>
+                                    <div class="row justify-content-center">
+                                        <div class="price">
+                                            PHP 10, 232.00
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card boxshadow">
+                                <img class="card-img-top grayscale" src="/images/Rooms/classicDeluxe.jpg">
+                                <div class="card-body">
+                                    <div class="row justify-content-center">
+                                        <i class="fas fa-calendar-check fa-2x mx-3 mt-n1 mb-2"></i>
+                                    </div>
+                                    <div class="row justify-content-center mt-2">
+                                        <div class="card-title">December 25, 2019 - December 31, 2019</div>
+                                    </div>
+                                    <div class="row justify-content-center roomtype mb-2">
+                                        Classic Deluxe
+                                    </div>
+                                    <div class="row justify-content-center spacing">
+                                        Adults : 1
+                                    </div>
+                                    <div class="row justify-content-center spacing">
+                                        Kids : 1
+                                    </div>
+                                    <div class="row justify-content-center mb-2 spacing">
+                                        Rooms : 1
+                                    </div>
+                                    <div class="row justify-content-center">
+                                        <div class="price">
+                                            PHP 10, 232.00
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card boxshadow">
+                                <img class="card-img-top grayscale" src="/images/Rooms/executiveSuite.jpg">
+                                <div class="card-body">
+                                    <div class="row justify-content-center">
+                                        <i class="fas fa-calendar-check fa-2x mx-3 mt-n1 mb-2"></i>
+                                    </div>
+                                    <div class="row justify-content-center mt-2">
+                                        <div class="card-title">January 20, 2020 - January 29, 2020</div>
+                                    </div>
+                                    <div class="row justify-content-center roomtype mb-2">
+                                        Executive Suite
+                                    </div>
+                                    <div class="row justify-content-center spacing">
+                                        Adults : 1
+                                    </div>
+                                    <div class="row justify-content-center spacing">
+                                        Kids : 1
+                                    </div>
+                                    <div class="row justify-content-center mb-2 spacing">
+                                        Rooms : 1
+                                    </div>
+                                    <div class="row justify-content-center">
+                                        <div class="price">
+                                            PHP 10, 232.00
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-deck list">
+                            <div class="card boxshadow">
+                                <img class="card-img-top grayscale" src="/images/Rooms/classicDeluxe.jpg">
+                                <div class="card-body">
+                                    <div class="row justify-content-center">
+                                        <i class="fas fa-calendar-check fa-2x mx-3 mt-n1 mb-2"></i>
+                                    </div>
+                                    <div class="row justify-content-center mt-2">
+                                        <div class="card-title">January 22, 2020 - January 23, 2020</div>
+                                    </div>
+                                    <div class="row justify-content-center roomtype mb-2">
+                                        Classic Deluxe
+                                    </div>
+                                    <div class="row justify-content-center spacing">
+                                        Adults : 4
+                                    </div>
+                                    <div class="row justify-content-center spacing">
+                                        Kids : 0
+                                    </div>
+                                    <div class="row justify-content-center mb-2 spacing">
+                                        Rooms : 1
+                                    </div>
+                                    <div class="row justify-content-center">
+                                        <div class="price">
+                                            PHP 8, 222.00
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card boxshadow">
+                                <img class="card-img-top grayscale" src="/images/Rooms/familyDeluxe.jpg">
+                                <div class="card-body">
+                                    <div class="row justify-content-center">
+                                        <i class="fas fa-calendar-check fa-2x mx-3 mt-n1 mb-2"></i>
+                                    </div>
+                                    <div class="row justify-content-center mt-2">
+                                        <div class="card-title">January 27, 2020 - January 31, 2020</div>
+                                    </div>
+                                    <div class="row justify-content-center roomtype mb-2">
+                                        Family Deluxe
+                                    </div>
+                                    <div class="row justify-content-center spacing">
+                                        Adults : 2
+                                    </div>
+                                    <div class="row justify-content-center spacing">
+                                        Kids : 0
+                                    </div>
+                                    <div class="row justify-content-center mb-2 spacing">
+                                        Rooms : 1
+                                    </div>
+                                    <div class="row justify-content-center">
+                                        <div class="price">
+                                            PHP 8, 722.00
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card boxshadow"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{> (lookup . 'whichfooter') }}
+<!-- Footer -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+<script src="/javascripts/Home.js"></script>
+
+<script src="https://unpkg.com/popper.js@1.12.6/dist/umd/popper.js" integrity="sha384-fA23ZRQ3G/J53mElWqVJEGJzU0sTs+SvzG8fXVWP+kJQ1lwFAOkcUOysnlKJC33U" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/bootstrap-material-design@4.1.1/dist/js/bootstrap-material-design.js" integrity="sha384-CauSuKpEqAFajSpkdjv3z9t8E7RlpJ1UP0lKM/+NdtSarroVKu069AlsRPKkFBz9" crossorigin="anonymous"></script>
+
+</body>
+</html>

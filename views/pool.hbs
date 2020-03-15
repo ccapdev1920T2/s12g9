@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="/stylesheets/animate.css">
+    <link rel="stylesheet" type="text/css" href="/stylesheets/pool.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.7/css/all.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0/css/fontawesome.min.css">
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="/stylesheets/slick.css">
+    <link rel="stylesheet" type="text/css" href="/stylesheets/slick-theme.css">
+    <script src="/javascripts/slick.js"></script>
+    <link rel = "icon" href ="/images/logo1circle.png" type = "image/x-icon"> 
+</head>
+
+<body>
+    {{> (lookup . 'whichheader') }}
+
+<div>
+    <h4 id="headerTitle">Pool</h4>
+</div>
+<br>
+<br>
+<div id="Enjoy">
+    <h2>Enjoy the sun with our signature cocktails and snacks by the pool</h2>
+</div>
+<br>
+<div class="carousel">
+        <span class="cardCarousel">
+            <div><img src="/images/Pool/snack.jpeg" class="card-img"></div>
+            <div><img src="/images/Pool/sushi.jpeg" class="card-img"></div>
+            <div><img src="/images/Pool/pools.jpeg" class="card-img"></div>
+            <div><img src="/images/Pool/drink.jpeg" class="card-img"></div>
+            <div><img src="/images/Pool/pool7.jpg" class="card-img"></div>
+            <div><img src="/images/Pool/drank.jpeg" class="card-img"></div>
+        </span>
+</div>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('.cardCarousel').slick({
+            autoplay: true,
+            autoplaySpeed: 2000,
+            infinite: true,
+            arrows: true,
+            dots: true
+        });
+    });
+</script>
+
+{{> (lookup . 'whichfooter') }}
+<script src="/javascripts/Home.js"></script>
+</body>
+
+</html>

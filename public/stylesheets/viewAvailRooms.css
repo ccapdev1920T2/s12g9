@@ -1,0 +1,240 @@
+@import url('https://fonts.googleapis.com/css?family=Actor&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Oswald&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Bungee+Shade|Satisfy&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Ubuntu&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Yeseva+One&display=swap');
+
+body {
+    margin: 0;
+    background-color: white;
+    font-family: 'Open Sans'
+}
+
+.container-fluid{
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+header .navbar {
+    width: 100%;
+    position: fixed;
+    z-index: 1000;
+}
+
+header #paraiso {
+    text-align: center;
+    top: 1%;
+    left: 2%;
+    font-size: 300%;
+    text-shadow: 0 2px 5px rgba(255, 101, 47, .2);
+    letter-spacing: 10px;
+    color: whitesmoke;
+    font-family: 'Oswald', sans-serif;
+}
+
+header{
+    background-image: linear-gradient(rgba(70, 67, 67, 0.2), rgba(0, 0, 0, 0.2)), url("../images/ViewAvailableRooms/trees2.jpeg");
+    background-size: cover;
+    background-attachment: fixed;
+/*    background-repeat: no-repeat;*/
+/*    height: 102vh;*/
+    background-position: 0px -320px;
+}
+
+.style{
+    background-color: transparent;
+    width: 80%;
+}
+
+#Book .form{
+    z-index: 10;
+}
+
+.form-control{
+    border-color: whitesmoke;
+    background-color: #A9A9A9;
+    opacity: 80%;
+    color: white;
+}
+
+#Book .btn{
+    border-radius: 0;
+    color: #fff;
+    border-color: #EFA07E;
+    background-color: #EFA07E;
+    font-size: 15px;
+}
+
+#Book .btn:hover{
+    color: #fff;
+    opacity: 80%;
+    background-color: #A9A9A9;
+    border-color: #A9A9A9;
+    font-size: 15px;
+}
+
+#Book label{
+    font-size: 15px;
+    font-style: bold;
+}
+
+#Book .title{
+    font-size: 20px;
+    text-align: center;
+    color: white;
+    font-style: italic;
+    text-shadow: 0 3px 3px #484848;
+    letter-spacing: 2px;
+    padding-top: 18.5%;
+    font-weight: 1000;
+}
+
+#Book .form-control::-webkit-input-placeholder {
+    font-size: 15px;
+    color: white;
+}
+
+#Book .form-control:focus {
+  border-color: #9EAFBA;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(158, 175, 186, 0.6);
+}
+
+#Book .btn-sm {
+    padding: 2px;
+}
+
+.view{
+    background-color: #2E4106;
+    text-align: center;
+    letter-spacing: 1px;
+    border-radius: 10px 10px 0px 0px;
+    color: white;
+}
+
+.Date #details{
+    text-align: center;
+    letter-spacing: 1px;
+    border-bottom: 1px solid #B0B0B0;
+    color: #2E4106;
+}
+
+.date{
+    border: 1px solid #2E4106;
+    color: #2E4106;
+    font-size: 15px;
+    background-color: white;  
+}
+
+button, select {
+    letter-spacing: 1px;
+    border: 1px solid #2E4106;
+    border: none;
+    color: #2E4106;
+    background-color: #eee;
+    border-radius: 50px;
+    font-size: 14px;
+}
+/*
+
+select, option{
+    letter-spacing: 1px;
+}
+*/
+
+.filter .margin-top{
+    margin-top: 0.38rem;
+}
+
+/*
+.margin-below{
+    margin-top: 0.38rem;
+}
+*/
+
+.boxshadow img{
+    height: 320px;
+    width: 350px;
+    object-fit: cover;
+}
+
+.list .label{
+    letter-spacing: 1px;
+    background-color: #E9D0D0;
+    font-size: 11px;
+    padding-left: 1.2%;
+/*    border-radius: 0px 0px 20px 20px;*/
+}
+
+.list .roomtype{
+    padding-left: 0;
+    padding-right: 0;
+}
+
+
+.list .boxshadow{
+/*    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);*/
+    box-shadow: 5px 5px 10px rgb(175, 165, 151);
+    background-color: whitesmoke;
+}
+
+.list .title{
+    color: #2E4106;
+    font-family: 'Yeseva One';
+    font-size: 35px;
+}
+
+.list p{
+    text-align:justify;
+    color: #2E4106;
+/*    padding-left: 5%;*/
+}
+
+.list .price{
+    font-weight: 1000;
+    color: #2E4106;
+    text-align: center;
+    
+}
+
+.list .btn{
+    letter-spacing: 1px;
+    border-radius: 30px;
+    color: black;
+    border-color: black;
+    background-color: transparent;
+}
+
+
+.list .btn:hover{
+    letter-spacing: 1px;
+    border-radius: 30px;
+    color: black;
+/*    border-color: #EFA07E;*/
+    background-color: #EFA07E;
+}
+
+/*
+.list .description .col-10{
+    padding-left: 2.2%;
+}
+
+.list .rate{
+    padding-left: 1.75%;
+}
+*/
+
+
+@media only screen and (max-width: 988px){
+    .boxshadow img{
+        height: 400px;
+        width: 750px;
+        object-fit: cover;
+    }
+
+    .list .title{
+        color: #2E4106;
+        font-family: 'Yeseva One';
+        font-size: 35px;
+        text-align: center;
+    }
+}
