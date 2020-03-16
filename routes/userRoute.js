@@ -86,7 +86,7 @@ const routerFunction = function(db) {
                     name: resp[0].fname+" "+ resp[0].lname,
                     membershipNumber: resp[0].membershipNumber,
                     email: resp[0].email,
-                    creditCard: resp[0].cardNumber,
+                    creditCard: resp[0].creditCardNumber,
                     // guests:
                     points:resp[0].membershipPoints,
                     whichfooter: footertype,

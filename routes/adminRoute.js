@@ -59,12 +59,14 @@ const routerFunction = function(db) {
             `;
             footertype = 'footerAdmin';
         }
-
+        //{ bookingDate: formattedDate.toString() }
         var today = new Date();
         var monthName = ["January", "February", "March", "April", "May", "June",
         "July", "August", "September", "October", "November", "December"];
         var formattedDate = today.getFullYear().toString() + '-' + (today.getMonth() + 1).toString().padStart(2, 0) + '-' + today.getDate().toString().padStart(2, 0);
-
+        const monthName = ["January", "February", "March", "April", "May", "June",
+            "July", "August", "September", "October", "November", "December"
+        ];
         db.collection('booking').find({ bookingDate: formattedDate.toString() }).toArray()
             .then(resp => {
                 console.log(resp.length);
@@ -72,7 +74,8 @@ const routerFunction = function(db) {
                 for (var i = 0; i < resp.length; i++) {
                     imagesource = resp[i].roomtype;
                     imagesource = imagesource.replace(/\s/g, '');
-                    imagesource = '/images/Rooms/'+ imagesource + '.jpg'
+                    imagesource = '/images/Rooms' + imagesource + '.jpg'
+                    console.log(resp._id);
                     checkIn = new Date(resp[i].checkInDate);
                     formatCheckInDate = monthName[checkIn.getMonth()] + " " + checkIn.getDate() + ", " + checkIn.getFullYear();
                     formatCheckInDate = formatCheckInDate.toString();
@@ -92,9 +95,10 @@ const routerFunction = function(db) {
                         numKids: resp[i].kids,
                         numRooms: resp[i].rooms,
                         requests: resp[i].requests,
-                        bookingid: resp[i]._id,
-                        TOTAL: price
+                        TOTAL: resp[i].payment.total,
+                        bookingid: resp[i]._id
                     }
+
                     newArray[i] = bookingObject;
                 }
 
@@ -168,7 +172,7 @@ const routerFunction = function(db) {
 
         db.collection('booking').findOne(bookingID)
             .then(resp => {
-                console.log('2' + resp._id);
+                console.log(resp._id);
                 res.render('customerDetails', {
                     fname: resp.fname,
                     lname: resp.lname,

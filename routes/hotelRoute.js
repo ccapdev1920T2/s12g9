@@ -15,9 +15,9 @@ router.get('/amenities', function(req, res) {
     `
     var footertype = 'footer';
 
-    if (req.session.userId){
-        loggingstring = 
-        `<li class="nav-item">\
+    if (req.session.userId) {
+        loggingstring =
+            `<li class="nav-item">\
             <a class="nav-link" href="/hotel/memberBenefits">Member Benefits</a>\
         </li>\
         <li class="nav-item">\
@@ -30,9 +30,9 @@ router.get('/amenities', function(req, res) {
         footertype = 'footerUser';
     }
 
-    if (req.session.adminId){
-        loggingstring = 
-        `<li class="nav-item">\
+    if (req.session.adminId) {
+        loggingstring =
+            `<li class="nav-item">\
             <a class="nav-link" href="/hotel/memberBenefits">Member Benefits</a>\
         </li>\
         <li class="nav-item">\
@@ -45,7 +45,7 @@ router.get('/amenities', function(req, res) {
         footertype = 'footerAdmin';
     }
 
-    res.render('amenities',{
+    res.render('amenities', {
         whichfooter: footertype,
         logging: loggingstring
     });
@@ -56,17 +56,17 @@ router.get('/gym', function(req, res) {
     var footertype = 'footer';
 
     // console.log(req.session.userId);
-    if (req.session.userId){
+    if (req.session.userId) {
         headertype = 'headerUser';
         footertype = 'footerUser';
     }
 
-    if (req.session.adminId){
+    if (req.session.adminId) {
         headertype = 'headerAdmin';
         footertype = 'footerAdmin';
     }
 
-    res.render('gym',{
+    res.render('gym', {
         whichheader: headertype,
         whichfooter: footertype
     });
@@ -86,9 +86,9 @@ router.get('/memberBenefits', function(req, res) {
     `
     var footertype = 'footer';
 
-    if (req.session.userId){
-        loggingstring = 
-        `<li class="nav-item">\
+    if (req.session.userId) {
+        loggingstring =
+            `<li class="nav-item">\
             <a class="nav-link" href="/hotel/memberBenefits">Member Benefits</a>\
         </li>\
         <li class="nav-item">\
@@ -101,9 +101,9 @@ router.get('/memberBenefits', function(req, res) {
         footertype = 'footerUser';
     }
 
-    if (req.session.adminId){
-        loggingstring = 
-        `<li class="nav-item">\
+    if (req.session.adminId) {
+        loggingstring =
+            `<li class="nav-item">\
             <a class="nav-link" href="/hotel/memberBenefits">Member Benefits</a>\
         </li>\
         <li class="nav-item">\
@@ -116,7 +116,7 @@ router.get('/memberBenefits', function(req, res) {
         footertype = 'footerAdmin';
     }
 
-    res.render('memberBenefits',{
+    res.render('memberBenefits', {
         logging: loggingstring,
         whichfooter: footertype
     });
@@ -127,17 +127,17 @@ router.get('/pool', function(req, res) {
     var footertype = 'footer';
 
     // console.log(req.session.userId);
-    if (req.session.userId){
+    if (req.session.userId) {
         headertype = 'headerUser';
         footertype = 'footerUser';
     }
 
-    if (req.session.adminId){
+    if (req.session.adminId) {
         headertype = 'headerAdmin';
         footertype = 'footerAdmin';
     }
 
-    res.render('pool',{
+    res.render('pool', {
         whichheader: headertype,
         whichfooter: footertype
     });
@@ -148,17 +148,17 @@ router.get('/restaurant', function(req, res) {
     var footertype = 'footer';
 
     // console.log(req.session.userId);
-    if (req.session.userId){
+    if (req.session.userId) {
         headertype = 'headerUser';
         footertype = 'footerUser';
     }
 
-    if (req.session.adminId){
+    if (req.session.adminId) {
         headertype = 'headerAdmin';
         footertype = 'footerAdmin';
     }
 
-    res.render('restaurant',{
+    res.render('restaurant', {
         whichheader: headertype,
         whichfooter: footertype
     });
@@ -178,9 +178,9 @@ router.get('/rooms', function(req, res) {
     `
     var footertype = 'footer';
 
-    if (req.session.userId){
-        loggingstring = 
-        `<li class="nav-item">\
+    if (req.session.userId) {
+        loggingstring =
+            `<li class="nav-item">\
             <a class="nav-link" href="/hotel/memberBenefits">Member Benefits</a>\
         </li>\
         <li class="nav-item">\
@@ -193,9 +193,9 @@ router.get('/rooms', function(req, res) {
         footertype = 'footerUser';
     }
 
-    if (req.session.adminId){
-        loggingstring = 
-        `<li class="nav-item">\
+    if (req.session.adminId) {
+        loggingstring =
+            `<li class="nav-item">\
             <a class="nav-link" href="/hotel/memberBenefits">Member Benefits</a>\
         </li>\
         <li class="nav-item">\
@@ -208,7 +208,7 @@ router.get('/rooms', function(req, res) {
         footertype = 'footerAdmin';
     }
 
-    res.render('rooms',{
+    res.render('rooms', {
         whichfooter: footertype,
         logging: loggingstring
     });
@@ -219,12 +219,12 @@ router.get('/spa', function(req, res) {
     var footertype = 'footer';
 
     // console.log(req.session.userId);
-    if (req.session.userId){
+    if (req.session.userId) {
         headertype = 'headerUser';
         footertype = 'footerUser';
     }
 
-    if (req.session.adminId){
+    if (req.session.adminId) {
         headertype = 'headerAdmin';
         footertype = 'footerAdmin';
     }

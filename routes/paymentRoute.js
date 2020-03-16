@@ -12,35 +12,35 @@ const routerFunction = function(db) {
         var headertype = 'header';
         var footertype = 'footer';
         var totalChargetype = 'totalChargeGuest';
-        var point ="";
+        var point = "";
 
         // console.log(req.session.userId);
-        if (req.session.userId){
+        if (req.session.userId) {
             headertype = 'headerUser';
             footertype = 'footerUser';
             totalChargetype = 'totalChargeUser';
 
-            var userid = {_id: ObjectId(req.session.userId)}
+            var userid = { _id: ObjectId(req.session.userId) }
 
             db.collection('users').findOne(userid)
                 .then(res => {
                     point = res.membershipPoints;
                     console.log(point);
-                }).catch (err => {
+                }).catch(err => {
                     console.log(err);
                 })
         }
 
-        if (req.session.adminId){
+        if (req.session.adminId) {
             headertype = 'headerAdmin';
             footertype = 'footerAdmin';
         }
 
-        if (firstname){
-            res.render('totalCharge',{
+        if (firstname) {
+            res.render('totalCharge', {
                 data: totalChargeBody,
                 fnameError: firstname,
-                source: '/images/Rooms/'+ imagesource + '.jpg',
+                source: '/images/Rooms/' + imagesource + '.jpg',
                 whichheader: headertype,
                 whichfooter: footertype,
                 whichtotalCharge: totalChargetype,
@@ -48,11 +48,11 @@ const routerFunction = function(db) {
             });
         }
 
-        if (lastname){
-            res.render('totalCharge',{
+        if (lastname) {
+            res.render('totalCharge', {
                 data: totalChargeBody,
                 lnameError: lastname,
-                source: '/images/Rooms/'+ imagesource + '.jpg',
+                source: '/images/Rooms/' + imagesource + '.jpg',
                 whichheader: headertype,
                 whichfooter: footertype,
                 whichtotalCharge: totalChargetype,
@@ -60,11 +60,11 @@ const routerFunction = function(db) {
             });
         }
 
-        if (emailglobe){
-            res.render('totalCharge',{
+        if (emailglobe) {
+            res.render('totalCharge', {
                 data: totalChargeBody,
                 emailError: emailglobe,
-                source: '/images/Rooms/'+ imagesource + '.jpg',
+                source: '/images/Rooms/' + imagesource + '.jpg',
                 whichheader: headertype,
                 whichfooter: footertype,
                 whichtotalCharge: totalChargetype,
@@ -72,11 +72,11 @@ const routerFunction = function(db) {
             });
         }
 
-        if (database){
-            res.render('totalCharge',{
+        if (database) {
+            res.render('totalCharge', {
                 data: totalChargeBody,
                 databaseError: emailglobe,
-                source: '/images/Rooms/'+ imagesource + '.jpg',
+                source: '/images/Rooms/' + imagesource + '.jpg',
                 whichheader: headertype,
                 whichfooter: footertype,
                 whichtotalCharge: totalChargetype,
@@ -85,22 +85,22 @@ const routerFunction = function(db) {
         }
     });
 
-    router.post('/', function(req, res){
+    router.post('/', function(req, res) {
 
         imagesource = req.body.roomtype;
-        imagesource = imagesource.replace(/\s/g,'');
+        imagesource = imagesource.replace(/\s/g, '');
 
         var headertype = 'header';
         var footertype = 'footer';
         var totalChargetype = 'totalChargeGuest';
-        var point ="";
+        var point = "";
 
-        if (req.session.userId){
+        if (req.session.userId) {
             headertype = 'headerUser';
             footertype = 'footerUser';
             totalChargetype = 'totalChargeUser';
 
-            var userid = {_id: ObjectId(req.session.userId)}
+            var userid = { _id: ObjectId(req.session.userId) }
 
             db.collection('users').findOne(userid)
                 .then(resp => {
@@ -118,7 +118,7 @@ const routerFunction = function(db) {
                 })
         }
 
-        if (req.session.adminId){
+        if (req.session.adminId) {
             headertype = 'headerAdmin';
             footertype = 'footerAdmin';
         }
@@ -133,7 +133,7 @@ const routerFunction = function(db) {
                 memberPoints: point
             }); 
     });
-   
+
     router.get('/pay', function(req, res) {
 
         var loggingstring = `
@@ -149,9 +149,9 @@ const routerFunction = function(db) {
         `
         var footertype = 'footer';
 
-        if (req.session.userId){
-            loggingstring = 
-            `<li class="nav-item">\
+        if (req.session.userId) {
+            loggingstring =
+                `<li class="nav-item">\
                 <a class="nav-link" href="/hotel/memberBenefits">Member Benefits</a>\
             </li>\
             <li class="nav-item">\
@@ -164,9 +164,9 @@ const routerFunction = function(db) {
             footertype = 'footerUser';
         }
 
-        if (req.session.adminId){
-            loggingstring = 
-            `<li class="nav-item">\
+        if (req.session.adminId) {
+            loggingstring =
+                `<li class="nav-item">\
                 <a class="nav-link" href="/hotel/memberBenefits">Member Benefits</a>\
             </li>\
             <li class="nav-item">\
@@ -179,8 +179,8 @@ const routerFunction = function(db) {
             footertype = 'footerAdmin';
         }
 
-        if (cardowner){
-            res.render('pay',{
+        if (cardowner) {
+            res.render('pay', {
                 data: payBody,
                 cardOwnerError: cardowner,
                 bookingid: idBook,
@@ -189,8 +189,8 @@ const routerFunction = function(db) {
             });
         }
 
-        if (card){
-            res.render('pay',{
+        if (card) {
+            res.render('pay', {
                 data: payBody,
                 cardError: card,
                 bookingid: idBook,
@@ -199,8 +199,8 @@ const routerFunction = function(db) {
             });
         }
 
-        if (cardNum){
-            res.render('pay',{
+        if (cardNum) {
+            res.render('pay', {
                 data: payBody,
                 cardNumError: cardNum,
                 bookingid: idBook,
@@ -209,8 +209,8 @@ const routerFunction = function(db) {
             });
         }
 
-        if (databasepay){
-            res.render('pay',{
+        if (databasepay) {
+            res.render('pay', {
                 data: payBody,
                 databaseError: databasepay,
                 bookingid: idBook,
@@ -221,7 +221,7 @@ const routerFunction = function(db) {
 
     });
 
-    router.post('/pay',function(req, res){
+    router.post('/pay', function(req, res) {
         // console.log(req.body);    
         let { fname, lname, email, total, requests, checkInDate, checkOutDate, rooms, adults, kids, roomtype, pricePerRoom} = req.body;
 
@@ -229,15 +229,15 @@ const routerFunction = function(db) {
         lname = lname.trim();
         email = email.trim();
 
-        lastname="";
-        firstname="";
-        emailglobe="";
-        database="";
+        lastname = "";
+        firstname = "";
+        emailglobe = "";
+        database = "";
 
         if (req.body.requests === "")
             req.body.requests = req.body.additionalrequest;
-        else 
-            req.body.requests = req.body.requests +', ' + req.body.additionalrequest;
+        else
+            req.body.requests = req.body.requests + ', ' + req.body.additionalrequest;
 
         // console.log('Hello');
         // console.log(req.body.requests);
@@ -270,26 +270,26 @@ const routerFunction = function(db) {
 
         var today = new Date();
         var formattedDate = today.getFullYear().toString() + '-' + (today.getMonth() + 1).toString().padStart(2, 0) + '-' + today.getDate().toString().padStart(2, 0);
-        
+
         var reservation = {
             fname,
             lname,
-            email, 
+            email,
             requests: req.body.requests,
-            checkInDate, 
-            checkOutDate, 
-            rooms, 
-            adults, 
-            kids, 
-            roomtype, 
+            checkInDate,
+            checkOutDate,
+            rooms,
+            adults,
+            kids,
+            roomtype,
             pricePerRoom,
             bookingDate: formattedDate,
             status: "Booked",
             payment: {
-                total, 
+                total,
                 status: "Not Paid",
-                creditcardNumber : "",
-                creditcardOwner : "",
+                creditcardNumber: "",
+                creditcardOwner: "",
                 cvv: "",
                 ccprovider: "",
                 month: "",
@@ -310,9 +310,9 @@ const routerFunction = function(db) {
         `
         var footertype = 'footer';
 
-        if (req.session.userId){
-            loggingstring = 
-            `<li class="nav-item">\
+        if (req.session.userId) {
+            loggingstring =
+                `<li class="nav-item">\
                 <a class="nav-link" href="/hotel/memberBenefits">Member Benefits</a>\
             </li>\
             <li class="nav-item">\
@@ -325,9 +325,9 @@ const routerFunction = function(db) {
             footertype = 'footerUser';
         }
 
-        if (req.session.adminId){
-            loggingstring = 
-            `<li class="nav-item">\
+        if (req.session.adminId) {
+            loggingstring =
+                `<li class="nav-item">\
                 <a class="nav-link" href="/hotel/memberBenefits">Member Benefits</a>\
             </li>\
             <li class="nav-item">\
@@ -354,56 +354,56 @@ const routerFunction = function(db) {
                 // );
             });
 
-            //Use to find in database
-            db.collection('booking').findOne(reservation)
-                .then(resp=> {
-                    // console.log(resp._id);
-                    // res.redirect('totalCharge/pay/'+resp._id); //resp._id is the id of the database
-                    res.render('pay',{
-                        bookingid: resp._id,
-                        whichfooter: footertype,
-                        logging: loggingstring
-                    });
-                }).catch(err => {
-                    console.log(err);
-                    database = '*Bad Server';
-                    return res.status(500).redirect('/totalCharge');
-                })
+        //Use to find in database
+        db.collection('booking').findOne(reservation)
+            .then(resp => {
+                // console.log(resp._id);
+                // res.redirect('totalCharge/pay/'+resp._id); //resp._id is the id of the database
+                res.render('pay', {
+                    bookingid: resp._id,
+                    whichfooter: footertype,
+                    logging: loggingstring
+                });
+            }).catch(err => {
+                console.log(err);
+                database = '*Bad Server';
+                return res.status(500).redirect('/totalCharge');
+            })
     });
 
     //:bookId = means that the url of the website will be ending with the id in the databse
-    router.get('/billingDetails/:bookId', function(req, res){
+    router.get('/billingDetails/:bookId', function(req, res) {
         var headertype = 'header';
         var footertype = 'footer';
 
-        if (req.session.userId){
+        if (req.session.userId) {
             headertype = 'headerUser';
             footertype = 'footerUser';
         }
 
-        if (req.session.adminId){
+        if (req.session.adminId) {
             headertype = 'headerAdmin';
             footertype = 'footerAdmin';
         }
 
-        res.render('billingDetails',{
+        res.render('billingDetails', {
             whichheader: headertype,
             whichfooter: footertype
         });
     });
 
-    router.post('/billingDetails', function(req,res){
+    router.post('/billingDetails', function(req, res) {
         res.redirect('/totalCharge/pay');
     });
 
-    router.post('/billingDetails/:bookId', function(req, res){
+    router.post('/billingDetails/:bookId', function(req, res) {
         // console.log(req.body);    
-        let { owner, cvv, cardNumber, month, year,  ccprovider} = req.body;
+        let { owner, cvv, cardNumber, month, year, ccprovider } = req.body;
 
         cardowner = "";
-        card ="";
-        cardNum ="";
-        databasepay ="";
+        card = "";
+        cardNum = "";
+        databasepay = "";
         idBook = req.params.bookId
         payBody = req.body;
 
@@ -425,35 +425,36 @@ const routerFunction = function(db) {
             cardNum = '*Please fill up missing field';
             return res.status(401).redirect('/totalCharge/pay');
         }
-        
-        var bookingid = {_id: ObjectId(req.params.bookId)}; //use to find the id in the database, (const { ObjectId } = require('mongodb'); is needed on top of this file)
-        var update = { $set: 
-            {'payment.status': 'Paid',
-            'payment.cvv': cvv,
-            'payment.creditcardOwner': owner,
-            'payment.creditcardNumber': cardNumber,
-            'payment.ccprovider': ccprovider,
-            'payment.month': month,
-            'payment.year': year    
+
+        var bookingid = { _id: ObjectId(req.params.bookId) }; //use to find the id in the database, (const { ObjectId } = require('mongodb'); is needed on top of this file)
+        var update = {
+            $set: {
+                'payment.status': 'Paid',
+                'payment.cvv': cvv,
+                'payment.creditcardOwner': owner,
+                'payment.creditcardNumber': cardNumber,
+                'payment.ccprovider': ccprovider,
+                'payment.month': month,
+                'payment.year': year
             }
         };
 
         var headertype = 'header';
         var footertype = 'footer';
 
-        if (req.session.userId){
+        if (req.session.userId) {
             headertype = 'headerUser';
             footertype = 'footerUser';
         }
 
-        if (req.session.adminId){
+        if (req.session.adminId) {
             headertype = 'headerAdmin';
             footertype = 'footerAdmin';
         }
-        
+
         //updating the collection of booking
-        db.collection('booking').updateOne(bookingid,update)
-            .then(resp=> {
+        db.collection('booking').updateOne(bookingid, update)
+            .then(resp => {
                 console.log(resp);
                 // res.redirect('/totalCharge/billingDetails/'+req.params.bookId); //redirecting to a website
                 // res.render('billingDetails');
@@ -462,18 +463,18 @@ const routerFunction = function(db) {
                 database = '*Bad Server';
                 return res.status(500).redirect('/totalCharge/pay');
             })
-        
+
         db.collection('booking').findOne(bookingid)
-            .then(resp=> {
+            .then(resp => {
                 var imagesource = resp.roomtype;
-                imagesource = imagesource.replace(/\s/g,'');
+                imagesource = imagesource.replace(/\s/g, '');
                 res.render('billingDetails', {
                     data: resp,
-                    source: '/images/Rooms/'+ imagesource + '.jpg',
+                    source: '/images/Rooms/' + imagesource + '.jpg',
                     whichfooter: footertype,
                     whichheader: headertype
                 })
-            }).catch(err=>{
+            }).catch(err => {
                 console.log(err);
                 database = '*Bad Server';
                 return res.status(500).redirect('/totalCharge/pay');
