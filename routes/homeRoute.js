@@ -562,17 +562,15 @@ const routerFunction = function(db) {
             });
         }
 
-        var useradmin = {
-            email,
-            password
+        var useremail = {
+            email
         }
 
-        db.collection('admin').findOne(useradmin)
+        db.collection('admin').findOne(useremail)
             .then(resp => {
                 // console.log(resp);
-
                 if (resp === null) {
-                    db.collection('users').findOne(useradmin)
+                    db.collection('users').findOne(useremail)
                         .then(respuser => {
                             // console.log(respuser);
                             if (respuser === null) {
@@ -584,9 +582,34 @@ const routerFunction = function(db) {
                                 });
                             } else {
                                 //TODO: fix account with userId
-                                req.session.userId = respuser._id;
-                                // console.log(req.session.userId);
-                                return res.status(201).redirect('/');
+                                var user = {
+                                    email,
+                                    password
+                                }
+            
+                                db.collection('users').findOne(user)
+                                    .then(found => {
+                                        if (found === null){
+                                            return res.status(401).render('signIn', {
+                                                generalError: `
+                                                <div class="row ml-1">*Incorrect password entered.</div>
+                                                `,
+                                                whichfooter: footertype
+                                            });
+                                        }
+                                        else {
+                                            req.session.userId = respuser._id;
+                                            // console.log(req.session.userId);
+                                            return res.status(201).redirect('/');
+                                        }
+                                    }).catch(errfound =>{
+                                        console.log(errfound);
+                                        return res.status(401).render('signIn', {
+                                            generalError: "*Bad Server",
+                                            whichfooter: footertype
+                                        });
+                                    }); 
+                                
                             }
                         }).catch(err => {
                             console.log(err);
@@ -596,9 +619,34 @@ const routerFunction = function(db) {
                             });
                         });
                 } else {
-                    req.session.adminId = resp._id;
-                    // console.log(req.session.userId);
-                    return res.status(200).redirect('/admin');
+                    //checking correct password for admin
+                    var user = {
+                        email,
+                        password
+                    }
+
+                    db.collection('admin').findOne(user)
+                        .then(found => {
+                            if (found === null){
+                                return res.status(401).render('signIn', {
+                                    generalError: `
+                                    <div class="row ml-1">*Incorrect password entered.</div>
+                                    `,
+                                    whichfooter: footertype
+                                });
+                            }
+                            else {
+                                req.session.adminId = resp._id;
+                                // console.log(req.session.userId);
+                                return res.status(200).redirect('/admin');
+                            }
+                        }).catch(errfound =>{
+                            console.log(errfound);
+                            return res.status(401).render('signIn', {
+                                generalError: "*Bad Server",
+                                whichfooter: footertype
+                            });
+                        });     
                 }
 
             }).catch(err => {
