@@ -126,165 +126,262 @@
                             <div class="col-md-2">Amount Paid</div>
                             <div class="col-md-2"></div>
                         </div>
-                        <div class="row boxshadow mb-4">
-                            <div class="col-md-4 col-12 roomtype">
-                                <img class="img-fluid" src ="/images/Rooms/juniorSuite.jpg">
-                            </div>
-                            <div class="col-md-4 col-12 align-self-center ml-md-n2 ml-0">
-                                <div class="title col-md-10 col-12">Junior Suite</div>
-                                <div class="card-title col-md-10 col-12">Check-In: December 25, 2019 <br>Check-Out: December 31, 2019</div>
-                                <div class="container">
-                                    <div class="row mt-2 ml-1">
-                                        <div class="col-md-4 col-12 border3 pt-1">
-                                            ADULTS<br>
-                                            <span class="numbers">1</span>
+                        <script type ="text/javascript">
+                            function addCurrCD(){
+                                $("#currentBookings").append('\
+                                    <div class="row boxshadow mb-4">\
+                                        <div class="col-md-4 col-12 roomtype">\
+                                            <img class="img-fluid" src ="/images/Rooms/juniorSuite.jpg">\
+                                        </div>\
+                                        <div class="col-md-4 col-12 align-self-center ml-md-n2 ml-0">\
+                                            <div class="title col-md-10 col-12">Classic Deluxe</div>\
+                                            <div class="card-title col-md-10 col-12">Check-In: December 25, 2019 <br>Check-Out: December 31, 2019</div>\
+                                            <div class="container">\
+                                                <div class="row mt-2 ml-1">\
+                                                    <div class="col-md-4 col-12 border3 pt-1">\
+                                                        ADULTS<br>\
+                                                        <span class="numbers">1</span>\
+                                                    </div>\
+                                                    <div class="col-md-4 col-12 border3 pt-1">\
+                                                        KIDS<br>\
+                                                        <span class="numbers">1</span>\
+                                                    </div>\
+                                                    <div class="col-md-4 col-12 borderall pt-1">\
+                                                        ROOMS<br>\
+                                                        <span class="numbers">1</span>\
+                                                    </div>\
+                                                </div>\
+                                            </div>\
+                                            <p class="col-md-10 col-12 mt-3 ml-1">*Additional Comments/Requests : No smoking in the room. Wifi should be provided. 2 Twin</p>\
+                                        </div>\
+                                        <div class="col-md-2 col-12 align-self-center ml-md-n3 ml-0">\
+                                            <div class="price">PHP 9,712.00</div>\
+                                        </div>\
+                                        <div class="col-md-2 col-12 align-self-center py-3 py-md-0 text-center">\
+                                            <a class="btn" type="button" href="ProfilePageMember.html">Cancel Reservation</a>\
+                                        </div>\
+                                    </div>\
+                                ');
+                            }
+                            function add(data){
+                                data.forEach(function(item, index){
+                                     $("#currentBookings").append(item);
+                                });
+                            }   
+                        </script>
+                        
+                        <div id="currentBookings">
+                            {{#each tab2}}
+                                {{#ifCD roomType}}
+                                    <div class="row boxshadow mb-4">
+                                        <div class="col-md-4 col-12 roomtype">
+                                            <img class="img-fluid" src ="/images/Rooms/classicDeluxe.jpg">
                                         </div>
-                                        <div class="col-md-4 col-12 border3 pt-1">
-                                            KIDS<br>
-                                            <span class="numbers">1</span>
+                                        <div class="col-md-4 col-12 align-self-center ml-md-n2 ml-0">
+                                            <div class="title col-md-10 col-12">Classic Deluxe</div>
+                                            <div class="card-title col-md-10 col-12">Check-In: {{checkInDate}} <br>Check-Out: {{checkOutDate}}</div>
+                                            <div class="container">
+                                                <div class="row mt-2 ml-1">
+                                                    <div class="col-md-4 col-12 border3 pt-1">
+                                                        ADULTS<br>
+                                                        <span class="numbers">{{adults}}</span>
+                                                    </div>
+                                                    <div class="col-md-4 col-12 border3 pt-1">
+                                                        KIDS<br>
+                                                        <span class="numbers">{{kids}}</span>
+                                                    </div>
+                                                    <div class="col-md-4 col-12 borderall pt-1">
+                                                        ROOMS<br>
+                                                        <span class="numbers">{{rooms}}</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <p class="col-md-10 col-12 mt-3 ml-1">*Additional Comments/Requests : {{requests}}</p>
                                         </div>
-                                        <div class="col-md-4 col-12 borderall pt-1">
-                                            ROOMS<br>
-                                            <span class="numbers">1</span>
+                                        <div class="col-md-2 col-12 align-self-center ml-md-n3 ml-0">
+                                            <div class="price">PHP {{price}}</div>
                                         </div>
-                                    </div>
-                                </div>
-                                <p class="col-md-10 col-12 mt-3 ml-1">*Additional Comments/Requests : No smoking in the room. Wifi should be provided. 2 Twin</p>
-                            </div>
-                            <div class="col-md-2 col-12 align-self-center ml-md-n3 ml-0">
-                                <div class="price">PHP 9,712.00</div>
-                            </div>
-                            <div class="col-md-2 col-12 align-self-center py-3 py-md-0 text-center">
-                                <a class="btn" type="button" href="ProfilePageMember.html">Cancel Reservation</a>
-                            </div>
-                        </div>
-                        <div class="row boxshadow mb-4">
-                            <div class="col-md-4 col-12 roomtype">
-                                <img class="img-fluid" src ="/images/Rooms/executiveSuite.jpg">
-                            </div>
-                            <div class="col-md-4 col-12 align-self-center ml-md-n2 ml-0">
-                                <div class="title col-md-10 col-12">Executive Suite</div>
-                                <div class="card-title col-md-10 col-12">Check-In: December 15, 2019 <br>Check-Out: December 21, 2019</div>
-                                <div class="container">
-                                    <div class="row mt-2 ml-1">
-                                        <div class="col-md-4 col-12 border3 pt-1">
-                                            ADULTS<br>
-                                            <span class="numbers">3</span>
-                                        </div>
-                                        <div class="col-md-4 col-12 border3 pt-1">
-                                            KIDS<br>
-                                            <span class="numbers">1</span>
-                                        </div>
-                                        <div class="col-md-4 col-12 borderall pt-1">
-                                            ROOMS<br>
-                                            <span class="numbers">1</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <p class="col-md-10 col-12 mt-3 ml-1">*Additional Comments/Requests : No smoking in the room. Wifi should be provided. 1 King. Breakfast buffet provided.</p>
-                            </div>
-                            <div class="col-md-2 col-12 align-self-center ml-md-n3 ml-0">
-                                <div class="price">PHP 12,172.00</div>
-                            </div>
-                            <div class="col-md-2 col-12 align-self-center py-3 py-md-0 text-center">
-                                <a class="btn" type="button" href="ProfilePageMember.html">Cancel Reservation</a>
-                            </div>
-                        </div>
-                        <div class="row boxshadow mb-4">
-                            <div class="col-md-4 col-12 roomtype">
-                                <img class="img-fluid" src ="/images/Rooms/grandSuite.jpg">
-                            </div>
-                            <div class="col-md-4 col-12 align-self-center ml-md-n2 ml-0">
-                                <div class="title col-md-10 col-12">Grand Suite</div>
-                                <div class="card-title col-md-10 col-12">Check-In: December 23, 2019 <br>Check-Out: December 25, 2019</div>
-                                <div class="container">
-                                    <div class="row mt-2 ml-1">
-                                        <div class="col-md-4 col-12 border3 pt-1">
-                                            ADULTS<br>
-                                            <span class="numbers">1</span>
-                                        </div>
-                                        <div class="col-md-4 col-12 border3 pt-1">
-                                            KIDS<br>
-                                            <span class="numbers">2</span>
-                                        </div>
-                                        <div class="col-md-4 col-12 borderall pt-1">
-                                            ROOMS<br>
-                                            <span class="numbers">1</span>
+                                        <div class="col-md-2 col-12 align-self-center py-3 py-md-0 text-center">
+                                            <a class="btn" type="button" href="ProfilePageMember.html">Cancel Reservation</a>
                                         </div>
                                     </div>
-                                </div>
-                                <p class="col-md-10 col-12 mt-3 ml-1">*Additional Comments/Requests : No smoking in the room. Wifi should be provided. 2 Queen. All day buffet provided.</p>
-                            </div>
-                            <div class="col-md-2 col-12 align-self-center ml-md-n3 ml-0">
-                                <div class="price">PHP 15,899.00</div>
-                            </div>
-                            <div class="col-md-2 col-12 align-self-center py-3 py-md-0 text-center">
-                                <a class="btn" type="button" href="ProfilePageMember.html">Cancel Reservation</a>
-                            </div>
-                        </div>
-                        <div class="row boxshadow mb-4">
-                            <div class="col-md-4 col-12 roomtype">
-                                <img class="img-fluid" src ="/images/Rooms/executiveDeluxe.jpg">
-                            </div>
-                            <div class="col-md-4 col-12 align-self-center ml-md-n2 ml-0">
-                                <div class="title col-md-10 col-12">Executive Deluxe</div>
-                                <div class="card-title col-md-10 col-12">Check-In: December 17, 2019 <br>Check-Out: December 19, 2019</div>
-                                <div class="container">
-                                    <div class="row mt-2 ml-1">
-                                        <div class="col-md-4 col-12 border3 pt-1">
-                                            ADULTS<br>
-                                            <span class="numbers">2</span>
+                                {{/ifCD}}
+                                
+                                {{#ifFD roomType}}
+                                    <div class="row boxshadow mb-4">
+                                        <div class="col-md-4 col-12 roomtype">
+                                            <img class="img-fluid" src ="/images/Rooms/familydeluxe.jpg">
                                         </div>
-                                        <div class="col-md-4 col-12 border3 pt-1">
-                                            KIDS<br>
-                                            <span class="numbers">2</span>
+                                        <div class="col-md-4 col-12 align-self-center ml-md-n2 ml-0">
+                                            <div class="title col-md-10 col-12">Family Deluxe</div>
+                                            <div class="card-title col-md-10 col-12">Check-In: {{checkInDate}} <br>Check-Out: {{checkOutDate}}</div>
+                                            <div class="container">
+                                                <div class="row mt-2 ml-1">
+                                                    <div class="col-md-4 col-12 border3 pt-1">
+                                                        ADULTS<br>
+                                                        <span class="numbers">{{adults}}</span>
+                                                    </div>
+                                                    <div class="col-md-4 col-12 border3 pt-1">
+                                                        KIDS<br>
+                                                        <span class="numbers">{{kids}}</span>
+                                                    </div>
+                                                    <div class="col-md-4 col-12 borderall pt-1">
+                                                        ROOMS<br>
+                                                        <span class="numbers">{{rooms}}</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <p class="col-md-10 col-12 mt-3 ml-1">*Additional Comments/Requests : {{requests}}</p>
                                         </div>
-                                        <div class="col-md-4 col-12 borderall pt-1">
-                                            ROOMS<br>
-                                            <span class="numbers">1</span>
+                                        <div class="col-md-2 col-12 align-self-center ml-md-n3 ml-0">
+                                            <div class="price">PHP {{price}}</div>
                                         </div>
-                                    </div>
-                                </div>
-                                <p class="col-md-10 col-12 mt-3 ml-1">*Additional Comments/Requests : No smoking in the room. Wifi should be provided. 1 King. Dinner buffet provided.</p>
-                            </div>
-                            <div class="col-md-2 col-12 align-self-center ml-md-n3 ml-0">
-                                <div class="price">PHP 9,999.00</div>
-                            </div>
-                            <div class="col-md-2 col-12 align-self-center py-3 py-md-0 text-center">
-                                <a class="btn" type="button" href="ProfilePageMember.html">Cancel Reservation</a>
-                            </div>
-                        </div>
-                        <div class="row boxshadow mb-4">
-                            <div class="col-md-4 col-12 roomtype">
-                                <img class="img-fluid" src ="/images/Rooms/juniorSuite.jpg">
-                            </div>
-                            <div class="col-md-4 col-12 align-self-center ml-md-n2 ml-0">
-                                <div class="title col-md-10 col-12">Junior Suite</div>
-                                <div class="card-title col-md-10 col-12">Check-In: December 01, 2019 <br>Check-Out: December 02, 2019</div>
-                                <div class="container">
-                                    <div class="row mt-2 ml-1">
-                                        <div class="col-md-4 col-12 border3 pt-1">
-                                            ADULTS<br>
-                                            <span class="numbers">2</span>
-                                        </div>
-                                        <div class="col-md-4 col-12 border3 pt-1">
-                                            KIDS<br>
-                                            <span class="numbers">0</span>
-                                        </div>
-                                        <div class="col-md-4 col-12 borderall pt-1">
-                                            ROOMS<br>
-                                            <span class="numbers">1</span>
+                                        <div class="col-md-2 col-12 align-self-center py-3 py-md-0 text-center">
+                                            <a class="btn" type="button" href="ProfilePageMember.html">Cancel Reservation</a>
                                         </div>
                                     </div>
-                                </div>
-                                <p class="col-md-10 col-12 mt-3 ml-1">*Additional Comments/Requests : No smoking in the room. Wifi should be provided. 1 King.</p>
-                            </div>
-                            <div class="col-md-2 col-12 align-self-center ml-md-n3 ml-0">
-                                <div class="price">PHP 9,760.00</div>
-                            </div>
-                            <div class="col-md-2 col-12 align-self-center py-3 py-md-0 text-center">
-                                <a class="btn" type="button" href="ProfilePageMember.html">Cancel Reservation</a>
-                            </div>
+                                {{/ifFD}}
+                                
+                                {{#ifED roomType}}
+                                    <div class="row boxshadow mb-4">
+                                        <div class="col-md-4 col-12 roomtype">
+                                            <img class="img-fluid" src ="/images/Rooms/executivedeluxe.jpg">
+                                        </div>
+                                        <div class="col-md-4 col-12 align-self-center ml-md-n2 ml-0">
+                                            <div class="title col-md-10 col-12">Executive Deluxe</div>
+                                            <div class="card-title col-md-10 col-12">Check-In: {{checkInDate}} <br>Check-Out: {{checkOutDate}}</div>
+                                            <div class="container">
+                                                <div class="row mt-2 ml-1">
+                                                    <div class="col-md-4 col-12 border3 pt-1">
+                                                        ADULTS<br>
+                                                        <span class="numbers">{{adults}}</span>
+                                                    </div>
+                                                    <div class="col-md-4 col-12 border3 pt-1">
+                                                        KIDS<br>
+                                                        <span class="numbers">{{kids}}</span>
+                                                    </div>
+                                                    <div class="col-md-4 col-12 borderall pt-1">
+                                                        ROOMS<br>
+                                                        <span class="numbers">{{rooms}}</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <p class="col-md-10 col-12 mt-3 ml-1">*Additional Comments/Requests : {{requests}}</p>
+                                        </div>
+                                        <div class="col-md-2 col-12 align-self-center ml-md-n3 ml-0">
+                                            <div class="price">PHP {{price}}</div>
+                                        </div>
+                                        <div class="col-md-2 col-12 align-self-center py-3 py-md-0 text-center">
+                                            <a class="btn" type="button" href="ProfilePageMember.html">Cancel Reservation</a>
+                                        </div>
+                                    </div>
+                                {{/ifED}}
+                                
+                                {{#ifJS roomType}}
+                                    <div class="row boxshadow mb-4">
+                                        <div class="col-md-4 col-12 roomtype">
+                                            <img class="img-fluid" src ="/images/Rooms/juniorsuite.jpg">
+                                        </div>
+                                        <div class="col-md-4 col-12 align-self-center ml-md-n2 ml-0">
+                                            <div class="title col-md-10 col-12">Junior Suite</div>
+                                            <div class="card-title col-md-10 col-12">Check-In: {{checkInDate}} <br>Check-Out: {{checkOutDate}}</div>
+                                            <div class="container">
+                                                <div class="row mt-2 ml-1">
+                                                    <div class="col-md-4 col-12 border3 pt-1">
+                                                        ADULTS<br>
+                                                        <span class="numbers">{{adults}}</span>
+                                                    </div>
+                                                    <div class="col-md-4 col-12 border3 pt-1">
+                                                        KIDS<br>
+                                                        <span class="numbers">{{kids}}</span>
+                                                    </div>
+                                                    <div class="col-md-4 col-12 borderall pt-1">
+                                                        ROOMS<br>
+                                                        <span class="numbers">{{rooms}}</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <p class="col-md-10 col-12 mt-3 ml-1">*Additional Comments/Requests : {{requests}}</p>
+                                        </div>
+                                        <div class="col-md-2 col-12 align-self-center ml-md-n3 ml-0">
+                                            <div class="price">PHP {{price}}</div>
+                                        </div>
+                                        <div class="col-md-2 col-12 align-self-center py-3 py-md-0 text-center">
+                                            <a class="btn" type="button" href="ProfilePageMember.html">Cancel Reservation</a>
+                                        </div>
+                                    </div>
+                                {{/ifJS}}
+
+                                {{#ifES roomType}}
+                                    <div class="row boxshadow mb-4">
+                                        <div class="col-md-4 col-12 roomtype">
+                                            <img class="img-fluid" src ="/images/Rooms/executivesuite.jpg">
+                                        </div>
+                                        <div class="col-md-4 col-12 align-self-center ml-md-n2 ml-0">
+                                            <div class="title col-md-10 col-12">Executive Suite</div>
+                                            <div class="card-title col-md-10 col-12">Check-In: {{checkInDate}} <br>Check-Out: {{checkOutDate}}</div>
+                                            <div class="container">
+                                                <div class="row mt-2 ml-1">
+                                                    <div class="col-md-4 col-12 border3 pt-1">
+                                                        ADULTS<br>
+                                                        <span class="numbers">{{adults}}</span>
+                                                    </div>
+                                                    <div class="col-md-4 col-12 border3 pt-1">
+                                                        KIDS<br>
+                                                        <span class="numbers">{{kids}}</span>
+                                                    </div>
+                                                    <div class="col-md-4 col-12 borderall pt-1">
+                                                        ROOMS<br>
+                                                        <span class="numbers">{{rooms}}</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <p class="col-md-10 col-12 mt-3 ml-1">*Additional Comments/Requests : {{requests}}</p>
+                                        </div>
+                                        <div class="col-md-2 col-12 align-self-center ml-md-n3 ml-0">
+                                            <div class="price">PHP {{price}}</div>
+                                        </div>
+                                        <div class="col-md-2 col-12 align-self-center py-3 py-md-0 text-center">
+                                            <a class="btn" type="button" href="ProfilePageMember.html">Cancel Reservation</a>
+                                        </div>
+                                    </div>
+                                {{/ifES}}
+
+                                {{#ifGS roomType}}
+                                    <div class="row boxshadow mb-4">
+                                        <div class="col-md-4 col-12 roomtype">
+                                            <img class="img-fluid" src ="/images/Rooms/grandsuite.jpg">
+                                        </div>
+                                        <div class="col-md-4 col-12 align-self-center ml-md-n2 ml-0">
+                                            <div class="title col-md-10 col-12">Grand Suite</div>
+                                            <div class="card-title col-md-10 col-12">Check-In: {{checkInDate}} <br>Check-Out: {{checkOutDate}}</div>
+                                            <div class="container">
+                                                <div class="row mt-2 ml-1">
+                                                    <div class="col-md-4 col-12 border3 pt-1">
+                                                        ADULTS<br>
+                                                        <span class="numbers">{{adults}}</span>
+                                                    </div>
+                                                    <div class="col-md-4 col-12 border3 pt-1">
+                                                        KIDS<br>
+                                                        <span class="numbers">{{kids}}</span>
+                                                    </div>
+                                                    <div class="col-md-4 col-12 borderall pt-1">
+                                                        ROOMS<br>
+                                                        <span class="numbers">{{rooms}}</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <p class="col-md-10 col-12 mt-3 ml-1">*Additional Comments/Requests : {{requests}}</p>
+                                        </div>
+                                        <div class="col-md-2 col-12 align-self-center ml-md-n3 ml-0">
+                                            <div class="price">PHP {{price}}</div>
+                                        </div>
+                                        <div class="col-md-2 col-12 align-self-center py-3 py-md-0 text-center">
+                                            <a class="btn" type="button" href="ProfilePageMember.html">Cancel Reservation</a>
+                                        </div>
+                                    </div>
+                                {{/ifGS}}
+                            {{/each}}
                         </div>
                     </div>
                 </div>
