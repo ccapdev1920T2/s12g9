@@ -67,6 +67,7 @@ const routerFunction = function(db) {
         ];
         db.collection('booking').find({ bookingDate: formattedDate.toString() }).toArray()
             .then(resp => {
+                console.log(resp.length);
                 var newArray = [];
                 for (var i = 0; i < resp.length; i++) {
                     imagesource = resp[i].roomtype;
@@ -79,7 +80,9 @@ const routerFunction = function(db) {
                     checkOut = new Date(resp[i].checkOutDate);
                     formatCheckOutDate = monthName[checkOut.getMonth()] + " " + checkOut.getDate() + ", " + checkOut.getFullYear();
                     formatCheckOutDate = formatCheckOutDate.toString();
-                    price = (Math.round(resp[i].pricePerRoom * 100) / 100).toFixed(2);
+                    price = resp[i].payment.total;
+
+                    console.log(price);
 
                     var bookingObject = {
                         img_src: imagesource,
@@ -96,6 +99,7 @@ const routerFunction = function(db) {
 
                     newArray[i] = bookingObject;
                 }
+
 
                 res.render('admin', {
                     whichfooter: footertype,
