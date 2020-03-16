@@ -22,7 +22,7 @@ const routerFunction = function(db) {
 
             var userid = {_id: ObjectId(req.session.userId)}
 
-            db.collection('user').findOne(userid)
+            db.collection('users').findOne(userid)
                 .then(res => {
                     point = res.membershipPoints;
                     console.log(point);
@@ -102,12 +102,17 @@ const routerFunction = function(db) {
 
             var userid = {_id: ObjectId(req.session.userId)}
 
-            db.collection('user').findOne(userid)
-                .then(res => {
-                    console.log(userid);
-                    console.log(res);
-                    point = res.membershipPoints;
-                    console.log(point);
+            db.collection('users').findOne(userid)
+                .then(resp => {
+                    point = resp.membershipPoints;
+                    return res.render('totalCharge', {
+                        data: req.body,
+                        source: '/images/Rooms/'+ imagesource + '.jpg',
+                        whichheader:  headertype,
+                        whichfooter: footertype,
+                        whichtotalCharge: totalChargetype,
+                        memberPoints: point.toString()
+                    }); 
                 }).catch (err => {
                     console.log(err);
                 })
@@ -118,14 +123,15 @@ const routerFunction = function(db) {
             footertype = 'footerAdmin';
         }
 
-        res.render('totalCharge', {
-            data: req.body,
-            source: '/images/Rooms/'+ imagesource + '.jpg',
-            whichheader:  headertype,
-            whichfooter: footertype,
-            whichtotalCharge: totalChargetype,
-            memberPoints: point
-        }); 
+        if (!req.session.userId)
+            res.render('totalCharge', {
+                data: req.body,
+                source: '/images/Rooms/'+ imagesource + '.jpg',
+                whichheader:  headertype,
+                whichfooter: footertype,
+                whichtotalCharge: totalChargetype,
+                memberPoints: point
+            }); 
     });
    
     router.get('/pay', function(req, res) {
@@ -217,7 +223,7 @@ const routerFunction = function(db) {
 
     router.post('/pay',function(req, res){
         // console.log(req.body);    
-        let { fname, lname, email, total, requests, checkInDate, checkOutDate, rooms, adults, kids, roomtype, pricePerRoom, additionalrequest} = req.body;
+        let { fname, lname, email, total, requests, checkInDate, checkOutDate, rooms, adults, kids, roomtype, pricePerRoom} = req.body;
 
         fname = fname.trim();
         lname = lname.trim();
