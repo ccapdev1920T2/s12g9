@@ -61,8 +61,6 @@ const routerFunction = function(db) {
         }
         //{ bookingDate: formattedDate.toString() }
         var today = new Date();
-        var monthName = ["January", "February", "March", "April", "May", "June",
-        "July", "August", "September", "October", "November", "December"];
         var formattedDate = today.getFullYear().toString() + '-' + (today.getMonth() + 1).toString().padStart(2, 0) + '-' + today.getDate().toString().padStart(2, 0);
         const monthName = ["January", "February", "March", "April", "May", "June",
             "July", "August", "September", "October", "November", "December"
