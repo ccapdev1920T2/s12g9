@@ -11,11 +11,24 @@ const routerFunction = function(db) {
 
         var headertype = 'header';
         var footertype = 'footer';
+        var totalChargetype = 'totalChargeGuest';
+        var point = "";
 
         // console.log(req.session.userId);
         if (req.session.userId) {
             headertype = 'headerUser';
             footertype = 'footerUser';
+            totalChargetype = 'totalChargeUser';
+
+            var userid = { _id: ObjectId(req.session.userId) }
+
+            db.collection('user').findOne(userid)
+                .then(res => {
+                    point = res.membershipPoints;
+                    console.log(point);
+                }).catch(err => {
+                    console.log(err);
+                })
         }
 
         if (req.session.adminId) {
@@ -29,7 +42,9 @@ const routerFunction = function(db) {
                 fnameError: firstname,
                 source: '/images/Rooms/' + imagesource + '.jpg',
                 whichheader: headertype,
-                whichfooter: footertype
+                whichfooter: footertype,
+                whichtotalCharge: totalChargetype,
+                memberPoints: point
             });
         }
 
@@ -39,7 +54,9 @@ const routerFunction = function(db) {
                 lnameError: lastname,
                 source: '/images/Rooms/' + imagesource + '.jpg',
                 whichheader: headertype,
-                whichfooter: footertype
+                whichfooter: footertype,
+                whichtotalCharge: totalChargetype,
+                memberPoints: point
             });
         }
 
@@ -49,7 +66,9 @@ const routerFunction = function(db) {
                 emailError: emailglobe,
                 source: '/images/Rooms/' + imagesource + '.jpg',
                 whichheader: headertype,
-                whichfooter: footertype
+                whichfooter: footertype,
+                whichtotalCharge: totalChargetype,
+                memberPoints: point
             });
         }
 
@@ -59,7 +78,9 @@ const routerFunction = function(db) {
                 databaseError: emailglobe,
                 source: '/images/Rooms/' + imagesource + '.jpg',
                 whichheader: headertype,
-                whichfooter: footertype
+                whichfooter: footertype,
+                whichtotalCharge: totalChargetype,
+                memberPoints: point
             });
         }
     });
@@ -71,10 +92,25 @@ const routerFunction = function(db) {
 
         var headertype = 'header';
         var footertype = 'footer';
+        var totalChargetype = 'totalChargeGuest';
+        var point = "";
 
         if (req.session.userId) {
             headertype = 'headerUser';
             footertype = 'footerUser';
+            totalChargetype = 'totalChargeUser';
+
+            var userid = { _id: ObjectId(req.session.userId) }
+
+            db.collection('user').findOne(userid)
+                .then(res => {
+                    console.log(userid);
+                    console.log(res);
+                    point = res.membershipPoints;
+                    console.log(point);
+                }).catch(err => {
+                    console.log(err);
+                })
         }
 
         if (req.session.adminId) {
@@ -86,7 +122,9 @@ const routerFunction = function(db) {
             data: req.body,
             source: '/images/Rooms/' + imagesource + '.jpg',
             whichheader: headertype,
-            whichfooter: footertype
+            whichfooter: footertype,
+            whichtotalCharge: totalChargetype,
+            memberPoints: point
         });
     });
 
@@ -179,7 +217,7 @@ const routerFunction = function(db) {
 
     router.post('/pay', function(req, res) {
         // console.log(req.body);    
-        let { fname, lname, email, total, requests, checkInDate, checkOutDate, rooms, adults, kids, roomtype, pricePerRoom } = req.body;
+        let { fname, lname, email, total, requests, checkInDate, checkOutDate, rooms, adults, kids, roomtype, pricePerRoom, additionalrequest } = req.body;
 
         fname = fname.trim();
         lname = lname.trim();
@@ -189,7 +227,14 @@ const routerFunction = function(db) {
         firstname = "";
         emailglobe = "";
         database = "";
-        //TODO: string concateneate 
+
+        if (req.body.requests === "")
+            req.body.requests = req.body.additionalrequest;
+        else
+            req.body.requests = req.body.requests + ', ' + req.body.additionalrequest;
+
+        // console.log('Hello');
+        // console.log(req.body.requests);
         totalChargeBody = req.body;
 
         //TODO: retain select options in the future
@@ -224,7 +269,7 @@ const routerFunction = function(db) {
             fname,
             lname,
             email,
-            requests,
+            requests: req.body.requests,
             checkInDate,
             checkOutDate,
             rooms,

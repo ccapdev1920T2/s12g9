@@ -82,7 +82,6 @@ const routerFunction = function(db) {
                     price = (Math.round(resp[i].pricePerRoom * 100) / 100).toFixed(2);
 
                     var bookingObject = {
-                        console.log(1);
                         img_src: imagesource,
                         roomType: resp[i].roomtype,
                         checkInDate: formatCheckInDate,
