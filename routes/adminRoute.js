@@ -71,7 +71,7 @@ const routerFunction = function(db) {
                 //     whichfooter: footertype,
                 //     logging: loggingstring
                 // });
-                console.log(resp._id);
+                console.log('1' + resp._id);
                 imagesource = resp.roomtype;
                 imagesource = imagesource.replace(/\s/g, '');
                 checkIn = new Date('checkInDate');
@@ -165,7 +165,7 @@ const routerFunction = function(db) {
 
         db.collection('booking').findOne(bookingID)
             .then(resp => {
-                console.log(resp._id);
+                console.log('2' + resp._id);
                 res.render('customerDetails', {
                     fname: resp.fname,
                     lname: resp.lname,

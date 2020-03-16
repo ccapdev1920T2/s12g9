@@ -585,7 +585,7 @@ const routerFunction = function(db) {
                             } else {
                                 //TODO: fix account with userId
                                 req.session.userId = respuser._id;
-                                console.log(req.session.userId);
+                                // console.log(req.session.userId);
                                 return res.status(201).redirect('/');
                             }
                         }).catch(err => {
