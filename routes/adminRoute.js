@@ -8,14 +8,14 @@ const routerFunction = function(db) {
     const notLoggedInAdmin = (req, res, next) => {
         if (!req.session.adminId) {
             if (!req.session.userId)
-                res.redirect('/signIn'); 
+                res.redirect('/signIn');
             else
                 res.redirect('/user');
-        } 
+        }
         return next();
     };
 
-    router.get('/',  notLoggedInAdmin, function(req, res) {
+    router.get('/', notLoggedInAdmin, function(req, res) {
         //for login
         var loggingstring = `
         <li class="nav-item">\
@@ -30,9 +30,9 @@ const routerFunction = function(db) {
         `
         var footertype = 'footer';
 
-        if (req.session.userId){
-            loggingstring = 
-            `<li class="nav-item">\
+        if (req.session.userId) {
+            loggingstring =
+                `<li class="nav-item">\
                 <a class="nav-link" href="/hotel/memberBenefits">Member Benefits</a>\
             </li>\
             <li class="nav-item">\
@@ -45,9 +45,9 @@ const routerFunction = function(db) {
             footertype = 'footerUser';
         }
 
-        if (req.session.adminId){
-            loggingstring = 
-            `<li class="nav-item">\
+        if (req.session.adminId) {
+            loggingstring =
+                `<li class="nav-item">\
                 <a class="nav-link" href="/hotel/memberBenefits">Member Benefits</a>\
             </li>\
             <li class="nav-item">\
@@ -62,40 +62,40 @@ const routerFunction = function(db) {
 
         var today = new Date();
         var formattedDate = today.getFullYear().toString() + '-' + (today.getMonth() + 1).toString().padStart(2, 0) + '-' + today.getDate().toString().padStart(2, 0);
-
-        var formatCheckOutDate =
-            db.collection('booking').find({ bookingDate: formattedDate }).toArray()
+        db.collection('booking').find({ bookingDate: formattedDate }).toArray()
             .then(resp => {
-                //USE FOR CHECKING LOG IN
-                // res.render('admin',{
-                //     whichfooter: footertype,
-                //     logging: loggingstring
-                // });
-                console.log('1' + resp._id);
-                imagesource = resp.roomtype;
-                imagesource = imagesource.replace(/\s/g, '');
-                checkIn = new Date('checkInDate');
-                formatCheckInDate = monthName[checkIn.getMonth()] + " " + checkIn.getDate() + ", " + checkIn.getFullYear();
-                formatCheckInDate = formatCheckInDate.toString();
-                checkOut = new Date('checkOutDate');
-                formatCheckOutDate = monthName[checkOut.getMonth()] + " " + checkOut.getDate() + ", " + checkOut.getFullYear();
-                formatCheckOutDate = formatCheckOutDate.toString();
-                price = (Math.round(num * 100) / 100).toFixed(2);
+                var newArray = [];
+                for (var i = 0; i < resp.length; i++) {
+                    imagesource = resp[i].roomtype;
+                    imagesource = imagesource.replace(/\s/g, '');
+                    console.log(resp._id);
+                    checkIn = new Date(resp[i].checkInDate);
+                    formatCheckInDate = monthName[checkIn.getMonth()] + " " + checkIn.getDate() + ", " + checkIn.getFullYear();
+                    formatCheckInDate = formatCheckInDate.toString();
+                    checkOut = new Date(resp[i].checkOutDate);
+                    formatCheckOutDate = monthName[checkOut.getMonth()] + " " + checkOut.getDate() + ", " + checkOut.getFullYear();
+                    formatCheckOutDate = formatCheckOutDate.toString();
+                    price = (Math.round(resp[i].pricePerRoom * 100) / 100).toFixed(2);
+
+                    var bookingObject = {
+                        img_src: imagesource,
+                        roomType: resp[i].roomtype,
+                        checkInDate: formatCheckInDate,
+                        checkOutDate: formatCheckOutDate,
+                        numAdults: resp[i].adults,
+                        numKids: resp[i].kids,
+                        numRooms: resp[i].rooms,
+                        requests: resp[i].requests,
+                        bookingid: resp[i]._id
+                    }
+
+                    newArray[i] = bookingobject;
+                }
+
                 res.render('admin', {
+                    whichheader: headertype,
                     whichfooter: footertype,
-                    logging: loggingstring,
-                    roomInfo: resp.roomtype[{
-                        img_src: '/images/Rooms/' + imagesource + '.jpg',
-                        roomType: 'roomtype',
-                        checkInDate: 'formatCheckInDate',
-                        checkOutDate: 'formatCheckOutDate',
-                        numAdults: 'adults',
-                        numKids: 'kids',
-                        numRooms: 'rooms',
-                        requests: 'requests',
-                        TOTAL: 'price',
-                        bookingid: '_id'
-                    }]
+                    roomInfo: newArray
                 });
             }).catch(err => {
                 return res.status(500).render('admin', {
@@ -121,44 +121,40 @@ const routerFunction = function(db) {
     // });
 
     //FOR CLEANILESS OF WEBSITE ONLY
-    router.get('/customerDetails', function(req,res){
-        if (req.session.adminId){
+    router.get('/customerDetails', function(req, res) {
+        if (req.session.adminId) {
             res.redirect('/');
-        }
-        else if (req.session.userId){
+        } else if (req.session.userId) {
             res.redirect('/');
-        }
-        else{
+        } else {
             res.redirect('/signIn');
         }
-        
+
     });
 
     //FOR CLEANILESS OF WEBSITE ONLY
-    router.get('/customerDetails/:bookid', function(req,res){
-        if (req.session.adminId){
+    router.get('/customerDetails/:bookid', function(req, res) {
+        if (req.session.adminId) {
             res.redirect('/');
-        }
-        else if (req.session.userId){
+        } else if (req.session.userId) {
             res.redirect('/');
-        }
-        else{
+        } else {
             res.redirect('/signIn');
         }
     });
 
-    router.post('/customerDetails/:bookid',  notLoggedInAdmin, function(req, res) {
+    router.post('/customerDetails/:bookid', notLoggedInAdmin, function(req, res) {
         var bookingID = { _id: ObjectId(req.params.bookid) }; //use to find the id in the database, (const { ObjectId } = require('mongodb'); is needed on top of this file)
         //for login
         var headertype = 'header';
         var footertype = 'footer';
 
-        if (req.session.userId){
+        if (req.session.userId) {
             headertype = 'headerUser';
             footertype = 'footerUser';
         }
 
-        if (req.session.adminId){
+        if (req.session.adminId) {
             headertype = 'headerAdmin';
             footertype = 'footerAdmin';
         }
