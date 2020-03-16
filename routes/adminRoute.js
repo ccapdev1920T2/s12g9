@@ -59,15 +59,19 @@ const routerFunction = function(db) {
             `;
             footertype = 'footerAdmin';
         }
-
+        //{ bookingDate: formattedDate.toString() }
         var today = new Date();
         var formattedDate = today.getFullYear().toString() + '-' + (today.getMonth() + 1).toString().padStart(2, 0) + '-' + today.getDate().toString().padStart(2, 0);
-        db.collection('booking').find({ bookingDate: formattedDate }).toArray()
+        const monthName = ["January", "February", "March", "April", "May", "June",
+            "July", "August", "September", "October", "November", "December"
+        ];
+        db.collection('booking').find({ bookingDate: formattedDate.toString() }).toArray()
             .then(resp => {
                 var newArray = [];
                 for (var i = 0; i < resp.length; i++) {
                     imagesource = resp[i].roomtype;
                     imagesource = imagesource.replace(/\s/g, '');
+                    imagesource = '/images/Rooms' + imagesource + '.jpg'
                     console.log(resp._id);
                     checkIn = new Date(resp[i].checkInDate);
                     formatCheckInDate = monthName[checkIn.getMonth()] + " " + checkIn.getDate() + ", " + checkIn.getFullYear();
@@ -78,6 +82,7 @@ const routerFunction = function(db) {
                     price = (Math.round(resp[i].pricePerRoom * 100) / 100).toFixed(2);
 
                     var bookingObject = {
+                        console.log(1);
                         img_src: imagesource,
                         roomType: resp[i].roomtype,
                         checkInDate: formatCheckInDate,
@@ -86,15 +91,16 @@ const routerFunction = function(db) {
                         numKids: resp[i].kids,
                         numRooms: resp[i].rooms,
                         requests: resp[i].requests,
+                        TOTAL: resp[i].payment.total,
                         bookingid: resp[i]._id
                     }
 
-                    newArray[i] = bookingobject;
+                    newArray[i] = bookingObject;
                 }
 
                 res.render('admin', {
-                    whichheader: headertype,
                     whichfooter: footertype,
+                    logging: loggingstring,
                     roomInfo: newArray
                 });
             }).catch(err => {

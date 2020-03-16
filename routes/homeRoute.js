@@ -8,9 +8,9 @@ const routerFunction = function(db) {
     const notLoggedIn = (req, res, next) => {
         if (!req.session.userId && !req.session.adminId) {
             // console.log('hi');
-            res.redirect('/signIn');  
-        } 
-        
+            res.redirect('/signIn');
+        }
+
         return next();
     };
 
@@ -18,41 +18,38 @@ const routerFunction = function(db) {
     const loggedIn = (req, res, next) => {
         // console.log(req.session.userId);
         if (req.session.userId || req.session.adminId) {
-            var admin = {_id: ObjectId(req.session.adminId)};
+            var admin = { _id: ObjectId(req.session.adminId) };
             // console.log('1');
             db.collection('admin').findOne(admin)
-                .then(resp=> {
+                .then(resp => {
                     // console.log(resp);
-                    if (resp === null){
-                        var user = {_id: ObjectId(req.session.userId)};
+                    if (resp === null) {
+                        var user = { _id: ObjectId(req.session.userId) };
                         // console.log('2');
                         db.collection('users').findOne(user)
-                            .then(respuser=> {
+                            .then(respuser => {
                                 // console.log('3');
                                 // console.log(respuser);
-                                if (respuser === null){
+                                if (respuser === null) {
                                     return res.status(401).render('signIn', {
                                         generalError: `
                                         <div class="row ml-1">*No Such Account Registered in the System</div><div class="row ml-1">Click here to <a href="/signUp" class="ml-1"> be a member</a></div>
                                         `,
                                         whichfooter: 'footer'
                                     });
-                                }
-                                else{
+                                } else {
                                     // console.log('4');
                                     return res.status(201).redirect('/user');
                                 }
-                            }).catch(err=>{
+                            }).catch(err => {
                                 console.log(err);
                                 return res.status(500).redirect('/signIn');
                             });
-                        }
-    
-                    else{
+                    } else {
                         // console.log('5');
                         return res.status(200).redirect('/admin');
-                    }   
-                }).catch(errsec=>{
+                    }
+                }).catch(errsec => {
                     console.log(errsec);
                     return res.status(500).redirect('/signIn');
                 });
@@ -83,9 +80,9 @@ const routerFunction = function(db) {
         `
         var footertype = 'footer';
 
-        if (req.session.userId){
-            loggingstring = 
-            `<li class="nav-item">\
+        if (req.session.userId) {
+            loggingstring =
+                `<li class="nav-item">\
                 <a class="nav-link" href="/hotel/memberBenefits">Member Benefits</a>\
             </li>\
             <li class="nav-item">\
@@ -98,9 +95,9 @@ const routerFunction = function(db) {
             footertype = 'footerUser';
         }
 
-        if (req.session.adminId){
-            loggingstring = 
-            `<li class="nav-item">\
+        if (req.session.adminId) {
+            loggingstring =
+                `<li class="nav-item">\
                 <a class="nav-link" href="/hotel/memberBenefits">Member Benefits</a>\
             </li>\
             <li class="nav-item">\
@@ -120,35 +117,34 @@ const routerFunction = function(db) {
 
         db.collection('admin').findOne(adminuser)
             .then(resp => {
-                if (resp === null){
+                if (resp === null) {
                     db.collection('admin').insertOne({
-                        email: "admin@paraisohotels.com",
-                        password: "para1soHotels"
-                    })
-                    .then(resp => {
-                        console.log(resp);
-                        return res.render('home', {
-                                logging: loggingstring,
-                                // whichheader: 'header',
-                                whichfooter: footertype
-                            }) //function when rendering the webpage
-                    }).catch(err => {
-                        console.log(err);
-                        return res.status(500).send('Bad Server');
-                    });
-                }
-                else {
+                            email: "admin@paraisohotels.com",
+                            password: "para1soHotels"
+                        })
+                        .then(resp => {
+                            console.log(resp);
+                            return res.render('home', {
+                                    logging: loggingstring,
+                                    // whichheader: 'header',
+                                    whichfooter: footertype
+                                }) //function when rendering the webpage
+                        }).catch(err => {
+                            console.log(err);
+                            return res.status(500).send('Bad Server');
+                        });
+                } else {
                     return res.render('home', {
                         logging: loggingstring,
                         // whichheader: 'header',
                         whichfooter: footertype
                     })
                 }
-            }).catch(errsec=>{
+            }).catch(errsec => {
                 console.log(errsec);
                 return res.status(500).send('Bad Server');
             })
-        
+
     });
 
     // post for view rooms
@@ -159,9 +155,9 @@ const routerFunction = function(db) {
         var juniorS = false;
         var execS = false;
         var grandS = false;
-        var today= new Date();
-        var checkin=new Date(req.body.checkIn);
-        var checkout=new Date(req.body.checkOut);
+        var today = new Date();
+        var checkin = new Date(req.body.checkIn);
+        var checkout = new Date(req.body.checkOut);
         var loggingstring = `
         <li class="nav-item">\
             <a class="nav-link" href="/signUp">Be a Member</a>\
@@ -175,9 +171,9 @@ const routerFunction = function(db) {
         `
         var footertype = 'footer';
 
-        if (req.session.userId){
-            loggingstring = 
-            `<li class="nav-item">\
+        if (req.session.userId) {
+            loggingstring =
+                `<li class="nav-item">\
                 <a class="nav-link" href="/hotel/memberBenefits">Member Benefits</a>\
             </li>\
             <li class="nav-item">\
@@ -190,9 +186,9 @@ const routerFunction = function(db) {
             footertype = 'footerUser';
         }
 
-        if (req.session.adminId){
-            loggingstring = 
-            `<li class="nav-item">\
+        if (req.session.adminId) {
+            loggingstring =
+                `<li class="nav-item">\
                 <a class="nav-link" href="/hotel/memberBenefits">Member Benefits</a>\
             </li>\
             <li class="nav-item">\
@@ -206,245 +202,247 @@ const routerFunction = function(db) {
         }
 
         //check if entered dates are valid
-        if(!(checkout.getTime() <= checkin.getTime()) && !(checkin.getTime() < today.getTime())){
+        if (!(checkout.getTime() <= checkin.getTime()) && !(checkin.getTime() < today.getTime())) {
             //check for number of guests
-            if(Number(req.body.nAdults)+(Number(req.body.nKids)/2)/req.body.nRooms <= 3){
-                db.collection('bookings').find({ 
-                    $and:[{$or:[{roomType:'Classic Deluxe'}, 
-                                {roomType:'Family Deluxe'}, 
-                                {roomType:'Executive Deluxe'},
-                                {roomType:'Junior Suite'},
-                                {roomType:'Executive Suite'},
-                                {roomType:'Grand Suite'},]}, 
-                    {$or:[{checkInDate:{$lte:req.body.checkIn}},
-                        {checkOutDate:{$gte:req.body.checkOut}}]}]
-                    }).toArray().then(
-                    resp=>{
-                    // count rooms 
-                    var cd = 0;
-                    var fd = 0;
-                    var ed = 0;
-                    var js = 0;
-                    var es = 0;
-                    var gs = 0;
-                    for(var i=0; i< resp.length; i++){
-                        if(resp[i].roomType == "Classic Deluxe"){
-                            cd+= resp[i].rooms;
+            if (Number(req.body.nAdults) + (Number(req.body.nKids) / 2) / req.body.nRooms <= 3) {
+                db.collection('bookings').find({
+                    $and: [{
+                            $or: [{ roomType: 'Classic Deluxe' },
+                                { roomType: 'Family Deluxe' },
+                                { roomType: 'Executive Deluxe' },
+                                { roomType: 'Junior Suite' },
+                                { roomType: 'Executive Suite' },
+                                { roomType: 'Grand Suite' },
+                            ]
+                        },
+                        {
+                            $or: [{ checkInDate: { $lte: req.body.checkIn } },
+                                { checkOutDate: { $gte: req.body.checkOut } }
+                            ]
                         }
-                        else if (resp[i].roomType == "Family Deluxe"){
-                            fd+= resp[i].rooms;
+                    ]
+                }).toArray().then(
+                    resp => {
+                        // count rooms 
+                        var cd = 0;
+                        var fd = 0;
+                        var ed = 0;
+                        var js = 0;
+                        var es = 0;
+                        var gs = 0;
+                        for (var i = 0; i < resp.length; i++) {
+                            if (resp[i].roomType == "Classic Deluxe") {
+                                cd += resp[i].rooms;
+                            } else if (resp[i].roomType == "Family Deluxe") {
+                                fd += resp[i].rooms;
+                            } else if (resp[i].roomType == "Executive Deluxe") {
+                                ed += resp[i].rooms;
+                            } else if (resp[i].roomType == "Junior Suite") {
+                                js += resp[i].rooms;
+                            } else if (resp[i].roomType == "Executive Suite") {
+                                es += resp[i].rooms;
+                            } else if (resp[i].roomType == "Grand Suite") {
+                                gs += resp[i].rooms;
+                            }
                         }
-                        else if (resp[i].roomType == "Executive Deluxe"){
-                            ed+= resp[i].rooms;
+                        if (cd < 5 && (5 - cd) >= req.body.nRooms) {
+                            classicD = true;
                         }
-                        else if (resp[i].roomType == "Junior Suite"){
-                            js+= resp[i].rooms;
+                        if (fd < 5 && (5 - fd) >= req.body.nRooms) {
+                            famD = true;
                         }
-                        else if (resp[i].roomType == "Executive Suite"){
-                            es+= resp[i].rooms;
+                        if (ed < 5 && (5 - ed) >= req.body.nRooms) {
+                            execD = true;
                         }
-                        else if (resp[i].roomType == "Grand Suite"){
-                            gs+= resp[i].rooms;
+                        if (js < 5 && (5 - js) >= req.body.nRooms) {
+                            juniorS = true;
                         }
-                    }
-                    if(cd < 5 && (5-cd) >=req.body.nRooms){
-                        classicD = true;
-                    }
-                    if(fd < 5 && (5-fd) >=req.body.nRooms){
-                        famD = true;
-                    }
-                    if(ed < 5 && (5-ed) >=req.body.nRooms){
-                        execD = true;
-                    }
-                    if(js < 5 && (5-js) >=req.body.nRooms){
-                        juniorS = true;
-                    }
-                    if(es < 5 && (5-es) >=req.body.nRooms){
-                        execS = true;
-                    }
-                    if(gs < 5 && (5-gs) >=req.body.nRooms){
-                        grandS = true;
-                    }
-                    // TODO: for testing console.log(resp);
-                    return res.status(201);
-                }).catch(err => {
+                        if (es < 5 && (5 - es) >= req.body.nRooms) {
+                            execS = true;
+                        }
+                        if (gs < 5 && (5 - gs) >= req.body.nRooms) {
+                            grandS = true;
+                        }
+                        // TODO: for testing console.log(resp);
+                        return res.status(201);
+                    }).catch(err => {
                     res.render('viewRooms', {
-                        message:"An error occured! Please try again.",
+                        message: "An error occured! Please try again.",
                         data: req.body,
                         // whichheader: 'header',
                         whichfooter: 'footer',
                         logging: loggingstring
                     });
                     return res.status(500);
-                }).finally(function(){
-                    if(classicD || famD || execD || juniorS || execS || grandS){
+                }).finally(function() {
+                    if (classicD || famD || execD || juniorS || execS || grandS) {
                         res.render('viewRooms', {
-                            cd:classicD,
+                            cd: classicD,
                             fd: famD,
                             ed: execD,
                             js: juniorS,
-                            es:execS,
-                            gs:grandS,
+                            es: execS,
+                            gs: grandS,
                             data: req.body,
                             // whichheader: 'header',
                             whichfooter: footertype,
                             logging: loggingstring
                         });
-                    }
-                    else{
+                    } else {
                         res.render('viewRooms', {
-                            message:"No rooms found! Please try other dates.",
+                            message: "No rooms found! Please try other dates.",
                             data: req.body,
                             whichfooter: footertype,
                             logging: loggingstring
                         });
                     }
                 });
-            }
-            else if(Number(req.body.nAdults)+(Number(req.body.nKids)/2)/req.body.nRooms <= 4){
-                db.collection('bookings').find({ 
-                    $and:[{$or:[{roomType:'Family Deluxe'}, 
-                                {roomType:'Executive Deluxe'},
-                                {roomType:'Junior Suite'},
-                                {roomType:'Executive Suite'},
-                                {roomType:'Grand Suite'},]}, 
-                    {$or:[{checkInDate:{$lte:req.body.checkIn}},
-                        {checkOutDate:{$gte:req.body.checkOut}}]}]
+            } else if (Number(req.body.nAdults) + (Number(req.body.nKids) / 2) / req.body.nRooms <= 4) {
+                db.collection('bookings').find({
+                    $and: [{
+                            $or: [{ roomType: 'Family Deluxe' },
+                                { roomType: 'Executive Deluxe' },
+                                { roomType: 'Junior Suite' },
+                                { roomType: 'Executive Suite' },
+                                { roomType: 'Grand Suite' },
+                            ]
+                        },
+                        {
+                            $or: [{ checkInDate: { $lte: req.body.checkIn } },
+                                { checkOutDate: { $gte: req.body.checkOut } }
+                            ]
+                        }
+                    ]
                 }).toArray().then(
-                    resp=>{
-                    // count rooms 
-                    var fd = 0;
-                    var ed = 0;
-                    var js = 0;
-                    var es = 0;
-                    var gs = 0;
-                    for(var i=0; i< resp.length; i++){
-                        if (resp[i].roomType == "Family Deluxe"){
-                            fd+= resp[i].rooms;
+                    resp => {
+                        // count rooms 
+                        var fd = 0;
+                        var ed = 0;
+                        var js = 0;
+                        var es = 0;
+                        var gs = 0;
+                        for (var i = 0; i < resp.length; i++) {
+                            if (resp[i].roomType == "Family Deluxe") {
+                                fd += resp[i].rooms;
+                            } else if (resp[i].roomType == "Executive Deluxe") {
+                                ed += resp[i].rooms;
+                            } else if (resp[i].roomType == "Junior Suite") {
+                                js += resp[i].rooms;
+                            } else if (resp[i].roomType == "Executive Suite") {
+                                es += resp[i].rooms;
+                            } else if (resp[i].roomType == "Grand Suite") {
+                                gs += resp[i].rooms;
+                            }
                         }
-                        else if (resp[i].roomType == "Executive Deluxe"){
-                            ed+= resp[i].rooms;
+                        if (fd < 5 && (5 - fd) >= req.body.nRooms) {
+                            famD = true;
                         }
-                        else if (resp[i].roomType == "Junior Suite"){
-                            js+= resp[i].rooms;
+                        if (ed < 5 && (5 - ed) >= req.body.nRooms) {
+                            execD = true;
                         }
-                        else if (resp[i].roomType == "Executive Suite"){
-                            es+= resp[i].rooms;
+                        if (js < 5 && (5 - js) >= req.body.nRooms) {
+                            juniorS = true;
                         }
-                        else if (resp[i].roomType == "Grand Suite"){
-                            gs+= resp[i].rooms;
+                        if (es < 5 && (5 - es) >= req.body.nRooms) {
+                            execS = true;
                         }
-                    }
-                    if(fd < 5 && (5-fd) >=req.body.nRooms){
-                        famD = true;
-                    }
-                    if(ed < 5 && (5-ed) >=req.body.nRooms){
-                        execD = true;
-                    }
-                    if(js < 5 && (5-js) >=req.body.nRooms){
-                        juniorS = true;
-                    }
-                    if(es < 5 && (5-es) >=req.body.nRooms){
-                        execS = true;
-                    }
-                    if(gs < 5 && (5-gs) >=req.body.nRooms){
-                        grandS = true;
-                    }
-                    // TODO: for testing console.log(resp);
-                    return res.status(201);
+                        if (gs < 5 && (5 - gs) >= req.body.nRooms) {
+                            grandS = true;
+                        }
+                        // TODO: for testing console.log(resp);
+                        return res.status(201);
                     }).catch(err => {
+                    res.render('viewRooms', {
+                        message: "An error occured! Please try again.",
+                        data: req.body,
+                        whichfooter: footertype,
+                        logging: loggingstring
+                    });
+                    return res.status(500);
+                }).finally(function() {
+                    if (famD || execD || juniorS || execS || grandS) {
                         res.render('viewRooms', {
-                            message:"An error occured! Please try again.",
+                            cd: classicD,
+                            fd: famD,
+                            ed: execD,
+                            js: juniorS,
+                            es: execS,
+                            gs: grandS,
                             data: req.body,
                             whichfooter: footertype,
                             logging: loggingstring
                         });
-                    return res.status(500);
-                    }).finally(function(){
-                        if(famD || execD || juniorS || execS || grandS){
-                            res.render('viewRooms', {
-                                cd:classicD,
-                                fd: famD,
-                                ed: execD,
-                                js: juniorS,
-                                es:execS,
-                                gs:grandS,
-                                data: req.body,
-                                whichfooter: footertype,
-                                logging: loggingstring
-                            });
-                        }
-                        else{
-                            res.render('viewRooms', {
-                                message:"No rooms found! Please try other dates.",
-                                data: req.body,
-                                whichfooter: footertype,
-                                logging: loggingstring
-                            });
-                        }
-                    });
-            }
-            else if(Number(req.body.nAdults)+(Number(req.body.nKids)/2)/req.body.nRooms <= 6){
-                db.collection('bookings').find({ 
-                    $and:[{$or:[{roomType:'Grand Suite'},]}, 
-                    {$or:[{checkInDate:{$lte:req.body.checkIn}},
-                        {checkOutDate:{$gte:req.body.checkOut}}]}]
-                }).toArray().then(
-                    resp=>{
-                    // count rooms 
-                    var gs = 0;
-                    for(var i=0; i< resp.length; i++){
-                        if (resp[i].roomType == "Grand Suite"){
-                            gs+= resp[i].rooms;
-                        }
-                    }
-                    if(gs < 5 && (5-gs) >=req.body.nRooms){
-                        grandS = true;
-                    }
-                    // TODO: for testing console.log(resp);
-                    return res.status(201);
-                    }).catch(err => {
+                    } else {
                         res.render('viewRooms', {
-                            message:"An error occured! Please try again.",
+                            message: "No rooms found! Please try other dates.",
                             data: req.body,
                             whichfooter: footertype,
                             logging: loggingstring
                         });
-                    return res.status(500);
-                    }).finally(function(){
-                        if(grandS){
-                            res.render('viewRooms', {
-                                gs:grandS,
-                                data: req.body,
-                                whichfooter: footertype,
-                                logging: loggingstring
-                            });
+                    }
+                });
+            } else if (Number(req.body.nAdults) + (Number(req.body.nKids) / 2) / req.body.nRooms <= 6) {
+                db.collection('bookings').find({
+                    $and: [{ $or: [{ roomType: 'Grand Suite' }, ] },
+                        {
+                            $or: [{ checkInDate: { $lte: req.body.checkIn } },
+                                { checkOutDate: { $gte: req.body.checkOut } }
+                            ]
                         }
-                        else{
-                            res.render('viewRooms', {
-                                message:"No rooms found! Please try other dates.",
-                                data: req.body,
-                                whichfooter: footertype,
-                                logging: loggingstring
-                            });
+                    ]
+                }).toArray().then(
+                    resp => {
+                        // count rooms 
+                        var gs = 0;
+                        for (var i = 0; i < resp.length; i++) {
+                            if (resp[i].roomType == "Grand Suite") {
+                                gs += resp[i].rooms;
+                            }
                         }
+                        if (gs < 5 && (5 - gs) >= req.body.nRooms) {
+                            grandS = true;
+                        }
+                        // TODO: for testing console.log(resp);
+                        return res.status(201);
+                    }).catch(err => {
+                    res.render('viewRooms', {
+                        message: "An error occured! Please try again.",
+                        data: req.body,
+                        whichfooter: footertype,
+                        logging: loggingstring
                     });
-    
-            }
-            else{
+                    return res.status(500);
+                }).finally(function() {
+                    if (grandS) {
+                        res.render('viewRooms', {
+                            gs: grandS,
+                            data: req.body,
+                            whichfooter: footertype,
+                            logging: loggingstring
+                        });
+                    } else {
+                        res.render('viewRooms', {
+                            message: "No rooms found! Please try other dates.",
+                            data: req.body,
+                            whichfooter: footertype,
+                            logging: loggingstring
+                        });
+                    }
+                });
+
+            } else {
                 res.render('viewRooms', {
-                    message:"Too many guests per room. Please add more rooms",
+                    message: "Too many guests per room. Please add more rooms",
                     data: req.body,
                     whichfooter: footertype,
                     logging: loggingstring
                 });
             }
-        }
-        else{
-            res.render('viewRooms',{
-               message:"Date entered invalid! Please change the dates entered.",
-               whichfooter: footertype,
-               logging: loggingstring
+        } else {
+            res.render('viewRooms', {
+                message: "Date entered invalid! Please change the dates entered.",
+                whichfooter: footertype,
+                logging: loggingstring
             })
         }
     });
@@ -464,9 +462,9 @@ const routerFunction = function(db) {
         `
         var footertype = 'footer';
 
-        if (req.session.userId){
-            loggingstring = 
-            `<li class="nav-item">\
+        if (req.session.userId) {
+            loggingstring =
+                `<li class="nav-item">\
                 <a class="nav-link" href="/hotel/memberBenefits">Member Benefits</a>\
             </li>\
             <li class="nav-item">\
@@ -479,9 +477,9 @@ const routerFunction = function(db) {
             footertype = 'footerUser';
         }
 
-        if (req.session.adminId){
-            loggingstring = 
-            `<li class="nav-item">\
+        if (req.session.adminId) {
+            loggingstring =
+                `<li class="nav-item">\
                 <a class="nav-link" href="/hotel/memberBenefits">Member Benefits</a>\
             </li>\
             <li class="nav-item">\
@@ -494,37 +492,37 @@ const routerFunction = function(db) {
             footertype = 'footerAdmin';
         }
 
-        res.render('aboutUs',{
+        res.render('aboutUs', {
             whichfooter: footertype,
             logging: loggingstring
-            
+
         });
     });
 
     router.get('/signIn', loggedIn, function(req, res) {
         var footertype = 'footer';
-        
-        if (req.session.userId){
+
+        if (req.session.userId) {
             footertype = 'footerUser';
         }
 
-        if (req.session.adminId){
+        if (req.session.adminId) {
             footertype = 'footerAdmin';
         }
 
-        res.render('signIn',{
+        res.render('signIn', {
             whichfooter: footertype
         });
     });
 
     router.post('/signIn', function(req, res) {
         var footertype = 'footer';
-        
-        if (req.session.userId){
+
+        if (req.session.userId) {
             footertype = 'footerUser';
         }
 
-        if (req.session.adminId){
+        if (req.session.adminId) {
             footertype = 'footerAdmin';
         }
 
@@ -614,16 +612,16 @@ const routerFunction = function(db) {
         var footertype = 'footer';
 
         // console.log(req.session.userId);
-        if (req.session.userId){
+        if (req.session.userId) {
             footertype = 'footerUser';
         }
 
-        if (req.session.adminId){
+        if (req.session.adminId) {
             footertype = 'footerAdmin';
         }
 
-        res.render('signUp',{
-            whichfooter : footertype
+        res.render('signUp', {
+            whichfooter: footertype
         });
     });
 
@@ -634,16 +632,16 @@ const routerFunction = function(db) {
             var footertype = 'footer';
 
             // console.log(req.session.userId);
-            if (req.session.userId){
+            if (req.session.userId) {
                 footertype = 'footerUser';
             }
-    
-            if (req.session.adminId){
+
+            if (req.session.adminId) {
                 footertype = 'footerAdmin';
             }
 
             // console.log(req.body);
-            let { fname, lname, email, password, cpassword, owner, cvv, cardNumber, month, year, ccprovider} = req.body;
+            let { fname, lname, email, password, cpassword, owner, cvv, cardNumber, month, year, ccprovider } = req.body;
 
             // sanitation of data/ cleaning of the data
             fname = fname.trim(); // '      '
@@ -739,7 +737,7 @@ const routerFunction = function(db) {
             if (!cvv) {
                 return res.render('signUp', {
                     cvvError: {
-                        msg: '*Please fill up missing field'                     
+                        msg: '*Please fill up missing field'
                     },
                     data: req.body,
                     whichfooter: footertype
@@ -763,7 +761,7 @@ const routerFunction = function(db) {
             // var found = 1;
 
             // console.log('Hello, i was here2');
-            
+
             // while (found){
             //     //generating random membership number
             //     var memberNumber = Math.floor(1000000000 + Math.random() * 9000000000);
@@ -783,7 +781,7 @@ const routerFunction = function(db) {
             //         });
             //     })
             // }
-            
+
 
             // inserting to db
             let user = {
@@ -803,9 +801,9 @@ const routerFunction = function(db) {
             };
 
             // promises
-            db.collection('users').findOne({email})
-                .then(resp=>{
-                    if (resp === null){
+            db.collection('users').findOne({ email })
+                .then(resp => {
+                    if (resp === null) {
                         db.collection('users').insertOne(user)
                             .then(respinsert => {
                                 console.log(respinsert);
@@ -818,8 +816,7 @@ const routerFunction = function(db) {
                                     whichfooter: footertype
                                 });
                             });
-                    }
-                    else {
+                    } else {
                         return res.status(500).render('signUp', {
                             generalError: "*Email address is already used. Please use another one.",
                             whichfooter: footertype
@@ -845,15 +842,15 @@ const routerFunction = function(db) {
         var footertype = 'footer';
 
         // console.log(req.session.userId);
-        if (req.session.userId){
+        if (req.session.userId) {
             footertype = 'footerUser';
         }
 
-        if (req.session.adminId){
+        if (req.session.adminId) {
             footertype = 'footerAdmin';
         }
 
-        res.render('viewRooms',{
+        res.render('viewRooms', {
             whichfooter: footertype
         });
     });
