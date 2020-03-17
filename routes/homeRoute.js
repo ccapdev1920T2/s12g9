@@ -20,7 +20,7 @@ const routerFunction = function(db) {
         if (req.session.userId || req.session.adminId) {
             if (req.session.userId)
                 var user = { _id: ObjectId(req.session.userId) };
-            else{
+            else {
                 var user = { _id: ObjectId(req.session.adminId) };
             }
             // console.log('1');
@@ -38,7 +38,7 @@ const routerFunction = function(db) {
                         // console.log('4');
                         if (resp.admin == true)
                             return res.status(201).redirect('/admin');
-                        else 
+                        else
                             return res.status(201).redirect('/user');
                     }
                 }).catch(err => {
@@ -101,17 +101,19 @@ const routerFunction = function(db) {
             footertype = 'footerAdmin';
         }
 
+        //TODO: CHECK
         var adminuser = {
             email: "admin@paraisohotels.com",
             password: "para1soHotels"
         }
 
-        db.collection('admin').findOne(adminuser)
+        db.collection('users').findOne(adminuser)
             .then(resp => {
                 if (resp === null) {
-                    db.collection('admin').insertOne({
+                    db.collection('users').insertOne({
                             email: "admin@paraisohotels.com",
-                            password: "para1soHotels"
+                            password: "para1soHotels",
+                            admin: true
                         })
                         .then(resp => {
                             console.log(resp);
@@ -564,7 +566,7 @@ const routerFunction = function(db) {
                         <div class="row ml-1">*No Such Account Registered in the System</div><div class="row ml-1">Click here to <a href="/signUp" class="ml-1"> be a member</a></div>
                         `,
                         whichfooter: footertype
-                    });   
+                    });
                 } else {
                     //TODO: fix account with userId
                     var user = {
@@ -584,7 +586,7 @@ const routerFunction = function(db) {
                             } else {
                                 if (found.admin == true)
                                     req.session.adminId = found._id;
-                                else 
+                                else
                                     req.session.userId = found._id;
                                 // console.log(req.session.userId);
                                 return res.status(201).redirect('/');
