@@ -97,10 +97,6 @@ const routerFunction = function(db) {
             `;
             footertype = 'footerAdmin';
         }
-
-        var user = null;
-        var pastBookings = null;
-        var currBookings = null;
         var today = new Date();
         var year =  today.getFullYear();
         var month=Number(today.getMonth())+1;
@@ -119,11 +115,11 @@ const routerFunction = function(db) {
         }).toArray().then(
             resp=>{
                 db.collection('bookings').find({ 
-                    email:user[0].email,
+                    email:resp[0].email,
                     checkInDate: {$gte:today.toString()}
                 }).toArray().then(r=> {
                     db.collection('bookings').find({ 
-                        email:user[0].email,
+                        email:resp[0].email,
                         checkInDate: {$lt:today.toString()}
                     }).toArray().then(r2 =>{
                         res.render('profile', {
@@ -139,6 +135,7 @@ const routerFunction = function(db) {
                         });
                     });    
                 });
+            // TODO: for testing console.log(resp);
             return res.status(201);
         }).catch(err => {
             res.render('profile', {
