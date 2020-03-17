@@ -97,6 +97,7 @@ const routerFunction = function(db) {
             `;
             footertype = 'footerAdmin';
         }
+        var user=null;
         var today = new Date();
         var year =  today.getFullYear();
         var month=Number(today.getMonth())+1;
@@ -108,26 +109,25 @@ const routerFunction = function(db) {
             month = '0' + month; 
         } 
         var today = year + '-' + month + '-' + day; 
-        // console.log(req.session.userId); //prints userid in db
-        // db.collection('users').find({_id:ObjectId(req.session.userId)}).toArray().then(resp=>{console.log(resp)});
         db.collection('users').find({ 
             _id:ObjectId(req.session.userId)
-        }).toArray().then(
-            resp=>{
+        }).toArray().then(function(resp){
+                user=resp;
+                console.log(resp[0].email);
                 db.collection('bookings').find({ 
-                    email:resp[0].email,
+                    email:user[0].email,
                     checkInDate: {$gte:today.toString()}
                 }).toArray().then(r=> {
                     db.collection('bookings').find({ 
-                        email:resp[0].email,
+                        email:user[0].email,
                         checkInDate: {$lt:today.toString()}
                     }).toArray().then(r2 =>{
                         res.render('profile', {
-                            name: resp[0].fname+" "+ resp[0].lname,
-                            membershipNumber: resp[0].membershipNumber,
-                            email: resp[0].email,
-                            creditCard: resp[0].creditcardNumber,
-                            points:resp[0].membershipPoints,
+                            name: user[0].fname+" "+ user[0].lname,
+                            membershipNumber: user[0].membershipNumber,
+                            email: user[0].email,
+                            creditCard: user[0].creditcardNumber,
+                            points:user[0].membershipPoints,
                             whichfooter: footertype,
                             logging: loggingstring,
                             tab2:r,
@@ -135,14 +135,14 @@ const routerFunction = function(db) {
                         });
                     });    
                 });
-            // TODO: for testing console.log(resp);
-            return res.status(201);
+            // return res.status(201);
         }).catch(err => {
-            res.render('profile', {
-                message:"An error occured! Please reload the page!.",
-                whichfooter: footertype,
-                logging: loggingstring
-        });
+            // res.render('profile', {
+            //     message:"An error occured! Please reload the page!.",
+            //     whichfooter: footertype,
+            //     logging: loggingstring
+            // });
+            console.log(err);
             return res.status(500);
         });
     });    
