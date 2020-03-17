@@ -143,6 +143,8 @@ const routerFunction = function(db) {
         }).catch(err => {
             res.render('profile', {
                 message:"An error occured! Please reload the page!.",
+                whichfooter: footertype,
+                logging: loggingstring,
         });
             return res.status(500);
         });
