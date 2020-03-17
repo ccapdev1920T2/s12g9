@@ -53,7 +53,7 @@ const routerFunction = function(db) {
     // TODO: Double check db names
     // TODO: tab 1 - DONE
     // TODO: tab 2 - DONE (for furthur testing)
-    // TODO: do tab 3 - past bookings
+    // TODO: tab 3 - DONE (for furthur testing)
     router.get('/',notLoggedInUser ,function(req, res) {
         var loggingstring = `
         <li class="nav-item">\
@@ -97,10 +97,6 @@ const routerFunction = function(db) {
             `;
             footertype = 'footerAdmin';
         }
-
-        var user = null;
-        var pastBookings = null;
-        var currBookings = null;
         var today = new Date();
         var year =  today.getFullYear();
         var month=Number(today.getMonth())+1;
@@ -118,35 +114,29 @@ const routerFunction = function(db) {
             _id:ObjectId(req.session.userId)
         }).toArray().then(
             resp=>{
-                // res.render('profile', {
-                //     name: resp[0].fname+" "+ resp[0].lname,
-                //     membershipNumber: resp[0].membershipNumber,
-                //     email: resp[0].email,
-                //     creditCard: resp[0].creditCardNumber,
-                //     // guests:
-                //     points:resp[0].membershipPoints,
-                //     whichfooter: footertype,
-                //     logging: loggingstring
-                // });
                 user=resp;
                 db.collection('bookings').find({ 
                     email:user[0].email,
                     checkInDate: {$gte:today.toString()}
                 }).toArray().then(r=> {
                     console.log(r)
-                    res.render('profile', {
-                        name: resp[0].fname+" "+ resp[0].lname,
-                        membershipNumber: resp[0].membershipNumber,
-                        email: resp[0].email,
-                        creditCard: resp[0].creditCardNumber,
-                        // guests:
-                        points:resp[0].membershipPoints,
-                        whichfooter: footertype,
-                        logging: loggingstring,
-                        tab2:r
+                    db.collection('bookings').find({ 
+                        email:user[0].email,
+                        checkInDate: {$lt:today.toString()}
+                    }).toArray().then(r2=>{
+                        console.log(r2);
+                        res.render('profile', {
+                            name: resp[0].fname+" "+ resp[0].lname,
+                            membershipNumber: resp[0].membershipNumber,
+                            email: resp[0].email,
+                            creditCard: resp[0].creditcardNumber,
+                            points:resp[0].membershipPoints,
+                            whichfooter: footertype,
+                            logging: loggingstring,
+                            tab2:r,
+                            tab3:r2
+                        });
                     });
-                });
-            // TODO: for testing console.log(resp);
             return res.status(201);
         }).catch(err => {
             res.render('profile', {

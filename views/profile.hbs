@@ -89,6 +89,7 @@
                 </div>
             </div>
 
+            {{!-- Tab 1 --}}
             <div class="tab-content tab-space">
                 <div class="tab-pane active gallery" id="profile">
                     <div class="container">
@@ -105,11 +106,6 @@
                                     <h4>{{creditCard}}</h4>
                                 </div>
                                 <div class="row justify-content-lg-start justify-content-center fa-2x pt-3">
-                                    <i class="fas fa-user mt-n2 mr-n2"></i>
-                                    <h4 class="head"> Number of guests in room:</h4>
-                                    <h4>{{guests}}</h4>
-                                </div>
-                                <div class="row justify-content-lg-start justify-content-center fa-2x pt-3">
                                     <i class="fas fa-star mt-n2 mr-n2"></i>
                                     <h4 class="head"> Membership Points:</h4>
                                     <h4>{{points}}</h4>
@@ -118,6 +114,8 @@
                         </div>
                     </div>
                 </div>
+
+                {{!-- Tab 2 --}}
                 <div class="tab-pane gallery" id="current">
                     <div class="container mt-3 list">
                         <div class="row label mb-3 py-2">
@@ -125,53 +123,10 @@
                             <div class="col-md-4">Details</div>
                             <div class="col-md-2">Amount Paid</div>
                             <div class="col-md-2"></div>
-                        </div>
-                        <script type ="text/javascript">
-                            function addCurrCD(){
-                                $("#currentBookings").append('\
-                                    <div class="row boxshadow mb-4">\
-                                        <div class="col-md-4 col-12 roomtype">\
-                                            <img class="img-fluid" src ="/images/Rooms/juniorSuite.jpg">\
-                                        </div>\
-                                        <div class="col-md-4 col-12 align-self-center ml-md-n2 ml-0">\
-                                            <div class="title col-md-10 col-12">Classic Deluxe</div>\
-                                            <div class="card-title col-md-10 col-12">Check-In: December 25, 2019 <br>Check-Out: December 31, 2019</div>\
-                                            <div class="container">\
-                                                <div class="row mt-2 ml-1">\
-                                                    <div class="col-md-4 col-12 border3 pt-1">\
-                                                        ADULTS<br>\
-                                                        <span class="numbers">1</span>\
-                                                    </div>\
-                                                    <div class="col-md-4 col-12 border3 pt-1">\
-                                                        KIDS<br>\
-                                                        <span class="numbers">1</span>\
-                                                    </div>\
-                                                    <div class="col-md-4 col-12 borderall pt-1">\
-                                                        ROOMS<br>\
-                                                        <span class="numbers">1</span>\
-                                                    </div>\
-                                                </div>\
-                                            </div>\
-                                            <p class="col-md-10 col-12 mt-3 ml-1">*Additional Comments/Requests : No smoking in the room. Wifi should be provided. 2 Twin</p>\
-                                        </div>\
-                                        <div class="col-md-2 col-12 align-self-center ml-md-n3 ml-0">\
-                                            <div class="price">PHP 9,712.00</div>\
-                                        </div>\
-                                        <div class="col-md-2 col-12 align-self-center py-3 py-md-0 text-center">\
-                                            <a class="btn" type="button" href="ProfilePageMember.html">Cancel Reservation</a>\
-                                        </div>\
-                                    </div>\
-                                ');
-                            }
-                            function add(data){
-                                data.forEach(function(item, index){
-                                     $("#currentBookings").append(item);
-                                });
-                            }   
-                        </script>
-                        
+                        </div>   
                         <div id="currentBookings">
                             {{#each tab2}}
+                                {{!-- Classic Deluxe --}}
                                 {{#ifCD roomType}}
                                     <div class="row boxshadow mb-4">
                                         <div class="col-md-4 col-12 roomtype">
@@ -184,22 +139,22 @@
                                                 <div class="row mt-2 ml-1">
                                                     <div class="col-md-4 col-12 border3 pt-1">
                                                         ADULTS<br>
-                                                        <span class="numbers">{{adults}}</span>
+                                                        <span class="numbers">{{numOfAdults}}</span>
                                                     </div>
                                                     <div class="col-md-4 col-12 border3 pt-1">
                                                         KIDS<br>
-                                                        <span class="numbers">{{kids}}</span>
+                                                        <span class="numbers">{{numOfKids}}</span>
                                                     </div>
                                                     <div class="col-md-4 col-12 borderall pt-1">
                                                         ROOMS<br>
-                                                        <span class="numbers">{{rooms}}</span>
+                                                        <span class="numbers">{{numOfRooms}}</span>
                                                     </div>
                                                 </div>
                                             </div>
                                             <p class="col-md-10 col-12 mt-3 ml-1">*Additional Comments/Requests : {{requests}}</p>
                                         </div>
                                         <div class="col-md-2 col-12 align-self-center ml-md-n3 ml-0">
-                                            <div class="price">PHP {{price}}</div>
+                                            <div class="price">PHP {{payment.totalAmount}}</div>
                                         </div>
                                         <div class="col-md-2 col-12 align-self-center py-3 py-md-0 text-center">
                                             <a class="btn" type="button" href="ProfilePageMember.html">Cancel Reservation</a>
@@ -207,6 +162,7 @@
                                     </div>
                                 {{/ifCD}}
                                 
+                                {{!-- Family Deluxe --}}
                                 {{#ifFD roomType}}
                                     <div class="row boxshadow mb-4">
                                         <div class="col-md-4 col-12 roomtype">
@@ -219,22 +175,22 @@
                                                 <div class="row mt-2 ml-1">
                                                     <div class="col-md-4 col-12 border3 pt-1">
                                                         ADULTS<br>
-                                                        <span class="numbers">{{adults}}</span>
+                                                        <span class="numbers">{{numOfAdults}}</span>
                                                     </div>
                                                     <div class="col-md-4 col-12 border3 pt-1">
                                                         KIDS<br>
-                                                        <span class="numbers">{{kids}}</span>
+                                                        <span class="numbers">{{numOfKids}}</span>
                                                     </div>
                                                     <div class="col-md-4 col-12 borderall pt-1">
                                                         ROOMS<br>
-                                                        <span class="numbers">{{rooms}}</span>
+                                                        <span class="numbers">{{numOfRooms}}</span>
                                                     </div>
                                                 </div>
                                             </div>
                                             <p class="col-md-10 col-12 mt-3 ml-1">*Additional Comments/Requests : {{requests}}</p>
                                         </div>
                                         <div class="col-md-2 col-12 align-self-center ml-md-n3 ml-0">
-                                            <div class="price">PHP {{price}}</div>
+                                            <div class="price">PHP {{payment.totalAmount}}</div>
                                         </div>
                                         <div class="col-md-2 col-12 align-self-center py-3 py-md-0 text-center">
                                             <a class="btn" type="button" href="ProfilePageMember.html">Cancel Reservation</a>
@@ -242,6 +198,7 @@
                                     </div>
                                 {{/ifFD}}
                                 
+                                {{!-- Executive Deluxe --}}
                                 {{#ifED roomType}}
                                     <div class="row boxshadow mb-4">
                                         <div class="col-md-4 col-12 roomtype">
@@ -254,22 +211,22 @@
                                                 <div class="row mt-2 ml-1">
                                                     <div class="col-md-4 col-12 border3 pt-1">
                                                         ADULTS<br>
-                                                        <span class="numbers">{{adults}}</span>
+                                                        <span class="numbers">{{numOfAdults}}</span>
                                                     </div>
                                                     <div class="col-md-4 col-12 border3 pt-1">
                                                         KIDS<br>
-                                                        <span class="numbers">{{kids}}</span>
+                                                        <span class="numbers">{{numOfKids}}</span>
                                                     </div>
                                                     <div class="col-md-4 col-12 borderall pt-1">
                                                         ROOMS<br>
-                                                        <span class="numbers">{{rooms}}</span>
+                                                        <span class="numbers">{{numOfRooms}}</span>
                                                     </div>
                                                 </div>
                                             </div>
                                             <p class="col-md-10 col-12 mt-3 ml-1">*Additional Comments/Requests : {{requests}}</p>
                                         </div>
                                         <div class="col-md-2 col-12 align-self-center ml-md-n3 ml-0">
-                                            <div class="price">PHP {{price}}</div>
+                                            <div class="price">PHP {{payment.totalAmount}}</div>
                                         </div>
                                         <div class="col-md-2 col-12 align-self-center py-3 py-md-0 text-center">
                                             <a class="btn" type="button" href="ProfilePageMember.html">Cancel Reservation</a>
@@ -277,6 +234,7 @@
                                     </div>
                                 {{/ifED}}
                                 
+                                {{!-- Junior Suite --}}
                                 {{#ifJS roomType}}
                                     <div class="row boxshadow mb-4">
                                         <div class="col-md-4 col-12 roomtype">
@@ -289,22 +247,22 @@
                                                 <div class="row mt-2 ml-1">
                                                     <div class="col-md-4 col-12 border3 pt-1">
                                                         ADULTS<br>
-                                                        <span class="numbers">{{adults}}</span>
+                                                        <span class="numbers">{{numOfAdults}}</span>
                                                     </div>
                                                     <div class="col-md-4 col-12 border3 pt-1">
                                                         KIDS<br>
-                                                        <span class="numbers">{{kids}}</span>
+                                                        <span class="numbers">{{numOfKids}}</span>
                                                     </div>
                                                     <div class="col-md-4 col-12 borderall pt-1">
                                                         ROOMS<br>
-                                                        <span class="numbers">{{rooms}}</span>
+                                                        <span class="numbers">{{numOfRooms}}</span>
                                                     </div>
                                                 </div>
                                             </div>
                                             <p class="col-md-10 col-12 mt-3 ml-1">*Additional Comments/Requests : {{requests}}</p>
                                         </div>
                                         <div class="col-md-2 col-12 align-self-center ml-md-n3 ml-0">
-                                            <div class="price">PHP {{price}}</div>
+                                            <div class="price">PHP {{payment.totalAmount}}</div>
                                         </div>
                                         <div class="col-md-2 col-12 align-self-center py-3 py-md-0 text-center">
                                             <a class="btn" type="button" href="ProfilePageMember.html">Cancel Reservation</a>
@@ -312,6 +270,7 @@
                                     </div>
                                 {{/ifJS}}
 
+                                {{!-- Executive Suite --}}
                                 {{#ifES roomType}}
                                     <div class="row boxshadow mb-4">
                                         <div class="col-md-4 col-12 roomtype">
@@ -324,22 +283,22 @@
                                                 <div class="row mt-2 ml-1">
                                                     <div class="col-md-4 col-12 border3 pt-1">
                                                         ADULTS<br>
-                                                        <span class="numbers">{{adults}}</span>
+                                                        <span class="numbers">{{numOfAdults}}</span>
                                                     </div>
                                                     <div class="col-md-4 col-12 border3 pt-1">
                                                         KIDS<br>
-                                                        <span class="numbers">{{kids}}</span>
+                                                        <span class="numbers">{{numOfKids}}</span>
                                                     </div>
                                                     <div class="col-md-4 col-12 borderall pt-1">
                                                         ROOMS<br>
-                                                        <span class="numbers">{{rooms}}</span>
+                                                        <span class="numbers">{{numOfRooms}}</span>
                                                     </div>
                                                 </div>
                                             </div>
                                             <p class="col-md-10 col-12 mt-3 ml-1">*Additional Comments/Requests : {{requests}}</p>
                                         </div>
                                         <div class="col-md-2 col-12 align-self-center ml-md-n3 ml-0">
-                                            <div class="price">PHP {{price}}</div>
+                                            <div class="price">PHP {{payment.totalAmount}}</div>
                                         </div>
                                         <div class="col-md-2 col-12 align-self-center py-3 py-md-0 text-center">
                                             <a class="btn" type="button" href="ProfilePageMember.html">Cancel Reservation</a>
@@ -347,6 +306,7 @@
                                     </div>
                                 {{/ifES}}
 
+                                {{!-- Grand Suite --}}
                                 {{#ifGS roomType}}
                                     <div class="row boxshadow mb-4">
                                         <div class="col-md-4 col-12 roomtype">
@@ -359,22 +319,22 @@
                                                 <div class="row mt-2 ml-1">
                                                     <div class="col-md-4 col-12 border3 pt-1">
                                                         ADULTS<br>
-                                                        <span class="numbers">{{adults}}</span>
+                                                        <span class="numbers">{{numOfAdults}}</span>
                                                     </div>
                                                     <div class="col-md-4 col-12 border3 pt-1">
                                                         KIDS<br>
-                                                        <span class="numbers">{{kids}}</span>
+                                                        <span class="numbers">{{numOfKids}}</span>
                                                     </div>
                                                     <div class="col-md-4 col-12 borderall pt-1">
                                                         ROOMS<br>
-                                                        <span class="numbers">{{rooms}}</span>
+                                                        <span class="numbers">{{numOfRooms}}</span>
                                                     </div>
                                                 </div>
                                             </div>
                                             <p class="col-md-10 col-12 mt-3 ml-1">*Additional Comments/Requests : {{requests}}</p>
                                         </div>
                                         <div class="col-md-2 col-12 align-self-center ml-md-n3 ml-0">
-                                            <div class="price">PHP {{price}}</div>
+                                            <div class="price">PHP {{payment.totalAmount}}</div>
                                         </div>
                                         <div class="col-md-2 col-12 align-self-center py-3 py-md-0 text-center">
                                             <a class="btn" type="button" href="ProfilePageMember.html">Cancel Reservation</a>
@@ -385,153 +345,203 @@
                         </div>
                     </div>
                 </div>
+
+                {{!-- Tab 3 --}}
                 <div class="tab-pane gallery" id="past">
-                    <div class="container">
-                        <div class="card-deck list pb-4">
-                            <div class="card boxshadow">
-                                <img class="card-img-top grayscale" src = "/images/Rooms/grandSuite.jpg">
-                                <div class="card-body">
-                                    <div class="row justify-content-center">
-                                        <i class="fas fa-calendar-check fa-2x mx-3 mt-n1 mb-2"></i>
-                                    </div>
-                                    <div class="row justify-content-center mt-2">
-                                        <div class="card-title">December 12, 2019 - December 15, 2019</div>
-                                    </div>
-                                    <div class="row justify-content-center roomtype mb-2">
-                                        Grand Suite
-                                    </div>
-                                    <div class="row justify-content-center spacing">
-                                        Adults : 1
-                                    </div>
-                                    <div class="row justify-content-center spacing">
-                                        Kids : 1
-                                    </div>
-                                    <div class="row justify-content-center mb-2 spacing">
-                                        Rooms : 1
-                                    </div>
-                                    <div class="row justify-content-center">
-                                        <div class="price">
-                                            PHP 10, 232.00
+                    <div class="container row d-flex justify-content-around"> {{!--container--}}
+                        {{#each tab3}}
+                            {{!-- Classic Deluxe--}}
+                            {{#ifCD roomType}}
+                                <div class="card boxshadow col-md-4 col-xs-12">
+                                    <img class="card-img-top grayscale" src="/images/Rooms/classicdeluxe.jpg">
+                                    <div class="card-body">
+                                        <div class="row justify-content-center">
+                                            <i class="fas fa-calendar-check fa-2x mx-3 mt-n1 mb-2"></i>
+                                        </div>
+                                        <div class="row justify-content-center mt-2">
+                                            <div class="card-title">{{checkInDate}} - {{checkOutDate}}</div>
+                                        </div>
+                                        <div class="row justify-content-center roomtype mb-2">
+                                            Classic Deluxe
+                                        </div>
+                                        <div class="row justify-content-center spacing">
+                                            Adults : {{numOfAdults}}
+                                        </div>
+                                        <div class="row justify-content-center spacing">
+                                            Kids : {{numOfKids}}
+                                        </div>
+                                        <div class="row justify-content-center mb-2 spacing">
+                                            Rooms : {{numOfRooms}}
+                                        </div>
+                                        <div class="row justify-content-center">
+                                            <div class="price">
+                                                PHP {{payment.totalAmount}}
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="card boxshadow">
-                                <img class="card-img-top grayscale" src="/images/Rooms/classicDeluxe.jpg">
-                                <div class="card-body">
-                                    <div class="row justify-content-center">
-                                        <i class="fas fa-calendar-check fa-2x mx-3 mt-n1 mb-2"></i>
-                                    </div>
-                                    <div class="row justify-content-center mt-2">
-                                        <div class="card-title">December 25, 2019 - December 31, 2019</div>
-                                    </div>
-                                    <div class="row justify-content-center roomtype mb-2">
-                                        Classic Deluxe
-                                    </div>
-                                    <div class="row justify-content-center spacing">
-                                        Adults : 1
-                                    </div>
-                                    <div class="row justify-content-center spacing">
-                                        Kids : 1
-                                    </div>
-                                    <div class="row justify-content-center mb-2 spacing">
-                                        Rooms : 1
-                                    </div>
-                                    <div class="row justify-content-center">
-                                        <div class="price">
-                                            PHP 10, 232.00
+                            {{/ifCD}}
+
+                            {{!-- Family Deluxe --}}
+                            {{#ifFD roomType}}
+                                <div class="card boxshadow col-md-4 col-xs-12">
+                                    <img class="card-img-top grayscale" src="/images/Rooms/familydeluxe.jpg">
+                                    <div class="card-body">
+                                        <div class="row justify-content-center">
+                                            <i class="fas fa-calendar-check fa-2x mx-3 mt-n1 mb-2"></i>
+                                        </div>
+                                        <div class="row justify-content-center mt-2">
+                                            <div class="card-title">{{checkInDate}} - {{checkOutDate}}</div>
+                                        </div>
+                                        <div class="row justify-content-center roomtype mb-2">
+                                            Family Deluxe
+                                        </div>
+                                        <div class="row justify-content-center spacing">
+                                            Adults : {{numOfAdults}}
+                                        </div>
+                                        <div class="row justify-content-center spacing">
+                                            Kids : {{numOfKids}}
+                                        </div>
+                                        <div class="row justify-content-center mb-2 spacing">
+                                            Rooms : {{numOfRooms}}
+                                        </div>
+                                        <div class="row justify-content-center">
+                                            <div class="price">
+                                                PHP {{payment.totalAmount}}
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="card boxshadow">
-                                <img class="card-img-top grayscale" src="/images/Rooms/executiveSuite.jpg">
-                                <div class="card-body">
-                                    <div class="row justify-content-center">
-                                        <i class="fas fa-calendar-check fa-2x mx-3 mt-n1 mb-2"></i>
-                                    </div>
-                                    <div class="row justify-content-center mt-2">
-                                        <div class="card-title">January 20, 2020 - January 29, 2020</div>
-                                    </div>
-                                    <div class="row justify-content-center roomtype mb-2">
-                                        Executive Suite
-                                    </div>
-                                    <div class="row justify-content-center spacing">
-                                        Adults : 1
-                                    </div>
-                                    <div class="row justify-content-center spacing">
-                                        Kids : 1
-                                    </div>
-                                    <div class="row justify-content-center mb-2 spacing">
-                                        Rooms : 1
-                                    </div>
-                                    <div class="row justify-content-center">
-                                        <div class="price">
-                                            PHP 10, 232.00
+                            {{/ifFD}}
+
+                            {{!-- Executive Deluxe --}}
+                            {{#ifED roomType}}
+                                <div class="card boxshadow col-md-4 col-xs-12">
+                                    <img class="card-img-top grayscale" src="/images/Rooms/executivedeluxe.jpg">
+                                    <div class="card-body">
+                                        <div class="row justify-content-center">
+                                            <i class="fas fa-calendar-check fa-2x mx-3 mt-n1 mb-2"></i>
+                                        </div>
+                                        <div class="row justify-content-center mt-2">
+                                            <div class="card-title">{{checkInDate}} - {{checkOutDate}}</div>
+                                        </div>
+                                        <div class="row justify-content-center roomtype mb-2">
+                                            Executive Deluxe
+                                        </div>
+                                        <div class="row justify-content-center spacing">
+                                            Adults : {{numOfAdults}}
+                                        </div>
+                                        <div class="row justify-content-center spacing">
+                                            Kids : {{numOfKids}}
+                                        </div>
+                                        <div class="row justify-content-center mb-2 spacing">
+                                            Rooms : {{numOfRooms}}
+                                        </div>
+                                        <div class="row justify-content-center">
+                                            <div class="price">
+                                                PHP {{payment.totalAmount}}
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="card-deck list">
-                            <div class="card boxshadow">
-                                <img class="card-img-top grayscale" src="/images/Rooms/classicDeluxe.jpg">
-                                <div class="card-body">
-                                    <div class="row justify-content-center">
-                                        <i class="fas fa-calendar-check fa-2x mx-3 mt-n1 mb-2"></i>
-                                    </div>
-                                    <div class="row justify-content-center mt-2">
-                                        <div class="card-title">January 22, 2020 - January 23, 2020</div>
-                                    </div>
-                                    <div class="row justify-content-center roomtype mb-2">
-                                        Classic Deluxe
-                                    </div>
-                                    <div class="row justify-content-center spacing">
-                                        Adults : 4
-                                    </div>
-                                    <div class="row justify-content-center spacing">
-                                        Kids : 0
-                                    </div>
-                                    <div class="row justify-content-center mb-2 spacing">
-                                        Rooms : 1
-                                    </div>
-                                    <div class="row justify-content-center">
-                                        <div class="price">
-                                            PHP 8, 222.00
+                            {{/ifED}}
+
+                            {{!-- Junior Suite --}}
+                            {{#ifJS roomType}}
+                                <div class="card boxshadow col-md-4 col-xs-12">
+                                    <img class="card-img-top grayscale" src="/images/Rooms/juniorsuite.jpg">
+                                    <div class="card-body">
+                                        <div class="row justify-content-center">
+                                            <i class="fas fa-calendar-check fa-2x mx-3 mt-n1 mb-2"></i>
+                                        </div>
+                                        <div class="row justify-content-center mt-2">
+                                            <div class="card-title">{{checkInDate}} - {{checkOutDate}}</div>
+                                        </div>
+                                        <div class="row justify-content-center roomtype mb-2">
+                                            Junior Suite
+                                        </div>
+                                        <div class="row justify-content-center spacing">
+                                            Adults : {{numOfAdults}}
+                                        </div>
+                                        <div class="row justify-content-center spacing">
+                                            Kids : {{numOfKids}}
+                                        </div>
+                                        <div class="row justify-content-center mb-2 spacing">
+                                            Rooms : {{numOfRooms}}
+                                        </div>
+                                        <div class="row justify-content-center">
+                                            <div class="price">
+                                                PHP {{payment.totalAmount}}
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="card boxshadow">
-                                <img class="card-img-top grayscale" src="/images/Rooms/familyDeluxe.jpg">
-                                <div class="card-body">
-                                    <div class="row justify-content-center">
-                                        <i class="fas fa-calendar-check fa-2x mx-3 mt-n1 mb-2"></i>
-                                    </div>
-                                    <div class="row justify-content-center mt-2">
-                                        <div class="card-title">January 27, 2020 - January 31, 2020</div>
-                                    </div>
-                                    <div class="row justify-content-center roomtype mb-2">
-                                        Family Deluxe
-                                    </div>
-                                    <div class="row justify-content-center spacing">
-                                        Adults : 2
-                                    </div>
-                                    <div class="row justify-content-center spacing">
-                                        Kids : 0
-                                    </div>
-                                    <div class="row justify-content-center mb-2 spacing">
-                                        Rooms : 1
-                                    </div>
-                                    <div class="row justify-content-center">
-                                        <div class="price">
-                                            PHP 8, 722.00
+                            {{/ifJS}}
+                            
+                            {{!-- Executive Suite --}}
+                            {{#ifES roomType}}
+                                <div class="card boxshadow col-md-4 col-xs-12">
+                                    <img class="card-img-top grayscale" src="/images/Rooms/executivesuite.jpg">
+                                    <div class="card-body">
+                                        <div class="row justify-content-center">
+                                            <i class="fas fa-calendar-check fa-2x mx-3 mt-n1 mb-2"></i>
+                                        </div>
+                                        <div class="row justify-content-center mt-2">
+                                            <div class="card-title">{{checkInDate}} - {{checkOutDate}}</div>
+                                        </div>
+                                        <div class="row justify-content-center roomtype mb-2">
+                                            Executive Suite
+                                        </div>
+                                        <div class="row justify-content-center spacing">
+                                            Adults : {{numOfAdults}}
+                                        </div>
+                                        <div class="row justify-content-center spacing">
+                                            Kids : {{numOfKids}}
+                                        </div>
+                                        <div class="row justify-content-center mb-2 spacing">
+                                            Rooms : {{numOfRooms}}
+                                        </div>
+                                        <div class="row justify-content-center">
+                                            <div class="price">
+                                                PHP {{payment.totalAmount}}
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="card boxshadow"></div>
-                        </div>
+                            {{/ifES}}
+
+                            {{!-- Grand Suite --}}
+                            {{#ifGS roomType}}
+                                <div class="card boxshadow col-md-4 col-xs-12">
+                                    <img class="card-img-top grayscale" src="/images/Rooms/grandsuite.jpg">
+                                    <div class="card-body">
+                                        <div class="row justify-content-center">
+                                            <i class="fas fa-calendar-check fa-2x mx-3 mt-n1 mb-2"></i>
+                                        </div>
+                                        <div class="row justify-content-center mt-2">
+                                            <div class="card-title">{{checkInDate}} - {{checkOutDate}}</div>
+                                        </div>
+                                        <div class="row justify-content-center roomtype mb-2">
+                                            Grand Suite
+                                        </div>
+                                        <div class="row justify-content-center spacing">
+                                            Adults : {{numOfAdults}}
+                                        </div>
+                                        <div class="row justify-content-center spacing">
+                                            Kids : {{numOfKids}}
+                                        </div>
+                                        <div class="row justify-content-center mb-2 spacing">
+                                            Rooms : {{numOfRooms}}
+                                        </div>
+                                        <div class="row justify-content-center">
+                                            <div class="price">
+                                                PHP {{payment.totalAmount}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {{/ifGS}}
+                        {{/each}}
                     </div>
                 </div>
             </div>
