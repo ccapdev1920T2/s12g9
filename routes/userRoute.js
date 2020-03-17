@@ -118,33 +118,10 @@ const routerFunction = function(db) {
             _id:ObjectId(req.session.userId)
         }).toArray().then(
             resp=>{
-                // res.render('profile', {
-                //     name: resp[0].fname+" "+ resp[0].lname,
-                //     membershipNumber: resp[0].membershipNumber,
-                //     email: resp[0].email,
-                //     creditCard: resp[0].creditCardNumber,
-                //     // guests:
-                //     points:resp[0].membershipPoints,
-                //     whichfooter: footertype,
-                //     logging: loggingstring
-                // });
-                user=resp;
                 db.collection('bookings').find({ 
                     email:user[0].email,
                     checkInDate: {$gte:today.toString()}
                 }).toArray().then(r=> {
-                    console.log(r)
-                    // res.render('profile', {
-                    //     name: resp[0].fname+" "+ resp[0].lname,
-                    //     membershipNumber: resp[0].membershipNumber,
-                    //     email: resp[0].email,
-                    //     creditCard: resp[0].creditCardNumber,
-                    //     // guests:
-                    //     points:resp[0].membershipPoints,
-                    //     whichfooter: footertype,
-                    //     logging: loggingstring,
-                    //     tab2:r
-                    // });
                     db.collection('bookings').find({ 
                         email:user[0].email,
                         checkInDate: {$lt:today.toString()}
@@ -153,7 +130,7 @@ const routerFunction = function(db) {
                             name: resp[0].fname+" "+ resp[0].lname,
                             membershipNumber: resp[0].membershipNumber,
                             email: resp[0].email,
-                            creditCard: resp[0].creditCardNumber,
+                            creditCard: resp[0].creditcardNumber,
                             points:resp[0].membershipPoints,
                             whichfooter: footertype,
                             logging: loggingstring,
@@ -162,7 +139,6 @@ const routerFunction = function(db) {
                         });
                     });    
                 });
-            // TODO: for testing console.log(resp);
             return res.status(201);
         }).catch(err => {
             res.render('profile', {
