@@ -36,7 +36,7 @@ const routerFunction = function(db) {
                         });
                     } else {
                         // console.log('4');
-                        if (resp.admin === 'true')
+                        if (resp.admin == true)
                             return res.status(201).redirect('/admin');
                         else
                             return res.status(201).redirect('/user');
@@ -584,7 +584,7 @@ const routerFunction = function(db) {
                                     whichfooter: footertype
                                 });
                             } else {
-                                if (found.admin === 'true')
+                                if (found.admin == true)
                                     req.session.adminId = found._id;
                                 else
                                     req.session.userId = found._id;
