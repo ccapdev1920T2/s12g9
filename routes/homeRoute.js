@@ -114,6 +114,7 @@ const routerFunction = function(db) {
                     db.collection('users').insertOne({
                             email: "admin@paraisohotels.com",
                             password: "para1soHotels",
+                            admin: true
                         })
                         .then(resp => {
                             console.log(resp);
