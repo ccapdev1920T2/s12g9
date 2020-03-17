@@ -104,7 +104,8 @@ const routerFunction = function(db) {
         //TODO: CHECK
         var adminuser = {
             email: "admin@paraisohotels.com",
-            password: "para1soHotels"
+            password: "para1soHotels",
+            admin: true
         }
 
         db.collection('users').findOne(adminuser)
@@ -113,7 +114,6 @@ const routerFunction = function(db) {
                     db.collection('users').insertOne({
                             email: "admin@paraisohotels.com",
                             password: "para1soHotels",
-                            admin: true
                         })
                         .then(resp => {
                             console.log(resp);
