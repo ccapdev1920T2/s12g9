@@ -140,7 +140,7 @@ const routerFunction = function(db) {
 
     });
 
-    // post for view rooms
+    // post for view rooms]
     router.post('/viewRooms', function(req, res) {
         var classicD = false;
         var famD = false;
@@ -225,17 +225,17 @@ const routerFunction = function(db) {
                         var gs = 0;
                         for (var i = 0; i < resp.length; i++) {
                             if (resp[i].roomType == "Classic Deluxe") {
-                                cd += resp[i].rooms;
+                                cd += resp[i].numOfRooms;
                             } else if (resp[i].roomType == "Family Deluxe") {
-                                fd += resp[i].rooms;
+                                fd += resp[i].numOfRooms;
                             } else if (resp[i].roomType == "Executive Deluxe") {
-                                ed += resp[i].rooms;
+                                ed += resp[i].numOfRooms;
                             } else if (resp[i].roomType == "Junior Suite") {
-                                js += resp[i].rooms;
+                                js += resp[i].numOfRooms;
                             } else if (resp[i].roomType == "Executive Suite") {
-                                es += resp[i].rooms;
+                                es += resp[i].numOfRooms;
                             } else if (resp[i].roomType == "Grand Suite") {
-                                gs += resp[i].rooms;
+                                gs += resp[i].numOfRooms;
                             }
                         }
                         if (cd < 5 && (5 - cd) >= req.body.nRooms) {
