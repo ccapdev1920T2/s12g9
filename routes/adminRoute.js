@@ -79,15 +79,12 @@ const routerFunction = function(db) {
                     checkOut = new Date(resp[i].checkOutDate);
                     formatCheckOutDate = monthName[checkOut.getMonth()] + " " + checkOut.getDate() + ", " + checkOut.getFullYear();
                     formatCheckOutDate = formatCheckOutDate.toString();
-<<<<<<< HEAD
-                    price = (Math.round(resp[i].pricePerRoom * 100) / 100).toFixed(2);
-                    console.log(resp[i]._id);
-=======
+                    // price = (Math.round(resp[i].pricePerRoom * 100) / 100).toFixed(2);
+                    // console.log(resp[i]._id);
                     price = resp[i].payment.total;
-
                     console.log(price);
 
->>>>>>> 236f36e795e5831b6044707ff9a0a6e21ef80836
+
                     var bookingObject = {
                         img_src: imagesource,
                         roomType: resp[i].roomtype,
