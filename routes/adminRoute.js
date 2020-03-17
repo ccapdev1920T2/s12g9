@@ -72,18 +72,22 @@ const routerFunction = function(db) {
                 for (var i = 0; i < resp.length; i++) {
                     imagesource = resp[i].roomtype;
                     imagesource = imagesource.replace(/\s/g, '');
-                    imagesource = '/images/Rooms' + imagesource + '.jpg'
-                    console.log(resp._id);
+                    imagesource = '/images/Rooms/' + imagesource + '.jpg'
                     checkIn = new Date(resp[i].checkInDate);
                     formatCheckInDate = monthName[checkIn.getMonth()] + " " + checkIn.getDate() + ", " + checkIn.getFullYear();
                     formatCheckInDate = formatCheckInDate.toString();
                     checkOut = new Date(resp[i].checkOutDate);
                     formatCheckOutDate = monthName[checkOut.getMonth()] + " " + checkOut.getDate() + ", " + checkOut.getFullYear();
                     formatCheckOutDate = formatCheckOutDate.toString();
+<<<<<<< HEAD
+                    price = (Math.round(resp[i].pricePerRoom * 100) / 100).toFixed(2);
+                    console.log(resp[i]._id);
+=======
                     price = resp[i].payment.total;
 
                     console.log(price);
 
+>>>>>>> 236f36e795e5831b6044707ff9a0a6e21ef80836
                     var bookingObject = {
                         img_src: imagesource,
                         roomType: resp[i].roomtype,
@@ -175,8 +179,8 @@ const routerFunction = function(db) {
                     fname: resp.fname,
                     lname: resp.lname,
                     email: resp.email,
-                    cardNumber: resp.creditcardNumber,
-                    roomType: roomtype,
+                    cardNumber: resp.payment.creditcardNumber,
+                    roomType: resp.roomtype,
                     numAdults: resp.adults,
                     numKids: resp.kids,
                     whichheader: headertype,
