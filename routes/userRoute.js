@@ -1,9 +1,45 @@
 const express = require('express');
 const router = express();
 const { ObjectId } = require('mongodb');
-
-
+const hbs = require('hbs');
 const routerFunction = function(db) {
+    //helpers for tab2 and tab3
+    hbs.registerHelper('ifCD', function(arg1, options) {
+        if (arg1 == "Classic Deluxe"){
+            return options.fn(this);
+        }
+        else return options.inverse(this);
+    });
+    hbs.registerHelper('ifFD', function(arg1, options) {
+        if (arg1 == "Family Deluxe"){
+            return options.fn(this);
+        }
+        else return options.inverse(this);
+    });
+    hbs.registerHelper('ifED', function(arg1, options) {
+        if (arg1 == "Executive Deluxe"){
+            return options.fn(this);
+        }
+        else return options.inverse(this);
+    });
+    hbs.registerHelper('ifJS', function(arg1, options) {
+        if (arg1 == "Junior Suite"){
+            return options.fn(this);
+        }
+        else return options.inverse(this);
+    });
+    hbs.registerHelper('ifES', function(arg1, options) {
+        if (arg1 == "Executive Suite"){
+            return options.fn(this);
+        }
+        else return options.inverse(this);
+    });
+    hbs.registerHelper('ifGS', function(arg1, options) {
+        if (arg1 == "Grand Suite"){
+            return options.fn(this);
+        }
+        else return options.inverse(this);
+    });
     //check if user is logged in, if not, he/she cannot access the page such as profile and admin， and log out
     const notLoggedInUser = (req, res, next) => {
         if (!req.session.userId) {
@@ -14,9 +50,9 @@ const routerFunction = function(db) {
         } 
         return next();
     };
-
+    // TODO: Double check db names
     // TODO: tab 1 - DONE
-    // TODO: do tab 2 - current bookings
+    // TODO: tab 2 - DONE (for furthur testing)
     // TODO: do tab 3 - past bookings
     router.get('/',notLoggedInUser ,function(req, res) {
         var loggingstring = `
@@ -82,21 +118,34 @@ const routerFunction = function(db) {
             _id:ObjectId(req.session.userId)
         }).toArray().then(
             resp=>{
-                res.render('profile', {
-                    name: resp[0].fname+" "+ resp[0].lname,
-                    membershipNumber: resp[0].membershipNumber,
-                    email: resp[0].email,
-                    creditCard: resp[0].cardNumber,
-                    // guests:
-                    points:resp[0].membershipPoints,
-                    whichfooter: footertype,
-                    logging: loggingstring
-                });
+                // res.render('profile', {
+                //     name: resp[0].fname+" "+ resp[0].lname,
+                //     membershipNumber: resp[0].membershipNumber,
+                //     email: resp[0].email,
+                //     creditCard: resp[0].creditCardNumber,
+                //     // guests:
+                //     points:resp[0].membershipPoints,
+                //     whichfooter: footertype,
+                //     logging: loggingstring
+                // });
                 user=resp;
-                // db.collection('bookings').find({ 
-                //     email:user[0].email,
-                //     checkInDate: {$lt: date}
-                // }).toArray().then(r=> console.log(r));
+                db.collection('bookings').find({ 
+                    email:user[0].email,
+                    checkInDate: {$gte:today.toString()}
+                }).toArray().then(r=> {
+                    console.log(r)
+                    res.render('profile', {
+                        name: resp[0].fname+" "+ resp[0].lname,
+                        membershipNumber: resp[0].membershipNumber,
+                        email: resp[0].email,
+                        creditCard: resp[0].creditCardNumber,
+                        // guests:
+                        points:resp[0].membershipPoints,
+                        whichfooter: footertype,
+                        logging: loggingstring,
+                        tab2:r
+                    });
+                });
             // TODO: for testing console.log(resp);
             return res.status(201);
         }).catch(err => {

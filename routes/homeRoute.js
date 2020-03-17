@@ -18,42 +18,33 @@ const routerFunction = function(db) {
     const loggedIn = (req, res, next) => {
         // console.log(req.session.userId);
         if (req.session.userId || req.session.adminId) {
-            var admin = { _id: ObjectId(req.session.adminId) };
+            if (req.session.userId)
+                var user = { _id: ObjectId(req.session.userId) };
+            else{
+                var user = { _id: ObjectId(req.session.adminId) };
+            }
             // console.log('1');
-            db.collection('admin').findOne(admin)
+            db.collection('users').findOne(user)
                 .then(resp => {
                     // console.log(resp);
                     if (resp === null) {
-                        var user = { _id: ObjectId(req.session.userId) };
-                        // console.log('2');
-                        db.collection('users').findOne(user)
-                            .then(respuser => {
-                                // console.log('3');
-                                // console.log(respuser);
-                                if (respuser === null) {
-                                    return res.status(401).render('signIn', {
-                                        generalError: `
-                                        <div class="row ml-1">*No Such Account Registered in the System</div><div class="row ml-1">Click here to <a href="/signUp" class="ml-1"> be a member</a></div>
-                                        `,
-                                        whichfooter: 'footer'
-                                    });
-                                } else {
-                                    // console.log('4');
-                                    return res.status(201).redirect('/user');
-                                }
-                            }).catch(err => {
-                                console.log(err);
-                                return res.status(500).redirect('/signIn');
-                            });
+                        return res.status(401).render('signIn', {
+                            generalError: `
+                            <div class="row ml-1">*No Such Account Registered in the System</div><div class="row ml-1">Click here to <a href="/signUp" class="ml-1"> be a member</a></div>
+                            `,
+                            whichfooter: 'footer'
+                        });
                     } else {
-                        // console.log('5');
-                        return res.status(200).redirect('/admin');
+                        // console.log('4');
+                        if (resp.admin === 'true')
+                            return res.status(201).redirect('/admin');
+                        else 
+                            return res.status(201).redirect('/user');
                     }
-                }).catch(errsec => {
-                    console.log(errsec);
+                }).catch(err => {
+                    console.log(err);
                     return res.status(500).redirect('/signIn');
                 });
-
         } else {
             // console.log('6');
             return next();
@@ -564,65 +555,24 @@ const routerFunction = function(db) {
             email
         }
 
-        db.collection('admin').findOne(useremail)
+        db.collection('users').findOne(useremail)
             .then(resp => {
                 // console.log(resp);
                 if (resp === null) {
-                    db.collection('users').findOne(useremail)
-                        .then(respuser => {
-                            // console.log(respuser);
-                            if (respuser === null) {
-                                return res.status(401).render('signIn', {
-                                    generalError: `
-                                    <div class="row ml-1">*No Such Account Registered in the System</div><div class="row ml-1">Click here to <a href="/signUp" class="ml-1"> be a member</a></div>
-                                    `,
-                                    whichfooter: footertype
-                                });
-                            } else {
-                                //TODO: fix account with userId
-                                var user = {
-                                    email,
-                                    password
-                                }
-
-                                db.collection('users').findOne(user)
-                                    .then(found => {
-                                        if (found === null) {
-                                            return res.status(401).render('signIn', {
-                                                generalError: `
-                                                <div class="row ml-1">*Incorrect password entered.</div>
-                                                `,
-                                                whichfooter: footertype
-                                            });
-                                        } else {
-                                            req.session.userId = respuser._id;
-                                            // console.log(req.session.userId);
-                                            return res.status(201).redirect('/');
-                                        }
-                                    }).catch(errfound => {
-                                        console.log(errfound);
-                                        return res.status(401).render('signIn', {
-                                            generalError: "*Bad Server",
-                                            whichfooter: footertype
-                                        });
-                                    });
-
-                            }
-                        }).catch(err => {
-                            console.log(err);
-                            return res.status(500).render('signIn', {
-                                generalError: "*Bad Server",
-                                whichfooter: footertype
-                            });
-                        });
+                    return res.status(401).render('signIn', {
+                        generalError: `
+                        <div class="row ml-1">*No Such Account Registered in the System</div><div class="row ml-1">Click here to <a href="/signUp" class="ml-1"> be a member</a></div>
+                        `,
+                        whichfooter: footertype
+                    });   
                 } else {
-                    //checking correct password for admin
+                    //TODO: fix account with userId
                     var user = {
                         email,
                         password
                     }
 
-                    db.collection('admin').findOne(user)
+                    db.collection('users').findOne(user)
                         .then(found => {
                             if (found === null) {
                                 return res.status(401).render('signIn', {
@@ -632,9 +582,12 @@ const routerFunction = function(db) {
                                     whichfooter: footertype
                                 });
                             } else {
-                                req.session.adminId = resp._id;
+                                if (found.admin === 'true')
+                                    req.session.adminId = found._id;
+                                else 
+                                    req.session.userId = found._id;
                                 // console.log(req.session.userId);
-                                return res.status(200).redirect('/admin');
+                                return res.status(201).redirect('/');
                             }
                         }).catch(errfound => {
                             console.log(errfound);
@@ -644,15 +597,14 @@ const routerFunction = function(db) {
                             });
                         });
                 }
-
             }).catch(err => {
                 console.log(err);
-                return res.status(401).render('signIn', {
+                return res.status(500).render('signIn', {
                     generalError: "*Bad Server",
                     whichfooter: footertype
                 });
             });
-    })
+    });
 
     router.get('/signUp', loggedIn, function(req, res) {
         var footertype = 'footer';
