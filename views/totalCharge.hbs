@@ -46,19 +46,19 @@
                     var string;
                     if ($(this).val() === 'breakfastbuffet'){
                         fees = parseFloat(fees) + parseFloat(breakfast.text());
-                        string = 'Daily Breakfast Buffet'
+                        string = 'Daily Breakfast Buffet';
                     } else if ($(this).val() === 'lunchbuffet'){
                         fees = parseFloat(fees) + parseFloat(lunch.text());
-                        string = 'Daily Lunch Buffet '
+                        string = 'Daily Lunch Buffet';
                     } else if ($(this).val() === 'dinnerbuffet') {
                         fees = parseFloat(fees) + parseFloat(dinner.text());
-                        string = 'Daily Dinner Buffet'
+                        string = 'Daily Dinner Buffet';
                     } else if ($(this).val() === 'allbuffet'){
                         fees = parseFloat(fees) + parseFloat(allbuffet.text());
-                        string = 'Daily Buffet'
+                        string = 'Daily Buffet';
                     } else if ($(this).val() === 'pickupprice'){
                         fees = parseFloat(fees) + parseFloat(pickup.text());
-                        string = 'Arrival and Departure Airport Pick-Up'
+                        string = 'Arrival and Departure Airport Pick-Up';
                     }
 
                     requestString = requestString + string + ", "

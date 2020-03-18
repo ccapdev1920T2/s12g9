@@ -223,152 +223,232 @@ const routerFunction = function(db) {
 
     router.post('/pay', function(req, res) {
         // console.log(req.body);    
-        let { fname, lname, email, total, requests, checkInDate, checkOutDate, rooms, adults, kids, roomtype, pricePerRoom} = req.body;
 
-        fname = fname.trim();
-        lname = lname.trim();
-        email = email.trim();
+        if (!req.session.userId){
+            let { fname, lname, email, total, checkInDate, checkOutDate, rooms, adults, kids, roomtype, pricePerRoom} = req.body;
 
-        lastname = "";
-        firstname = "";
-        emailglobe = "";
-        database = "";
+            fname = fname.trim();
+            lname = lname.trim();
+            email = email.trim();
 
-        if (req.body.requests === "")
-            req.body.requests = req.body.additionalrequest;
-        else
-            req.body.requests = req.body.requests + ', ' + req.body.additionalrequest;
+            lastname = "";
+            firstname = "";
+            emailglobe = "";
+            database = "";
 
-        // console.log('Hello');
-        // console.log(req.body.requests);
-        totalChargeBody = req.body;
+            if (req.body.requests === "")
+                req.body.requests = req.body.additionalrequest;
+            else
+                req.body.requests = req.body.requests + ', ' + req.body.additionalrequest;
 
-        //TODO: retain select options in the future
-        if (!fname) {
-            firstname = '*Please fill up missing field';
-            return res.status(401).redirect('/totalCharge');
-        }
+            // console.log('Hello');
+            // console.log(req.body.requests);
+            totalChargeBody = req.body;
 
-        if (!lname) {
-            lastname = '*Please fill up missing field';
-            return res.status(401).redirect('/totalCharge');
-        }
-
-        if (!email) {
-            emailglobe = '*Please fill up missing field';
-            return res.status(401).redirect('/totalCharge');
-        }
-
-        let emailRegex = /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/;
-
-        // dfa validator
-        if (!emailRegex.test(email)) {
-            req.body.email = "";
-            emailglobe = '*Email not valid';
-            return res.status(401).redirect('/totalCharge');
-        }
-
-        var today = new Date();
-        var formattedDate = today.getFullYear().toString() + '-' + (today.getMonth() + 1).toString().padStart(2, 0) + '-' + today.getDate().toString().padStart(2, 0);
-
-        var reservation = {
-            fname,
-            lname,
-            email,
-            requests: req.body.requests,
-            checkInDate,
-            checkOutDate,
-            rooms,
-            adults,
-            kids,
-            roomtype,
-            pricePerRoom,
-            bookingDate: formattedDate,
-            status: "Booked",
-            payment: {
-                total,
-                status: "Not Paid",
-                creditcardNumber: "",
-                creditcardOwner: "",
-                cvv: "",
-                ccprovider: "",
-                month: "",
-                year: ""
+            //TODO: retain select options in the future
+            if (!fname) {
+                firstname = '*Please fill up missing field';
+                return res.status(401).redirect('/totalCharge');
             }
-        };
 
-        var loggingstring = `
-        <li class="nav-item">\
-            <a class="nav-link" href="/signUp">Be a Member</a>\
-        </li>\
-        <li class="nav-item">\
-            <a class="nav-link" href="/signIn">Log In</a>\
-        </li>\
-        <li class="nav-item">\
-            <a class="nav-link bookBtn" href="/" tabindex="-1" aria-disabled="true">BOOK NOW</a>\
-        </li>\
-        `
-        var footertype = 'footer';
+            if (!lname) {
+                lastname = '*Please fill up missing field';
+                return res.status(401).redirect('/totalCharge');
+            }
 
-        if (req.session.userId) {
-            loggingstring =
-                `<li class="nav-item">\
-                <a class="nav-link" href="/hotel/memberBenefits">Member Benefits</a>\
+            if (!email) {
+                emailglobe = '*Please fill up missing field';
+                return res.status(401).redirect('/totalCharge');
+            }
+
+            let emailRegex = /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/;
+
+            // dfa validator
+            if (!emailRegex.test(email)) {
+                req.body.email = "";
+                emailglobe = '*Email not valid';
+                return res.status(401).redirect('/totalCharge');
+            }
+
+            var today = new Date();
+            var formattedDate = today.getFullYear().toString() + '-' + (today.getMonth() + 1).toString().padStart(2, 0) + '-' + today.getDate().toString().padStart(2, 0);
+
+            var reservation = {
+                fname,
+                lname,
+                email,
+                requests: req.body.requests,
+                checkInDate,
+                checkOutDate,
+                rooms : parseInt(rooms),
+                adults : parseInt(adults),
+                kids : parseInt(kids),
+                roomtype,
+                pricePerRoom : parseFloat(pricePerRoom).toFixed(2),
+                bookingDate: formattedDate,
+                status: "Booked",
+                payment: {
+                    total,
+                    status: "Not Paid",
+                    creditcardNumber: "",
+                    creditcardOwner: "",
+                    cvv: "",
+                    ccprovider: "",
+                    month: "",
+                    year: ""
+                }
+            };
+
+            var loggingstring = `
+            <li class="nav-item">\
+                <a class="nav-link" href="/signUp">Be a Member</a>\
             </li>\
             <li class="nav-item">\
-                <a class="nav-link" href="/logout">Log Out</a>\
+                <a class="nav-link" href="/signIn">Log In</a>\
             </li>\
             <li class="nav-item">\
-                <a class="nav-link bookBtn" href="/user" tabindex="-1" aria-disabled="true">PROFILE</a>\
+                <a class="nav-link bookBtn" href="/" tabindex="-1" aria-disabled="true">BOOK NOW</a>\
             </li>\
-            `;
-            footertype = 'footerUser';
+            `
+            var footertype = 'footer';
+
+            if (req.session.userId) {
+                loggingstring =
+                    `<li class="nav-item">\
+                    <a class="nav-link" href="/hotel/memberBenefits">Member Benefits</a>\
+                </li>\
+                <li class="nav-item">\
+                    <a class="nav-link" href="/logout">Log Out</a>\
+                </li>\
+                <li class="nav-item">\
+                    <a class="nav-link bookBtn" href="/user" tabindex="-1" aria-disabled="true">PROFILE</a>\
+                </li>\
+                `;
+                footertype = 'footerUser';
+            }
+
+            if (req.session.adminId) {
+                loggingstring =
+                    `<li class="nav-item">\
+                    <a class="nav-link" href="/hotel/memberBenefits">Member Benefits</a>\
+                </li>\
+                <li class="nav-item">\
+                    <a class="nav-link" href="/logout">Log Out</a>\
+                </li>\
+                <li class="nav-item">\
+                    <a class="nav-link bookBtn" href="/admin" tabindex="-1" aria-disabled="true">ADMIN</a>\
+                </li>\
+                `;
+                footertype = 'footerAdmin';
+            }
+
+            db.collection('booking').insertOne(reservation)
+                .then(resp => {
+                    // console.log(resp);
+                    // for debugging and for production
+                    // return res.status(201).send('Good');
+                    //Use to find in database
+                    db.collection('booking').findOne(reservation)
+                    .then(respfind => {
+                        // console.log(resp._id);
+                        // res.redirect('totalCharge/pay/'+resp._id); //resp._id is the id of the database
+                        res.render('pay', {
+                            bookingid: respfind._id,
+                            whichfooter: footertype,
+                            logging: loggingstring
+                        });
+                    }).catch(err => {
+                        console.log(err);
+                        database = '*Bad Server';
+                        return res.status(500).redirect('/totalCharge');
+                    })
+                }).catch(err => {
+                    console.log(err);
+                    database = '*Bad Server';
+                    return res.status(500).redirect('/totalCharge');
+                    // return res.status(500).render('totalCharge',
+                    //     {databaseError: '*Bad Server'}
+                    // );
+                });            
         }
+        else {
+            let {total, checkInDate, checkOutDate, rooms, adults, kids, roomtype, pricePerRoom, points} = req.body;
 
-        if (req.session.adminId) {
-            loggingstring =
-                `<li class="nav-item">\
-                <a class="nav-link" href="/hotel/memberBenefits">Member Benefits</a>\
-            </li>\
-            <li class="nav-item">\
-                <a class="nav-link" href="/logout">Log Out</a>\
-            </li>\
-            <li class="nav-item">\
-                <a class="nav-link bookBtn" href="/admin" tabindex="-1" aria-disabled="true">ADMIN</a>\
-            </li>\
-            `;
-            footertype = 'footerAdmin';
-        }
+            var today = new Date();
+            var formattedDate = today.getFullYear().toString() + '-' + (today.getMonth() + 1).toString().padStart(2, 0) + '-' + today.getDate().toString().padStart(2, 0);
 
-        db.collection('booking').insertOne(reservation)
-            .then(resp => {
-                console.log(resp);
-                // for debugging and for production
-                // return res.status(201).send('Good');
-            }).catch(err => {
-                console.log(err);
-                database = '*Bad Server';
-                return res.status(500).redirect('/totalCharge');
-                // return res.status(500).render('totalCharge',
-                //     {databaseError: '*Bad Server'}
-                // );
-            });
+            var userID = { _id: ObjectId(req.session.userId) };
 
-        //Use to find in database
-        db.collection('booking').findOne(reservation)
-            .then(resp => {
-                // console.log(resp._id);
-                // res.redirect('totalCharge/pay/'+resp._id); //resp._id is the id of the database
-                res.render('pay', {
-                    bookingid: resp._id,
-                    whichfooter: footertype,
-                    logging: loggingstring
+            db.collection('users').findOne(userID)
+                .then(resp=>{
+
+                    var allpoints = resp.membershipPoints - parseInt(points);
+                    allpoints = allpoints + parseInt(total) * 0.10;
+                    var update ={
+                        $set: {
+                            'membershipPoints': parseInt(allpoints)
+                        }
+                    }
+
+                    db.collection('users').updateOne(userID,update)
+                        .then(resppoints=>{
+                            var reservationMember = {
+                                fname : resp.fname,
+                                lname : resp.lname,
+                                email : resp.email,
+                                requests: req.body.requests,
+                                checkInDate,
+                                checkOutDate,
+                                rooms : parseInt(rooms),
+                                adults : parseInt(adults),
+                                kids : parseInt(kids),
+                                roomtype,
+                                pricePerRoom : parseFloat(pricePerRoom).toFixed(2),
+                                bookingDate: formattedDate,
+                                status: "Booked",
+                                payment: {
+                                    total,
+                                    status: "Not Paid",
+                                    creditcardNumber: resp.creditcardNumber,
+                                    creditcardOwner: resp.creditcardOwner,
+                                    cvv: resp.cvv,
+                                    ccprovider: resp.ccprovider,
+                                    month: resp.month,
+                                    year: resp.year
+                                }
+                            };
+                        
+                            db.collection('booking').insertOne(reservationMember)
+                                .then(respbook => {
+                                        db.collection('booking').findOne(reservationMember)
+                                        .then(respfind => {
+                                            // console.log("bookid");
+                                            // console.log(respfind._id);
+                                            res.redirect('/totalCharge/billingDetails/' + respfind._id);
+                                        }).catch(errfind => {
+                                            console.log(errfind);
+                                            database = '*Bad Server';
+                                            return res.status(500).redirect('/totalCharge');
+                                        })   
+                                }).catch((errbook=>{
+                                    console.log(errbook);
+                                    database = '*Bad Server';
+                                    return res.status(500).redirect('/totalCharge');
+                                }));
+
+                        }).catch(errpoints => {
+                            console.log(errpoints);
+                            database = '*Bad Server';
+                            return res.status(500).redirect('/totalCharge');
+
+                        });
+
+                }).catch(err=>{
+                    console.log(err);
+                    database = '*Bad Server';
+                    return res.status(500).redirect('/totalCharge');
                 });
-            }).catch(err => {
-                console.log(err);
-                database = '*Bad Server';
-                return res.status(500).redirect('/totalCharge');
-            })
+        }
     });
 
     //:bookId = means that the url of the website will be ending with the id in the databse
@@ -385,11 +465,24 @@ const routerFunction = function(db) {
             headertype = 'headerAdmin';
             footertype = 'footerAdmin';
         }
+        
+        var bookingid = { _id: ObjectId(req.params.bookId) }; 
+        // console.log(req.params.bookId);
 
-        res.render('billingDetails', {
-            whichheader: headertype,
-            whichfooter: footertype
-        });
+        db.collection('booking').findOne(bookingid)
+            .then(resp=>{
+                // console.log(resp);
+                var imagesource = resp.roomtype;
+                imagesource = imagesource.replace(/\s/g, '');
+                res.render('billingDetails', {
+                    data: resp,
+                    source: '/images/Rooms/' + imagesource + '.jpg',
+                    whichfooter: footertype,
+                    whichheader: headertype
+                })
+            }).catch(err=>{
+                console.log(err);
+            });
     });
 
     router.post('/billingDetails', function(req, res) {
