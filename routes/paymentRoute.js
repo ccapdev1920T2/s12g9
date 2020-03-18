@@ -89,7 +89,7 @@ const routerFunction = function(db) {
 
         imagesource = req.body.roomtype;
         imagesource = imagesource.replace(/\s/g, '');
-
+        
         var headertype = 'header';
         var footertype = 'footer';
         var totalChargetype = 'totalChargeGuest';
@@ -105,14 +105,47 @@ const routerFunction = function(db) {
             db.collection('users').findOne(userid)
                 .then(resp => {
                     point = resp.membershipPoints;
-                    return res.render('totalCharge', {
-                        data: req.body,
-                        source: '/images/Rooms/'+ imagesource + '.jpg',
-                        whichheader:  headertype,
-                        whichfooter: footertype,
-                        whichtotalCharge: totalChargetype,
-                        memberPoints: point.toString()
-                    }); 
+
+                    if (req.body.roomtype === 'Classic Deluxe'){
+
+                        var checkBox = `
+                            <div class="row pt-3">\
+                                <div class="style">Use Points to Book Classic Deluxe</div>\
+                            </div>\
+                            <div class="row pt-2">\
+                                <div class="subheader">You may either choose to pay or use points for this type of room.</div>\
+                            </div>\
+                            <div class="row">\
+                                <img src="/images/AboutUs/MP.svg" width="97%" height="1%">\
+                            </div>\
+                            <div class="pb-3 ml-4">\
+                                <input class="form-check-input pointfee" type="checkbox" name="classicDeluxe" onclick=calculatePoints() value="classicDeluxe">\
+                                <label class="form-check-label" for="gridCheck1">\
+                                    Use Points (<span id="classicdeluxepoints">150000</span> points)\
+                                </label>\
+                            </div>\
+                        `
+                        
+                        return res.render('totalCharge', {
+                            data: req.body,
+                            source: '/images/Rooms/'+ imagesource + '.jpg',
+                            whichheader:  headertype,
+                            whichfooter: footertype,
+                            whichtotalCharge: totalChargetype,
+                            memberPoints: point.toString(),
+                            checkboxDiv: checkBox
+
+                        }); 
+                    } else {
+                        return res.render('totalCharge', {
+                            data: req.body,
+                            source: '/images/Rooms/'+ imagesource + '.jpg',
+                            whichheader:  headertype,
+                            whichfooter: footertype,
+                            whichtotalCharge: totalChargetype,
+                            memberPoints: point.toString()
+                        }); 
+                    }    
                 }).catch (err => {
                     console.log(err);
                 })

@@ -7,7 +7,7 @@
     <link rel="stylesheet" type="text/css" href="/stylesheets/totalCharge.css">
     <script>
        function breakfastFunc(){
-            $('input[name="dbbuffet"]').change(function(){
+            $('input[name="dbbuffet"]').change(function(e){
                 if ($("input[name='dbbuffet']:checked").length > 1) {
                     $(this).prop('checked', false);                    
                 }
@@ -126,9 +126,16 @@
             var spatreat = $("#spatreatmentpoints");
             var requestString ="";
             var additional = $("#additionalrequest");
+            var classic = $("#classicdeluxepoints");
 
             requestString = requestString + additional.val();
 
+            //USE FOR CLASSIC DELUXE POINTS
+            var room = $("#roomfees");
+            var numrooms = $("#numrooms");
+            var priceroom = $("#priceperroom");
+
+            //USE FOR POINTS
             var total = $("#totalpoint");
             var inputpoint = $("#inputpoints");
 
@@ -145,6 +152,10 @@
                     additional.val(requestString);
 
             }
+
+            room.text(parseFloat(numrooms.val().trim()) * parseFloat(priceroom.val().trim()));
+
+            calculateUser();
 
             if ($("input[class='form-check-input pointfee']:checked") != "undefined"){
                 $.each($("input[class='form-check-input pointfee']:checked"), function(){
@@ -164,6 +175,10 @@
                     } else if ($(this).val() === 'spatreatment'){
                         points = parseInt(points) + parseInt(spatreat.text());
                         string = 'Spa Treatment for Whole Stay';
+                    } else if ($(this).val() === 'classicDeluxe'){
+                        points = parseInt(points) + parseInt(classic.text());
+                        room.text('0');  
+                        calculateUser();
                     }
 
                     console.log(points);
@@ -190,6 +205,7 @@
             var dbpoints = $("#dinnerbuffetpoints");
             var allpoints = $("#allbuffetpoints");
             var spatreat = $("#spatreatmentpoints");
+            var classic = $("#classicdeluxepoints");
 
             var totalpoints= $("#totalpoint").text();
             var currentpoints= $("#membershippoint").text();
@@ -219,6 +235,10 @@
                 else if (!$(this).is(":checked") && $(this).val() === 'spatreatment' && (parseInt(currentpoints) - parseInt(totalpoints)) < parseInt(spatreat.text())){
                     $(this).attr('disabled', true);
                 }
+
+                else if (!$(this).is(":checked") && $(this).val() === 'classicDeluxe' && (parseInt(currentpoints) - parseInt(totalpoints)) < parseInt(classic.text())){
+                    $(this).attr('disabled', true);
+                }
             })
                 
         }
@@ -229,6 +249,7 @@
             var dbpoints = $("#dinnerbuffetpoints");
             var allpoints = $("#allbuffetpoints");
             var spatreat = $("#spatreatmentpoints");
+            var classic = $("#classicdeluxepoints");
 
             var currentpoints = $("#membershippoint").text();
             
@@ -249,7 +270,9 @@
                 }
                     
                 else if ($(this).val() === 'spatreatment' && parseInt(currentpoints) < parseInt(spatreat.text())){
-                    console.log(spatreat.text());
+                    $(this).attr('disabled', true);
+                }
+                else if ($(this).val() === 'classicDeluxe' && parseInt(currentpoints) < parseInt(classic.text())){
                     $(this).attr('disabled', true);
                 }
             })         
@@ -351,8 +374,8 @@
         </div>
         </form>
     </div>
+     {{{checkboxDiv}}}
     <div class="container pb-4" id="guest">
-        <!-- TODO: redirect to billing details dapat meaning no need to put credit card information-->
         <form method="POST" action="/totalCharge/pay">
             <div class="form-group">
                 <label for="comment">Additional Comments/Special Requests</label>
@@ -377,15 +400,15 @@
                 <input type="hidden" name="roomtype" value="{{data.roomtype}}">
             </div>
             <div class="form-group">
-                <input type="hidden" name="pricePerRoom" value="{{data.pricePerRoom}}">
+                <input type="hidden" name="pricePerRoom" value="{{data.pricePerRoom}}" id="priceperroom">
             </div>
             <div class="form-group">
                 <input type="hidden" name="total" value="{{data.total}}" id="inputtotal">
             </div> 
-            <!-- TODO: -->
             <div class="form-group">
-                <input type="text" name="points" value="0" id="inputpoints">
+                <input type="hidden" name="points" value="0" id="inputpoints">
             </div> 
+            <!-- TODO: -->
             <div class="form-group">
                 <textarea class="form-control" rows="3" id="additionalrequest" name="additionalrequest"></textarea>
             </div> 
