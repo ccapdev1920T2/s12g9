@@ -40,17 +40,17 @@ app.use(express.static(path.join(__dirname, '/public')));
 //partials for hbs
 const hbs = require('hbs');
 hbs.registerPartials(__dirname + '/views/partials')
-// hbs.registerHelper('display', function(whichHeader){
-//     if (whichHeader === 'guest'){
-//         return header;
-//     }
-//     else if (whichHeader === 'user'){
-//         return headerUser;
-//     }
-//     else {
-//         return headerAdmin;
-//     }
-// });
+    // hbs.registerHelper('display', function(whichHeader){
+    //     if (whichHeader === 'guest'){
+    //         return header;
+    //     }
+    //     else if (whichHeader === 'user'){
+    //         return headerUser;
+    //     }
+    //     else {
+    //         return headerAdmin;
+    //     }
+    // });
 
 // MIDDLEWARES
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -73,7 +73,7 @@ client.connect().then(() => {
     app.use('/admin', adminRouter);
 
     //home router
-    const homeRouter= require('./routes/homeRoute')(db); //passing db to the file homeRoute.js
+    const homeRouter = require('./routes/homeRoute')(db); //passing db to the file homeRoute.js
     app.use('/', homeRouter);
 
     // user router
@@ -82,17 +82,17 @@ client.connect().then(() => {
 
     // payments router
     const paymentRouter = require('./routes/paymentRoute')(db);
-    app.use('/totalCharge',paymentRouter);
+    app.use('/totalCharge', paymentRouter);
 
     // hotel router << normal users and guest
     const hotelRouter = require('./routes/hotelRoute');
-    app.use('/hotel',hotelRouter);
+    app.use('/hotel', hotelRouter);
 
     app.listen(port, hostname, () => {
         console.log(`Server running at http://${hostname}:${port}/`);
     });
 }).catch(err => {
     console.log(err);
-});   
+});
 
 module.exports = app;

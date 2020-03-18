@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express();
 const { ObjectId } = require('mongodb');
+//verification
+const nodemailer = require('nodemailer');
 
 const routerFunction = function(db) {
 
@@ -114,6 +116,7 @@ const routerFunction = function(db) {
                     db.collection('users').insertOne({
                             email: "admin@paraisohotels.com",
                             password: "para1soHotels",
+                            verified: true,
                             admin: true
                         })
                         .then(resp => {
@@ -493,6 +496,8 @@ const routerFunction = function(db) {
         });
     });
 
+
+    //Get for signIn
     router.get('/signIn', loggedIn, function(req, res) {
         var footertype = 'footer';
 
@@ -509,6 +514,7 @@ const routerFunction = function(db) {
         });
     });
 
+    //post for signIN
     router.post('/signIn', function(req, res) {
         var footertype = 'footer';
 
@@ -609,6 +615,7 @@ const routerFunction = function(db) {
             });
     });
 
+    //Get for signUp
     router.get('/signUp', loggedIn, function(req, res) {
         var footertype = 'footer';
 
@@ -630,6 +637,8 @@ const routerFunction = function(db) {
     router.post('/signUp',
         function(req, res) {
 
+            var verified = false;
+            var verificationKey = Math.random().toString(36).substr(2, 8);
             var footertype = 'footer';
 
             // console.log(req.session.userId);
@@ -653,6 +662,7 @@ const routerFunction = function(db) {
             creditcardOwner = creditcardOwner.trim();
             cvv = cvv.trim();
             creditcardNumber = creditcardNumber.trim();
+            console.log('trimmed');
 
             // validation
             if (!fname) {
@@ -698,6 +708,37 @@ const routerFunction = function(db) {
                     whichfooter: footertype
                 });
             }
+
+            //EMAIL VERIFICATION
+
+            var transporter = nodemailer.createTransport({
+                host: 'smtp.gmail.com',
+                //port: 3000,
+                secure: false,
+                auth: {
+                    user: 'paraisohotelscorp@gmail.com',
+                    pass: 'para1soHotels'
+                },
+                tls: {
+                    rejectUnauthorized: false
+                }
+            });
+
+            var text = "Please click on the link: http://localhost:3000/ to have your email verified. Your verification key is: " + verificationKey + "<br> You only have one hour to verify your account";
+            let mailOptions = {
+                from: 'Hotel Paraiso',
+                to: email,
+                subject: 'Verify Email Address - Hotel Paraiso',
+                text: text
+            };
+
+            transporter.sendMail(mailOptions, (error, info) => {
+                if (error) {
+                    return console.log(error);
+                }
+
+                console.log('Message sent: %s', info.messageID);
+            });
 
             if (!password) {
                 return res.render('signUp', {
@@ -758,6 +799,11 @@ const routerFunction = function(db) {
             //generating random membership number
             var memberNumber = Math.floor(1000000000 + Math.random() * 9000000000);
 
+            //getting the date when the user signed up
+            var today = new Date();
+            var date = new Date(today.getTime() + 1000 * 60 * 30);
+
+
             //checking if random generated number is used already in the database
             // var found = 1;
 
@@ -798,7 +844,11 @@ const routerFunction = function(db) {
                 year,
                 ccprovider,
                 membershipNumber: memberNumber,
-                membershipPoints: 0
+                membershipPoints: 0,
+                admin: false,
+                signInDate: date,
+                verificationKey,
+                verified
             };
 
             // promises
@@ -809,7 +859,7 @@ const routerFunction = function(db) {
                             .then(respinsert => {
                                 console.log(respinsert);
                                 // for debugging and for production
-                                return res.status(201).redirect('/signIn');
+                                return res.status(201).redirect('/verifies/:verification');
                             }).catch(errsec => {
                                 console.log(errsec);
                                 return res.status(500).render('signUp', {
@@ -854,6 +904,47 @@ const routerFunction = function(db) {
         res.render('viewRooms', {
             whichfooter: footertype
         });
+    });
+
+    router.get('/verifies/:verification', function(req, res) {
+        res.render('verificationKey', {
+            whichheadertype: 'header',
+            whichfooter: 'footer',
+            verificationKey: req.params.verificationKey
+        });
+    });
+
+    router.post('/verifies/:verification', function(req, res) {
+        var verificationkey = { verificationKey: req.params.verification };
+
+        console.log(req.params.verificationKey);
+        res.render('verificationKey', {
+            whichheadertype: 'header',
+            whichfooter: 'footer',
+            verificationKey: req.param.verificationKey
+        });
+
+        db.collection('users').findOne(verificationkey)
+            .then(resp => {
+                var update = {
+                    $set: {
+                        'verified': true
+                    }
+                }
+
+                db.collection('users').updateOne(verificationkey, update)
+                    .then(respupdate => {
+                        res.redirect('/');
+                    }).catch(errfind => {
+                        console.log(errfind);
+                        database = '*Bad Server';
+                        return res.status(500).redirect('/');
+                    })
+            }).catch(errverify => {
+                console.log(errverify);
+                database = '*Bad Server';
+                return res.status(500).redirect('/verifies/' + req.params.verificationKey);
+            })
     });
 
     return router;
