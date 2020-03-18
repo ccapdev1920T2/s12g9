@@ -67,7 +67,7 @@ const routerFunction = function(db) {
         ];
         db.collection('booking').find({ bookingDate: formattedDate.toString() }).toArray()
             .then(resp => {
-                console.log(resp.length);
+                // console.log(resp.length);
                 var newArray = [];
                 for (var i = 0; i < resp.length; i++) {
                     imagesource = resp[i].roomtype;
@@ -82,7 +82,7 @@ const routerFunction = function(db) {
                     // price = (Math.round(resp[i].pricePerRoom * 100) / 100).toFixed(2);
                     // console.log(resp[i]._id);
                     price = resp[i].payment.total;
-                    console.log(price);
+                    // console.log(price);
 
 
                     var bookingObject = {
@@ -116,20 +116,6 @@ const routerFunction = function(db) {
             });
     });
 
-    //TODO: ivy's for log in
-    // router.get('/adminaccount/:userId', function(req, res) {
-    //     res.render('home',{
-    //         logging: 
-    //             `<li class="nav-item">\
-    //                 <a class="nav-link" href="/logout">Log Out</a>\
-    //             </li>\
-    //             <li class="nav-item">\
-    //                 <a class="nav-link bookBtn" href="/admin" tabindex="-1" aria-disabled="true">ACCOUNT</a>\
-    //             </li>\
-    //             `
-    //     });
-    // });
-
     //FOR CLEANILESS OF WEBSITE ONLY
     router.get('/customerDetails', function(req, res) {
         if (req.session.adminId) {
@@ -144,13 +130,35 @@ const routerFunction = function(db) {
 
     //FOR CLEANILESS OF WEBSITE ONLY
     router.get('/customerDetails/:bookid', function(req, res) {
-        if (req.session.adminId) {
-            res.redirect('/');
-        } else if (req.session.userId) {
-            res.redirect('/');
-        } else {
-            res.redirect('/signIn');
+        var bookingID = { _id: ObjectId(req.params.bookid) };
+
+        var headertype = 'header';
+        var footertype = 'footer';
+
+        if (req.session.userId) {
+            headertype = 'headerUser';
+            footertype = 'footerUser';
         }
+
+        if (req.session.adminId) {
+            headertype = 'headerAdmin';
+            footertype = 'footerAdmin';
+        }
+        
+        db.collection('booking').deleteOne(bookingID)
+            .then(resp => {
+                console.log(resp);
+                return res.status(201).redirect('/admin');
+            }).catch(err => {
+                console.log(err);
+                return res.status(500).render('customerDetails', {
+                    databaseError: '*Bad Server',
+                    whichheader: headertype,
+                    whichfooter: footertype,
+                    bookingid: req.params.bookid
+                });
+
+            });
     });
 
     router.post('/customerDetails/:bookid', notLoggedInAdmin, function(req, res) {
@@ -171,7 +179,7 @@ const routerFunction = function(db) {
 
         db.collection('booking').findOne(bookingID)
             .then(resp => {
-                console.log(resp._id);
+                // console.log(resp._id);
                 res.render('customerDetails', {
                     fname: resp.fname,
                     lname: resp.lname,
@@ -181,14 +189,16 @@ const routerFunction = function(db) {
                     numAdults: resp.adults,
                     numKids: resp.kids,
                     whichheader: headertype,
-                    whichfooter: footertype
+                    whichfooter: footertype,
+                    bookingid: req.params.bookid
                 });
             }).catch(err => {
                 console.log(err);
                 return res.status(500).render('customerDetails', {
                     databaseError: '*Bad Server',
                     whichheader: headertype,
-                    whichfooter: footertype
+                    whichfooter: footertype,
+                    bookingid: req.params.bookid
                 });
             });
     });
