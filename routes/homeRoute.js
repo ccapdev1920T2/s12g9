@@ -642,7 +642,7 @@ const routerFunction = function(db) {
             }
 
             // console.log(req.body);
-            let { fname, lname, email, password, cpassword, owner, cvv, creditcardNumber, month, year, ccprovider } = req.body;
+            let { fname, lname, email, password, cpassword, creditcardOwner, cvv, creditcardNumber, month, year, ccprovider } = req.body;
 
             // sanitation of data/ cleaning of the data
             fname = fname.trim(); // '      '
@@ -650,7 +650,7 @@ const routerFunction = function(db) {
             email = email.trim(); // '      '
             password = password.trim();
             cpassword = cpassword.trim();
-            owner = owner.trim();
+            creditcardOwner = creditcardOwner.trim();
             cvv = cvv.trim();
             creditcardNumber = creditcardNumber.trim();
 
@@ -725,7 +725,7 @@ const routerFunction = function(db) {
                 });
             }
 
-            if (!owner) {
+            if (!creditcardOwner) {
                 return res.render('signUp', {
                     ownerError: {
                         msg: '*Please fill up missing field'
@@ -791,7 +791,7 @@ const routerFunction = function(db) {
                 email,
                 password,
                 cpassword,
-                owner,
+                creditcardOwner,
                 cvv,
                 creditcardNumber,
                 month,

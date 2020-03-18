@@ -99,7 +99,7 @@
                             <h1 class="mb-5">Credit Card Information</h1>
                             <div class=group1>
                                 <div class="form-group owner">
-                                    <input type="text" class="form-control" id="owner" name="owner" placeholder="Name of Card Owner" value="{{{data.owner}}}">
+                                    <input type="text" class="form-control" id="owner" name="creditcardOwner" placeholder="Name of Card Owner" value="{{{data.owner}}}">
                                 </div>
                                 <span class="error-label mr-auto" id="owner-error">
                                     {{ownerError.msg}}
@@ -111,7 +111,7 @@
                                     {{cvvError.msg}}
                                 </span>
                                 <div class="form-group" id="card-number-field">
-                                    <input type=text pattern="[0-9]{13,16}" id="credit-number" name="cardNumber" placeholder="Card Number" value="{{{data.cardNumber}}}">
+                                    <input type=text pattern="[0-9]{13,16}" id="credit-number" name="creditcardNumber" placeholder="Card Number" value="{{{data.cardNumber}}}">
                                 </div>
                                 <span class="error-label mr-auto" id="cardNum-error">
                                     {{cardNumError.msg}}
