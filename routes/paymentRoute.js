@@ -410,6 +410,11 @@ const routerFunction = function(db) {
             var today = new Date();
             var formattedDate = today.getFullYear().toString() + '-' + (today.getMonth() + 1).toString().padStart(2, 0) + '-' + today.getDate().toString().padStart(2, 0);
 
+            if (req.body.requests === "")
+                req.body.requests = req.body.additionalrequest;
+            else
+                req.body.requests = req.body.requests + ', ' + req.body.additionalrequest;
+
             var userID = { _id: ObjectId(req.session.userId) };
 
             db.collection('users').findOne(userID)
