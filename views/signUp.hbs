@@ -105,13 +105,13 @@
                                     {{ownerError.msg}}
                                 </span>
                                 <div class="form-group CVV">
-                                    <input type="text" class="form-control" id="cvv" name="cvv" placeholder="CVV" value="{{{data.cvv}}}">
+                                    <input type="text" pattern="\d*" minlength="3" maxlength="3" class="form-control" id="cvv" name="cvv" placeholder="CVV" value="{{{data.cvv}}}">
                                 </div>
                                 <span class="error-label mr-auto" id="owner-error">
                                     {{cvvError.msg}}
                                 </span>
                                 <div class="form-group" id="card-number-field">
-                                    <input type=text pattern="[0-9]{13,16}" id="credit-number" name="cardNumber" placeholder="Card Number" value="{{{data.cardNumber}}}">
+                                    <input type="text" pattern="[0-9]{13,16}" id="credit-number" name="cardNumber" placeholder="Card Number" value="{{{data.cardNumber}}}">
                                 </div>
                                 <span class="error-label mr-auto" id="cardNum-error">
                                     {{cardNumError.msg}}
