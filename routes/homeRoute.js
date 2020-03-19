@@ -773,32 +773,6 @@ const routerFunction = function(db) {
             var date = new Date(today.getTime() + 1000 * 60 * 30);
 
 
-            //checking if random generated number is used already in the database
-            // var found = 1;
-
-            // console.log('Hello, i was here2');
-
-            // while (found){
-            //     //generating random membership number
-            //     var memberNumber = Math.floor(1000000000 + Math.random() * 9000000000);
-            //     console.log(memberNumber);
-            //     db.collection('users').findOne({membershipNumber: memberNumber})
-            //     .then(resp=>{
-            //         if (resp===null){
-            //             found = 0;
-            //             console.log('lol');
-            //         }
-            //         console.log('endless loop?');
-            //     }).catch(err=>{
-            //         console.log(err);
-            //         return res.status(500).render('signUp', {
-            //             generalError: "*Bad Server",
-            //             whichfooter: footertype
-            //         });
-            //     })
-            // }
-
-
             // inserting to db
             let user = {
                 fname,
@@ -860,7 +834,8 @@ const routerFunction = function(db) {
                             .then(respinsert => {
                                 console.log(respinsert);
                                 // for debugging and for production
-                                return res.status(201).redirect('/verify'); // from this to
+                                return res.status(201).redirect('/verify');
+
                             }).catch(errsec => {
                                 console.log(errsec);
                                 return res.status(500).render('signUp', {
@@ -876,7 +851,6 @@ const routerFunction = function(db) {
                     }
                 }).catch(err => {
                     console.log(err);
-                    //TODO: don't use send 
                     return res.status(500).render('signUp', {
                         generalError: "*Bad Server",
                         whichfooter: footertype
@@ -917,15 +891,13 @@ const routerFunction = function(db) {
 
     router.post('/verify', function(req, res) {
         var verificationkey = { verificationKey: req.body.verification };
-        console.log('Hello');
-        console.log(req.body.verification);
-        /*
-        res.render('verificationKey', {
-            whichheadertype: 'header',
-            whichfooter: 'footer',
-            verificationKey: req.body.verificationKey
-        });
-        */
+
+        console.log(req.body.verificationKey);
+        // res.render('verificationKey', {
+        //     whichheadertype: 'header',
+        //     whichfooter: 'footer',
+        //     verificationKey: req.body.verificationKey
+        // });
 
         db.collection('users').findOne(verificationkey)
             .then(resp => {
