@@ -238,7 +238,7 @@ body{
     padding: 10px;
     text-align: center;
     -webkit-transition: .4s;
-    transition:.4s;
+    transition:.4s
     z-index: -1;
     opacity: 90%;
 }

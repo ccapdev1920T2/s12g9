@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express();
 const { ObjectId } = require('mongodb');
+const nodemailer = require('nodemailer');
 var totalChargeBody, lastname, firstname, emailglobe, database;
 var payBody, cardowner, idBook, card, cardNum, databasepay;
 var imagesource;
@@ -48,7 +49,7 @@ const routerFunction = function(db) {
             });
         }
 
-        if (lastname) {
+        else if (lastname) {
             res.render('totalCharge', {
                 data: totalChargeBody,
                 lnameError: lastname,
@@ -60,7 +61,7 @@ const routerFunction = function(db) {
             });
         }
 
-        if (emailglobe) {
+        else if (emailglobe) {
             res.render('totalCharge', {
                 data: totalChargeBody,
                 emailError: emailglobe,
@@ -72,7 +73,7 @@ const routerFunction = function(db) {
             });
         }
 
-        if (database) {
+        else if (database) {
             res.render('totalCharge', {
                 data: totalChargeBody,
                 databaseError: emailglobe,
@@ -83,6 +84,19 @@ const routerFunction = function(db) {
                 memberPoints: point
             });
         }
+
+        else{
+            res.render('totalCharge', {
+                data: totalChargeBody,
+                source: '/images/Rooms/' + imagesource + '.jpg',
+                whichheader: headertype,
+                whichfooter: footertype,
+                whichtotalCharge: totalChargetype,
+                memberPoints: point
+            });
+        }
+
+
     });
 
     router.post('/', function(req, res) {
@@ -271,7 +285,7 @@ const routerFunction = function(db) {
 
             if (req.body.requests === "")
                 req.body.requests = req.body.additionalrequest;
-            else
+            else if (req.body.additionalrequest !== "")
                 req.body.requests = req.body.requests + ', ' + req.body.additionalrequest;
 
             // console.log('Hello');
@@ -412,7 +426,7 @@ const routerFunction = function(db) {
 
             if (req.body.requests === "")
                 req.body.requests = req.body.additionalrequest;
-            else
+            else if (req.body.additionalrequest !== "")
                 req.body.requests = req.body.requests + ', ' + req.body.additionalrequest;
 
             var userID = { _id: ObjectId(req.session.userId) };
@@ -462,6 +476,81 @@ const routerFunction = function(db) {
                                         .then(respfind => {
                                             // console.log("bookid");
                                             // console.log(respfind._id);
+                                            var transporter = nodemailer.createTransport({
+                                                service: 'gmail',
+                                                secure: false,//true
+                                                port: 25,
+                                                auth: {
+                                                    user: 'paraisohotelscorp@gmail.com',
+                                                    pass: 'para1soHotels'
+                                                }
+                                            });
+
+                                            var months = [ "January", "February", "March", "April", "May", "June",
+                                    "July", "August", "September", "October", "November", "December"];
+
+                                            var cardmonth = parseInt(respfind.payment.month) - 1;
+                                            cardmonth = months[cardmonth];
+
+                                            var addrequests;
+
+                                            if (respfind.requests==="")
+                                                addrequests = 'None';
+                                            else
+                                                addrequests = respfind.requests;
+
+                                            var mailOptions = {
+                                                from: 'Paraiso Hotel', // sender address
+                                                to: respfind.email, // list of receivers
+                                                subject: 'Paraiso Hotel Reservation Details [BOOKING ID: ' + respfind._id + ']', 
+                                                html:  `
+                                                    <head>
+                                                    <link href="https://fonts.googleapis.com/css?family=Open+Sans:200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
+                                                    
+                                                    </head>
+                                                    <p style="font-family: 'Open Sans'; letter-spacing: 1px; color: #2E4106; font-size:12px;">
+                                                        <span style="font-size: 14px">Good day Paraiso Member <b>${respfind.fname} ${respfind.lname}</b>!</span><br><br>
+                                                        Thank you for booking in our hotel.<br><br>
+                                                        This is your <b>booking details</b>.<br>
+                                                        <br>
+                                                        <span style="font-weight:600">Your Check-In Date</span>: ${respfind.checkInDate}<br>
+                                                        <span style="font-weight:600">Your Check-Out Date</span>: ${respfind.checkOutDate}<br>
+                                                        <span style="font-weight:600">Type of Room</span>: ${respfind.roomtype}<br>
+                                                        <span style="font-weight:600">Number of Room/s</span>: ${respfind.rooms}<br>
+                                                        <span style="font-weight:600">Number of Adult/s</span>: ${respfind.adults}<br>
+                                                        <span style="font-weight:600">Number of Kid/s</span>: ${respfind.kids}<br>
+                                                        <span style="font-weight:600">Requests</span>: ${addrequests}<br>
+                                                        <br>
+                                                        Here is your <b>payment details</b>.<br><br>
+                                                        <span style="font-weight:600">Total Amount</span>: PHP ${respfind.payment.total}<br><br>
+                                                        Paid using credit card:<br>
+                                                        <span style="font-weight:600">Credit Card Owner</span>: ${respfind.payment.creditcardOwner}<br>
+                                                        <span style="font-weight:600">Credit Card Number</span>: ${respfind.payment.creditcardNumber}<br>
+                                                        <span style="font-weight:600">CVV</span>: ${respfind.payment.cvv}<br>
+                                                        <span style="font-weight:600">Credit Card Provider</span>: ${respfind.payment.ccprovider}<br>
+                                                        <span style="font-weight:600">Credit Card Expiry Date</span>: ${cardmonth}  20${respfind.payment.year}<br>
+                                                        <br>
+                                                        <span style="font-weight:600">Your Remaining Membership Points</span>: ${allpoints}<br>
+                                                        <br>
+                                                        If there are any problems, feel free to send us an email or go to our website: <a href="http://localhost:3000/aboutUs">(Contact Us)</a> and email us your concern.<br><br>
+                                                        We hope to see you on ${respfind.checkInDate}, and enjoy the amenities and services of Paraiso Hotel. <br>Have a good day!<br>
+                                                        <br>
+                                                        Best Regards,<br>
+                                                        <b>Paraiso Hotel<br>
+                                                    </p>
+                                                    `
+                                            };
+
+                                            transporter.sendMail(mailOptions,(error, response) => {
+                                                if (error) {
+                                                    console.log(error);
+                                                } else {
+                                                    console.log('Email Sent Successfully!');
+                                                    // console.log(response);
+                                                }
+                                                transporter.close();
+                                            })
+
                                             res.redirect('/totalCharge/billingDetails/' + respfind._id);
                                         }).catch(errfind => {
                                             console.log(errfind);
@@ -524,7 +613,11 @@ const routerFunction = function(db) {
     });
 
     router.post('/billingDetails', function(req, res) {
-        res.redirect('/totalCharge/pay');
+        res.redirect('/');
+    });
+
+    router.get('/billingDetails', function(req, res) {
+        res.redirect('/');
     });
 
     router.post('/billingDetails/:bookId', function(req, res) {
@@ -587,30 +680,105 @@ const routerFunction = function(db) {
         db.collection('booking').updateOne(bookingid, update)
             .then(resp => {
                 console.log(resp);
-                // res.redirect('/totalCharge/billingDetails/'+req.params.bookId); //redirecting to a website
-                // res.render('billingDetails');
-            }).catch(err => {
-                console.log(err);
-                database = '*Bad Server';
-                return res.status(500).redirect('/totalCharge/pay');
-            })
 
-        db.collection('booking').findOne(bookingid)
-            .then(resp => {
-                var imagesource = resp.roomtype;
-                imagesource = imagesource.replace(/\s/g, '');
-                res.render('billingDetails', {
-                    data: resp,
-                    source: '/images/Rooms/' + imagesource + '.jpg',
-                    whichfooter: footertype,
-                    whichheader: headertype
-                })
+                db.collection('booking').findOne(bookingid)
+                    .then(respfind => {
+                        var imagesource = respfind.roomtype;
+                        imagesource = imagesource.replace(/\s/g, '');
+
+                        var transporter = nodemailer.createTransport({
+                            service: 'gmail',
+                            secure: false,//true
+                            port: 25,
+                            auth: {
+                                user: 'paraisohotelscorp@gmail.com',
+                                pass: 'para1soHotels'
+                            }
+                        });
+                        
+                        var months = [ "January", "February", "March", "April", "May", "June",
+                                    "July", "August", "September", "October", "November", "December"];
+
+                        var cardmonth = parseInt(respfind.payment.month) - 1;
+                        cardmonth = months[cardmonth];
+
+                        var addrequests;
+
+                        if (respfind.requests==="")
+                            addrequests = 'None';
+                        else
+                            addrequests = respfind.requests;
+
+                        var mailOptions = {
+                            from: 'Paraiso Hotel', // sender address
+                            to: respfind.email, // list of receivers
+                            subject: 'Paraiso Hotel Reservation Details [BOOKING ID: ' + respfind._id + ']', 
+                            html:  `
+                                <head>
+                                <link href="https://fonts.googleapis.com/css?family=Open+Sans:200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
+                                
+                                </head>
+                                <p style="font-family: 'Open Sans'; letter-spacing: 1px; color: #2E4106; font-size:12px;">
+                                    <span style="font-size: 14px">Good day <b>${respfind.fname} ${respfind.lname}</b>!</span><br><br>
+                                    Thank you for booking in our hotel.<br><br>
+                                    This is your <b>booking details</b>.<br>
+                                    <br>
+                                    <span style="font-weight:600">Your Check-In Date</span>: ${respfind.checkInDate}<br>
+                                    <span style="font-weight:600">Your Check-Out Date</span>: ${respfind.checkOutDate}<br>
+                                    <span style="font-weight:600">Type of Room</span>: ${respfind.roomtype}<br>
+                                    <span style="font-weight:600">Number of Room/s</span>: ${respfind.rooms}<br>
+                                    <span style="font-weight:600">Number of Adult/s</span>: ${respfind.adults}<br>
+                                    <span style="font-weight:600">Number of Kid/s</span>: ${respfind.kids}<br>
+                                    <span style="font-weight:600">Requests</span>: ${addrequests}<br>
+                                    <br>
+                                    Here is your <b>payment details</b>.<br><br>
+                                    <span style="font-weight:600">Total Amount</span>: PHP ${respfind.payment.total}<br><br>
+                                    Paid using credit card:<br>
+                                    <span style="font-weight:600">Credit Card Owner</span>: ${respfind.payment.creditcardOwner}<br>
+                                    <span style="font-weight:600">Credit Card Number</span>: ${respfind.payment.creditcardNumber}<br>
+                                    <span style="font-weight:600">CVV</span>: ${respfind.payment.cvv}<br>
+                                    <span style="font-weight:600">Credit Card Provider</span>: ${respfind.payment.ccprovider}<br>
+                                    <span style="font-weight:600">Credit Card Expiry Date</span>: ${cardmonth}  20${respfind.payment.year}<br>
+                                    <br>
+                                    If there are any problems, feel free to send us an email or go to our website: <a href="http://localhost:3000/aboutUs">(Contact Us)</a> and email us your concern.<br><br>
+                                    We hope to see you on ${respfind.checkInDate}, and enjoy the amenities and services of Paraiso Hotel. <br>Have a good day!<br>
+                                    <br>
+                                    Best Regards,<br>
+                                    <b>Paraiso Hotel<br>
+                                </p>
+                                `
+                        };
+
+                        transporter.sendMail(mailOptions,(error, response) => {
+                            if (error) {
+                                console.log(error);
+                            } else {
+                                console.log('Email Sent Successfully!');
+                                // console.log(response);
+                            }
+                            transporter.close();
+                        })
+
+                        return res.render('billingDetails', {
+                            data: respfind,
+                            source: '/images/Rooms/' + imagesource + '.jpg',
+                            whichfooter: footertype,
+                            whichheader: headertype
+                        })
+
+                    }).catch(errfind => {
+                        console.log(errfind);
+                        database = '*Bad Server';
+                        return res.status(500).redirect('/totalCharge/pay');
+                    });
             }).catch(err => {
                 console.log(err);
                 database = '*Bad Server';
                 return res.status(500).redirect('/totalCharge/pay');
-            })
-    });
+            });
+        });
+
+        
     return router;
 };
 

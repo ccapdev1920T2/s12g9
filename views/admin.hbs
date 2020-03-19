@@ -76,6 +76,7 @@
                                 <div class="col-md-2">Payment</div>
                                 <div class="col-md-2"></div>
                             </div>
+                            {{{noneMessage}}}
                             {{#each roomInfo}}
                             <div class="row boxshadow mb-4">
                                 <div class="col-md-4 col-12 roomtype">
@@ -107,7 +108,7 @@
                                 </div>
                                 <div class="col-md-2 col-12 align-self-center py-3 py-md-0 text-center">
                                     <form action="/admin/customerDetails/{{bookingid}}" method="POST">
-                                        <input class="btn" type="submit" value="Customer Details" href="/customerDetails"></a>
+                                        <input class="btn" type="submit" value="Customer Details" href="/customerDetails">
                                     </form>
                                 </div>
                             </div>
