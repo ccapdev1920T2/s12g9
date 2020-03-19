@@ -709,37 +709,6 @@ const routerFunction = function(db) {
                 });
             }
 
-            //EMAIL VERIFICATION
-
-            var transporter = nodemailer.createTransport({
-                host: 'smtp.gmail.com',
-                //port: 3000,
-                secure: false,
-                auth: {
-                    user: 'paraisohotelscorp@gmail.com',
-                    pass: 'para1soHotels'
-                },
-                tls: {
-                    rejectUnauthorized: false
-                }
-            });
-
-            var text = "Please click on the link: http://localhost:3000/ to have your email verified. Your verification key is: " + verificationKey + "<br> You only have one hour to verify your account";
-            let mailOptions = {
-                from: 'Hotel Paraiso',
-                to: email,
-                subject: 'Verify Email Address - Hotel Paraiso',
-                text: text
-            };
-
-            transporter.sendMail(mailOptions, (error, info) => {
-                if (error) {
-                    return console.log(error);
-                }
-
-                console.log('Message sent: %s', info.messageID);
-            });
-
             if (!password) {
                 return res.render('signUp', {
                     passwordError: {
@@ -804,32 +773,6 @@ const routerFunction = function(db) {
             var date = new Date(today.getTime() + 1000 * 60 * 30);
 
 
-            //checking if random generated number is used already in the database
-            // var found = 1;
-
-            // console.log('Hello, i was here2');
-
-            // while (found){
-            //     //generating random membership number
-            //     var memberNumber = Math.floor(1000000000 + Math.random() * 9000000000);
-            //     console.log(memberNumber);
-            //     db.collection('users').findOne({membershipNumber: memberNumber})
-            //     .then(resp=>{
-            //         if (resp===null){
-            //             found = 0;
-            //             console.log('lol');
-            //         }
-            //         console.log('endless loop?');
-            //     }).catch(err=>{
-            //         console.log(err);
-            //         return res.status(500).render('signUp', {
-            //             generalError: "*Bad Server",
-            //             whichfooter: footertype
-            //         });
-            //     })
-            // }
-
-
             // inserting to db
             let user = {
                 fname,
@@ -855,11 +798,45 @@ const routerFunction = function(db) {
             db.collection('users').findOne({ email })
                 .then(resp => {
                     if (resp === null) {
+
+
+                        //EMAIL VERIFICATION
+
+                        var transporter = nodemailer.createTransport({
+                            host: 'smtp.gmail.com',
+                            //port: 3000,
+                            secure: false,
+                            auth: {
+                                user: 'paraisohotelscorp@gmail.com',
+                                pass: 'para1soHotels'
+                            },
+                            tls: {
+                                rejectUnauthorized: false
+                            }
+                        });
+
+                        var text = "Please click on the link: http://localhost:3000/ to have your email verified. Your verification key is: " + verificationKey + "<br> You only have one hour to verify your account";
+                        let mailOptions = {
+                            from: 'Hotel Paraiso',
+                            to: email,
+                            subject: 'Verify Email Address - Hotel Paraiso',
+                            text: text
+                        };
+
+                        transporter.sendMail(mailOptions, (error, info) => {
+                            if (error) {
+                                return console.log(error);
+                            }
+
+                            console.log('Message sent: %s', info.messageID);
+                        });
+
+
                         db.collection('users').insertOne(user)
                             .then(respinsert => {
                                 console.log(respinsert);
                                 // for debugging and for production
-                                return res.status(201).redirect('/verifies/:verification');
+                                return res.status(201).redirect('/verify');
                             }).catch(errsec => {
                                 console.log(errsec);
                                 return res.status(500).render('signUp', {
@@ -906,7 +883,7 @@ const routerFunction = function(db) {
         });
     });
 
-    router.get('/verify/', function(req, res) {
+    router.get('/verify', function(req, res) {
         res.render('verificationKey', {
             whichheadertype: 'header',
             whichfooter: 'footer',
@@ -914,15 +891,15 @@ const routerFunction = function(db) {
         });
     });
 
-    router.post('/verify/', function(req, res) {
+    router.post('/verify', function(req, res) {
         var verificationkey = { verificationKey: req.body.verification };
 
         console.log(req.body.verificationKey);
-        res.render('verificationKey', {
-            whichheadertype: 'header',
-            whichfooter: 'footer',
-            verificationKey: req.body.verificationKey
-        });
+        // res.render('verificationKey', {
+        //     whichheadertype: 'header',
+        //     whichfooter: 'footer',
+        //     verificationKey: req.body.verificationKey
+        // });
 
         db.collection('users').findOne(verificationkey)
             .then(resp => {
