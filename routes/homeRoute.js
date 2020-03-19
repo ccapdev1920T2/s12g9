@@ -575,7 +575,7 @@ const routerFunction = function(db) {
                         whichfooter: footertype
                     });
                 } else {
-                    //TODO: fix account with userId
+                    
                     var user = {
                         email,
                         password
@@ -662,7 +662,7 @@ const routerFunction = function(db) {
             creditcardOwner = creditcardOwner.trim();
             cvv = cvv.trim();
             creditcardNumber = creditcardNumber.trim();
-            console.log('trimmed');
+            // console.log('trimmed');
 
             // validation
             if (!fname) {
@@ -814,12 +814,24 @@ const routerFunction = function(db) {
                             }
                         });
 
-                        var text = "Please click on the link: http://localhost:3000/ to have your email verified. Your verification key is: " + verificationKey + "<br> You only have one hour to verify your account";
                         let mailOptions = {
                             from: 'Hotel Paraiso',
                             to: email,
                             subject: 'Verify Email Address - Hotel Paraiso',
-                            text: text
+                            html: `
+                                <head>
+                                <link href="https://fonts.googleapis.com/css?family=Open+Sans:200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
+                                
+                                </head>
+                                <p style="font-family: 'Open Sans'; letter-spacing: 1px; color: #2E4106; font-size:12px;">
+                                    <span style="font-size: 14px">Good day <b>${req.body.fname} ${req.body.lname}</b>!</span><br><br>
+                                    Please click <a href="http://localhost:3000/verify">Verify Email</a> to have your email verified. Your verification key is: <b>${verificationKey}</b><br> You only have one hour to verify your account.<br>
+                                    <br>
+                                    Best Regards,<br>
+                                    <b>Paraiso Hotel<br>
+                                </p>
+                            
+                            `
                         };
 
                         transporter.sendMail(mailOptions, (error, info) => {
