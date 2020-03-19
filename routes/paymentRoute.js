@@ -517,9 +517,13 @@ const routerFunction = function(db) {
                                                 service: 'gmail',
                                                 secure: false,//true
                                                 port: 25,
+                                                pool: true,
                                                 auth: {
                                                     user: 'paraisohotelscorp@gmail.com',
                                                     pass: 'para1soHotels'
+                                                },
+                                                tls: {
+                                                    rejectUnauthorized: false
                                                 }
                                             });
 
@@ -741,6 +745,10 @@ const routerFunction = function(db) {
                             service: 'gmail',
                             secure: false,//true
                             port: 25,
+                            pool: true,
+                            tls: {
+                                rejectUnauthorized: false
+                            },
                             auth: {
                                 user: 'paraisohotelscorp@gmail.com',
                                 pass: 'para1soHotels'
@@ -809,6 +817,7 @@ const routerFunction = function(db) {
                             }
                             transporter.close();
                         })
+
 
                         return res.render('billingDetails', {
                             data: respfind,

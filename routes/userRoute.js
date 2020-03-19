@@ -2,6 +2,8 @@ const express = require('express');
 const router = express();
 const { ObjectId } = require('mongodb');
 const hbs = require('hbs');
+const nodemailer = require('nodemailer');
+
 const routerFunction = function(db) {
     //helpers for tab2 and tab3
     hbs.registerHelper('ifCD', function(arg1, options) {
@@ -114,11 +116,13 @@ const routerFunction = function(db) {
                 // console.log(resp[0].email);
                 db.collection('bookings').find({ 
                     email:user[0].email,
-                    checkInDate: {$gte:today.toString()}
+                    checkInDate: {$gte:today.toString()},
+                    status:"Booked"
                 }).toArray().then(r=> {
                     db.collection('bookings').find({ 
                         email:user[0].email,
-                        checkInDate: {$lt:today.toString()}
+                        checkInDate: {$lt:today.toString()},
+                        status:"Booked"
                     }).toArray().then(r2 =>{
                         res.render('profile', {
                             name: user[0].fname+" "+ user[0].lname,
@@ -149,8 +153,88 @@ const routerFunction = function(db) {
     // TODO: FINISH THIS
     router.post('/',function(req, res) {
         // add delete from db code here
-        console.log(req.body);
-        res.redirect("/user");
+        db.collection('bookings').updateOne(
+            {
+                checkInDate: req.body.checkIn,
+                checkOutDate: req.body.checkOut,
+                roomType: req.body.roomType,
+                numOfRooms: req.body.numRooms,
+                numOfAdults: req.body.numAdults,
+                numOfKids:req.body.numKids,
+                email:req.body.email,
+                status:"Booked"
+            },
+            {
+                $set:{ status: 'Cancelled' }
+            }
+        ). then(resp=>{
+            db.collection('users').updateOne(
+                {email:req.body.email},
+                {
+                    $inc: {cancellationCount:1}
+                }
+            ).then(r=>
+                db.collection('users').findOne({
+                    email:req.body.email
+                }).then(re=>{
+                    if(re.cancellationCount<5){
+                        res.redirect("/user");
+                    }
+                    else{
+                        db.collection('users').updateOne(
+                            {email:req.body.email},
+                            {
+                                $set:{banned:true}
+                            }
+                        );
+                        // TODO: SEND EMAIL
+                        var transporter = nodemailer.createTransport({
+                            host: 'smtp.gmail.com',
+                            //port: 3000,
+                            secure: false,
+                            port: 25,
+                            pool: true,
+                            auth: {
+                                user: 'paraisohotelscorp@gmail.com',
+                                pass: 'para1soHotels'
+                            },
+                            tls: {
+                                rejectUnauthorized: false
+                            }
+                        });
+                        let mailOptions = {
+                            from: 'Hotel Paraiso',
+                            to: req.body.email,
+                            subject: 'Banned Account - Hotel Paraiso',
+                            html: `
+                                <head>
+                                <link href="https://fonts.googleapis.com/css?family=Open+Sans:200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
+                                
+                                </head>
+                                <p style="font-family: 'Open Sans'; letter-spacing: 1px; color: #2E4106; font-size:12px;">
+                                    <span style="font-size: 14px">Good day <b>${re.fname} ${re.lname}</b>!</span><br><br>
+                                    Your account is currently banned due to excess cancellations for this year. Please contact us through email at paraisohotelscorp@gmail.com or call us through +63 912 345 6789 to reactivate your account.<br>
+                                    <br>
+                                    Best Regards,<br>
+                                    <b>Paraiso Hotel<br>
+                                </p>
+                            
+                            `
+                        };
+                        transporter.sendMail(mailOptions, (error, info) => {
+                            if (error) {
+                                return console.log(error);
+                            }
+
+                            console.log('Message sent: %s', info.messageID);
+                            transporter.close();
+                        });
+                        res.redirect("/logout");
+                    }
+                })
+            ).catch(er=>console.log(er));
+        }).catch(err=> console.log(err))
+        
     });
 
     return router;

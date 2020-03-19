@@ -69,7 +69,7 @@ const routerFunction = function(db) {
         var noneMessageTodayBooking = "";
         var noneMessageView = "";
         var noneMessageCheckin = "";
-        db.collection('booking').find({ bookingDate: formattedDate.toString() }).toArray()
+        db.collection('booking').find({ bookingDate: formattedDate.toString() , status: 'Booked'}).toArray()
             .then(resp => {
 
                 if (resp.length == 0) {
@@ -112,8 +112,13 @@ const routerFunction = function(db) {
                     }
                 }
 
+<<<<<<< HEAD
                 db.collection('booking').find({}).toArray()
                     .then(respViewAll => {
+=======
+                    db.collection('booking').find({status: 'Booked'}).toArray()
+                        .then(respViewAll => {
+>>>>>>> b2f2cce1f31ffd78be74bcacaabd9474070031c0
 
                         // console.log(respViewAll);
                         if (respViewAll.length == 0) {
@@ -155,6 +160,7 @@ const routerFunction = function(db) {
                             }
                         }
 
+<<<<<<< HEAD
                         db.collection('booking').find({
                                 $and: [
                                     { checkInDate: { gte: today } },
@@ -197,6 +203,55 @@ const routerFunction = function(db) {
                                             requests: resp[i].requests,
                                             TOTAL: resp[i].payment.total,
                                             bookingid: resp[i]._id
+=======
+                                db.collection('booking').find({
+                                        $and: [
+                                            { checkInDate: { gte: today } },
+                                            { checkOutDate: { lte: today } }
+                                        ],
+                                        status: 'Booked'
+                                    }).toArray()
+                                    .then(respCheckedIn => {
+
+                                        // console.log(respCheckedIn);
+                                        if (respCheckedIn.length == 0) {
+                                            noneMessageCheckin = '<div class="row justify-content-center pb-5 pt-4">There are no check-ins today to be displayed.</div>';
+                                        }
+                                        // console.log(resp.length);
+                                        else {
+                                            var CheckedInArray = [];
+                                            for (var i = 0; i < respCheckedIn.length; i++) {
+                                                imagesource = respCheckedIn[i].roomtype;
+                                                imagesource = imagesource.replace(/\s/g, '');
+                                                imagesource = '/images/Rooms/' + imagesource + '.jpg'
+                                                checkIn = new Date(respCheckedIn[i].checkInDate);
+                                                formatCheckInDate = monthName[checkIn.getMonth()] + " " + checkIn.getDate() + ", " + checkIn.getFullYear();
+                                                formatCheckInDate = formatCheckInDate.toString();
+                                                checkOut = new Date(respCheckedIn[i].checkOutDate);
+                                                formatCheckOutDate = monthName[checkOut.getMonth()] + " " + checkOut.getDate() + ", " + checkOut.getFullYear();
+                                                formatCheckOutDate = formatCheckOutDate.toString();
+                                                // price = (Math.round(resp[i].pricePerRoom * 100) / 100).toFixed(2);
+                                                // console.log(resp[i]._id);
+                                                price = respCheckedIn[i].payment.total;
+                                                // console.log(price);
+
+
+                                                var CheckedInObject = {
+                                                    img_src: imagesource,
+                                                    roomType: resp[i].roomtype,
+                                                    checkInDate: formatCheckInDate,
+                                                    checkOutDate: formatCheckOutDate,
+                                                    numAdults: resp[i].adults,
+                                                    numKids: resp[i].kids,
+                                                    numRooms: resp[i].rooms,
+                                                    requests: resp[i].requests,
+                                                    TOTAL: resp[i].payment.total,
+                                                    bookingid: resp[i]._id
+                                                }
+
+                                                CheckedInArray[i] = CheckedInObject;
+                                            }
+>>>>>>> b2f2cce1f31ffd78be74bcacaabd9474070031c0
                                         }
 
                                         CheckedInArray[i] = CheckedInObject;

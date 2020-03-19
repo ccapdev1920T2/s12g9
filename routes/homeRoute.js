@@ -117,18 +117,46 @@ const routerFunction = function(db) {
                             email: "admin@paraisohotels.com",
                             password: "para1soHotels",
                             verified: true,
-                            admin: true
+                            admin: true,
+                            banned: false
                         })
                         .then(resp => {
-                            console.log(resp);
-                            return res.render('home', {
+                            // console.log(resp);
+
+                            var todayDate = new Date();
+                            var countUpdate = {$set: {cancellationCount: 0} };
+
+                            if ((todayDate.getMonth() + 1) == 1 && todayDate.getDate() == 1){
+                                db.collection('users').updateMany({},countUpdate)
+                                    .then(resset => {
+                                        return res.render('home', {
+                                            logging: loggingstring,
+                                            // whichheader: 'header',
+                                            whichfooter: footertype
+                                        }) 
+                                    }).catch(errset => {
+                                        console.log(errset);
+                                        return res.render('home', {
+                                            logging: loggingstring,
+                                            // whichheader: 'header',
+                                            whichfooter: footertype
+                                        })
+                                    })
+                            }
+                            else{
+                                return res.render('home', {
                                     logging: loggingstring,
                                     // whichheader: 'header',
                                     whichfooter: footertype
                                 }) //function when rendering the webpage
+                            }
                         }).catch(err => {
                             console.log(err);
-                            return res.status(500).send('Bad Server');
+                            return res.render('home', {
+                                logging: loggingstring,
+                                // whichheader: 'header',
+                                whichfooter: footertype
+                            })
                         });
                 } else {
                     return res.render('home', {
@@ -139,7 +167,11 @@ const routerFunction = function(db) {
                 }
             }).catch(errsec => {
                 console.log(errsec);
-                return res.status(500).send('Bad Server');
+                return res.render('home', {
+                    logging: loggingstring,
+                    // whichheader: 'header',
+                    whichfooter: footertype
+                })
             })
 
     });
@@ -296,8 +328,12 @@ const routerFunction = function(db) {
                 });
             } else if (Number(req.body.nAdults) + (Number(req.body.nKids) / 2) / req.body.nRooms <= 4) {
                 db.collection('bookings').find({
-                    $and: [{
-                            $or: [{ roomType: 'Family Deluxe' },
+                    $and: 
+                    [
+                        {
+                            $or: 
+                            [
+                                { roomType: 'Family Deluxe' },
                                 { roomType: 'Executive Deluxe' },
                                 { roomType: 'Junior Suite' },
                                 { roomType: 'Executive Suite' },
@@ -305,9 +341,14 @@ const routerFunction = function(db) {
                             ]
                         },
                         {
-                            $or: [{ checkInDate: { $lte: req.body.checkIn } },
+                            $or: 
+                            [
+                                { checkInDate: { $lte: req.body.checkIn } },
                                 { checkOutDate: { $gte: req.body.checkOut } }
                             ]
+                        },
+                        {
+                            status:"Booked"
                         }
                     ]
                 }).toArray().then(
@@ -576,49 +617,58 @@ const routerFunction = function(db) {
                         whichfooter: footertype
                     });
                 } else {
-                    if (resp.verified === true){
-                        var user = {
-                            email,
-                            password
+                    if (resp.banned === false){
+                        if (resp.verified === true){
+                            var user = {
+                                email,
+                                password
+                            }
+
+                            db.collection('users').findOne(user)
+                                .then(found => {
+                                    if (found === null) {
+                                        return res.status(401).render('signIn', {
+                                            generalError: `
+                                            <div class="row ml-1">*Incorrect password entered.</div>
+                                            `,
+                                            whichfooter: footertype,
+                                            email: email
+                                        });
+                                    } else {
+                                        if (found.admin == true)
+                                            req.session.adminId = found._id;
+                                        else
+                                            req.session.userId = found._id;
+                                        // console.log(req.session.userId);
+                                        return res.status(201).redirect('/');
+                                    }
+                                }).catch(errfound => {
+                                    console.log(errfound);
+                                    return res.status(401).render('signIn', {
+                                        generalError: "*Bad Server",
+                                        whichfooter: footertype
+                                    });
+                                });
                         }
 
-                        db.collection('users').findOne(user)
-                            .then(found => {
-                                if (found === null) {
-                                    return res.status(401).render('signIn', {
-                                        generalError: `
-                                        <div class="row ml-1">*Incorrect password entered.</div>
-                                        `,
-                                        whichfooter: footertype,
-                                        email: email
-                                    });
-                                } else {
-                                    if (found.admin == true)
-                                        req.session.adminId = found._id;
-                                    else
-                                        req.session.userId = found._id;
-                                    // console.log(req.session.userId);
-                                    return res.status(201).redirect('/');
-                                }
-                            }).catch(errfound => {
-                                console.log(errfound);
-                                return res.status(401).render('signIn', {
-                                    generalError: "*Bad Server",
-                                    whichfooter: footertype
-                                });
+                        else if (resp.verified === false){
+                            return res.status(401).render('signIn', {
+                                generalError: `
+                                <div class="row ml-1">*Account not yet verified</div><div class="row ml-1">Click here to <a href="/verify" class="ml-1"> verify your email address.</a></div>
+                                `,
+                                whichfooter: footertype
                             });
+                        }
+                        
                     }
-
-                    else if (resp.verified === false){
+                    else if (resp.banned === true){
                         return res.status(401).render('signIn', {
                             generalError: `
-                            <div class="row ml-1">*Account not yet verified</div><div class="row ml-1">Click here to <a href="/verify" class="ml-1"> verify your email address.</a></div>
+                            <div class="row ml-1">*Account is banned. Please contact the admin to have your account reactivated.</div>
                             `,
                             whichfooter: footertype
                         });
                     }
-                    
-                    
                 }
             }).catch(err => {
                 console.log(err);
@@ -818,7 +868,9 @@ const routerFunction = function(db) {
                 admin: false,
                 signInDate: date,
                 verificationKey,
-                verified
+                verified,
+                cancellationCount: 0,
+                banned: false
             };
 
             // promises
@@ -832,6 +884,8 @@ const routerFunction = function(db) {
                             host: 'smtp.gmail.com',
                             //port: 3000,
                             secure: false,
+                            port: 25,
+                            pool: true,
                             auth: {
                                 user: 'paraisohotelscorp@gmail.com',
                                 pass: 'para1soHotels'
@@ -867,7 +921,10 @@ const routerFunction = function(db) {
                             }
 
                             console.log('Message sent: %s', info.messageID);
+                            transporter.close();
                         });
+
+                        
 
                         db.collection('users').insertOne(user)
                             .then(respinsert => {
