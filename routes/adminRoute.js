@@ -65,16 +65,15 @@ const routerFunction = function(db) {
         const monthName = ["January", "February", "March", "April", "May", "June",
             "July", "August", "September", "October", "November", "December"
         ];
+
+        var noneMessageTodayBooking = "";
+        var noneMessageView = "";
+        var noneMessageCheckin = "";
         db.collection('booking').find({ bookingDate: formattedDate.toString() }).toArray()
             .then(resp => {
 
-                console.log(resp);
                 if (resp.length == 0) {
-                    return res.render('admin', {
-                        whichfooter: footertype,
-                        logging: loggingstring,
-                        noneMessage: '<div class="row justify-content-center pb-5 pt-4">There are no reservations today to be displayed.</div>'
-                    });
+                    noneMessageTodayBooking= '<div class="row justify-content-center pb-5 pt-4">There are no reservations today to be displayed.</div>';
                 }
                 // console.log(resp.length);
                 else {
@@ -110,17 +109,14 @@ const routerFunction = function(db) {
 
                         newArray[i] = bookingObject;
                     }
+                }
 
                     db.collection('booking').find({}).toArray()
                         .then(respViewAll => {
 
-                            console.log(respViewAll);
+                            // console.log(respViewAll);
                             if (respViewAll.length == 0) {
-                                return res.render('admin', {
-                                    whichfooter: footertype,
-                                    logging: loggingstring,
-                                    noneMessage: '<div class="row justify-content-center pb-5 pt-4">There are no reservations today to be displayed.</div>'
-                                });
+                                noneMessageView= '<div class="row justify-content-center pb-5 pt-4">There are no reservations to be displayed.</div>';
                             }
                             // console.log(resp.length);
                             else {
@@ -156,6 +152,7 @@ const routerFunction = function(db) {
 
                                     viewAllArray[i] = viewAllObject;
                                 }
+                            }
 
                                 db.collection('booking').find({
                                         $and: [
@@ -165,13 +162,9 @@ const routerFunction = function(db) {
                                     }).toArray()
                                     .then(respCheckedIn => {
 
-                                        console.log(respCheckedIn);
+                                        // console.log(respCheckedIn);
                                         if (respCheckedIn.length == 0) {
-                                            return res.render('admin', {
-                                                whichfooter: footertype,
-                                                logging: loggingstring,
-                                                noneMessage: '<div class="row justify-content-center pb-5 pt-4">There are no reservations today to be displayed.</div>'
-                                            });
+                                            noneMessageCheckin = '<div class="row justify-content-center pb-5 pt-4">There are no check-ins today to be displayed.</div>';
                                         }
                                         // console.log(resp.length);
                                         else {
@@ -207,27 +200,29 @@ const routerFunction = function(db) {
 
                                                 CheckedInArray[i] = CheckedInObject;
                                             }
-
-
-                                            return res.render('admin', {
-                                                whichfooter: footertype,
-                                                logging: loggingstring,
-                                                currentlyChecked: CheckedInArray,
-                                                viewAll: viewAllArray,
-                                                todayReserve: newArray
-                                            });
                                         }
 
-                                    }).catch(err => {
+
+                                        return res.render('admin', {
+                                            whichfooter: footertype,
+                                            logging: loggingstring,
+                                            currentlyChecked: CheckedInArray,
+                                            viewAll: viewAllArray,
+                                            todayReserve: newArray,
+                                            noneMessageToday : noneMessageTodayBooking,
+                                            noneMessageChecked: noneMessageCheckin,
+                                            noneMessageViewAll: noneMessageView
+                                        });
+
+                                    }).catch(errcheck => {
                                         return res.status(500).render('admin', {
                                             databaseError: '*Bad Server',
                                             whichfooter: footertype,
                                             logging: loggingstring
                                         });
                                     });
-                            }
 
-                        }).catch(err => {
+                        }).catch(errall => {
                             return res.status(500).render('admin', {
                                 databaseError: '*Bad Server',
                                 whichfooter: footertype,
@@ -235,9 +230,7 @@ const routerFunction = function(db) {
                             });
                         });
 
-                }
-
-            }).catch(err => {
+            }).catch(errbook => {
                 return res.status(500).render('admin', {
                     databaseError: '*Bad Server',
                     whichfooter: footertype,
