@@ -67,9 +67,9 @@ const routerFunction = function(db) {
         ];
         db.collection('booking').find({ bookingDate: formattedDate.toString() }).toArray()
             .then(resp => {
-                
+
                 console.log(resp);
-                if (resp.length == 0){
+                if (resp.length == 0) {
                     return res.render('admin', {
                         whichfooter: footertype,
                         logging: loggingstring,
@@ -111,14 +111,132 @@ const routerFunction = function(db) {
                         newArray[i] = bookingObject;
                     }
 
+                    db.collection('booking').find({}).toArray()
+                        .then(respViewAll => {
 
-                    return res.render('admin', {
-                        whichfooter: footertype,
-                        logging: loggingstring,
-                        roomInfo: newArray
-                    });
+                            console.log(respViewAll);
+                            if (respViewAll.length == 0) {
+                                return res.render('admin', {
+                                    whichfooter: footertype,
+                                    logging: loggingstring,
+                                    noneMessage: '<div class="row justify-content-center pb-5 pt-4">There are no reservations today to be displayed.</div>'
+                                });
+                            }
+                            // console.log(resp.length);
+                            else {
+                                var viewAllArray = [];
+                                for (var i = 0; i < respViewAll.length; i++) {
+                                    imagesource = respViewAll[i].roomtype;
+                                    imagesource = imagesource.replace(/\s/g, '');
+                                    imagesource = '/images/Rooms/' + imagesource + '.jpg'
+                                    checkIn = new Date(respViewAll[i].checkInDate);
+                                    formatCheckInDate = monthName[checkIn.getMonth()] + " " + checkIn.getDate() + ", " + checkIn.getFullYear();
+                                    formatCheckInDate = formatCheckInDate.toString();
+                                    checkOut = new Date(respViewAll[i].checkOutDate);
+                                    formatCheckOutDate = monthName[checkOut.getMonth()] + " " + checkOut.getDate() + ", " + checkOut.getFullYear();
+                                    formatCheckOutDate = formatCheckOutDate.toString();
+                                    // price = (Math.round(resp[i].pricePerRoom * 100) / 100).toFixed(2);
+                                    // console.log(resp[i]._id);
+                                    price = respViewAll[i].payment.total;
+                                    // console.log(price);
+
+
+                                    var viewAllObject = {
+                                        img_src: imagesource,
+                                        roomType: resp[i].roomtype,
+                                        checkInDate: formatCheckInDate,
+                                        checkOutDate: formatCheckOutDate,
+                                        numAdults: resp[i].adults,
+                                        numKids: resp[i].kids,
+                                        numRooms: resp[i].rooms,
+                                        requests: resp[i].requests,
+                                        TOTAL: resp[i].payment.total,
+                                        bookingid: resp[i]._id
+                                    }
+
+                                    viewAllArray[i] = viewAllObject;
+                                }
+
+                                db.collection('booking').find({
+                                        $and: [
+                                            { checkInDate: { gte: today } },
+                                            { checkOutDate: { lte: today } }
+                                        ]
+                                    }).toArray()
+                                    .then(respCheckedIn => {
+
+                                        console.log(respCheckedIn);
+                                        if (respCheckedIn.length == 0) {
+                                            return res.render('admin', {
+                                                whichfooter: footertype,
+                                                logging: loggingstring,
+                                                noneMessage: '<div class="row justify-content-center pb-5 pt-4">There are no reservations today to be displayed.</div>'
+                                            });
+                                        }
+                                        // console.log(resp.length);
+                                        else {
+                                            var CheckedInArray = [];
+                                            for (var i = 0; i < respCheckedIn.length; i++) {
+                                                imagesource = respCheckedIn[i].roomtype;
+                                                imagesource = imagesource.replace(/\s/g, '');
+                                                imagesource = '/images/Rooms/' + imagesource + '.jpg'
+                                                checkIn = new Date(respCheckedIn[i].checkInDate);
+                                                formatCheckInDate = monthName[checkIn.getMonth()] + " " + checkIn.getDate() + ", " + checkIn.getFullYear();
+                                                formatCheckInDate = formatCheckInDate.toString();
+                                                checkOut = new Date(respCheckedIn[i].checkOutDate);
+                                                formatCheckOutDate = monthName[checkOut.getMonth()] + " " + checkOut.getDate() + ", " + checkOut.getFullYear();
+                                                formatCheckOutDate = formatCheckOutDate.toString();
+                                                // price = (Math.round(resp[i].pricePerRoom * 100) / 100).toFixed(2);
+                                                // console.log(resp[i]._id);
+                                                price = respCheckedIn[i].payment.total;
+                                                // console.log(price);
+
+
+                                                var CheckedInObject = {
+                                                    img_src: imagesource,
+                                                    roomType: resp[i].roomtype,
+                                                    checkInDate: formatCheckInDate,
+                                                    checkOutDate: formatCheckOutDate,
+                                                    numAdults: resp[i].adults,
+                                                    numKids: resp[i].kids,
+                                                    numRooms: resp[i].rooms,
+                                                    requests: resp[i].requests,
+                                                    TOTAL: resp[i].payment.total,
+                                                    bookingid: resp[i]._id
+                                                }
+
+                                                CheckedInArray[i] = CheckedInObject;
+                                            }
+
+
+                                            return res.render('admin', {
+                                                whichfooter: footertype,
+                                                logging: loggingstring,
+                                                currentlyChecked: CheckedInArray,
+                                                viewAll: viewAllArray,
+                                                todayReserve: newArray
+                                            });
+                                        }
+
+                                    }).catch(err => {
+                                        return res.status(500).render('admin', {
+                                            databaseError: '*Bad Server',
+                                            whichfooter: footertype,
+                                            logging: loggingstring
+                                        });
+                                    });
+                            }
+
+                        }).catch(err => {
+                            return res.status(500).render('admin', {
+                                databaseError: '*Bad Server',
+                                whichfooter: footertype,
+                                logging: loggingstring
+                            });
+                        });
+
                 }
-                
+
             }).catch(err => {
                 return res.status(500).render('admin', {
                     databaseError: '*Bad Server',
@@ -156,7 +274,7 @@ const routerFunction = function(db) {
             headertype = 'headerAdmin';
             footertype = 'footerAdmin';
         }
-        
+
         db.collection('booking').deleteOne(bookingID)
             .then(resp => {
                 console.log(resp);

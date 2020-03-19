@@ -176,6 +176,30 @@ body {
     font-style: italic;
 }
 
+.dropDowns select {
+    border-radius: 10px;
+    background: transparent;
+    color: #2E4106;
+}
+
+.dropDowns select:hover {
+    color: white;
+    background-color: #2E4106;
+}
+
+.dropDowns .select-selected {
+    background-color: #2E4106;
+}
+
+.dropDowns option {
+    background-color: #2E4106;
+}
+
+.dropDowns select option {
+    color: white;
+    letter-spacing: 1px;
+}
+
 @media only screen and (max-width: 988px) {
     .boxshadow img {
         height: 400px;
