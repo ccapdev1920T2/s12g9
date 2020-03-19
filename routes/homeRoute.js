@@ -859,7 +859,8 @@ const routerFunction = function(db) {
                             .then(respinsert => {
                                 console.log(respinsert);
                                 // for debugging and for production
-                                return res.status(201).redirect('/verifies/:verification');
+                                return res.status(201).redirect('/verify'); // from this to
+                                return res.status(201).redirect('/verify/' + verificationKey);
                             }).catch(errsec => {
                                 console.log(errsec);
                                 return res.status(500).render('signUp', {
@@ -906,22 +907,20 @@ const routerFunction = function(db) {
         });
     });
 
-    router.get('/verifies/:verification', function(req, res) {
+    router.get('/verify', function(req, res) {
         res.render('verificationKey', {
             whichheadertype: 'header',
             whichfooter: 'footer',
-            verificationKey: req.params.verificationKey
         });
     });
 
-    router.post('/verifies/:verification', function(req, res) {
-        var verificationkey = { verificationKey: req.params.verification };
+    router.post('/verify', function(req, res) {
+        var verificationkey = { verificationKey: req.body.verification };
 
         console.log(req.params.verificationKey);
         res.render('verificationKey', {
             whichheadertype: 'header',
             whichfooter: 'footer',
-            verificationKey: req.param.verificationKey
         });
 
         db.collection('users').findOne(verificationkey)
