@@ -147,9 +147,9 @@ footer {
     /*    font-weight: bold;*/
 }
 
-.modal-footer a:focus {
+/* .modal-footer a:focus {
     outline: none;
-}
+} */
 
 .modal-footer a:hover {
     color: white;
@@ -192,6 +192,6 @@ footer {
     background-color: whitesmoke;
 }
 
-.modal-footer .btn:focus {
+/* .modal-footer .btn:focus {
     outline: none;
-  }
+  } */
