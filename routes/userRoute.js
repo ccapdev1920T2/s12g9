@@ -114,11 +114,13 @@ const routerFunction = function(db) {
                 // console.log(resp[0].email);
                 db.collection('bookings').find({ 
                     email:user[0].email,
-                    checkInDate: {$gte:today.toString()}
+                    checkInDate: {$gte:today.toString()},
+                    status:"Booked"
                 }).toArray().then(r=> {
                     db.collection('bookings').find({ 
                         email:user[0].email,
-                        checkInDate: {$lt:today.toString()}
+                        checkInDate: {$lt:today.toString()},
+                        status:"Booked"
                     }).toArray().then(r2 =>{
                         res.render('profile', {
                             name: user[0].fname+" "+ user[0].lname,
@@ -149,14 +151,21 @@ const routerFunction = function(db) {
     // TODO: FINISH THIS
     router.post('/',function(req, res) {
         // add delete from db code here
-        db.collection('bookings').deleteOne({
-            checkInDate: req.body.checkIn,
-            checkOutDate: req.body.checkOut,
-            roomType: req.body.roomType,
-            numOfRooms: req.body.numRooms,
-            numOfAdults: req.body.numAdults,
-            numOfKids:req.body.numKids
-        }). then(resp=>{
+        db.collection('bookings').updateOne(
+            {
+                checkInDate: req.body.checkIn,
+                checkOutDate: req.body.checkOut,
+                roomType: req.body.roomType,
+                numOfRooms: req.body.numRooms,
+                numOfAdults: req.body.numAdults,
+                numOfKids:req.body.numKids,
+                email:req.body.email,
+                status:"Booked"
+            },
+            {
+                $set:{ status: 'Cancelled' }
+            }
+        ). then(resp=>{
             db.collection('users').updateOne(
                 {email:req.body.email},
                 {

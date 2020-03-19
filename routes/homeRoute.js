@@ -328,8 +328,12 @@ const routerFunction = function(db) {
                 });
             } else if (Number(req.body.nAdults) + (Number(req.body.nKids) / 2) / req.body.nRooms <= 4) {
                 db.collection('bookings').find({
-                    $and: [{
-                            $or: [{ roomType: 'Family Deluxe' },
+                    $and: 
+                    [
+                        {
+                            $or: 
+                            [
+                                { roomType: 'Family Deluxe' },
                                 { roomType: 'Executive Deluxe' },
                                 { roomType: 'Junior Suite' },
                                 { roomType: 'Executive Suite' },
@@ -337,9 +341,14 @@ const routerFunction = function(db) {
                             ]
                         },
                         {
-                            $or: [{ checkInDate: { $lte: req.body.checkIn } },
+                            $or: 
+                            [
+                                { checkInDate: { $lte: req.body.checkIn } },
                                 { checkOutDate: { $gte: req.body.checkOut } }
                             ]
+                        },
+                        {
+                            status:"Booked"
                         }
                     ]
                 }).toArray().then(
