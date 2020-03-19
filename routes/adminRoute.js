@@ -73,7 +73,7 @@ const routerFunction = function(db) {
             .then(resp => {
 
                 if (resp.length == 0) {
-                    noneMessageTodayBooking= '<div class="row justify-content-center pb-5 pt-4">There are no reservations today to be displayed.</div>';
+                    noneMessageTodayBooking = '<div class="row justify-content-center pb-5 pt-4">There are no reservations today to be displayed.</div>';
                 }
                 // console.log(resp.length);
                 else {
@@ -107,128 +107,129 @@ const routerFunction = function(db) {
                             bookingid: resp[i]._id
                         }
 
+                        console.log(bookingObject);
                         newArray[i] = bookingObject;
                     }
                 }
 
-                    db.collection('booking').find({}).toArray()
-                        .then(respViewAll => {
+                db.collection('booking').find({}).toArray()
+                    .then(respViewAll => {
 
-                            // console.log(respViewAll);
-                            if (respViewAll.length == 0) {
-                                noneMessageView= '<div class="row justify-content-center pb-5 pt-4">There are no reservations to be displayed.</div>';
-                            }
-                            // console.log(resp.length);
-                            else {
-                                var viewAllArray = [];
-                                for (var i = 0; i < respViewAll.length; i++) {
-                                    imagesource = respViewAll[i].roomtype;
-                                    imagesource = imagesource.replace(/\s/g, '');
-                                    imagesource = '/images/Rooms/' + imagesource + '.jpg'
-                                    checkIn = new Date(respViewAll[i].checkInDate);
-                                    formatCheckInDate = monthName[checkIn.getMonth()] + " " + checkIn.getDate() + ", " + checkIn.getFullYear();
-                                    formatCheckInDate = formatCheckInDate.toString();
-                                    checkOut = new Date(respViewAll[i].checkOutDate);
-                                    formatCheckOutDate = monthName[checkOut.getMonth()] + " " + checkOut.getDate() + ", " + checkOut.getFullYear();
-                                    formatCheckOutDate = formatCheckOutDate.toString();
-                                    // price = (Math.round(resp[i].pricePerRoom * 100) / 100).toFixed(2);
-                                    // console.log(resp[i]._id);
-                                    price = respViewAll[i].payment.total;
-                                    // console.log(price);
+                        // console.log(respViewAll);
+                        if (respViewAll.length == 0) {
+                            noneMessageView = '<div class="row justify-content-center pb-5 pt-4">There are no reservations to be displayed.</div>';
+                        }
+                        // console.log(resp.length);
+                        else {
+                            var viewAllArray = [];
+                            for (var i = 0; i < respViewAll.length; i++) {
+                                imagesource = respViewAll[i].roomtype;
+                                imagesource = imagesource.replace(/\s/g, '');
+                                imagesource = '/images/Rooms/' + imagesource + '.jpg'
+                                checkIn = new Date(respViewAll[i].checkInDate);
+                                formatCheckInDate = monthName[checkIn.getMonth()] + " " + checkIn.getDate() + ", " + checkIn.getFullYear();
+                                formatCheckInDate = formatCheckInDate.toString();
+                                checkOut = new Date(respViewAll[i].checkOutDate);
+                                formatCheckOutDate = monthName[checkOut.getMonth()] + " " + checkOut.getDate() + ", " + checkOut.getFullYear();
+                                formatCheckOutDate = formatCheckOutDate.toString();
+                                // price = (Math.round(resp[i].pricePerRoom * 100) / 100).toFixed(2);
+                                // console.log(resp[i]._id);
+                                price = respViewAll[i].payment.total;
+                                // console.log(price);
 
 
-                                    var viewAllObject = {
-                                        img_src: imagesource,
-                                        roomType: resp[i].roomtype,
-                                        checkInDate: formatCheckInDate,
-                                        checkOutDate: formatCheckOutDate,
-                                        numAdults: resp[i].adults,
-                                        numKids: resp[i].kids,
-                                        numRooms: resp[i].rooms,
-                                        requests: resp[i].requests,
-                                        TOTAL: resp[i].payment.total,
-                                        bookingid: resp[i]._id
-                                    }
-
-                                    viewAllArray[i] = viewAllObject;
+                                var viewAllObject = {
+                                    img_src: imagesource,
+                                    roomType: resp[i].roomtype,
+                                    checkInDate: formatCheckInDate,
+                                    checkOutDate: formatCheckOutDate,
+                                    numAdults: resp[i].adults,
+                                    numKids: resp[i].kids,
+                                    numRooms: resp[i].rooms,
+                                    requests: resp[i].requests,
+                                    TOTAL: resp[i].payment.total,
+                                    bookingid: resp[i]._id
                                 }
+
+                                viewAllArray[i] = viewAllObject;
                             }
+                        }
 
-                                db.collection('booking').find({
-                                        $and: [
-                                            { checkInDate: { gte: today } },
-                                            { checkOutDate: { lte: today } }
-                                        ]
-                                    }).toArray()
-                                    .then(respCheckedIn => {
+                        db.collection('booking').find({
+                                $and: [
+                                    { checkInDate: { gte: today } },
+                                    { checkOutDate: { lte: today } }
+                                ]
+                            }).toArray()
+                            .then(respCheckedIn => {
 
-                                        // console.log(respCheckedIn);
-                                        if (respCheckedIn.length == 0) {
-                                            noneMessageCheckin = '<div class="row justify-content-center pb-5 pt-4">There are no check-ins today to be displayed.</div>';
-                                        }
-                                        // console.log(resp.length);
-                                        else {
-                                            var CheckedInArray = [];
-                                            for (var i = 0; i < respCheckedIn.length; i++) {
-                                                imagesource = respCheckedIn[i].roomtype;
-                                                imagesource = imagesource.replace(/\s/g, '');
-                                                imagesource = '/images/Rooms/' + imagesource + '.jpg'
-                                                checkIn = new Date(respCheckedIn[i].checkInDate);
-                                                formatCheckInDate = monthName[checkIn.getMonth()] + " " + checkIn.getDate() + ", " + checkIn.getFullYear();
-                                                formatCheckInDate = formatCheckInDate.toString();
-                                                checkOut = new Date(respCheckedIn[i].checkOutDate);
-                                                formatCheckOutDate = monthName[checkOut.getMonth()] + " " + checkOut.getDate() + ", " + checkOut.getFullYear();
-                                                formatCheckOutDate = formatCheckOutDate.toString();
-                                                // price = (Math.round(resp[i].pricePerRoom * 100) / 100).toFixed(2);
-                                                // console.log(resp[i]._id);
-                                                price = respCheckedIn[i].payment.total;
-                                                // console.log(price);
+                                // console.log(respCheckedIn);
+                                if (respCheckedIn.length == 0) {
+                                    noneMessageCheckin = '<div class="row justify-content-center pb-5 pt-4">There are no check-ins today to be displayed.</div>';
+                                }
+                                // console.log(resp.length);
+                                else {
+                                    var CheckedInArray = [];
+                                    for (var i = 0; i < respCheckedIn.length; i++) {
+                                        imagesource = respCheckedIn[i].roomtype;
+                                        imagesource = imagesource.replace(/\s/g, '');
+                                        imagesource = '/images/Rooms/' + imagesource + '.jpg'
+                                        checkIn = new Date(respCheckedIn[i].checkInDate);
+                                        formatCheckInDate = monthName[checkIn.getMonth()] + " " + checkIn.getDate() + ", " + checkIn.getFullYear();
+                                        formatCheckInDate = formatCheckInDate.toString();
+                                        checkOut = new Date(respCheckedIn[i].checkOutDate);
+                                        formatCheckOutDate = monthName[checkOut.getMonth()] + " " + checkOut.getDate() + ", " + checkOut.getFullYear();
+                                        formatCheckOutDate = formatCheckOutDate.toString();
+                                        // price = (Math.round(resp[i].pricePerRoom * 100) / 100).toFixed(2);
+                                        // console.log(resp[i]._id);
+                                        price = respCheckedIn[i].payment.total;
+                                        // console.log(price);
 
 
-                                                var CheckedInObject = {
-                                                    img_src: imagesource,
-                                                    roomType: resp[i].roomtype,
-                                                    checkInDate: formatCheckInDate,
-                                                    checkOutDate: formatCheckOutDate,
-                                                    numAdults: resp[i].adults,
-                                                    numKids: resp[i].kids,
-                                                    numRooms: resp[i].rooms,
-                                                    requests: resp[i].requests,
-                                                    TOTAL: resp[i].payment.total,
-                                                    bookingid: resp[i]._id
-                                                }
-
-                                                CheckedInArray[i] = CheckedInObject;
-                                            }
+                                        var CheckedInObject = {
+                                            img_src: imagesource,
+                                            roomType: resp[i].roomtype,
+                                            checkInDate: formatCheckInDate,
+                                            checkOutDate: formatCheckOutDate,
+                                            numAdults: resp[i].adults,
+                                            numKids: resp[i].kids,
+                                            numRooms: resp[i].rooms,
+                                            requests: resp[i].requests,
+                                            TOTAL: resp[i].payment.total,
+                                            bookingid: resp[i]._id
                                         }
 
+                                        CheckedInArray[i] = CheckedInObject;
+                                    }
+                                }
 
-                                        return res.render('admin', {
-                                            whichfooter: footertype,
-                                            logging: loggingstring,
-                                            currentlyChecked: CheckedInArray,
-                                            viewAll: viewAllArray,
-                                            todayReserve: newArray,
-                                            noneMessageToday : noneMessageTodayBooking,
-                                            noneMessageChecked: noneMessageCheckin,
-                                            noneMessageViewAll: noneMessageView
-                                        });
 
-                                    }).catch(errcheck => {
-                                        return res.status(500).render('admin', {
-                                            databaseError: '*Bad Server',
-                                            whichfooter: footertype,
-                                            logging: loggingstring
-                                        });
-                                    });
+                                return res.render('admin', {
+                                    whichfooter: footertype,
+                                    logging: loggingstring,
+                                    currentlyChecked: CheckedInArray,
+                                    viewAll: viewAllArray,
+                                    todayReserve: newArray,
+                                    noneMessageToday: noneMessageTodayBooking,
+                                    noneMessageChecked: noneMessageCheckin,
+                                    noneMessageViewAll: noneMessageView
+                                });
 
-                        }).catch(errall => {
-                            return res.status(500).render('admin', {
-                                databaseError: '*Bad Server',
-                                whichfooter: footertype,
-                                logging: loggingstring
+                            }).catch(errcheck => {
+                                return res.status(500).render('admin', {
+                                    databaseError: '*Bad Server',
+                                    whichfooter: footertype,
+                                    logging: loggingstring
+                                });
                             });
+
+                    }).catch(errall => {
+                        return res.status(500).render('admin', {
+                            databaseError: '*Bad Server',
+                            whichfooter: footertype,
+                            logging: loggingstring
                         });
+                    });
 
             }).catch(errbook => {
                 return res.status(500).render('admin', {
