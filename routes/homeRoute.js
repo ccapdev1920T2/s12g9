@@ -832,6 +832,8 @@ const routerFunction = function(db) {
                             host: 'smtp.gmail.com',
                             //port: 3000,
                             secure: false,
+                            port: 25,
+                            pool: true,
                             auth: {
                                 user: 'paraisohotelscorp@gmail.com',
                                 pass: 'para1soHotels'
@@ -867,7 +869,10 @@ const routerFunction = function(db) {
                             }
 
                             console.log('Message sent: %s', info.messageID);
+                            transporter.close();
                         });
+
+                        
 
                         db.collection('users').insertOne(user)
                             .then(respinsert => {
