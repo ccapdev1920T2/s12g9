@@ -143,6 +143,20 @@ header{
     font-style: italic;
 }
 
+.error-label.mr-auto a{
+    color: #8D1515;
+    font-size: 12px;
+    font-style: italic;
+    text-decoration: underline;
+}
+
+.error-label.mr-auto a:hover{
+    color: #9EAFBA;
+    font-size: 12px;
+    font-style: italic;
+    text-decoration: underline;
+}
+
 @media only screen and (max-height: 3000) {
     header{
         height: 500.5vh;
