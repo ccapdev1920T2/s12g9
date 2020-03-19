@@ -907,7 +907,7 @@ const routerFunction = function(db) {
         });
     });
 
-    router.get('/verify', function(req, res) {
+    router.get('/verify', loggedIn, function(req, res) {
         res.render('verificationKey', {
             whichheadertype: 'header',
             whichfooter: 'footer',
