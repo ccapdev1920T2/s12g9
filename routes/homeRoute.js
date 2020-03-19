@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express();
 const { ObjectId } = require('mongodb');
+//verification
+const nodemailer = require('nodemailer');
 
 const routerFunction = function(db) {
 
@@ -114,6 +116,7 @@ const routerFunction = function(db) {
                     db.collection('users').insertOne({
                             email: "admin@paraisohotels.com",
                             password: "para1soHotels",
+                            verified: true,
                             admin: true
                         })
                         .then(resp => {
@@ -493,6 +496,8 @@ const routerFunction = function(db) {
         });
     });
 
+
+    //Get for signIn
     router.get('/signIn', loggedIn, function(req, res) {
         var footertype = 'footer';
 
@@ -509,6 +514,7 @@ const routerFunction = function(db) {
         });
     });
 
+    //post for signIN
     router.post('/signIn', function(req, res) {
         var footertype = 'footer';
 
@@ -569,7 +575,7 @@ const routerFunction = function(db) {
                         whichfooter: footertype
                     });
                 } else {
-                    //TODO: fix account with userId
+                    
                     var user = {
                         email,
                         password
@@ -609,6 +615,7 @@ const routerFunction = function(db) {
             });
     });
 
+    //Get for signUp
     router.get('/signUp', loggedIn, function(req, res) {
         var footertype = 'footer';
 
@@ -630,6 +637,8 @@ const routerFunction = function(db) {
     router.post('/signUp',
         function(req, res) {
 
+            var verified = false;
+            var verificationKey = Math.random().toString(36).substr(2, 8);
             var footertype = 'footer';
 
             // console.log(req.session.userId);
@@ -642,7 +651,7 @@ const routerFunction = function(db) {
             }
 
             // console.log(req.body);
-            let { fname, lname, email, password, cpassword, owner, cvv, cardNumber, month, year, ccprovider } = req.body;
+            let { fname, lname, email, password, cpassword, creditcardOwner, cvv, creditcardNumber, month, year, ccprovider } = req.body;
 
             // sanitation of data/ cleaning of the data
             fname = fname.trim(); // '      '
@@ -650,9 +659,10 @@ const routerFunction = function(db) {
             email = email.trim(); // '      '
             password = password.trim();
             cpassword = cpassword.trim();
-            owner = owner.trim();
+            creditcardOwner = creditcardOwner.trim();
             cvv = cvv.trim();
-            cardNumber = cardNumber.trim();
+            creditcardNumber = creditcardNumber.trim();
+            // console.log('trimmed');
 
             // validation
             if (!fname) {
@@ -725,7 +735,7 @@ const routerFunction = function(db) {
                 });
             }
 
-            if (!owner) {
+            if (!creditcardOwner) {
                 return res.render('signUp', {
                     ownerError: {
                         msg: '*Please fill up missing field'
@@ -745,7 +755,7 @@ const routerFunction = function(db) {
                 });
             }
 
-            if (!cardNumber) {
+            if (!creditcardNumber) {
                 return res.render('signUp', {
                     cardNumError: {
                         msg: '*Please fill up missing field'
@@ -758,30 +768,9 @@ const routerFunction = function(db) {
             //generating random membership number
             var memberNumber = Math.floor(1000000000 + Math.random() * 9000000000);
 
-            //checking if random generated number is used already in the database
-            // var found = 1;
-
-            // console.log('Hello, i was here2');
-
-            // while (found){
-            //     //generating random membership number
-            //     var memberNumber = Math.floor(1000000000 + Math.random() * 9000000000);
-            //     console.log(memberNumber);
-            //     db.collection('users').findOne({membershipNumber: memberNumber})
-            //     .then(resp=>{
-            //         if (resp===null){
-            //             found = 0;
-            //             console.log('lol');
-            //         }
-            //         console.log('endless loop?');
-            //     }).catch(err=>{
-            //         console.log(err);
-            //         return res.status(500).render('signUp', {
-            //             generalError: "*Bad Server",
-            //             whichfooter: footertype
-            //         });
-            //     })
-            // }
+            //getting the date when the user signed up
+            var today = new Date();
+            var date = new Date(today.getTime() + 1000 * 60 * 30);
 
 
             // inserting to db
@@ -791,25 +780,74 @@ const routerFunction = function(db) {
                 email,
                 password,
                 cpassword,
-                owner,
+                creditcardOwner,
                 cvv,
-                cardNumber,
+                creditcardNumber,
                 month,
                 year,
                 ccprovider,
                 membershipNumber: memberNumber,
-                membershipPoints: 0
+                membershipPoints: 0,
+                admin: false,
+                signInDate: date,
+                verificationKey,
+                verified
             };
 
             // promises
             db.collection('users').findOne({ email })
                 .then(resp => {
                     if (resp === null) {
+
+                        //EMAIL VERIFICATION
+
+                        var transporter = nodemailer.createTransport({
+                            host: 'smtp.gmail.com',
+                            //port: 3000,
+                            secure: false,
+                            auth: {
+                                user: 'paraisohotelscorp@gmail.com',
+                                pass: 'para1soHotels'
+                            },
+                            tls: {
+                                rejectUnauthorized: false
+                            }
+                        });
+
+                        let mailOptions = {
+                            from: 'Hotel Paraiso',
+                            to: email,
+                            subject: 'Verify Email Address - Hotel Paraiso',
+                            html: `
+                                <head>
+                                <link href="https://fonts.googleapis.com/css?family=Open+Sans:200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
+                                
+                                </head>
+                                <p style="font-family: 'Open Sans'; letter-spacing: 1px; color: #2E4106; font-size:12px;">
+                                    <span style="font-size: 14px">Good day <b>${req.body.fname} ${req.body.lname}</b>!</span><br><br>
+                                    Please click <a href="http://localhost:3000/verify">Verify Email</a> to have your email verified. Your verification key is: <b>${verificationKey}</b><br> You only have one hour to verify your account.<br>
+                                    <br>
+                                    Best Regards,<br>
+                                    <b>Paraiso Hotel<br>
+                                </p>
+                            
+                            `
+                        };
+
+                        transporter.sendMail(mailOptions, (error, info) => {
+                            if (error) {
+                                return console.log(error);
+                            }
+
+                            console.log('Message sent: %s', info.messageID);
+                        });
+
                         db.collection('users').insertOne(user)
                             .then(respinsert => {
                                 console.log(respinsert);
                                 // for debugging and for production
-                                return res.status(201).redirect('/signIn');
+                                return res.status(201).redirect('/verify');
+
                             }).catch(errsec => {
                                 console.log(errsec);
                                 return res.status(500).render('signUp', {
@@ -825,7 +863,6 @@ const routerFunction = function(db) {
                     }
                 }).catch(err => {
                     console.log(err);
-                    //TODO: don't use send 
                     return res.status(500).render('signUp', {
                         generalError: "*Bad Server",
                         whichfooter: footertype
@@ -854,6 +891,50 @@ const routerFunction = function(db) {
         res.render('viewRooms', {
             whichfooter: footertype
         });
+    });
+
+    router.get('/verify', function(req, res) {
+        res.render('verificationKey', {
+            whichheadertype: 'header',
+            whichfooter: 'footer',
+            verificationKey: req.body.verificationKey
+        });
+    });
+
+    router.post('/verify', function(req, res) {
+        var verificationkey = { verificationKey: req.body.verification };
+
+        console.log(req.body.verificationKey);
+        // res.render('verificationKey', {
+        //     whichheadertype: 'header',
+        //     whichfooter: 'footer',
+        //     verificationKey: req.body.verificationKey
+        // });
+
+        db.collection('users').findOne(verificationkey)
+            .then(resp => {
+
+                if (resp!==null){
+                    var update = {
+                        $set: {
+                            'verified': true
+                        }
+                    }
+
+                    db.collection('users').updateOne(verificationkey, update)
+                        .then(respupdate => {
+                            res.redirect('/');
+                        }).catch(errfind => {
+                            console.log(errfind);
+                            database = '*Bad Server';
+                            return res.status(500).redirect('/');
+                        });
+                }
+            }).catch(errverify => {
+                console.log(errverify);
+                database = '*Bad Server';
+                return res.status(500).redirect('/verify');
+            });
     });
 
     return router;
