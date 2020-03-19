@@ -157,7 +157,7 @@
                                             <div class="price">PHP {{payment.totalAmount}}</div>
                                         </div>
                                         <div class="col-md-2 col-12 align-self-center py-3 py-md-0 text-center">
-                                            <a class="btn" type="button" href="ProfilePageMember.html">Cancel Reservation</a>
+                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#cancelModal" data-check-in={{{checkInDate}}}  data-check-out={{{checkOutDate}}} data-room-type="Classic Deluxe" data-num-rooms={{{numOfRooms}}} data-num-adults={{{numOfAdults}}} data-num-kids={{{numOfKids}}}>Cancel Reservation</button>
                                         </div>
                                     </div>
                                 {{/ifCD}}
@@ -193,7 +193,7 @@
                                             <div class="price">PHP {{payment.totalAmount}}</div>
                                         </div>
                                         <div class="col-md-2 col-12 align-self-center py-3 py-md-0 text-center">
-                                            <a class="btn" type="button" href="ProfilePageMember.html">Cancel Reservation</a>
+                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#cancelModal" data-check-in={{{checkInDate}}}  data-check-out={{{checkOutDate}}} data-room-type="Family Deluxe" data-num-rooms={{{numOfRooms}}} data-num-adults={{{numOfAdults}}} data-num-kids={{{numOfKids}}}>Cancel Reservation</button>
                                         </div>
                                     </div>
                                 {{/ifFD}}
@@ -229,7 +229,7 @@
                                             <div class="price">PHP {{payment.totalAmount}}</div>
                                         </div>
                                         <div class="col-md-2 col-12 align-self-center py-3 py-md-0 text-center">
-                                            <a class="btn" type="button" href="ProfilePageMember.html">Cancel Reservation</a>
+                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#cancelModal" data-check-in={{{checkInDate}}}  data-check-out={{{checkOutDate}}} data-room-type="Executive Deluxe" data-num-rooms={{{numOfRooms}}} data-num-adults={{{numOfAdults}}} data-num-kids={{{numOfKids}}}>Cancel Reservation</button>
                                         </div>
                                     </div>
                                 {{/ifED}}
@@ -265,7 +265,7 @@
                                             <div class="price">PHP {{payment.totalAmount}}</div>
                                         </div>
                                         <div class="col-md-2 col-12 align-self-center py-3 py-md-0 text-center">
-                                            <a class="btn" type="button" href="ProfilePageMember.html">Cancel Reservation</a>
+                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#cancelModal" data-check-in={{{checkInDate}}}  data-check-out={{{checkOutDate}}} data-room-type="Junior Suite" data-num-rooms={{{numOfRooms}}} data-num-adults={{{numOfAdults}}} data-num-kids={{{numOfKids}}}>Cancel Reservation</button>
                                         </div>
                                     </div>
                                 {{/ifJS}}
@@ -301,7 +301,7 @@
                                             <div class="price">PHP {{payment.totalAmount}}</div>
                                         </div>
                                         <div class="col-md-2 col-12 align-self-center py-3 py-md-0 text-center">
-                                            <a class="btn" type="button" href="ProfilePageMember.html">Cancel Reservation</a>
+                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#cancelModal" data-check-in={{{checkInDate}}}  data-check-out={{{checkOutDate}}} data-room-type="Executive Suite" data-num-rooms={{{numOfRooms}}} data-num-adults={{{numOfAdults}}} data-num-kids={{{numOfKids}}}>Cancel Reservation</button>
                                         </div>
                                     </div>
                                 {{/ifES}}
@@ -337,11 +337,63 @@
                                             <div class="price">PHP {{payment.totalAmount}}</div>
                                         </div>
                                         <div class="col-md-2 col-12 align-self-center py-3 py-md-0 text-center">
-                                            <a class="btn" type="button" href="ProfilePageMember.html">Cancel Reservation</a>
+                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#cancelModal" data-check-in={{{checkInDate}}}  data-check-out={{{checkOutDate}}} data-room-type="Grand Suite" data-num-rooms={{{numOfRooms}}} data-num-adults={{{numOfAdults}}} data-num-kids={{{numOfKids}}}>Cancel Reservation</button>
                                         </div>
                                     </div>
                                 {{/ifGS}}
                             {{/each}}
+                            {{!-- Cancel Booking Modal --}}
+                            <div class="modal fade" data-backdrop ="false" id="cancelModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLongTitle">Confirm Cancellation</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">  
+                                        </div>
+                                        <div class="modal-footer">
+                                            <form method="POST" enctype="application/x-www-form-urlencoded" class="modalForm">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                <input class="btn" type="submit" value="Cancel Reservation">
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <script type="text/javascript">
+                                $('#cancelModal').on('show.bs.modal', function (event) {
+                                    var button = $(event.relatedTarget);// Button that triggered the modal
+                                    var checkin = button.data('check-in');// Extract info from data-* attributes
+                                    var checkout = button.data('check-out');
+                                    var roomtype = button.data('room-type');
+                                    var numrooms = button.data('num-rooms');
+                                    var numadults = button.data('num-adults');
+                                    var numkids = button.data('num-kids');
+                                    // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+                                    // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+                                    var modal = $(this)
+                                    $(".modalForm"). append('<input name="checkIn" id="checkIn" type="hidden" value="'+checkin+ '">'+
+                                                            '<input name="checkOut" id="checkOut" type="hidden" value="'+checkout+ '">'+
+                                                            '<input name="roomType" id="roomType" type="hidden" value="'+roomtype+ '">'+
+                                                            '<input name="numRooms" id="numRooms" type="hidden" value="'+numrooms+ '">'+
+                                                            '<input name="numAdults" id="numAdults" type="hidden" value="'+numadults+ '">'+
+                                                            '<input name="numKids" id="numKids" type="hidden" value="'+numkids+ '">'
+                                                           );
+                                    //<input name="checkIn" id="checkIn" type="hidden" value={{{checkInDate}}}>
+                                    modal.find('.modal-body').html('Clicking confirm will cancel your reservation and automatically refund your payment to your credit card. You will also be automatically redirected to your profile.<br>'+
+                                        '<br><u><b>Your booking details:</b></u>'+
+                                        '<br><b>Check In Date:</b> ' + checkin +
+                                        '<br><b>Check Out Date:</b> '+checkout +
+                                        '<br><b>Room Type:</b> '+roomtype +
+                                        '<br><b>Number of Rooms:</b> '+numrooms +
+                                        '<br><b>Number of Adults:</b> '+numadults +
+                                        '<br><b>Number of Kids:</b> '+numkids
+                                    )
+                                })
+                            </script>
                         </div>
                     </div>
                 </div>

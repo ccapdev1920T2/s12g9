@@ -97,25 +97,19 @@
                             </span>
                             <br>
                             <h1 class="mb-5">Credit Card Information</h1>
+                            <span class="error-label mr-auto" id="owner-error">
+                                    {{cardError}}
+                                </span>
                             <div class="group1">
                                 <div class="form-group owner">
                                     <input type="text" class="form-control" id="owner" name="creditcardOwner" placeholder="Name of Card Owner" value="{{{data.creditcardOwner}}}">
                                 </div>
-                                <span class="error-label mr-auto" id="owner-error">
-                                    {{ownerError.msg}}
-                                </span>
                                 <div class="form-group CVV">
                                     <input type="text" pattern="\d*" minlength="3" maxlength="3" class="form-control" id="cvv" name="cvv" placeholder="CVV" value="{{{data.cvv}}}">
                                 </div>
-                                <span class="error-label mr-auto" id="owner-error">
-                                    {{cvvError.msg}}
-                                </span>
                                 <div class="form-group" id="card-number-field">
                                     <input type="text" pattern="[0-9]{13,16}" id="credit-number" name="creditcardNumber" placeholder="Card Number" value="{{{data.creditcardNumber}}}">
                                 </div>
-                                <span class="error-label mr-auto" id="cardNum-error">
-                                    {{cardNumError.msg}}
-                                </span>
                                 <div class="form-group" id="expiration-date">
                                     <label>Expiration Date</label>
                                     <select name="month" value="{{{data.month}}}">

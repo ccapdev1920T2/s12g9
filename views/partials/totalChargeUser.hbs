@@ -247,6 +247,10 @@
             }
         }
 
+        function submitWhenYes(){
+             $("#yes").submit();
+        }
+
         $(document).ready(function(){
             var bbpoints = $("#breakfastbuffetpoints");
             var lbpoints = $("#lunchbuffetpoints");
@@ -259,17 +263,17 @@
             
 
             $.each($("input[class='form-check-input pointfee']"),function(){
-                if ($(this).val() === 'breakfastbuffet' && parseInt(currentpoints) < parseInt(bbpoints.text())){
+                if ($(this).val() === 'breakfastbuffetpoints' && parseInt(currentpoints) < parseInt(bbpoints.text())){
                     $(this).attr('disabled', true);
                 }
-                else if ($(this).val() === 'lunchbuffet' && parseInt(currentpoints) < parseInt(lbpoints.text())){
+                else if ($(this).val() === 'lunchbuffetpoints' && parseInt(currentpoints) < parseInt(lbpoints.text())){
                     $(this).attr('disabled', true);
                 }
-                else if ($(this).val() === 'dinnerbuffet' && parseInt(currentpoints) < parseInt(dbpoints.text())){
+                else if ($(this).val() === 'dinnerbuffetpoints' && parseInt(currentpoints) < parseInt(dbpoints.text())){
                     $(this).attr('disabled', true);
                 }
                     
-                else if ($(this).val() === 'allbuffet' && parseInt(currentpoints) < parseInt(allpoints.text())){
+                else if ($(this).val() === 'allbuffetpoints' && parseInt(currentpoints) < parseInt(allpoints.text())){
                     $(this).attr('disabled', true);
                 }
                     
@@ -380,7 +384,7 @@
     </div>
      {{{checkboxDiv}}}
     <div class="container pb-4" id="guest">
-        <form method="POST" action="/totalCharge/pay">
+        <form method="POST" action="/totalCharge/pay" id="yes">
             <div class="form-group">
                 <label for="comment">Additional Comments/Special Requests</label>
                 <textarea class="form-control" id="comment" rows="3" name="requests" value="{{data.requests}}"></textarea>
@@ -412,14 +416,39 @@
             <div class="form-group">
                 <input type="hidden" name="points" value="0" id="inputpoints">
             </div> 
-            <!-- TODO: -->
             <div class="form-group">
                 <textarea class="form-control" rows="3" id="additionalrequest" name="additionalrequest" style="display: none;"></textarea>
             </div> 
-             <div class="row justify-center-content py-2 pb-4" style="text-align: center; font-size:18px; font-weight: 1000; letter-spacing: 1px;">Take note that clicking this button would automatically use your registered credit card number to pay.</div>
             <div class="form-group text-center">
-                <input class="btn" type="submit" value="Payment" id="charge">
-            </div>       
+                <button type="button" class="btn" data-toggle="modal" data-target="#exampleModal" id="charge"> Payment </button>
+                {{!-- <input class="btn" type="submit" value="Payment" id="charge"> --}}
+            </div> 
+
+             {{!-- <div class="row checkout justify-content-center pt-5 mt-2">
+                <button type="button" class="btn" data-toggle="modal" data-target="#exampleModal"> Check Out </button>
+            </div> --}}
+
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Confirm Payment</h5>
+                            <button type="button" class="close btn" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            Clicking Yes will use your registered credit card in your account to pay for this booking. Do you proceed?
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button class="btn" onclick="submitWhenYes()" id="yesbtn">Yes</button>
+                            {{!-- <input class="btn" type="submit" value="Payment" id="charge"> --}}
+                        </div>
+                    </div>
+                </div>
+            </div>      
         </form>
     </div>
 </body>

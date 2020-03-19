@@ -152,6 +152,15 @@ form label {
     color: #9EAFBA;
 }
 
+#continue:hover {
+    color: white;
+    opacity: 80%;
+    background-color: #A9A9A9;
+    border-color: #A9A9A9;
+    /* font-size: 15px; */
+    /*    font-weight: bold;*/
+}
+
 @media only screen and (max-width: 988px) {
     header {
         font-family: 'Open Sans', sans-serif;

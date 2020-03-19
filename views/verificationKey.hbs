@@ -55,7 +55,8 @@
                     <div class="form-container sign-up-container">
                         <!-- POST Adding to the db a new user -->
                         <form method="POST" action="/verify">
-                            <h1 class="mb-5">Verification Key</h1>
+                            <h1 class="mb-2 mt-5 pt-5">Verification Key</h1>
+                            <div class="row mb-1 pb-1" style="font-size: 12px;">The verification key has been sent to the email you used to become a member.</div>
                             <br>
                             <input type="text" id="verificationKey" name="verification" placeholder="Verification Key" value="{{{data.verification}}}">
                             <span class="error-label mr-auto ml-2">

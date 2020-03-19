@@ -144,7 +144,7 @@ const routerFunction = function(db) {
 
     });
 
-    // post for view rooms]
+    // post for view rooms
     router.post('/viewRooms', function(req, res) {
         var classicD = false;
         var famD = false;
@@ -750,33 +750,46 @@ const routerFunction = function(db) {
             }
 
             if (!creditcardOwner) {
-                return res.render('signUp', {
-                    ownerError: {
-                        msg: '*Please fill up missing field'
-                    },
+                return res.status(401).render('signUp', {
+                    cardError: "*Please fill up credit card owner information",
                     data: req.body,
                     whichfooter: footertype
                 });
             }
 
             if (!cvv) {
-                return res.render('signUp', {
-                    cvvError: {
-                        msg: '*Please fill up missing field'
-                    },
+                return res.status(401).render('signUp', {
+                    cardError: "*Please fill up ccv information",
                     data: req.body,
                     whichfooter: footertype
                 });
             }
 
             if (!creditcardNumber) {
-                return res.render('signUp', {
-                    cardNumError: {
-                        msg: '*Please fill up missing field'
-                    },
+                return res.status(401).render('signUp', {
+                    cardError: "*Please fill up credit card number information",
                     data: req.body,
                     whichfooter: footertype
                 });
+            }
+
+            var cardtoday = new Date();
+            var monthToday = cardtoday.getMonth() + 1;
+            var yearToday = cardtoday.getFullYear();
+            yearToday = yearToday.toString();
+            yearToday= yearToday.substring(yearToday.length - 2, yearToday.length);
+    
+            
+            if (parseInt(year) == parseInt(yearToday) ){
+                if (parseInt(month) <= monthToday){
+                    // console.log('I should have passed here');
+                    return res.status(401).render('signUp', {
+                        cardError: '*Card is not accepted because of the expiration date',
+                        data: req.body,
+                        whichfooter: footertype
+                    });
+                    
+                }
             }
 
             //generating random membership number
