@@ -202,12 +202,9 @@ router.get('/', notLoggedInAdmin, function(req, res) {
 
                                         CheckedInArray[i] = CheckedInObject;
                                     }
-                                }
 
                                 CheckedInArray[i] = CheckedInObject;
                             }
-                        }
-
 
                     return res.render('admin', {
                         whichfooter: footertype,
