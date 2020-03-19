@@ -141,7 +141,7 @@ const routerFunction = function(db) {
 
     });
 
-    // post for view rooms]
+    // post for view rooms
     router.post('/viewRooms', function(req, res) {
         var classicD = false;
         var famD = false;

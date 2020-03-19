@@ -156,9 +156,17 @@
                                         <div class="col-md-2 col-12 align-self-center ml-md-n3 ml-0">
                                             <div class="price">PHP {{payment.totalAmount}}</div>
                                         </div>
-                                        <div class="col-md-2 col-12 align-self-center py-3 py-md-0 text-center">
-                                            <a class="btn" type="button" href="ProfilePageMember.html">Cancel Reservation</a>
-                                        </div>
+                                        {{!--TODO: test form --}}
+                                        {{!-- Placed info into hidden forms for easy deletion --}}
+                                        <form class="col-md-2 col-12 align-self-center py-3 py-md-0 text-center" method="POST" enctype="application/x-www-form-urlencoded">
+                                            <input name="checkIn" id="checkIn" type="hidden" value={{{checkInDate}}}>
+                                            <input name="checkOut" id="checkOut" type="hidden" value={{{checkOutDate}}}>
+                                            <input name="roomType" id="roomType" type="hidden" value="Classic Deluxe">
+                                            <input name="numOfRooms" id="numOfRooms" type="hidden" value={{{numOfRooms}}}>
+                                            <input name="numOfAdults" id="numOfAdults" type="hidden" value={{{numOfAdults}}}>
+                                            <input name="numOfKids" id="numOfKids" type="hidden" value={{{numOfKids}}}>
+                                            <input class="btn" type="submit" value="Cancel Reservation">
+                                        </form>
                                     </div>
                                 {{/ifCD}}
                                 
