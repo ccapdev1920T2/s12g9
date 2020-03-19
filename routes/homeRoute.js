@@ -750,7 +750,7 @@ const routerFunction = function(db) {
             }
 
             if (!creditcardOwner) {
-                return res.render('signUp', {
+                return res.status(401).render('signUp', {
                     ownerError: {
                         msg: '*Please fill up missing field'
                     },
@@ -760,7 +760,7 @@ const routerFunction = function(db) {
             }
 
             if (!cvv) {
-                return res.render('signUp', {
+                return res.status(401).render('signUp', {
                     cvvError: {
                         msg: '*Please fill up missing field'
                     },
@@ -770,13 +770,32 @@ const routerFunction = function(db) {
             }
 
             if (!creditcardNumber) {
-                return res.render('signUp', {
+                return res.status(401).render('signUp', {
                     cardNumError: {
                         msg: '*Please fill up missing field'
                     },
                     data: req.body,
                     whichfooter: footertype
                 });
+            }
+
+            var cardtoday = new Date();
+            var monthToday = cardtoday.getMonth() + 1;
+            var yearToday = cardtoday.getFullYear();
+            yearToday = yearToday.toString();
+            yearToday= yearToday.substring(yearToday.length - 2, yearToday.length);
+    
+            
+            if (parseInt(year) == parseInt(yearToday) ){
+                if (parseInt(month) <= monthToday){
+                    console.log('I should have passed here');
+                    return res.status(401).render('signUp', {
+                        cardError: '*Card is not accepted because of the expiration date',
+                        data: req.body,
+                        whichfooter: footertype
+                    });
+                    
+                }
             }
 
             //generating random membership number
