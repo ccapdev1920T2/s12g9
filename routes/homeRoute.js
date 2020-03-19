@@ -907,20 +907,22 @@ const routerFunction = function(db) {
         });
     });
 
-    router.get('/verify', function(req, res) {
+    router.get('/verify/', function(req, res) {
         res.render('verificationKey', {
             whichheadertype: 'header',
             whichfooter: 'footer',
+            verificationKey: req.body.verificationKey
         });
     });
 
-    router.post('/verify', function(req, res) {
+    router.post('/verify/', function(req, res) {
         var verificationkey = { verificationKey: req.body.verification };
 
-        console.log(req.params.verificationKey);
+        console.log(req.body.verificationKey);
         res.render('verificationKey', {
             whichheadertype: 'header',
             whichfooter: 'footer',
+            verificationKey: req.body.verificationKey
         });
 
         db.collection('users').findOne(verificationkey)
@@ -938,12 +940,12 @@ const routerFunction = function(db) {
                         console.log(errfind);
                         database = '*Bad Server';
                         return res.status(500).redirect('/');
-                    })
+                    });
             }).catch(errverify => {
                 console.log(errverify);
                 database = '*Bad Server';
-                return res.status(500).redirect('/verifies/' + req.params.verificationKey);
-            })
+                return res.status(500).redirect('/verify');
+            });
     });
 
     return router;
