@@ -149,6 +149,7 @@ const routerFunction = function(db) {
     // TODO: FINISH THIS
     router.post('/',function(req, res) {
         // add delete from db code here
+        console.log(req.body);
         res.redirect("/user");
     });
 
