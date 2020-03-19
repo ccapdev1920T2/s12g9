@@ -125,13 +125,20 @@ form label {
 }
 
 .footerNavWrap .btn{
-    background: #EFA07E;
-    color: #5A5E5A;
-    font-size: medium;
-    padding: 10px;
-    margin-left: 50px;
-    /* margin-right: 50px; */
-    float: none;
+    color: white;
+    opacity: 80%;
+    background-color: #A9A9A9;
+    border-color: #A9A9A9;
+    font-size: 15px;
+    border-radius: 0;
+}
+
+.footerNavWrap .btn:hover{
+    border-radius: 0;
+    color: white;
+    border-color: #EFA07E;
+    background-color: #EFA07E;
+    font-size: 15px;
 }
 
 .btn.btn-lg.pull-left {

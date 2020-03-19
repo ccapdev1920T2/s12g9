@@ -56,11 +56,10 @@
                         <!-- POST Adding to the db a new user -->
                         <form method="POST" action="/verify">
                             <h1 class="mb-5">Verification Key</h1>
-                            <span></span>
                             <br>
                             <input type="text" id="verificationKey" name="verification" placeholder="Verification Key" value="{{{data.verification}}}">
-                            <span class="error-label mr-auto" id="firstName-error">
-                                {{fnameError.msg}}
+                            <span class="error-label mr-auto ml-2">
+                                {{verificationError}}
                             </span>
                             <br>
                             <input type="submit" value="Continue" id="continue">

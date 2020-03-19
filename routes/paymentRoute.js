@@ -76,7 +76,7 @@ const routerFunction = function(db) {
         else if (database) {
             res.render('totalCharge', {
                 data: totalChargeBody,
-                databaseError: emailglobe,
+                databaseError: database,
                 source: '/images/Rooms/' + imagesource + '.jpg',
                 whichheader: headertype,
                 whichfooter: footertype,
@@ -97,6 +97,23 @@ const routerFunction = function(db) {
         }
 
 
+    });
+
+    router.get('/delete/:bookId', function(req,res){
+        var bookingid = { _id: ObjectId(req.params.bookId)};
+
+        db.collection('booking').deleteOne(bookingid)
+            .then(resp => {
+                return res.redirect('/totalCharge');
+            }).catch(err =>{
+                return res.render('pay', {
+                    data: payBody,
+                    databaseError: '*Bad Server',
+                    bookingid: req.params.bookId,
+                    whichfooter: footertype,
+                    logging: loggingstring
+                });
+            })
     });
 
     router.post('/', function(req, res) {
@@ -283,7 +300,9 @@ const routerFunction = function(db) {
             emailglobe = "";
             database = "";
 
-            if (req.body.requests === "")
+            if (req.body.requests === "" && req.body.additionalrequest === "")
+                req.body.requests = 'None';
+            else if (req.body.requests === "")
                 req.body.requests = req.body.additionalrequest;
             else if (req.body.additionalrequest !== "")
                 req.body.requests = req.body.requests + ', ' + req.body.additionalrequest;
@@ -398,7 +417,6 @@ const routerFunction = function(db) {
                     db.collection('booking').findOne(reservation)
                     .then(respfind => {
                         // console.log(resp._id);
-                        // res.redirect('totalCharge/pay/'+resp._id); //resp._id is the id of the database
                         res.render('pay', {
                             bookingid: respfind._id,
                             whichfooter: footertype,
@@ -424,7 +442,9 @@ const routerFunction = function(db) {
             var today = new Date();
             var formattedDate = today.getFullYear().toString() + '-' + (today.getMonth() + 1).toString().padStart(2, 0) + '-' + today.getDate().toString().padStart(2, 0);
 
-            if (req.body.requests === "")
+            if (req.body.requests === "" && req.body.additionalrequest === "")
+                req.body.requests = 'None';
+            else if (req.body.requests === "")
                 req.body.requests = req.body.additionalrequest;
             else if (req.body.additionalrequest !== "")
                 req.body.requests = req.body.requests + ', ' + req.body.additionalrequest;
@@ -648,6 +668,20 @@ const routerFunction = function(db) {
         if (!cardNumber) {
             cardNum = '*Please fill up missing field';
             return res.status(401).redirect('/totalCharge/pay');
+        }
+        
+        var today = new Date();
+        var monthToday = today.getMonth() + 1;
+        var yearToday = today.getFullYear();
+        yearToday = yearToday.toString();
+        yearToday= yearToday.substring(yearToday.length - 2, yearToday.length);
+
+        
+        if (parseInt(year) == parseInt(yearToday) ){
+            if (parseInt(month) <= monthToday){
+                databasepay = '*Card is not accepted because of the expiration date';
+                return res.status(500).redirect('/totalCharge/pay');
+            }
         }
 
         var bookingid = { _id: ObjectId(req.params.bookId) }; //use to find the id in the database, (const { ObjectId } = require('mongodb'); is needed on top of this file)

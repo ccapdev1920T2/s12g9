@@ -538,7 +538,7 @@ const routerFunction = function(db) {
             return res.status(401).render('signIn', {
                 emailError: '*Please fill up missing field',
                 data: req.body,
-                whichfooter: footertype
+                whichfooter: footertype,
             });
         }
 
@@ -548,7 +548,7 @@ const routerFunction = function(db) {
         if (!emailRegex.test(email)) {
             return res.status(401).render('signIn', {
                 emailError: '*Email not valid',
-                whichfooter: footertype
+                whichfooter: footertype,
             });
         }
 
@@ -556,7 +556,8 @@ const routerFunction = function(db) {
             return res.status(401).render('signIn', {
                 passwordError: '*Please fill up missing field',
                 data: req.body,
-                whichfooter: footertype
+                whichfooter: footertype,
+                email: email
             });
         }
 
@@ -575,36 +576,49 @@ const routerFunction = function(db) {
                         whichfooter: footertype
                     });
                 } else {
-                    
-                    var user = {
-                        email,
-                        password
-                    }
+                    if (resp.verified === true){
+                        var user = {
+                            email,
+                            password
+                        }
 
-                    db.collection('users').findOne(user)
-                        .then(found => {
-                            if (found === null) {
+                        db.collection('users').findOne(user)
+                            .then(found => {
+                                if (found === null) {
+                                    return res.status(401).render('signIn', {
+                                        generalError: `
+                                        <div class="row ml-1">*Incorrect password entered.</div>
+                                        `,
+                                        whichfooter: footertype,
+                                        email: email
+                                    });
+                                } else {
+                                    if (found.admin == true)
+                                        req.session.adminId = found._id;
+                                    else
+                                        req.session.userId = found._id;
+                                    // console.log(req.session.userId);
+                                    return res.status(201).redirect('/');
+                                }
+                            }).catch(errfound => {
+                                console.log(errfound);
                                 return res.status(401).render('signIn', {
-                                    generalError: `
-                                    <div class="row ml-1">*Incorrect password entered.</div>
-                                    `,
+                                    generalError: "*Bad Server",
                                     whichfooter: footertype
                                 });
-                            } else {
-                                if (found.admin == true)
-                                    req.session.adminId = found._id;
-                                else
-                                    req.session.userId = found._id;
-                                // console.log(req.session.userId);
-                                return res.status(201).redirect('/');
-                            }
-                        }).catch(errfound => {
-                            console.log(errfound);
-                            return res.status(401).render('signIn', {
-                                generalError: "*Bad Server",
-                                whichfooter: footertype
                             });
+                    }
+
+                    else if (resp.verified === false){
+                        return res.status(401).render('signIn', {
+                            generalError: `
+                            <div class="row ml-1">*Account not yet verified</div><div class="row ml-1">Click here to <a href="/verify" class="ml-1"> verify your email address.</a></div>
+                            `,
+                            whichfooter: footertype
                         });
+                    }
+                    
+                    
                 }
             }).catch(err => {
                 console.log(err);
@@ -736,7 +750,7 @@ const routerFunction = function(db) {
             }
 
             if (!creditcardOwner) {
-                return res.render('signUp', {
+                return res.status(401).render('signUp', {
                     ownerError: {
                         msg: '*Please fill up missing field'
                     },
@@ -746,7 +760,7 @@ const routerFunction = function(db) {
             }
 
             if (!cvv) {
-                return res.render('signUp', {
+                return res.status(401).render('signUp', {
                     cvvError: {
                         msg: '*Please fill up missing field'
                     },
@@ -756,13 +770,32 @@ const routerFunction = function(db) {
             }
 
             if (!creditcardNumber) {
-                return res.render('signUp', {
+                return res.status(401).render('signUp', {
                     cardNumError: {
                         msg: '*Please fill up missing field'
                     },
                     data: req.body,
                     whichfooter: footertype
                 });
+            }
+
+            var cardtoday = new Date();
+            var monthToday = cardtoday.getMonth() + 1;
+            var yearToday = cardtoday.getFullYear();
+            yearToday = yearToday.toString();
+            yearToday= yearToday.substring(yearToday.length - 2, yearToday.length);
+    
+            
+            if (parseInt(year) == parseInt(yearToday) ){
+                if (parseInt(month) <= monthToday){
+                    console.log('I should have passed here');
+                    return res.status(401).render('signUp', {
+                        cardError: '*Card is not accepted because of the expiration date',
+                        data: req.body,
+                        whichfooter: footertype
+                    });
+                    
+                }
             }
 
             //generating random membership number
@@ -893,7 +926,7 @@ const routerFunction = function(db) {
         });
     });
 
-    router.get('/verify', function(req, res) {
+    router.get('/verify', loggedIn, function(req, res) {
         res.render('verificationKey', {
             whichheadertype: 'header',
             whichfooter: 'footer',
@@ -929,6 +962,13 @@ const routerFunction = function(db) {
                             database = '*Bad Server';
                             return res.status(500).redirect('/');
                         });
+                }
+                else{
+                    return res.render('verificationKey',{
+                        verificationError: 'Wrong verfication key.',
+                        whichheadertype: 'header',
+                        whichfooter: 'footer',
+                    })
                 }
             }).catch(errverify => {
                 console.log(errverify);

@@ -97,6 +97,9 @@
                             </span>
                             <br>
                             <h1 class="mb-5">Credit Card Information</h1>
+                            <span class="error-label mr-auto" id="owner-error">
+                                    {{cardError}}
+                                </span>
                             <div class="group1">
                                 <div class="form-group owner">
                                     <input type="text" class="form-control" id="owner" name="creditcardOwner" placeholder="Name of Card Owner" value="{{{data.creditcardOwner}}}">
