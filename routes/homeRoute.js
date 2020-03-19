@@ -788,7 +788,7 @@ const routerFunction = function(db) {
             
             if (parseInt(year) == parseInt(yearToday) ){
                 if (parseInt(month) <= monthToday){
-                    console.log('I should have passed here');
+                    // console.log('I should have passed here');
                     return res.status(401).render('signUp', {
                         cardError: '*Card is not accepted because of the expiration date',
                         data: req.body,

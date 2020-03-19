@@ -408,33 +408,50 @@ const routerFunction = function(db) {
                 footertype = 'footerAdmin';
             }
 
-            db.collection('booking').insertOne(reservation)
-                .then(resp => {
-                    // console.log(resp);
-                    // for debugging and for production
-                    // return res.status(201).send('Good');
-                    //Use to find in database
-                    db.collection('booking').findOne(reservation)
-                    .then(respfind => {
-                        // console.log(resp._id);
-                        res.render('pay', {
-                            bookingid: respfind._id,
-                            whichfooter: footertype,
-                            logging: loggingstring
-                        });
-                    }).catch(err => {
-                        console.log(err);
-                        database = '*Bad Server';
+            var useremail = {
+                email
+            }
+            db.collection('users').findOne(useremail)
+                .then(respuser =>{
+                    if (respuser === null){
+                        db.collection('booking').insertOne(reservation)
+                            .then(resp => {
+                                // console.log(resp);
+                                // for debugging and for production
+                                // return res.status(201).send('Good');
+                                //Use to find in database
+                                db.collection('booking').findOne(reservation)
+                                .then(respfind => {
+                                    // console.log(resp._id);
+                                    res.render('pay', {
+                                        bookingid: respfind._id,
+                                        whichfooter: footertype,
+                                        logging: loggingstring
+                                    });
+                                }).catch(errfind => {
+                                    console.log(errfind);
+                                    database = '*Bad Server';
+                                    return res.status(500).redirect('/totalCharge');
+                                })
+                            }).catch(err => {
+                                console.log(err);
+                                database = '*Bad Server';
+                                return res.status(500).redirect('/totalCharge');
+                                // return res.status(500).render('totalCharge',
+                                //     {databaseError: '*Bad Server'}
+                                // );
+                            });       
+                    }
+                    else {
+                        database = 'You are a registered member based on your email address. Please book using your account. Click here to <a href="/signIn">sign in</a>';
                         return res.status(500).redirect('/totalCharge');
-                    })
-                }).catch(err => {
+                    }
+                }).catch(erruser=>{
                     console.log(err);
-                    database = '*Bad Server';
+                    database = 'Bad server';
                     return res.status(500).redirect('/totalCharge');
-                    // return res.status(500).render('totalCharge',
-                    //     {databaseError: '*Bad Server'}
-                    // );
-                });            
+                });
+          
         }
         else {
             let {total, checkInDate, checkOutDate, rooms, adults, kids, roomtype, pricePerRoom, points} = req.body;
