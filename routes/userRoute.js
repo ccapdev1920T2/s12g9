@@ -50,10 +50,8 @@ const routerFunction = function(db) {
         } 
         return next();
     };
-    // TODO: Double check db names
-    // TODO: tab 1 - DONE
-    // TODO: tab 2 - DONE (for furthur testing)
-    // TODO: do tab 3 - past bookings
+    
+    // TODO: all tabs done- double check for errors
     router.get('/',notLoggedInUser ,function(req, res) {
         var loggingstring = `
         <li class="nav-item">\
@@ -113,7 +111,7 @@ const routerFunction = function(db) {
             _id:ObjectId(req.session.userId)
         }).toArray().then(function(resp){
                 user=resp;
-                console.log(resp[0].email);
+                // console.log(resp[0].email);
                 db.collection('bookings').find({ 
                     email:user[0].email,
                     checkInDate: {$gte:today.toString()}
@@ -145,7 +143,16 @@ const routerFunction = function(db) {
             console.log(err);
             return res.status(500);
         });
-    });    
+    });   
+
+    // Post for Cancel Reservation
+    // TODO: FINISH THIS
+    router.post('/',function(req, res) {
+        // add delete from db code here
+        console.log(req.body);
+        res.redirect("/user");
+    });
+
     return router;
 }
 
