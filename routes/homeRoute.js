@@ -751,9 +751,7 @@ const routerFunction = function(db) {
 
             if (!creditcardOwner) {
                 return res.status(401).render('signUp', {
-                    ownerError: {
-                        msg: '*Please fill up missing field'
-                    },
+                    cardError: "*Please fill up credit card owner information",
                     data: req.body,
                     whichfooter: footertype
                 });
@@ -761,9 +759,7 @@ const routerFunction = function(db) {
 
             if (!cvv) {
                 return res.status(401).render('signUp', {
-                    cvvError: {
-                        msg: '*Please fill up missing field'
-                    },
+                    cardError: "*Please fill up ccv information",
                     data: req.body,
                     whichfooter: footertype
                 });
@@ -771,9 +767,7 @@ const routerFunction = function(db) {
 
             if (!creditcardNumber) {
                 return res.status(401).render('signUp', {
-                    cardNumError: {
-                        msg: '*Please fill up missing field'
-                    },
+                    cardError: "*Please fill up credit card number information",
                     data: req.body,
                     whichfooter: footertype
                 });
