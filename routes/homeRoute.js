@@ -836,7 +836,12 @@ const routerFunction = function(db) {
                             .then(respinsert => {
                                 console.log(respinsert);
                                 // for debugging and for production
+<<<<<<< HEAD
                                 return res.status(201).redirect('/verify');
+=======
+                                return res.status(201).redirect('/verify'); // from this to
+                                return res.status(201).redirect('/verify/' + verificationKey);
+>>>>>>> 37c8bb029e699f0ec9705deaca6670c15f8246d5
                             }).catch(errsec => {
                                 console.log(errsec);
                                 return res.status(500).render('signUp', {
