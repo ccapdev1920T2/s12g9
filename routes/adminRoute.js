@@ -69,7 +69,7 @@ const routerFunction = function(db) {
         var noneMessageTodayBooking = "";
         var noneMessageView = "";
         var noneMessageCheckin = "";
-        db.collection('booking').find({ bookingDate: formattedDate.toString() }).toArray()
+        db.collection('booking').find({ bookingDate: formattedDate.toString() , status: 'Booked'}).toArray()
             .then(resp => {
 
                 if (resp.length == 0) {
@@ -111,7 +111,7 @@ const routerFunction = function(db) {
                     }
                 }
 
-                    db.collection('booking').find({}).toArray()
+                    db.collection('booking').find({status: 'Booked'}).toArray()
                         .then(respViewAll => {
 
                             // console.log(respViewAll);
@@ -158,7 +158,8 @@ const routerFunction = function(db) {
                                         $and: [
                                             { checkInDate: { gte: today } },
                                             { checkOutDate: { lte: today } }
-                                        ]
+                                        ],
+                                        status: 'Booked'
                                     }).toArray()
                                     .then(respCheckedIn => {
 
