@@ -149,8 +149,23 @@ const routerFunction = function(db) {
     // TODO: FINISH THIS
     router.post('/',function(req, res) {
         // add delete from db code here
-        console.log(req.body);
-        res.redirect("/user");
+        db.collection('bookings').deleteOne({
+            checkInDate: req.body.checkIn,
+            checkOutDate: req.body.checkOut,
+            roomType: req.body.roomType,
+            numOfRooms: req.body.numRooms,
+            numOfAdults: req.body.numAdults,
+            numOfKids:req.body.numKids
+        }). then(resp=>{
+            db.collection('users').updateOne(
+                {email:req.body.email},
+                {
+                    $inc: {cancellationCount:1}
+                }
+            ).then(r=>res.redirect("/user")
+            ).catch(er=>console.log(er));
+        }).catch(err=> console.log(err))
+        
     });
 
     return router;
