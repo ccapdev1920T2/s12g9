@@ -111,7 +111,7 @@ const routerFunction = function(db) {
 
         var todayDate = new Date();
 
-        db.collection('booking').findOneAndRemove({ signInDate: { $lte: todayDate } })
+        db.collection('booking').deleteMany({ signInDate: { $lte: todayDate } })
             .then(resDel => {
                 db.collection('users').findOne(adminuser)
                     .then(resp => {
@@ -125,7 +125,6 @@ const routerFunction = function(db) {
                                 })
                                 .then(resp => {
                                     // console.log(resp);
-
                                     var countUpdate = { $set: { cancellationCount: 0 } };
 
                                     if ((todayDate.getMonth() + 1) == 1 && todayDate.getDate() == 1) {
@@ -882,7 +881,7 @@ const routerFunction = function(db) {
             var hours = 1;
             var days = 0;
             var startDate = new Date();
-            var date = new Date(startDate.getTime() + milliseconds + 1000 * (sec + 60 * (min + 60 * (hours + 24 * days)))); //adding two hours to the current date and time it was made 
+            var date = new Date(startDate.getTime() + milliseconds + 1000 * (sec + 60 * (min + 60 * (hours + 24 * days)))); //adding one hour to the current date and time it was made 
             console.log("date: " + date);
             // var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
             // var time = today.getHours() + ":" + today.getMinutes();
