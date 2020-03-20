@@ -58,7 +58,6 @@ const routerFunction = function(db) {
         res.redirect('/signIn');
     });
 
-    //FIXME: Think if you're going to put /:userId for home
     router.get('/', function(req, res) {
         var loggingstring = `
         <li class="nav-item">\
@@ -79,7 +78,7 @@ const routerFunction = function(db) {
                 <a class="nav-link" href="/hotel/memberBenefits">Member Benefits</a>\
             </li>\
             <li class="nav-item">\
-                <a class="nav-link" href="/logout">Log Out</a>\
+                <a class="nav-link" data-toggle="modal" data-target="#exampleModal">Log Out</a>\
             </li>\
             <li class="nav-item">\
                 <a class="nav-link bookBtn" href="/user" tabindex="-1" aria-disabled="true">PROFILE</a>\
@@ -94,7 +93,7 @@ const routerFunction = function(db) {
                 <a class="nav-link" href="/hotel/memberBenefits">Member Benefits</a>\
             </li>\
             <li class="nav-item">\
-                <a class="nav-link" href="/logout">Log Out</a>\
+                <a class="nav-link" data-toggle="modal" data-target="#exampleModal">Log Out</a>\
             </li>\
             <li class="nav-item">\
                 <a class="nav-link bookBtn" href="/admin" tabindex="-1" aria-disabled="true">ADMIN</a>\
@@ -205,7 +204,7 @@ const routerFunction = function(db) {
                 <a class="nav-link" href="/hotel/memberBenefits">Member Benefits</a>\
             </li>\
             <li class="nav-item">\
-                <a class="nav-link" href="/logout">Log Out</a>\
+                <a class="nav-link" data-toggle="modal" data-target="#exampleModal">Log Out</a>\
             </li>\
             <li class="nav-item">\
                 <a class="nav-link bookBtn" href="/user" tabindex="-1" aria-disabled="true">PROFILE</a>\
@@ -220,7 +219,7 @@ const routerFunction = function(db) {
                 <a class="nav-link" href="/hotel/memberBenefits">Member Benefits</a>\
             </li>\
             <li class="nav-item">\
-                <a class="nav-link" href="/logout">Log Out</a>\
+                <a class="nav-link" data-toggle="modal" data-target="#exampleModal">Log Out</a>\
             </li>\
             <li class="nav-item">\
                 <a class="nav-link bookBtn" href="/admin" tabindex="-1" aria-disabled="true">ADMIN</a>\
@@ -501,7 +500,7 @@ const routerFunction = function(db) {
                 <a class="nav-link" href="/hotel/memberBenefits">Member Benefits</a>\
             </li>\
             <li class="nav-item">\
-                <a class="nav-link" href="/logout">Log Out</a>\
+                <a class="nav-link" data-toggle="modal" data-target="#exampleModal">Log Out</a>\
             </li>\
             <li class="nav-item">\
                 <a class="nav-link bookBtn" href="/user" tabindex="-1" aria-disabled="true">PROFILE</a>\
@@ -516,7 +515,7 @@ const routerFunction = function(db) {
                 <a class="nav-link" href="/hotel/memberBenefits">Member Benefits</a>\
             </li>\
             <li class="nav-item">\
-                <a class="nav-link" href="/logout">Log Out</a>\
+                <a class="nav-link" data-toggle="modal" data-target="#exampleModal">Log Out</a>\
             </li>\
             <li class="nav-item">\
                 <a class="nav-link bookBtn" href="/admin" tabindex="-1" aria-disabled="true">ADMIN</a>\

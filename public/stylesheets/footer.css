@@ -34,3 +34,15 @@ footer a:hover {
     color: #9EAFBA;
     text-decoration: none;
 }
+
+#gmail{
+    font-size: 15px;
+}
+
+@media only screen and (max-width: 988px) {
+
+    #gmail{
+        font-size: 16px;
+    }
+}
+

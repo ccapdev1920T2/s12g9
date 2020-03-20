@@ -190,6 +190,9 @@ footer {
 
 .modal-content{
     background-color: whitesmoke;
+    font-family: 'Open Sans';
+    color: #2E4106;
+    letter-spacing: 1px;
 }
 
 /* .modal-footer .btn:focus {
