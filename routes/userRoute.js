@@ -77,7 +77,7 @@ const routerFunction = function(db) {
                 <a class="nav-link" data-toggle="modal" data-target="#exampleModal">Log Out</a>\
             </li>\
             <li class="nav-item">\
-                <a class="nav-link bookBtn" href="/user" tabindex="-1" aria-disabled="true">PROFILE</a>\
+                <a class="nav-link bookBtn active" href="/user" tabindex="-1" aria-disabled="true">PROFILE</a>\
             </li>\
             `;
             footertype = 'footerUser';

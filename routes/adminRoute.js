@@ -54,7 +54,7 @@ router.get('/', notLoggedInAdmin, function(req, res) {
                 <a class="nav-link" data-toggle="modal" data-target="#exampleModal">Log Out</a>\
             </li>\
             <li class="nav-item">\
-                <a class="nav-link bookBtn" href="/admin" tabindex="-1" aria-disabled="true">ADMIN</a>\
+                <a class="nav-link bookBtn active" href="/admin" tabindex="-1" aria-disabled="true">ADMIN</a>\
             </li>\
             `;
         footertype = 'footerAdmin';
