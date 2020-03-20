@@ -275,8 +275,8 @@ const routerFunction = function(db) {
                             ]
                         },
                         {
-                            $or: [{ checkInDate: { $lte: req.body.checkIn } },
-                                { checkOutDate: { $gte: req.body.checkOut } }
+                            $and: [{ checkInDate: { $lt: req.body.checkOut} },
+                                { checkOutDate: { $gt: req.body.checkIn } }
                             ]
                         },
                         {
@@ -294,17 +294,17 @@ const routerFunction = function(db) {
                         var gs = 0;
                         for (var i = 0; i < resp.length; i++) {
                             if (resp[i].roomtype == "Classic Deluxe") {
-                                cd += resp[i].numOfRooms;
+                                cd += resp[i].rooms;
                             } else if (resp[i].roomtype == "Family Deluxe") {
-                                fd += resp[i].numOfRooms;
+                                fd += resp[i].rooms;
                             } else if (resp[i].roomtype == "Executive Deluxe") {
-                                ed += resp[i].numOfRooms;
+                                ed += resp[i].rooms;
                             } else if (resp[i].roomtype == "Junior Suite") {
-                                js += resp[i].numOfRooms;
+                                js += resp[i].rooms;
                             } else if (resp[i].roomtype == "Executive Suite") {
-                                es += resp[i].numOfRooms;
+                                es += resp[i].rooms;
                             } else if (resp[i].roomtype == "Grand Suite") {
-                                gs += resp[i].numOfRooms;
+                                gs += resp[i].rooms;
                             }
                         }
                         if (cd < 5 && (5 - cd) >= req.body.nRooms) {
@@ -371,9 +371,8 @@ const routerFunction = function(db) {
                             ]
                         },
                         {
-                            $or: [
-                                { checkInDate: { $lte: req.body.checkIn } },
-                                { checkOutDate: { $gte: req.body.checkOut } }
+                            $and: [{ checkInDate: { $lt: req.body.checkOut} },
+                                { checkOutDate: { $gt: req.body.checkIn } }
                             ]
                         },
                         {
@@ -452,8 +451,8 @@ const routerFunction = function(db) {
                 db.collection('booking').find({
                     $and: [{ $or: [{ roomtype: 'Grand Suite' }, ] },
                         {
-                            $or: [{ checkInDate: { $lte: req.body.checkIn } },
-                                { checkOutDate: { $gte: req.body.checkOut } }
+                            $and: [{ checkInDate: { $lt: req.body.checkOut} },
+                                { checkOutDate: { $gt: req.body.checkIn } }
                             ]
                         },
                         {

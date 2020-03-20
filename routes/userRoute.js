@@ -118,12 +118,12 @@ const routerFunction = function(db) {
                     email:user[0].email,
                     checkInDate: {$gte:today.toString()},
                     status:"Booked"
-                }).toArray().then(r=> {
+                }).sort({checkInDate:1}).toArray().then(r=> {
                     db.collection('booking').find({ 
                         email:user[0].email,
                         checkInDate: {$lt:today.toString()},
                         status:"Check Out"
-                    }).toArray().then(r2 =>{
+                    }).sort({checkInDate:-1}).toArray().then(r2 =>{
                         res.render('profile', {
                             name: user[0].fname+" "+ user[0].lname,
                             membershipNumber: user[0].membershipNumber,
@@ -150,8 +150,6 @@ const routerFunction = function(db) {
     });   
 
     // Post for Cancel Reservation
-    // TODO: Removal of points
-    // TODO: email for banned account
     router.post('/',function(req, res) {
         db.collection('booking').updateOne(
             {
