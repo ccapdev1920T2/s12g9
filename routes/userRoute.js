@@ -114,15 +114,15 @@ const routerFunction = function(db) {
         }).toArray().then(function(resp){
                 user=resp;
                 // console.log(resp[0].email);
-                db.collection('bookings').find({ 
+                db.collection('booking').find({ 
                     email:user[0].email,
                     checkInDate: {$gte:today.toString()},
                     status:"Booked"
                 }).toArray().then(r=> {
-                    db.collection('bookings').find({ 
+                    db.collection('booking').find({ 
                         email:user[0].email,
                         checkInDate: {$lt:today.toString()},
-                        status:"Booked"
+                        status:"Check Out"
                     }).toArray().then(r2 =>{
                         res.render('profile', {
                             name: user[0].fname+" "+ user[0].lname,
@@ -153,14 +153,14 @@ const routerFunction = function(db) {
     // TODO: FINISH THIS
     router.post('/',function(req, res) {
         // add delete from db code here
-        db.collection('bookings').updateOne(
+        db.collection('booking').updateOne(
             {
                 checkInDate: req.body.checkIn,
                 checkOutDate: req.body.checkOut,
-                roomType: req.body.roomType,
-                numOfRooms: req.body.numRooms,
-                numOfAdults: req.body.numAdults,
-                numOfKids:req.body.numKids,
+                roomtype: req.body.roomType,
+                rooms: req.body.numRooms,
+                adults: req.body.numAdults,
+                kids:req.body.numKids,
                 email:req.body.email,
                 status:"Booked"
             },
@@ -168,10 +168,14 @@ const routerFunction = function(db) {
                 $set:{ status: 'Cancelled' }
             }
         ). then(resp=>{
+            var points= req.payment/10;
             db.collection('users').updateOne(
                 {email:req.body.email},
                 {
-                    $inc: {cancellationCount:1}
+                    $inc: {
+                        cancellationCount:1,
+                        membershipPoints:-points
+                    }
                 }
             ).then(r=>
                 db.collection('users').findOne({

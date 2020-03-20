@@ -243,20 +243,23 @@ const routerFunction = function(db) {
         if (!(checkout.getTime() <= checkin.getTime()) && !(checkin.getTime() < today.getTime())) {
             //check for number of guests
             if (Number(req.body.nAdults) + (Number(req.body.nKids) / 2) / req.body.nRooms <= 3) {
-                db.collection('bookings').find({
+                db.collection('booking').find({
                     $and: [{
-                            $or: [{ roomType: 'Classic Deluxe' },
-                                { roomType: 'Family Deluxe' },
-                                { roomType: 'Executive Deluxe' },
-                                { roomType: 'Junior Suite' },
-                                { roomType: 'Executive Suite' },
-                                { roomType: 'Grand Suite' },
+                            $or: [{ roomtype: 'Classic Deluxe' },
+                                { roomtype: 'Family Deluxe' },
+                                { roomtype: 'Executive Deluxe' },
+                                { roomtype: 'Junior Suite' },
+                                { roomtype: 'Executive Suite' },
+                                { roomtype: 'Grand Suite' },
                             ]
                         },
                         {
                             $or: [{ checkInDate: { $lte: req.body.checkIn } },
                                 { checkOutDate: { $gte: req.body.checkOut } }
                             ]
+                        },
+                        {
+                            status: "Booked"
                         }
                     ]
                 }).toArray().then(
@@ -269,17 +272,17 @@ const routerFunction = function(db) {
                         var es = 0;
                         var gs = 0;
                         for (var i = 0; i < resp.length; i++) {
-                            if (resp[i].roomType == "Classic Deluxe") {
+                            if (resp[i].roomtype == "Classic Deluxe") {
                                 cd += resp[i].numOfRooms;
-                            } else if (resp[i].roomType == "Family Deluxe") {
+                            } else if (resp[i].roomtype == "Family Deluxe") {
                                 fd += resp[i].numOfRooms;
-                            } else if (resp[i].roomType == "Executive Deluxe") {
+                            } else if (resp[i].roomtype == "Executive Deluxe") {
                                 ed += resp[i].numOfRooms;
-                            } else if (resp[i].roomType == "Junior Suite") {
+                            } else if (resp[i].roomtype == "Junior Suite") {
                                 js += resp[i].numOfRooms;
-                            } else if (resp[i].roomType == "Executive Suite") {
+                            } else if (resp[i].roomtype == "Executive Suite") {
                                 es += resp[i].numOfRooms;
-                            } else if (resp[i].roomType == "Grand Suite") {
+                            } else if (resp[i].roomtype == "Grand Suite") {
                                 gs += resp[i].numOfRooms;
                             }
                         }
@@ -336,14 +339,14 @@ const routerFunction = function(db) {
                     }
                 });
             } else if (Number(req.body.nAdults) + (Number(req.body.nKids) / 2) / req.body.nRooms <= 4) {
-                db.collection('bookings').find({
+                db.collection('booking').find({
                     $and: [{
                             $or: [
-                                { roomType: 'Family Deluxe' },
-                                { roomType: 'Executive Deluxe' },
-                                { roomType: 'Junior Suite' },
-                                { roomType: 'Executive Suite' },
-                                { roomType: 'Grand Suite' },
+                                { roomtype: 'Family Deluxe' },
+                                { roomtype: 'Executive Deluxe' },
+                                { roomtype: 'Junior Suite' },
+                                { roomtype: 'Executive Suite' },
+                                { roomtype: 'Grand Suite' },
                             ]
                         },
                         {
@@ -365,15 +368,15 @@ const routerFunction = function(db) {
                         var es = 0;
                         var gs = 0;
                         for (var i = 0; i < resp.length; i++) {
-                            if (resp[i].roomType == "Family Deluxe") {
+                            if (resp[i].roomtype == "Family Deluxe") {
                                 fd += resp[i].rooms;
-                            } else if (resp[i].roomType == "Executive Deluxe") {
+                            } else if (resp[i].roomtype == "Executive Deluxe") {
                                 ed += resp[i].rooms;
-                            } else if (resp[i].roomType == "Junior Suite") {
+                            } else if (resp[i].roomtype == "Junior Suite") {
                                 js += resp[i].rooms;
-                            } else if (resp[i].roomType == "Executive Suite") {
+                            } else if (resp[i].roomtype == "Executive Suite") {
                                 es += resp[i].rooms;
-                            } else if (resp[i].roomType == "Grand Suite") {
+                            } else if (resp[i].roomtype == "Grand Suite") {
                                 gs += resp[i].rooms;
                             }
                         }
@@ -425,12 +428,15 @@ const routerFunction = function(db) {
                     }
                 });
             } else if (Number(req.body.nAdults) + (Number(req.body.nKids) / 2) / req.body.nRooms <= 6) {
-                db.collection('bookings').find({
-                    $and: [{ $or: [{ roomType: 'Grand Suite' }, ] },
+                db.collection('booking').find({
+                    $and: [{ $or: [{ roomtype: 'Grand Suite' }, ] },
                         {
                             $or: [{ checkInDate: { $lte: req.body.checkIn } },
                                 { checkOutDate: { $gte: req.body.checkOut } }
                             ]
+                        },
+                        {
+                            status: "Booked"
                         }
                     ]
                 }).toArray().then(
@@ -438,7 +444,7 @@ const routerFunction = function(db) {
                         // count rooms 
                         var gs = 0;
                         for (var i = 0; i < resp.length; i++) {
-                            if (resp[i].roomType == "Grand Suite") {
+                            if (resp[i].roomtype == "Grand Suite") {
                                 gs += resp[i].rooms;
                             }
                         }
@@ -930,8 +936,9 @@ const routerFunction = function(db) {
                             if (error) {
                                 return console.log(error);
                             }
-
-                            console.log('Message sent: %s', info.messageID);
+                            else {
+                                console.log('Message sent: %s', info.messageID);
+                            }
                             transporter.close();
                         });
 

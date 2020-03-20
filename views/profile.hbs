@@ -146,7 +146,7 @@
                         <div id="currentBookings">
                             {{#each tab2}}
                                 {{!-- Classic Deluxe --}}
-                                {{#ifCD roomType}}
+                                {{#ifCD roomtype}}
                                     <div class="row boxshadow mb-4">
                                         <div class="col-md-4 col-12 roomtype">
                                             <img class="img-fluid" src ="/images/Rooms/classicDeluxe.jpg">
@@ -158,31 +158,31 @@
                                                 <div class="row mt-2 ml-1">
                                                     <div class="col-md-4 col-12 border3 pt-1">
                                                         ADULTS<br>
-                                                        <span class="numbers">{{numOfAdults}}</span>
+                                                        <span class="numbers">{{adults}}</span>
                                                     </div>
                                                     <div class="col-md-4 col-12 border3 pt-1">
                                                         KIDS<br>
-                                                        <span class="numbers">{{numOfKids}}</span>
+                                                        <span class="numbers">{{kids}}</span>
                                                     </div>
                                                     <div class="col-md-4 col-12 borderall pt-1">
                                                         ROOMS<br>
-                                                        <span class="numbers">{{numOfRooms}}</span>
+                                                        <span class="numbers">{{rooms}}</span>
                                                     </div>
                                                 </div>
                                             </div>
                                             <p class="col-md-10 col-12 mt-3 ml-1">*Additional Comments/Requests : {{requests}}</p>
                                         </div>
                                         <div class="col-md-2 col-12 align-self-center ml-md-n3 ml-0">
-                                            <div class="price">PHP {{payment.totalAmount}}</div>
+                                            <div class="price">PHP {{payment.total}}</div>
                                         </div>
                                         <div class="col-md-2 col-12 align-self-center py-3 py-md-0 text-center">
-                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#cancelModal" data-email={{{email}}} data-check-in={{{checkInDate}}}  data-check-out={{{checkOutDate}}} data-room-type="Classic Deluxe" data-num-rooms={{{numOfRooms}}} data-num-adults={{{numOfAdults}}} data-num-kids={{{numOfKids}}}>Cancel Reservation</button>
+                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#cancelModal" data-payment={{payment.total}} data-email={{{email}}} data-check-in={{{checkInDate}}}  data-check-out={{{checkOutDate}}} data-room-type="Classic Deluxe" data-num-rooms={{{rooms}}} data-num-adults={{{adults}}} data-num-kids={{{kids}}}>Cancel Reservation</button>
                                         </div>
                                     </div>
                                 {{/ifCD}}
                                 
                                 {{!-- Family Deluxe --}}
-                                {{#ifFD roomType}}
+                                {{#ifFD roomtype}}
                                     <div class="row boxshadow mb-4">
                                         <div class="col-md-4 col-12 roomtype">
                                             <img class="img-fluid" src ="/images/Rooms/familydeluxe.jpg">
@@ -194,31 +194,31 @@
                                                 <div class="row mt-2 ml-1">
                                                     <div class="col-md-4 col-12 border3 pt-1">
                                                         ADULTS<br>
-                                                        <span class="numbers">{{numOfAdults}}</span>
+                                                        <span class="numbers">{{adults}}</span>
                                                     </div>
                                                     <div class="col-md-4 col-12 border3 pt-1">
                                                         KIDS<br>
-                                                        <span class="numbers">{{numOfKids}}</span>
+                                                        <span class="numbers">{{kids}}</span>
                                                     </div>
                                                     <div class="col-md-4 col-12 borderall pt-1">
                                                         ROOMS<br>
-                                                        <span class="numbers">{{numOfRooms}}</span>
+                                                        <span class="numbers">{{rooms}}</span>
                                                     </div>
                                                 </div>
                                             </div>
                                             <p class="col-md-10 col-12 mt-3 ml-1">*Additional Comments/Requests : {{requests}}</p>
                                         </div>
                                         <div class="col-md-2 col-12 align-self-center ml-md-n3 ml-0">
-                                            <div class="price">PHP {{payment.totalAmount}}</div>
+                                            <div class="price">PHP {{payment.total}}</div>
                                         </div>
                                         <div class="col-md-2 col-12 align-self-center py-3 py-md-0 text-center">
-                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#cancelModal" data-email={{{email}}} data-check-in={{{checkInDate}}}  data-check-out={{{checkOutDate}}} data-room-type="Family Deluxe" data-num-rooms={{{numOfRooms}}} data-num-adults={{{numOfAdults}}} data-num-kids={{{numOfKids}}}>Cancel Reservation</button>
+                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#cancelModal" data-payment={{payment.total}} data-email={{{email}}} data-check-in={{{checkInDate}}}  data-check-out={{{checkOutDate}}} data-room-type="Family Deluxe" data-num-rooms={{{rooms}}} data-num-adults={{{adults}}} data-num-kids={{{kids}}}>Cancel Reservation</button>
                                         </div>
                                     </div>
                                 {{/ifFD}}
                                 
                                 {{!-- Executive Deluxe --}}
-                                {{#ifED roomType}}
+                                {{#ifED roomtype}}
                                     <div class="row boxshadow mb-4">
                                         <div class="col-md-4 col-12 roomtype">
                                             <img class="img-fluid" src ="/images/Rooms/executivedeluxe.jpg">
@@ -230,31 +230,31 @@
                                                 <div class="row mt-2 ml-1">
                                                     <div class="col-md-4 col-12 border3 pt-1">
                                                         ADULTS<br>
-                                                        <span class="numbers">{{numOfAdults}}</span>
+                                                        <span class="numbers">{{adults}}</span>
                                                     </div>
                                                     <div class="col-md-4 col-12 border3 pt-1">
                                                         KIDS<br>
-                                                        <span class="numbers">{{numOfKids}}</span>
+                                                        <span class="numbers">{{kids}}</span>
                                                     </div>
                                                     <div class="col-md-4 col-12 borderall pt-1">
                                                         ROOMS<br>
-                                                        <span class="numbers">{{numOfRooms}}</span>
+                                                        <span class="numbers">{{rooms}}</span>
                                                     </div>
                                                 </div>
                                             </div>
                                             <p class="col-md-10 col-12 mt-3 ml-1">*Additional Comments/Requests : {{requests}}</p>
                                         </div>
                                         <div class="col-md-2 col-12 align-self-center ml-md-n3 ml-0">
-                                            <div class="price">PHP {{payment.totalAmount}}</div>
+                                            <div class="price">PHP {{payment.total}}</div>
                                         </div>
                                         <div class="col-md-2 col-12 align-self-center py-3 py-md-0 text-center">
-                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#cancelModal" data-email={{{email}}} data-check-in={{{checkInDate}}}  data-check-out={{{checkOutDate}}} data-room-type="Executive Deluxe" data-num-rooms={{{numOfRooms}}} data-num-adults={{{numOfAdults}}} data-num-kids={{{numOfKids}}}>Cancel Reservation</button>
+                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#cancelModal" data-payment={{payment.total}} data-email={{{email}}} data-check-in={{{checkInDate}}}  data-check-out={{{checkOutDate}}} data-room-type="Executive Deluxe" data-num-rooms={{{rooms}}} data-num-adults={{{adults}}} data-num-kids={{{kids}}}>Cancel Reservation</button>
                                         </div>
                                     </div>
                                 {{/ifED}}
                                 
                                 {{!-- Junior Suite --}}
-                                {{#ifJS roomType}}
+                                {{#ifJS roomtype}}
                                     <div class="row boxshadow mb-4">
                                         <div class="col-md-4 col-12 roomtype">
                                             <img class="img-fluid" src ="/images/Rooms/juniorsuite.jpg">
@@ -266,31 +266,31 @@
                                                 <div class="row mt-2 ml-1">
                                                     <div class="col-md-4 col-12 border3 pt-1">
                                                         ADULTS<br>
-                                                        <span class="numbers">{{numOfAdults}}</span>
+                                                        <span class="numbers">{{adults}}</span>
                                                     </div>
                                                     <div class="col-md-4 col-12 border3 pt-1">
                                                         KIDS<br>
-                                                        <span class="numbers">{{numOfKids}}</span>
+                                                        <span class="numbers">{{kids}}</span>
                                                     </div>
                                                     <div class="col-md-4 col-12 borderall pt-1">
                                                         ROOMS<br>
-                                                        <span class="numbers">{{numOfRooms}}</span>
+                                                        <span class="numbers">{{rooms}}</span>
                                                     </div>
                                                 </div>
                                             </div>
                                             <p class="col-md-10 col-12 mt-3 ml-1">*Additional Comments/Requests : {{requests}}</p>
                                         </div>
                                         <div class="col-md-2 col-12 align-self-center ml-md-n3 ml-0">
-                                            <div class="price">PHP {{payment.totalAmount}}</div>
+                                            <div class="price">PHP {{payment.total}}</div>
                                         </div>
                                         <div class="col-md-2 col-12 align-self-center py-3 py-md-0 text-center">
-                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#cancelModal" data-email={{{email}}} data-check-in={{{checkInDate}}}  data-check-out={{{checkOutDate}}} data-room-type="Junior Suite" data-num-rooms={{{numOfRooms}}} data-num-adults={{{numOfAdults}}} data-num-kids={{{numOfKids}}}>Cancel Reservation</button>
+                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#cancelModal" data-payment={{payment.total}} data-email={{{email}}} data-check-in={{{checkInDate}}}  data-check-out={{{checkOutDate}}} data-room-type="Junior Suite" data-num-rooms={{{rooms}}} data-num-adults={{{adults}}} data-num-kids={{{kids}}}>Cancel Reservation</button>
                                         </div>
                                     </div>
                                 {{/ifJS}}
 
                                 {{!-- Executive Suite --}}
-                                {{#ifES roomType}}
+                                {{#ifES roomtype}}
                                     <div class="row boxshadow mb-4">
                                         <div class="col-md-4 col-12 roomtype">
                                             <img class="img-fluid" src ="/images/Rooms/executivesuite.jpg">
@@ -302,31 +302,31 @@
                                                 <div class="row mt-2 ml-1">
                                                     <div class="col-md-4 col-12 border3 pt-1">
                                                         ADULTS<br>
-                                                        <span class="numbers">{{numOfAdults}}</span>
+                                                        <span class="numbers">{{adults}}</span>
                                                     </div>
                                                     <div class="col-md-4 col-12 border3 pt-1">
                                                         KIDS<br>
-                                                        <span class="numbers">{{numOfKids}}</span>
+                                                        <span class="numbers">{{kids}}</span>
                                                     </div>
                                                     <div class="col-md-4 col-12 borderall pt-1">
                                                         ROOMS<br>
-                                                        <span class="numbers">{{numOfRooms}}</span>
+                                                        <span class="numbers">{{rooms}}</span>
                                                     </div>
                                                 </div>
                                             </div>
                                             <p class="col-md-10 col-12 mt-3 ml-1">*Additional Comments/Requests : {{requests}}</p>
                                         </div>
                                         <div class="col-md-2 col-12 align-self-center ml-md-n3 ml-0">
-                                            <div class="price">PHP {{payment.totalAmount}}</div>
+                                            <div class="price">PHP {{payment.total}}</div>
                                         </div>
                                         <div class="col-md-2 col-12 align-self-center py-3 py-md-0 text-center">
-                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#cancelModal" data-email={{{email}}} data-check-in={{{checkInDate}}}  data-check-out={{{checkOutDate}}} data-room-type="Executive Suite" data-num-rooms={{{numOfRooms}}} data-num-adults={{{numOfAdults}}} data-num-kids={{{numOfKids}}}>Cancel Reservation</button>
+                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#cancelModal" data-payment={{payment.total}} data-email={{{email}}} data-check-in={{{checkInDate}}}  data-check-out={{{checkOutDate}}} data-room-type="Executive Suite" data-num-rooms={{{rooms}}} data-num-adults={{{adults}}} data-num-kids={{{kids}}}>Cancel Reservation</button>
                                         </div>
                                     </div>
                                 {{/ifES}}
 
                                 {{!-- Grand Suite --}}
-                                {{#ifGS roomType}}
+                                {{#ifGS roomtype}}
                                     <div class="row boxshadow mb-4">
                                         <div class="col-md-4 col-12 roomtype">
                                             <img class="img-fluid" src ="/images/Rooms/grandsuite.jpg">
@@ -338,25 +338,25 @@
                                                 <div class="row mt-2 ml-1">
                                                     <div class="col-md-4 col-12 border3 pt-1">
                                                         ADULTS<br>
-                                                        <span class="numbers">{{numOfAdults}}</span>
+                                                        <span class="numbers">{{adults}}</span>
                                                     </div>
                                                     <div class="col-md-4 col-12 border3 pt-1">
                                                         KIDS<br>
-                                                        <span class="numbers">{{numOfKids}}</span>
+                                                        <span class="numbers">{{kids}}</span>
                                                     </div>
                                                     <div class="col-md-4 col-12 borderall pt-1">
                                                         ROOMS<br>
-                                                        <span class="numbers">{{numOfRooms}}</span>
+                                                        <span class="numbers">{{rooms}}</span>
                                                     </div>
                                                 </div>
                                             </div>
                                             <p class="col-md-10 col-12 mt-3 ml-1">*Additional Comments/Requests : {{requests}}</p>
                                         </div>
                                         <div class="col-md-2 col-12 align-self-center ml-md-n3 ml-0">
-                                            <div class="price">PHP {{payment.totalAmount}}</div>
+                                            <div class="price">PHP {{payment.total}}</div>
                                         </div>
                                         <div class="col-md-2 col-12 align-self-center py-3 py-md-0 text-center">
-                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#cancelModal" data-email={{{email}}} data-check-in={{{checkInDate}}}  data-check-out={{{checkOutDate}}} data-room-type="Grand Suite" data-num-rooms={{{numOfRooms}}} data-num-adults={{{numOfAdults}}} data-num-kids={{{numOfKids}}}>Cancel Reservation</button>
+                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#cancelModal" data-payment={{payment.total}} data-email={{{email}}} data-check-in={{{checkInDate}}}  data-check-out={{{checkOutDate}}} data-room-type="Grand Suite" data-num-rooms={{{rooms}}} data-num-adults={{{adults}}} data-num-kids={{{kids}}}>Cancel Reservation</button>
                                         </div>
                                     </div>
                                 {{/ifGS}}
@@ -376,7 +376,7 @@
                                         <div class="modal-footer">
                                             <form method="POST" enctype="application/x-www-form-urlencoded" class="modalForm">
                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                <input class="btn" type="submit" value="Cancel Reservation">
+                                                <input class="btn reserve" type="submit" value="Cancel Reservation">
                                             </form>
                                         </div>
                                     </div>
@@ -392,6 +392,7 @@
                                     var numadults = button.data('num-adults');
                                     var numkids = button.data('num-kids');
                                     var email = button.data('email');
+                                    var payment = button.data('payment');
                                     // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
                                     // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
                                     var modal = $(this)
@@ -401,7 +402,8 @@
                                                             '<input name="numRooms" id="numRooms" type="hidden" value="'+numrooms+ '">'+
                                                             '<input name="numAdults" id="numAdults" type="hidden" value="'+numadults+ '">'+
                                                             '<input name="numKids" id="numKids" type="hidden" value="'+numkids+ '">'+
-                                                            '<input name="email" id="email" type="hidden" value="'+email+ '">'
+                                                            '<input name="email" id="email" type="hidden" value="'+email+ '">'+
+                                                            '<input name="payment" id="payment" type="hidden" value="'+payment+ '">'
                                                            );
                                     //<input name="checkIn" id="checkIn" type="hidden" value={{{checkInDate}}}>
                                     modal.find('.modal-body').html('Clicking confirm will cancel your reservation and automatically refund your payment to your credit card. You will also be automatically redirected to your profile.'+
@@ -425,7 +427,7 @@
                     <div class="container row d-flex justify-content-around"> {{!--container--}}
                         {{#each tab3}}
                             {{!-- Classic Deluxe--}}
-                            {{#ifCD roomType}}
+                            {{#ifCD roomtype}}
                                 <div class="card boxshadow col-md-4 col-xs-12">
                                     <img class="card-img-top grayscale" src="/images/Rooms/classicdeluxe.jpg">
                                     <div class="card-body">
@@ -439,17 +441,17 @@
                                             Classic Deluxe
                                         </div>
                                         <div class="row justify-content-center spacing">
-                                            Adults : {{numOfAdults}}
+                                            Adults : {{adults}}
                                         </div>
                                         <div class="row justify-content-center spacing">
-                                            Kids : {{numOfKids}}
+                                            Kids : {{kids}}
                                         </div>
                                         <div class="row justify-content-center mb-2 spacing">
-                                            Rooms : {{numOfRooms}}
+                                            Rooms : {{rooms}}
                                         </div>
                                         <div class="row justify-content-center">
                                             <div class="price">
-                                                PHP {{payment.totalAmount}}
+                                                PHP {{payment.total}}
                                             </div>
                                         </div>
                                     </div>
@@ -457,7 +459,7 @@
                             {{/ifCD}}
 
                             {{!-- Family Deluxe --}}
-                            {{#ifFD roomType}}
+                            {{#ifFD roomtype}}
                                 <div class="card boxshadow col-md-4 col-xs-12">
                                     <img class="card-img-top grayscale" src="/images/Rooms/familydeluxe.jpg">
                                     <div class="card-body">
@@ -471,17 +473,17 @@
                                             Family Deluxe
                                         </div>
                                         <div class="row justify-content-center spacing">
-                                            Adults : {{numOfAdults}}
+                                            Adults : {{adults}}
                                         </div>
                                         <div class="row justify-content-center spacing">
-                                            Kids : {{numOfKids}}
+                                            Kids : {{kids}}
                                         </div>
                                         <div class="row justify-content-center mb-2 spacing">
-                                            Rooms : {{numOfRooms}}
+                                            Rooms : {{rooms}}
                                         </div>
                                         <div class="row justify-content-center">
                                             <div class="price">
-                                                PHP {{payment.totalAmount}}
+                                                PHP {{payment.total}}
                                             </div>
                                         </div>
                                     </div>
@@ -489,7 +491,7 @@
                             {{/ifFD}}
 
                             {{!-- Executive Deluxe --}}
-                            {{#ifED roomType}}
+                            {{#ifED roomtype}}
                                 <div class="card boxshadow col-md-4 col-xs-12">
                                     <img class="card-img-top grayscale" src="/images/Rooms/executivedeluxe.jpg">
                                     <div class="card-body">
@@ -503,17 +505,17 @@
                                             Executive Deluxe
                                         </div>
                                         <div class="row justify-content-center spacing">
-                                            Adults : {{numOfAdults}}
+                                            Adults : {{adults}}
                                         </div>
                                         <div class="row justify-content-center spacing">
-                                            Kids : {{numOfKids}}
+                                            Kids : {{kids}}
                                         </div>
                                         <div class="row justify-content-center mb-2 spacing">
-                                            Rooms : {{numOfRooms}}
+                                            Rooms : {{rooms}}
                                         </div>
                                         <div class="row justify-content-center">
                                             <div class="price">
-                                                PHP {{payment.totalAmount}}
+                                                PHP {{payment.total}}
                                             </div>
                                         </div>
                                     </div>
@@ -521,7 +523,7 @@
                             {{/ifED}}
 
                             {{!-- Junior Suite --}}
-                            {{#ifJS roomType}}
+                            {{#ifJS roomtype}}
                                 <div class="card boxshadow col-md-4 col-xs-12">
                                     <img class="card-img-top grayscale" src="/images/Rooms/juniorsuite.jpg">
                                     <div class="card-body">
@@ -535,17 +537,17 @@
                                             Junior Suite
                                         </div>
                                         <div class="row justify-content-center spacing">
-                                            Adults : {{numOfAdults}}
+                                            Adults : {{adults}}
                                         </div>
                                         <div class="row justify-content-center spacing">
-                                            Kids : {{numOfKids}}
+                                            Kids : {{kids}}
                                         </div>
                                         <div class="row justify-content-center mb-2 spacing">
-                                            Rooms : {{numOfRooms}}
+                                            Rooms : {{rooms}}
                                         </div>
                                         <div class="row justify-content-center">
                                             <div class="price">
-                                                PHP {{payment.totalAmount}}
+                                                PHP {{payment.total}}
                                             </div>
                                         </div>
                                     </div>
@@ -553,7 +555,7 @@
                             {{/ifJS}}
                             
                             {{!-- Executive Suite --}}
-                            {{#ifES roomType}}
+                            {{#ifES roomtype}}
                                 <div class="card boxshadow col-md-4 col-xs-12">
                                     <img class="card-img-top grayscale" src="/images/Rooms/executivesuite.jpg">
                                     <div class="card-body">
@@ -567,17 +569,17 @@
                                             Executive Suite
                                         </div>
                                         <div class="row justify-content-center spacing">
-                                            Adults : {{numOfAdults}}
+                                            Adults : {{adults}}
                                         </div>
                                         <div class="row justify-content-center spacing">
-                                            Kids : {{numOfKids}}
+                                            Kids : {{kids}}
                                         </div>
                                         <div class="row justify-content-center mb-2 spacing">
-                                            Rooms : {{numOfRooms}}
+                                            Rooms : {{rooms}}
                                         </div>
                                         <div class="row justify-content-center">
                                             <div class="price">
-                                                PHP {{payment.totalAmount}}
+                                                PHP {{payment.total}}
                                             </div>
                                         </div>
                                     </div>
@@ -585,7 +587,7 @@
                             {{/ifES}}
 
                             {{!-- Grand Suite --}}
-                            {{#ifGS roomType}}
+                            {{#ifGS roomtype}}
                                 <div class="card boxshadow col-md-4 col-xs-12">
                                     <img class="card-img-top grayscale" src="/images/Rooms/grandsuite.jpg">
                                     <div class="card-body">
@@ -599,17 +601,17 @@
                                             Grand Suite
                                         </div>
                                         <div class="row justify-content-center spacing">
-                                            Adults : {{numOfAdults}}
+                                            Adults : {{adults}}
                                         </div>
                                         <div class="row justify-content-center spacing">
-                                            Kids : {{numOfKids}}
+                                            Kids : {{kids}}
                                         </div>
                                         <div class="row justify-content-center mb-2 spacing">
-                                            Rooms : {{numOfRooms}}
+                                            Rooms : {{rooms}}
                                         </div>
                                         <div class="row justify-content-center">
                                             <div class="price">
-                                                PHP {{payment.totalAmount}}
+                                                PHP {{payment.total}}
                                             </div>
                                         </div>
                                     </div>
