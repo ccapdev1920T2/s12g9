@@ -114,12 +114,12 @@ const routerFunction = function(db) {
         }).toArray().then(function(resp){
                 user=resp;
                 // console.log(resp[0].email);
-                db.collection('bookings').find({ 
+                db.collection('booking').find({ 
                     email:user[0].email,
                     checkInDate: {$gte:today.toString()},
                     status:"Booked"
                 }).toArray().then(r=> {
-                    db.collection('bookings').find({ 
+                    db.collection('booking').find({ 
                         email:user[0].email,
                         checkInDate: {$lt:today.toString()},
                         status:"Booked"
@@ -153,14 +153,14 @@ const routerFunction = function(db) {
     // TODO: FINISH THIS
     router.post('/',function(req, res) {
         // add delete from db code here
-        db.collection('bookings').updateOne(
+        db.collection('booking').updateOne(
             {
                 checkInDate: req.body.checkIn,
                 checkOutDate: req.body.checkOut,
-                roomType: req.body.roomType,
-                numOfRooms: req.body.numRooms,
-                numOfAdults: req.body.numAdults,
-                numOfKids:req.body.numKids,
+                roomtype: req.body.roomType,
+                rooms: req.body.numRooms,
+                adults: req.body.numAdults,
+                kids:req.body.numKids,
                 email:req.body.email,
                 status:"Booked"
             },
