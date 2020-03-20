@@ -159,11 +159,32 @@ const routerFunction = function(db) {
                                     })
                                 });
                         } else {
-                            return res.render('home', {
-                                logging: loggingstring,
-                                // whichheader: 'header',
-                                whichfooter: footertype
-                            })
+                            var todayDate = new Date();
+                            var countUpdate = { $set: { cancellationCount: 0 } };
+
+                            if ((todayDate.getMonth() + 1) == 1 && todayDate.getDate() == 1) {
+                                db.collection('users').updateMany({}, countUpdate)
+                                    .then(resset => {
+                                        return res.render('home', {
+                                            logging: loggingstring,
+                                            // whichheader: 'header',
+                                            whichfooter: footertype
+                                        })
+                                    }).catch(errset => {
+                                        console.log(errset);
+                                        return res.render('home', {
+                                            logging: loggingstring,
+                                            // whichheader: 'header',
+                                            whichfooter: footertype
+                                        })
+                                    })
+                            } else {
+                                return res.render('home', {
+                                        logging: loggingstring,
+                                        // whichheader: 'header',
+                                        whichfooter: footertype
+                                    }) //function when rendering the webpage
+                            }
                         }
                     }).catch(errsec => {
                         console.log(errsec);
@@ -173,14 +194,14 @@ const routerFunction = function(db) {
                             whichfooter: footertype
                         })
                     })
+            }).catch(errDel => {
+                console.log(errDel);
+                return res.render('home', {
+                    logging: loggingstring,
+                    whichfooter: fottertype
+                })
             })
-    }).catch(errDel => {
-        console.log(errDel);
-        return res.render('home', {
-            logging: loggingstring,
-            whichfooter: fottertype
-        })
-    })
+    });
 
 
     //FOR CHECKING VERIFICATION
