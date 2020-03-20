@@ -64,162 +64,226 @@
         </div>
     </div>
     <div class="main main-raised">
-        <div class="profile-content">
+        <div class="profile-content mb-5">
             <div class="container">
-                <br>
-                <div class="row admin justify-content-center pt-5">
-                    Reservations
-                    <img src="/images/AboutUs/hotel.svg" width="100%" height="1%">
-                </div>
-                <div class="dropDowns">
-                <!--
-                <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Select Category
-                <span class="caret"></span></button>
-                -->
-                <select classs="dropdown-menu" id="dropDownMenu">
-                    <option>Select Category</option>
-                    <option value="todayReserve">Today's Reservations</option>
-                    <option value="currentlyChecked">Currently Checked In</option>
-                    <option value="viewAll">View All</option>
-                </select>
-                </div>
-                <div class="row" id="admin">
-                    <div class="col-12 ml-auto mr-auto">
-                        <div class="container mt-3 list">
-                            <div class="row label mb-3 py-2">
-                                <div class="col-md-4">Room Type</div>
-                                <div class="col-md-4">Details</div>
-                                <div class="col-md-2">Payment</div>
-                                <div class="col-md-2"></div>
-                            </div>
-                            
+                <!-- Nav tabs -->
+                <ul class="nav nav-pills nav-pills-icons justify-content-center pt-5" role="tablist">
+                    <li class="nav-item">
+                    <a class="nav-link active" data-toggle="tab" href="#reservations">
+                        <div class="material-icons style">View</div>
+                        Reservations
+                    </a>
+                    </li>
+                    <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#account">
+                        <div class="material-icons style">Banned</div>
+                        Accounts
+                    </a>
+                    </li>
+                </ul>
 
-                            <!--Today's Reservations-->
-                            <div id="todayReserve" class="selection">
-                                {{{noneMessageToday}}}
-                                {{#each todayReserve}}
-                                <div class="row boxshadow mb-4">
-                                    <div class="col-md-4 col-12 roomtype">
-                                        <img class="img-fluid" src="{{{img_src}}}">
+                <!-- Tab panes -->
+                <div class="tab-content tab-space">
+                    <div id="reservations" class="container tab-pane active gallery"><br>
+                    <div class="container">
+                        <br>
+                        <div class="row admin justify-content-center">
+                            Reservations
+                            <img src="/images/AboutUs/hotel.svg" width="100%" height="1%">
+                        </div>
+                        <div class="dropDowns">
+                        <!--
+                        <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Select Category
+                        <span class="caret"></span></button>
+                        -->
+                        <select classs="dropdown-menu" id="dropDownMenu">
+                            <option>Select Category</option>
+                            <option value="todayReserve">Today's Reservations</option>
+                            <option value="currentlyChecked">Currently Checked In</option>
+                            <option value="viewAll">View All</option>
+                        </select>
+                        </div>
+                        <div class="row" id="admin">
+                            <div class="col-12 ml-auto mr-auto">
+                                <div class="container mt-3 list">
+                                    <div class="row label mb-3 py-2">
+                                        <div class="col-md-4">Room Type</div>
+                                        <div class="col-md-4">Details</div>
+                                        <div class="col-md-2">Payment</div>
+                                        <div class="col-md-2"></div>
                                     </div>
-                                    <div class="col-md-4 col-12 align-self-center ml-md-n2 ml-0">
-                                        <div class="title col-md-10 col-12">{{{roomType}}}</div>
-                                        <div class="datetitle col-md-10 col-12">Check-In: {{{checkInDate}}} <br>Check-Out: {{{checkOutDate}}}</div>
-                                        <div class="container">
-                                            <div class="row mt-2 ml-1">
-                                                <div class="col-md-4 col-12 border3 pt-1">
-                                                    ADULTS<br>
-                                                    <span class="numbers">{{{numAdults}}}</span>
+                                    
+
+                                    <!--Today's Reservations-->
+                                    <div id="todayReserve" class="selection">
+                                        {{{noneMessageToday}}}
+                                        {{#each todayReserve}}
+                                        <div class="row boxshadow mb-4">
+                                            <div class="col-md-4 col-12 roomtype">
+                                                <img class="img-fluid" src="{{{img_src}}}">
+                                            </div>
+                                            <div class="col-md-4 col-12 align-self-center ml-md-n2 ml-0">
+                                                <div class="title col-md-10 col-12">{{{roomType}}}</div>
+                                                <div class="datetitle col-md-10 col-12">Check-In: {{{checkInDate}}} <br>Check-Out: {{{checkOutDate}}}</div>
+                                                <div class="container">
+                                                    <div class="row mt-2 ml-1">
+                                                        <div class="col-md-4 col-12 border3 pt-1">
+                                                            ADULTS<br>
+                                                            <span class="numbers">{{{numAdults}}}</span>
+                                                        </div>
+                                                        <div class="col-md-4 col-12 border3 pt-1">
+                                                            KIDS<br>
+                                                            <span class="numbers">{{{numKids}}}</span>
+                                                        </div>
+                                                        <div class="col-md-4 col-12 borderall pt-1">
+                                                            ROOMS<br>
+                                                            <span class="numbers">{{{numRooms}}}</span>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                                <div class="col-md-4 col-12 border3 pt-1">
-                                                    KIDS<br>
-                                                    <span class="numbers">{{{numKids}}}</span>
-                                                </div>
-                                                <div class="col-md-4 col-12 borderall pt-1">
-                                                    ROOMS<br>
-                                                    <span class="numbers">{{{numRooms}}}</span>
-                                                </div>
+                                                <p class="col-md-10 col-12 mt-3 ml-1">*Additional Comments/Requests : {{{requests}}}</p>
+                                            </div>
+                                            <div class="col-md-2 col-12 align-self-center ml-md-n3 ml-0">
+                                                <div class="price">PHP {{{TOTAL}}}</div>
+                                            </div>
+                                            <div class="col-md-2 col-12 align-self-center py-3 py-md-0 text-center">
+                                                <form action="/admin/customerDetails/{{bookingid}}" method="POST">
+                                                    <input class="btn" type="submit" value="Customer Details" href="/customerDetails">
+                                                </form>
                                             </div>
                                         </div>
-                                        <p class="col-md-10 col-12 mt-3 ml-1">*Additional Comments/Requests : {{{requests}}}</p>
+                                        {{/each}}
                                     </div>
-                                    <div class="col-md-2 col-12 align-self-center ml-md-n3 ml-0">
-                                        <div class="price">PHP {{{TOTAL}}}</div>
-                                    </div>
-                                    <div class="col-md-2 col-12 align-self-center py-3 py-md-0 text-center">
-                                        <form action="/admin/customerDetails/{{bookingid}}" method="POST">
-                                            <input class="btn" type="submit" value="Customer Details" href="/customerDetails">
-                                        </form>
-                                    </div>
-                                </div>
-                                {{/each}}
-                            </div>
 
-                            <div id="currentlyChecked" class="selection">
-                            <!--Currently Checked In-->
-                                {{{noneMessageChecked}}}
-                                {{#each currentlyChecked}}
-                                <div class="row boxshadow mb-4">
-                                    <div class="col-md-4 col-12 roomtype">
-                                        <img class="img-fluid" src="{{{img_src}}}">
-                                    </div>
-                                    <div class="col-md-4 col-12 align-self-center ml-md-n2 ml-0">
-                                        <div class="title col-md-10 col-12">{{{roomType}}}</div>
-                                        <div class="datetitle col-md-10 col-12">Check-In: {{{checkInDate}}} <br>Check-Out: {{{checkOutDate}}}</div>
-                                        <div class="container">
-                                            <div class="row mt-2 ml-1">
-                                                <div class="col-md-4 col-12 border3 pt-1">
-                                                    ADULTS<br>
-                                                    <span class="numbers">{{{numAdults}}}</span>
+                                    <div id="currentlyChecked" class="selection">
+                                    <!--Currently Checked In-->
+                                        {{{noneMessageChecked}}}
+                                        {{#each currentlyChecked}}
+                                        <div class="row boxshadow mb-4">
+                                            <div class="col-md-4 col-12 roomtype">
+                                                <img class="img-fluid" src="{{{img_src}}}">
+                                            </div>
+                                            <div class="col-md-4 col-12 align-self-center ml-md-n2 ml-0">
+                                                <div class="title col-md-10 col-12">{{{roomType}}}</div>
+                                                <div class="datetitle col-md-10 col-12">Check-In: {{{checkInDate}}} <br>Check-Out: {{{checkOutDate}}}</div>
+                                                <div class="container">
+                                                    <div class="row mt-2 ml-1">
+                                                        <div class="col-md-4 col-12 border3 pt-1">
+                                                            ADULTS<br>
+                                                            <span class="numbers">{{{numAdults}}}</span>
+                                                        </div>
+                                                        <div class="col-md-4 col-12 border3 pt-1">
+                                                            KIDS<br>
+                                                            <span class="numbers">{{{numKids}}}</span>
+                                                        </div>
+                                                        <div class="col-md-4 col-12 borderall pt-1">
+                                                            ROOMS<br>
+                                                            <span class="numbers">{{{numRooms}}}</span>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                                <div class="col-md-4 col-12 border3 pt-1">
-                                                    KIDS<br>
-                                                    <span class="numbers">{{{numKids}}}</span>
-                                                </div>
-                                                <div class="col-md-4 col-12 borderall pt-1">
-                                                    ROOMS<br>
-                                                    <span class="numbers">{{{numRooms}}}</span>
-                                                </div>
+                                                <p class="col-md-10 col-12 mt-3 ml-1">*Additional Comments/Requests : {{{requests}}}</p>
+                                            </div>
+                                            <div class="col-md-2 col-12 align-self-center ml-md-n3 ml-0">
+                                                <div class="price">PHP {{{TOTAL}}}</div>
+                                            </div>
+                                            <div class="col-md-2 col-12 align-self-center py-3 py-md-0 text-center">
+                                                <form action="/admin/customerDetails/{{bookingid}}" method="POST">
+                                                    <input class="btn" type="submit" value="Customer Details" href="/customerDetails">
+                                                </form>
                                             </div>
                                         </div>
-                                        <p class="col-md-10 col-12 mt-3 ml-1">*Additional Comments/Requests : {{{requests}}}</p>
+                                        {{/each}}
                                     </div>
-                                    <div class="col-md-2 col-12 align-self-center ml-md-n3 ml-0">
-                                        <div class="price">PHP {{{TOTAL}}}</div>
-                                    </div>
-                                    <div class="col-md-2 col-12 align-self-center py-3 py-md-0 text-center">
-                                        <form action="/admin/customerDetails/{{bookingid}}" method="POST">
-                                            <input class="btn" type="submit" value="Customer Details" href="/customerDetails">
-                                        </form>
-                                    </div>
-                                </div>
-                                {{/each}}
-                            </div>
 
-                            <div id="viewAll" class="selection">
-                            <!--View All-->
-                                {{{noneMessageViewAll}}}
-                                {{#each viewAll}}
-                                <div class="row boxshadow mb-4">
-                                    <div class="col-md-4 col-12 roomtype">
-                                        <img class="img-fluid" src="{{{img_src}}}">
-                                    </div>
-                                    <div class="col-md-4 col-12 align-self-center ml-md-n2 ml-0">
-                                        <div class="title col-md-10 col-12">{{{roomType}}}</div>
-                                        <div class="datetitle col-md-10 col-12">Check-In: {{{checkInDate}}} <br>Check-Out: {{{checkOutDate}}}</div>
-                                        <div class="container">
-                                            <div class="row mt-2 ml-1">
-                                                <div class="col-md-4 col-12 border3 pt-1">
-                                                    ADULTS<br>
-                                                    <span class="numbers">{{{numAdults}}}</span>
+                                    <div id="viewAll" class="selection">
+                                    <!--View All-->
+                                        {{{noneMessageViewAll}}}
+                                        {{#each viewAll}}
+                                        <div class="row boxshadow mb-4">
+                                            <div class="col-md-4 col-12 roomtype">
+                                                <img class="img-fluid" src="{{{img_src}}}">
+                                            </div>
+                                            <div class="col-md-4 col-12 align-self-center ml-md-n2 ml-0">
+                                                <div class="title col-md-10 col-12">{{{roomType}}}</div>
+                                                <div class="datetitle col-md-10 col-12">Check-In: {{{checkInDate}}} <br>Check-Out: {{{checkOutDate}}}</div>
+                                                <div class="container">
+                                                    <div class="row mt-2 ml-1">
+                                                        <div class="col-md-4 col-12 border3 pt-1">
+                                                            ADULTS<br>
+                                                            <span class="numbers">{{{numAdults}}}</span>
+                                                        </div>
+                                                        <div class="col-md-4 col-12 border3 pt-1">
+                                                            KIDS<br>
+                                                            <span class="numbers">{{{numKids}}}</span>
+                                                        </div>
+                                                        <div class="col-md-4 col-12 borderall pt-1">
+                                                            ROOMS<br>
+                                                            <span class="numbers">{{{numRooms}}}</span>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                                <div class="col-md-4 col-12 border3 pt-1">
-                                                    KIDS<br>
-                                                    <span class="numbers">{{{numKids}}}</span>
-                                                </div>
-                                                <div class="col-md-4 col-12 borderall pt-1">
-                                                    ROOMS<br>
-                                                    <span class="numbers">{{{numRooms}}}</span>
-                                                </div>
+                                                <p class="col-md-10 col-12 mt-3 ml-1">*Additional Comments/Requests : {{{requests}}}</p>
+                                            </div>
+                                            <div class="col-md-2 col-12 align-self-center ml-md-n3 ml-0">
+                                                <div class="price">PHP {{{TOTAL}}}</div>
+                                            </div>
+                                            <div class="col-md-2 col-12 align-self-center py-3 py-md-0 text-center">
+                                                <form action="/admin/customerDetails/{{bookingid}}" method="POST">
+                                                    <input class="btn" type="submit" value="Customer Details" href="/customerDetails">
+                                                </form>
                                             </div>
                                         </div>
-                                        <p class="col-md-10 col-12 mt-3 ml-1">*Additional Comments/Requests : {{{requests}}}</p>
-                                    </div>
-                                    <div class="col-md-2 col-12 align-self-center ml-md-n3 ml-0">
-                                        <div class="price">PHP {{{TOTAL}}}</div>
-                                    </div>
-                                    <div class="col-md-2 col-12 align-self-center py-3 py-md-0 text-center">
-                                        <form action="/admin/customerDetails/{{bookingid}}" method="POST">
-                                            <input class="btn" type="submit" value="Customer Details" href="/customerDetails">
-                                        </form>
+                                        {{/each}}
                                     </div>
                                 </div>
-                                {{/each}}
                             </div>
                         </div>
                     </div>
+                    </div>
+                    <div id="account" class="container tab-pane gallery">
+                        <br>
+                        <div class="container">
+                            <br>
+                            <div class="row admin justify-content-center">
+                                Banned Accounts
+                                <img src="/images/AboutUs/hotel.svg" width="100%" height="1%">
+                            </div>
+                            <div class="row" id="admin">
+                                <div class="col-12 ml-auto mr-auto">
+                                    <div class="container mt-3 list">
+                                        <div class="row label mb-3 py-2">
+                                            <div class="col-md-3">Membership Number</div>
+                                            <div class="col-md-3 ml-n2">Name</div>
+                                            <div class="col-md-3 ml-n3">Cancellation Counts</div>
+                                            <div class="col-md-3"></div>
+                                        </div>
+                                        {{{noneMessageAccounts}}}
+                                        {{#each bannedAccount}}
+                                            <div class="row boxshadow mb-4 py-3">
+                                                <div class="col-md-3 col-12 align-self-center ml-2">
+                                                    {{membershipNumber}}
+                                                </div>
+                                                <div class="col-md-3 col-12 align-self-center ml-md-n2 ml-5">
+                                                    {{fname}} {{lname}}
+                                                </div>
+                                                <div class="col-md-3 col-12 align-self-center ml-md-n3 ml-5">
+                                                    {{cancellationCount}}
+                                                </div>
+                                                <div class="col-md-3 col-12 align-self-center py-3 py-md-0 text-center">
+                                                    <form action="/admin/reactivate/{{_id}}" method="POST">
+                                                        <input class="btn" type="submit" value="Reactivate">
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        {{/each}}
+                                    </div>
+                                </div>
+                            </div>      
+                        </div>        
+                    </div>
                 </div>
-            </div>
+            </div>    
         </div>
     </div>
     {{> (lookup . 'whichfooter') }}

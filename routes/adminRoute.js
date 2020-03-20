@@ -61,7 +61,10 @@ router.get('/', notLoggedInAdmin, function(req, res) {
     }
     //{ bookingDate: formattedDate.toString() }
     var today = new Date();
+    var monthNum = today.getMonth() + 1;
+    var todayFormat = today.getFullYear().toString() + '-' + monthNum.toString() + '-' + today.getDay().toString();
     var formattedDate = today.getFullYear().toString() + '-' + (today.getMonth() + 1).toString().padStart(2, 0) + '-' + today.getDate().toString().padStart(2, 0);
+    
     const monthName = ["January", "February", "March", "April", "May", "June",
         "July", "August", "September", "October", "November", "December"
     ];
@@ -69,7 +72,8 @@ router.get('/', notLoggedInAdmin, function(req, res) {
     var noneMessageTodayBooking = "";
     var noneMessageView = "";
     var noneMessageCheckin = "";
-    db.collection('booking').find({ bookingDate: formattedDate.toString(), status: 'Booked' }).toArray()
+    var noneMessageBanned ="";
+    db.collection('booking').find({ bookingDate: formattedDate, status: 'Booked' }).toArray()
         .then(resp => {
 
             if (resp.length == 0) {
@@ -106,7 +110,9 @@ router.get('/', notLoggedInAdmin, function(req, res) {
                         TOTAL: resp[i].payment.total,
                         bookingid: resp[i]._id
                     }
-
+                    console.log("booking");
+                    console.log(resp[i]);
+                    console.log("booking");
                     console.log(bookingObject);
                     newArray[i] = bookingObject;
                 }
@@ -140,26 +146,31 @@ router.get('/', notLoggedInAdmin, function(req, res) {
 
                             var viewAllObject = {
                                 img_src: imagesource,
-                                roomType: resp[i].roomtype,
+                                roomType: respViewAll[i].roomtype,
                                 checkInDate: formatCheckInDate,
                                 checkOutDate: formatCheckOutDate,
-                                numAdults: resp[i].adults,
-                                numKids: resp[i].kids,
-                                numRooms: resp[i].rooms,
-                                requests: resp[i].requests,
-                                TOTAL: resp[i].payment.total,
-                                bookingid: resp[i]._id
+                                numAdults: respViewAll[i].adults,
+                                numKids: respViewAll[i].kids,
+                                numRooms: respViewAll[i].rooms,
+                                requests: respViewAll[i].requests,
+                                TOTAL: respViewAll[i].payment.total,
+                                bookingid: respViewAll[i]._id
                             }
-
+                            console.log("viewAll");
+                            console.log(respViewAll[i]);
+                            console.log("viewAll");
+                            console.log(viewAllObject);
                             viewAllArray[i] = viewAllObject;
                         }
                     }
 
+                    console.log('hello');
+                    console.log("date:" + todayFormat);
                     db.collection('booking').find({
                             $and: [
-                                { checkInDate: { gte: today } },
-                                { checkOutDate: { lte: today } }
-                            ],
+                                    { checkInDate: { $lte: todayFormat } },
+                                    { checkOutDate: { $gte: todayFormat } }
+                                ],
                             status: 'Booked'
                         }).toArray()
                         .then(respCheckedIn => {
@@ -189,34 +200,48 @@ router.get('/', notLoggedInAdmin, function(req, res) {
 
                                         var CheckedInObject = {
                                             img_src: imagesource,
-                                            roomType: resp[i].roomtype,
+                                            roomType: respCheckedIn[i].roomtype,
                                             checkInDate: formatCheckInDate,
                                             checkOutDate: formatCheckOutDate,
-                                            numAdults: resp[i].adults,
-                                            numKids: resp[i].kids,
-                                            numRooms: resp[i].rooms,
-                                            requests: resp[i].requests,
-                                            TOTAL: resp[i].payment.total,
-                                            bookingid: resp[i]._id
+                                            numAdults: respCheckIn[i].adults,
+                                            numKids: respCheckIn[i].kids,
+                                            numRooms: respCheckIn[i].rooms,
+                                            requests: respCheckIn[i].requests,
+                                            TOTAL: respCheckIn[i].payment.total,
+                                            bookingid: respCheckIn[i]._id
                                         }
-
+                                        console.log("checkIn");
+                                        console.log(respCheckIn[i]);
                                         CheckedInArray[i] = CheckedInObject;
                                     }
-
-                                CheckedInArray[i] = CheckedInObject;
                             }
+                            db.collection('users').find({banned: true}).toArray()
+                                .then(respaccount => {
 
-                    return res.render('admin', {
-                        whichfooter: footertype,
-                        logging: loggingstring,
-                        currentlyChecked: CheckedInArray,
-                        viewAll: viewAllArray,
-                        todayReserve: newArray,
-                        noneMessageToday: noneMessageTodayBooking,
-                        noneMessageChecked: noneMessageCheckin,
-                        noneMessageViewAll: noneMessageView
-                    });
+                                    if (respaccount.length == 0){
+                                        noneMessageBanned= '<div class="row justify-content-center pb-5 pt-4">There are no banned accounts.</div>';
+                                    }
 
+                                    return res.render('admin', {
+                                        whichfooter: footertype,
+                                        logging: loggingstring,
+                                        currentlyChecked: CheckedInArray,
+                                        viewAll: viewAllArray,
+                                        todayReserve: newArray,
+                                        bannedAccount: respaccount,
+                                        noneMessageToday: noneMessageTodayBooking,
+                                        noneMessageChecked: noneMessageCheckin,
+                                        noneMessageViewAll: noneMessageView,
+                                        noneMessageAccounts: noneMessageBanned
+                                    });
+
+                                }).catch(erraccount => {
+                                    return res.status(500).render('admin', {
+                                        databaseError: '*Bad Server',
+                                        whichfooter: footertype,
+                                        logging: loggingstring
+                                    });
+                                });
                 }).catch(errcheck => {
                     return res.status(500).render('admin', {
                         databaseError: '*Bad Server',
@@ -254,8 +279,7 @@ router.get('/customerDetails', function(req, res) {
 
 });
 
-//FOR CLEANILESS OF WEBSITE ONLY
-router.get('/customerDetails/:bookid', function(req, res) {
+router.get('/customerDetails/:bookid', notLoggedInAdmin, function(req, res) {
     var bookingID = { _id: ObjectId(req.params.bookid) };
 
     var headertype = 'header';
@@ -328,6 +352,117 @@ router.post('/customerDetails/:bookid', notLoggedInAdmin, function(req, res) {
             });
         });
 });
+
+
+    router.get('/reactivate/:userid',notLoggedInAdmin, function(req,res){
+        var userID = { _id: ObjectId(req.params.userid) }; //use to find the id in the database, (const { ObjectId } = require('mongodb'); is needed on top of this file)
+        //for login
+        var headertype = 'header';
+        var footertype = 'footer';
+    
+        if (req.session.userId) {
+            headertype = 'headerUser';
+            footertype = 'footerUser';
+        }
+    
+        if (req.session.adminId) {
+            headertype = 'headerAdmin';
+            footertype = 'footerAdmin';
+        }
+
+        var update = {
+            $set: {
+                banned: false,
+                cancellationCount: 0
+            }
+        }
+
+        db.collection('users').updateOne(userID, update)
+            .then(resp => {
+                return res.status(201).redirect('/admin');
+            }).catch(err=>{
+                console.log(err);
+                return res.status(500).render('Reactivate', {
+                    databaseError: '*Bad Server',
+                    whichheader: headertype,
+                    whichfooter: footertype,
+                    userid: req.params.userid
+                });
+            })
+    });
+
+    router.post('/reactivate/:userid', notLoggedInAdmin, function(req, res){
+        var userID = { _id: ObjectId(req.params.userid) };
+
+        var headertype = 'header';
+        var footertype = 'footer';
+    
+        if (req.session.userId) {
+            headertype = 'headerUser';
+            footertype = 'footerUser';
+        }
+    
+        if (req.session.adminId) {
+            headertype = 'headerAdmin';
+            footertype = 'footerAdmin';
+        }
+        
+
+        db.collection('users').findOne(userID)
+        .then(resp => {
+            // console.log(resp._id);
+
+            db.collection('booking').find({email: resp.email, status: "Cancelled"}).toArray()
+                .then( respbook => {
+
+                    var bookedYear = []
+                    var total = 0;
+                    var count = 0;
+                    for (var i=0;i<respbook.length;i++){
+                        var year = respbook[i].bookingDate;
+                        year = year.substring(0,4);
+                        var today = new Date();
+
+                        if (today.getFullYear().toString() === year){
+                            total = total + parseFloat(respbook[i].payment.total);
+
+                            bookedYear[count] = respbook[i];
+                            count++;
+                        }
+                    }
+                    
+                    var total = total * 0.5;
+
+                    return res.render('Reactivate', {
+                        whichheader: headertype,
+                        whichfooter: footertype,
+                        userid: req.params.userid,
+                        totalPayment: total,
+                        fname: resp.fname,
+                        lname: resp.lname,
+                        email: resp.email,
+                        cardNumber: resp.creditcardNumber,
+                        book: bookedYear
+                    });
+                }).catch(errbook => {
+                    console.log(err);
+                    return res.status(500).render('Reactivate', {
+                        databaseError: '*Bad Server',
+                        whichheader: headertype,
+                        whichfooter: footertype,
+                        userid: req.params.userid,
+                    });
+                })        
+        }).catch(err => {
+            console.log(err);
+            return res.status(500).render('Reactivate', {
+                databaseError: '*Bad Server',
+                whichheader: headertype,
+                whichfooter: footertype,
+                userid: req.params.userid
+            });
+        });
+    });
 
 return router;
 };
