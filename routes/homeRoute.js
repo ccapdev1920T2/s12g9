@@ -109,6 +109,8 @@ const routerFunction = function(db) {
             admin: true
         }
 
+        var todayDate = new Date();
+
         db.collection('booking').findOneAndRemove({ signInDate: { $lte: todayDate } })
             .then(resDel => {
                 db.collection('users').findOne(adminuser)
@@ -124,7 +126,6 @@ const routerFunction = function(db) {
                                 .then(resp => {
                                     // console.log(resp);
 
-                                    var todayDate = new Date();
                                     var countUpdate = { $set: { cancellationCount: 0 } };
 
                                     if ((todayDate.getMonth() + 1) == 1 && todayDate.getDate() == 1) {
@@ -956,8 +957,7 @@ const routerFunction = function(db) {
                         transporter.sendMail(mailOptions, (error, info) => {
                             if (error) {
                                 return console.log(error);
-                            }
-                            else {
+                            } else {
                                 console.log('Message sent: %s', info.messageID);
                             }
                             transporter.close();
