@@ -168,11 +168,13 @@ const routerFunction = function(db) {
                 $set:{ status: "Cancelled" }
             }
         ). then(resp=>{
+            var subPoints = Number(Number(req.body.payment)/Number(10)*Number(-1))
             db.collection('users').updateOne(
                 {email:req.body.email},
                 {
                     $inc: {
                         cancellationCount:1,
+                        membershipPoints:subPoints
                     }
                 }
             ).then(r=>
@@ -180,7 +182,7 @@ const routerFunction = function(db) {
                     email:req.body.email
                 }).then(re=>{
                     if(re.cancellationCount<5){
-                        res.redirect("/user");
+                        res.redirect('back');
                     }
                     else{
                         db.collection('users').updateOne(
@@ -191,9 +193,8 @@ const routerFunction = function(db) {
                         );
                         var transporter = nodemailer.createTransport({
                             host: 'smtp.gmail.com',
-                            //port: 3000,
                             secure: false,
-                            port: 25,
+                            port: 587,
                             pool: true,
                             auth: {
                                 user: 'paraisohotelscorp@gmail.com',
