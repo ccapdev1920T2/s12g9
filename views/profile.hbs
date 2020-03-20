@@ -406,14 +406,12 @@
                                                             '<input name="payment" id="payment" type="hidden" value="'+payment+ '">'
                                                            );
                                     //<input name="checkIn" id="checkIn" type="hidden" value={{{checkInDate}}}>
-                                    modal.find('.modal-body').html('Clicking confirm will cancel your reservation and automatically refund your payment to your credit card. You will also be automatically redirected to your profile.'+
+                                    modal.find('.modal-body').html('Clicking confirm will cancel your reservation and automatically refund your payment to your credit card. Point earned for this booking will also be deducted from your account.'+
                                         '<br><u><b>Your booking details:</b></u>'+
                                         '<br><b>Check In Date:</b> ' + checkin +
                                         '<br><b>Check Out Date:</b> '+checkout +
                                         '<br><b>Room Type:</b> '+roomtype +
                                         '<br><b>Number of Rooms:</b> '+numrooms +
-                                        '<br><b>Number of Adults:</b> '+numadults +
-                                        '<br><b>Number of Kids:</b> '+numkids+
                                         '<p style="color:red;"><b>Warning!:</b>If there are 5 or more cancellations in a year this account will be banned!</p>'
                                     )
                                 })

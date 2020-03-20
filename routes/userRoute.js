@@ -150,31 +150,29 @@ const routerFunction = function(db) {
     });   
 
     // Post for Cancel Reservation
-    // TODO: FINISH THIS
+    // TODO: Removal of points
+    // TODO: email for banned account
     router.post('/',function(req, res) {
-        // add delete from db code here
         db.collection('booking').updateOne(
             {
                 checkInDate: req.body.checkIn,
                 checkOutDate: req.body.checkOut,
                 roomtype: req.body.roomType,
-                rooms: req.body.numRooms,
-                adults: req.body.numAdults,
-                kids:req.body.numKids,
+                rooms: Number(req.body.numRooms),
+                adults: Number(req.body.numAdults),
+                kids:Number(req.body.numKids),
                 email:req.body.email,
                 status:"Booked"
             },
             {
-                $set:{ status: 'Cancelled' }
+                $set:{ status: "Cancelled" }
             }
         ). then(resp=>{
-            var points= req.payment/10;
             db.collection('users').updateOne(
                 {email:req.body.email},
                 {
                     $inc: {
                         cancellationCount:1,
-                        membershipPoints:-points
                     }
                 }
             ).then(r=>
@@ -191,7 +189,6 @@ const routerFunction = function(db) {
                                 $set:{banned:true}
                             }
                         );
-                        // TODO: SEND EMAIL
                         var transporter = nodemailer.createTransport({
                             host: 'smtp.gmail.com',
                             //port: 3000,
@@ -237,8 +234,7 @@ const routerFunction = function(db) {
                     }
                 })
             ).catch(er=>console.log(er));
-        }).catch(err=> console.log(err))
-        
+        }).catch(err=> console.log(err));
     });
 
     return router;
