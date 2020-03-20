@@ -62,7 +62,7 @@ router.get('/', notLoggedInAdmin, function(req, res) {
     //{ bookingDate: formattedDate.toString() }
     var today = new Date();
     var monthNum = today.getMonth() + 1;
-    var todayFormat = today.getFullYear().toString() + '-' + monthNum.toString() + '-' + today.getDay().toString();
+    var todayFormat = today.getFullYear().toString() + '-' + monthNum.toString().padStart(2, 0) + '-' + today.getDate().toString().padStart(2, 0);
     var formattedDate = today.getFullYear().toString() + '-' + (today.getMonth() + 1).toString().padStart(2, 0) + '-' + today.getDate().toString().padStart(2, 0);
     
     const monthName = ["January", "February", "March", "April", "May", "June",
