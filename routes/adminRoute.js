@@ -110,10 +110,10 @@ router.get('/', notLoggedInAdmin, function(req, res) {
                         TOTAL: resp[i].payment.total,
                         bookingid: resp[i]._id
                     }
-                    console.log("booking");
-                    console.log(resp[i]);
-                    console.log("booking");
-                    console.log(bookingObject);
+                    // console.log("booking");
+                    // console.log(resp[i]);
+                    // console.log("booking");
+                    // console.log(bookingObject);
                     newArray[i] = bookingObject;
                 }
             }
@@ -156,10 +156,10 @@ router.get('/', notLoggedInAdmin, function(req, res) {
                                 TOTAL: respViewAll[i].payment.total,
                                 bookingid: respViewAll[i]._id
                             }
-                            console.log("viewAll");
-                            console.log(respViewAll[i]);
-                            console.log("viewAll");
-                            console.log(viewAllObject);
+                            // console.log("viewAll");
+                            // console.log(respViewAll[i]);
+                            // console.log("viewAll");
+                            // console.log(viewAllObject);
                             viewAllArray[i] = viewAllObject;
                         }
                     }
@@ -210,8 +210,8 @@ router.get('/', notLoggedInAdmin, function(req, res) {
                                             TOTAL: respCheckedIn[i].payment.total,
                                             bookingid: respCheckedIn[i]._id
                                         }
-                                        console.log("checkIn");
-                                        console.log(respCheckedIn[i]);
+                                        // console.log("checkIn");
+                                        // console.log(respCheckedIn[i]);
                                         CheckedInArray[i] = CheckedInObject;
                                     }
                             }
@@ -295,7 +295,13 @@ router.get('/customerDetails/:bookid', notLoggedInAdmin, function(req, res) {
         footertype = 'footerAdmin';
     }
 
-    db.collection('booking').deleteOne(bookingID)
+    var update = {
+        $set: {
+            status: 'Check Out'
+        }
+    }
+
+    db.collection('booking').updateOne(bookingID, update)
         .then(resp => {
             console.log(resp);
             return res.status(201).redirect('/admin');
