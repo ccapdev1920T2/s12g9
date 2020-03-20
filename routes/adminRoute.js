@@ -203,15 +203,15 @@ router.get('/', notLoggedInAdmin, function(req, res) {
                                             roomType: respCheckedIn[i].roomtype,
                                             checkInDate: formatCheckInDate,
                                             checkOutDate: formatCheckOutDate,
-                                            numAdults: respCheckIn[i].adults,
-                                            numKids: respCheckIn[i].kids,
-                                            numRooms: respCheckIn[i].rooms,
-                                            requests: respCheckIn[i].requests,
-                                            TOTAL: respCheckIn[i].payment.total,
-                                            bookingid: respCheckIn[i]._id
+                                            numAdults: respCheckedIn[i].adults,
+                                            numKids: respCheckedIn[i].kids,
+                                            numRooms: respCheckedIn[i].rooms,
+                                            requests: respCheckedIn[i].requests,
+                                            TOTAL: respCheckedIn[i].payment.total,
+                                            bookingid: respCheckedIn[i]._id
                                         }
                                         console.log("checkIn");
-                                        console.log(respCheckIn[i]);
+                                        console.log(respCheckedIn[i]);
                                         CheckedInArray[i] = CheckedInObject;
                                     }
                             }
