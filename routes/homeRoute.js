@@ -883,8 +883,7 @@ const routerFunction = function(db) {
                             host: 'smtp.gmail.com',
                             //port: 3000,
                             secure: false,
-                            port: 25,
-                            pool: true,
+                            port: 587,
                             auth: {
                                 user: 'paraisohotelscorp@gmail.com',
                                 pass: 'para1soHotels'
@@ -918,8 +917,9 @@ const routerFunction = function(db) {
                             if (error) {
                                 return console.log(error);
                             }
-
-                            console.log('Message sent: %s', info.messageID);
+                            else {
+                                console.log('Message sent: %s', info.messageID);
+                            }
                             transporter.close();
                         });
 
