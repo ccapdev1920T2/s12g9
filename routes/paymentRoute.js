@@ -516,7 +516,7 @@ const routerFunction = function(db) {
                                             var transporter = nodemailer.createTransport({
                                                 service: 'gmail',
                                                 secure: false,//true
-                                                port: 25,
+                                                port: 587,
                                                 pool: true,
                                                 auth: {
                                                     user: 'paraisohotelscorp@gmail.com',
@@ -744,7 +744,7 @@ const routerFunction = function(db) {
                         var transporter = nodemailer.createTransport({
                             service: 'gmail',
                             secure: false,//true
-                            port: 25,
+                            port: 587,
                             pool: true,
                             tls: {
                                 rejectUnauthorized: false
