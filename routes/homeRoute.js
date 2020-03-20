@@ -124,16 +124,16 @@ const routerFunction = function(db) {
                             // console.log(resp);
 
                             var todayDate = new Date();
-                            var countUpdate = {$set: {cancellationCount: 0} };
+                            var countUpdate = { $set: { cancellationCount: 0 } };
 
-                            if ((todayDate.getMonth() + 1) == 1 && todayDate.getDate() == 1){
-                                db.collection('users').updateMany({},countUpdate)
+                            if ((todayDate.getMonth() + 1) == 1 && todayDate.getDate() == 1) {
+                                db.collection('users').updateMany({}, countUpdate)
                                     .then(resset => {
                                         return res.render('home', {
                                             logging: loggingstring,
                                             // whichheader: 'header',
                                             whichfooter: footertype
-                                        }) 
+                                        })
                                     }).catch(errset => {
                                         console.log(errset);
                                         return res.render('home', {
@@ -142,13 +142,12 @@ const routerFunction = function(db) {
                                             whichfooter: footertype
                                         })
                                     })
-                            }
-                            else{
+                            } else {
                                 return res.render('home', {
-                                    logging: loggingstring,
-                                    // whichheader: 'header',
-                                    whichfooter: footertype
-                                }) //function when rendering the webpage
+                                        logging: loggingstring,
+                                        // whichheader: 'header',
+                                        whichfooter: footertype
+                                    }) //function when rendering the webpage
                             }
                         }).catch(err => {
                             console.log(err);
@@ -328,11 +327,8 @@ const routerFunction = function(db) {
                 });
             } else if (Number(req.body.nAdults) + (Number(req.body.nKids) / 2) / req.body.nRooms <= 4) {
                 db.collection('bookings').find({
-                    $and: 
-                    [
-                        {
-                            $or: 
-                            [
+                    $and: [{
+                            $or: [
                                 { roomType: 'Family Deluxe' },
                                 { roomType: 'Executive Deluxe' },
                                 { roomType: 'Junior Suite' },
@@ -341,14 +337,13 @@ const routerFunction = function(db) {
                             ]
                         },
                         {
-                            $or: 
-                            [
+                            $or: [
                                 { checkInDate: { $lte: req.body.checkIn } },
                                 { checkOutDate: { $gte: req.body.checkOut } }
                             ]
                         },
                         {
-                            status:"Booked"
+                            status: "Booked"
                         }
                     ]
                 }).toArray().then(
@@ -617,8 +612,8 @@ const routerFunction = function(db) {
                         whichfooter: footertype
                     });
                 } else {
-                    if (resp.banned === false){
-                        if (resp.verified === true){
+                    if (resp.banned === false) {
+                        if (resp.verified === true) {
                             var user = {
                                 email,
                                 password
@@ -649,9 +644,7 @@ const routerFunction = function(db) {
                                         whichfooter: footertype
                                     });
                                 });
-                        }
-
-                        else if (resp.verified === false){
+                        } else if (resp.verified === false) {
                             return res.status(401).render('signIn', {
                                 generalError: `
                                 <div class="row ml-1">*Account not yet verified</div><div class="row ml-1">Click here to <a href="/verify" class="ml-1"> verify your email address.</a></div>
@@ -659,9 +652,8 @@ const routerFunction = function(db) {
                                 whichfooter: footertype
                             });
                         }
-                        
-                    }
-                    else if (resp.banned === true){
+
+                    } else if (resp.banned === true) {
                         return res.status(401).render('signIn', {
                             generalError: `
                             <div class="row ml-1">*Account is banned. Please contact the admin to have your account reactivated.</div>
@@ -827,18 +819,18 @@ const routerFunction = function(db) {
             var monthToday = cardtoday.getMonth() + 1;
             var yearToday = cardtoday.getFullYear();
             yearToday = yearToday.toString();
-            yearToday= yearToday.substring(yearToday.length - 2, yearToday.length);
-    
-            
-            if (parseInt(year) == parseInt(yearToday) ){
-                if (parseInt(month) <= monthToday){
+            yearToday = yearToday.substring(yearToday.length - 2, yearToday.length);
+
+
+            if (parseInt(year) == parseInt(yearToday)) {
+                if (parseInt(month) <= monthToday) {
                     // console.log('I should have passed here');
                     return res.status(401).render('signUp', {
                         cardError: '*Card is not accepted because of the expiration date',
                         data: req.body,
                         whichfooter: footertype
                     });
-                    
+
                 }
             }
 
@@ -884,7 +876,7 @@ const routerFunction = function(db) {
                             host: 'smtp.gmail.com',
                             //port: 3000,
                             secure: false,
-                            port: 25,
+                            port: 587,
                             pool: true,
                             auth: {
                                 user: 'paraisohotelscorp@gmail.com',
@@ -924,7 +916,7 @@ const routerFunction = function(db) {
                             transporter.close();
                         });
 
-                        
+
 
                         db.collection('users').insertOne(user)
                             .then(respinsert => {
@@ -998,7 +990,7 @@ const routerFunction = function(db) {
         db.collection('users').findOne(verificationkey)
             .then(resp => {
 
-                if (resp!==null){
+                if (resp !== null) {
                     var update = {
                         $set: {
                             'verified': true
@@ -1013,9 +1005,8 @@ const routerFunction = function(db) {
                             database = '*Bad Server';
                             return res.status(500).redirect('/');
                         });
-                }
-                else{
-                    return res.render('verificationKey',{
+                } else {
+                    return res.render('verificationKey', {
                         verificationError: 'Wrong verfication key.',
                         whichheadertype: 'header',
                         whichfooter: 'footer',
