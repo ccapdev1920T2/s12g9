@@ -176,7 +176,7 @@
                                             <div class="price">PHP {{payment.total}}</div>
                                         </div>
                                         <div class="col-md-2 col-12 align-self-center py-3 py-md-0 text-center">
-                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#cancelModal" data-email={{{email}}} data-check-in={{{checkInDate}}}  data-check-out={{{checkOutDate}}} data-room-type="Classic Deluxe" data-num-rooms={{{rooms}}} data-num-adults={{{adults}}} data-num-kids={{{kids}}}>Cancel Reservation</button>
+                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#cancelModal" data-payment={{payment.total}} data-email={{{email}}} data-check-in={{{checkInDate}}}  data-check-out={{{checkOutDate}}} data-room-type="Classic Deluxe" data-num-rooms={{{rooms}}} data-num-adults={{{adults}}} data-num-kids={{{kids}}}>Cancel Reservation</button>
                                         </div>
                                     </div>
                                 {{/ifCD}}
@@ -212,7 +212,7 @@
                                             <div class="price">PHP {{payment.total}}</div>
                                         </div>
                                         <div class="col-md-2 col-12 align-self-center py-3 py-md-0 text-center">
-                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#cancelModal" data-email={{{email}}} data-check-in={{{checkInDate}}}  data-check-out={{{checkOutDate}}} data-room-type="Family Deluxe" data-num-rooms={{{rooms}}} data-num-adults={{{adults}}} data-num-kids={{{kids}}}>Cancel Reservation</button>
+                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#cancelModal" data-payment={{payment.total}} data-email={{{email}}} data-check-in={{{checkInDate}}}  data-check-out={{{checkOutDate}}} data-room-type="Family Deluxe" data-num-rooms={{{rooms}}} data-num-adults={{{adults}}} data-num-kids={{{kids}}}>Cancel Reservation</button>
                                         </div>
                                     </div>
                                 {{/ifFD}}
@@ -248,7 +248,7 @@
                                             <div class="price">PHP {{payment.total}}</div>
                                         </div>
                                         <div class="col-md-2 col-12 align-self-center py-3 py-md-0 text-center">
-                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#cancelModal" data-email={{{email}}} data-check-in={{{checkInDate}}}  data-check-out={{{checkOutDate}}} data-room-type="Executive Deluxe" data-num-rooms={{{rooms}}} data-num-adults={{{adults}}} data-num-kids={{{kids}}}>Cancel Reservation</button>
+                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#cancelModal" data-payment={{payment.total}} data-email={{{email}}} data-check-in={{{checkInDate}}}  data-check-out={{{checkOutDate}}} data-room-type="Executive Deluxe" data-num-rooms={{{rooms}}} data-num-adults={{{adults}}} data-num-kids={{{kids}}}>Cancel Reservation</button>
                                         </div>
                                     </div>
                                 {{/ifED}}
@@ -284,7 +284,7 @@
                                             <div class="price">PHP {{payment.total}}</div>
                                         </div>
                                         <div class="col-md-2 col-12 align-self-center py-3 py-md-0 text-center">
-                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#cancelModal" data-email={{{email}}} data-check-in={{{checkInDate}}}  data-check-out={{{checkOutDate}}} data-room-type="Junior Suite" data-num-rooms={{{rooms}}} data-num-adults={{{adults}}} data-num-kids={{{kids}}}>Cancel Reservation</button>
+                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#cancelModal" data-payment={{payment.total}} data-email={{{email}}} data-check-in={{{checkInDate}}}  data-check-out={{{checkOutDate}}} data-room-type="Junior Suite" data-num-rooms={{{rooms}}} data-num-adults={{{adults}}} data-num-kids={{{kids}}}>Cancel Reservation</button>
                                         </div>
                                     </div>
                                 {{/ifJS}}
@@ -320,7 +320,7 @@
                                             <div class="price">PHP {{payment.total}}</div>
                                         </div>
                                         <div class="col-md-2 col-12 align-self-center py-3 py-md-0 text-center">
-                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#cancelModal" data-email={{{email}}} data-check-in={{{checkInDate}}}  data-check-out={{{checkOutDate}}} data-room-type="Executive Suite" data-num-rooms={{{rooms}}} data-num-adults={{{adults}}} data-num-kids={{{kids}}}>Cancel Reservation</button>
+                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#cancelModal" data-payment={{payment.total}} data-email={{{email}}} data-check-in={{{checkInDate}}}  data-check-out={{{checkOutDate}}} data-room-type="Executive Suite" data-num-rooms={{{rooms}}} data-num-adults={{{adults}}} data-num-kids={{{kids}}}>Cancel Reservation</button>
                                         </div>
                                     </div>
                                 {{/ifES}}
@@ -356,7 +356,7 @@
                                             <div class="price">PHP {{payment.total}}</div>
                                         </div>
                                         <div class="col-md-2 col-12 align-self-center py-3 py-md-0 text-center">
-                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#cancelModal" data-email={{{email}}} data-check-in={{{checkInDate}}}  data-check-out={{{checkOutDate}}} data-room-type="Grand Suite" data-num-rooms={{{rooms}}} data-num-adults={{{adults}}} data-num-kids={{{kids}}}>Cancel Reservation</button>
+                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#cancelModal" data-payment={{payment.total}} data-email={{{email}}} data-check-in={{{checkInDate}}}  data-check-out={{{checkOutDate}}} data-room-type="Grand Suite" data-num-rooms={{{rooms}}} data-num-adults={{{adults}}} data-num-kids={{{kids}}}>Cancel Reservation</button>
                                         </div>
                                     </div>
                                 {{/ifGS}}
@@ -392,6 +392,7 @@
                                     var numadults = button.data('num-adults');
                                     var numkids = button.data('num-kids');
                                     var email = button.data('email');
+                                    var payment = button.data('payment');
                                     // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
                                     // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
                                     var modal = $(this)
@@ -401,7 +402,8 @@
                                                             '<input name="numRooms" id="numRooms" type="hidden" value="'+numrooms+ '">'+
                                                             '<input name="numAdults" id="numAdults" type="hidden" value="'+numadults+ '">'+
                                                             '<input name="numKids" id="numKids" type="hidden" value="'+numkids+ '">'+
-                                                            '<input name="email" id="email" type="hidden" value="'+email+ '">'
+                                                            '<input name="email" id="email" type="hidden" value="'+email+ '">'+
+                                                            '<input name="payment" id="payment" type="hidden" value="'+payment+ '">'
                                                            );
                                     //<input name="checkIn" id="checkIn" type="hidden" value={{{checkInDate}}}>
                                     modal.find('.modal-body').html('Clicking confirm will cancel your reservation and automatically refund your payment to your credit card. You will also be automatically redirected to your profile.'+
