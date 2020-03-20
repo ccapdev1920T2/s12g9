@@ -89,7 +89,7 @@ router.get('/memberBenefits', function(req, res) {
     if (req.session.userId) {
         loggingstring =
             `<li class="nav-item">\
-            <a class="nav-link" href="/hotel/memberBenefits">Member Benefits</a>\
+            <a class="nav-link active" href="/hotel/memberBenefits">Member Benefits</a>\
         </li>\
         <li class="nav-item">\
             <a class="nav-link" data-toggle="modal" data-target="#exampleModal">Log Out</a>\
@@ -104,7 +104,7 @@ router.get('/memberBenefits', function(req, res) {
     if (req.session.adminId) {
         loggingstring =
             `<li class="nav-item">\
-            <a class="nav-link" href="/hotel/memberBenefits">Member Benefits</a>\
+            <a class="nav-link active" href="/hotel/memberBenefits">Member Benefits</a>\
         </li>\
         <li class="nav-item">\
             <a class="nav-link" data-toggle="modal" data-target="#exampleModal">Log Out</a>\

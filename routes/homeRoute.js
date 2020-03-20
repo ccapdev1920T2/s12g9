@@ -109,19 +109,56 @@ const routerFunction = function(db) {
             admin: true
         }
 
-        db.collection('users').findOne(adminuser)
-            .then(resp => {
-                if (resp === null) {
-                    db.collection('users').insertOne({
-                            email: "admin@paraisohotels.com",
-                            password: "para1soHotels",
-                            verified: true,
-                            admin: true,
-                            banned: false
-                        })
-                        .then(resp => {
-                            // console.log(resp);
+        var todayDate = new Date();
 
+        db.collection('booking').deleteMany({ signInDate: { $lte: todayDate } })
+            .then(resDel => {
+                db.collection('users').findOne(adminuser)
+                    .then(resp => {
+                        if (resp === null) {
+                            db.collection('users').insertOne({
+                                    email: "admin@paraisohotels.com",
+                                    password: "para1soHotels",
+                                    verified: true,
+                                    admin: true,
+                                    banned: false
+                                })
+                                .then(resp => {
+                                    // console.log(resp);
+                                    var countUpdate = { $set: { cancellationCount: 0 } };
+
+                                    if ((todayDate.getMonth() + 1) == 1 && todayDate.getDate() == 1) {
+                                        db.collection('users').updateMany({}, countUpdate)
+                                            .then(resset => {
+                                                return res.render('home', {
+                                                    logging: loggingstring,
+                                                    // whichheader: 'header',
+                                                    whichfooter: footertype
+                                                })
+                                            }).catch(errset => {
+                                                console.log(errset);
+                                                return res.render('home', {
+                                                    logging: loggingstring,
+                                                    // whichheader: 'header',
+                                                    whichfooter: footertype
+                                                })
+                                            })
+                                    } else {
+                                        return res.render('home', {
+                                                logging: loggingstring,
+                                                // whichheader: 'header',
+                                                whichfooter: footertype
+                                            }) //function when rendering the webpage
+                                    }
+                                }).catch(err => {
+                                    console.log(err);
+                                    return res.render('home', {
+                                        logging: loggingstring,
+                                        // whichheader: 'header',
+                                        whichfooter: footertype
+                                    })
+                                });
+                        } else {
                             var todayDate = new Date();
                             var countUpdate = { $set: { cancellationCount: 0 } };
 
@@ -148,31 +185,26 @@ const routerFunction = function(db) {
                                         whichfooter: footertype
                                     }) //function when rendering the webpage
                             }
-                        }).catch(err => {
-                            console.log(err);
-                            return res.render('home', {
-                                logging: loggingstring,
-                                // whichheader: 'header',
-                                whichfooter: footertype
-                            })
-                        });
-                } else {
-                    return res.render('home', {
-                        logging: loggingstring,
-                        // whichheader: 'header',
-                        whichfooter: footertype
+                        }
+                    }).catch(errsec => {
+                        console.log(errsec);
+                        return res.render('home', {
+                            logging: loggingstring,
+                            // whichheader: 'header',
+                            whichfooter: footertype
+                        })
                     })
-                }
-            }).catch(errsec => {
-                console.log(errsec);
+            }).catch(errDel => {
+                console.log(errDel);
                 return res.render('home', {
                     logging: loggingstring,
-                    // whichheader: 'header',
-                    whichfooter: footertype
+                    whichfooter: fottertype
                 })
             })
-
     });
+
+
+    //FOR CHECKING VERIFICATION
 
     // post for view rooms
     router.post('/viewRooms', function(req, res) {
@@ -843,9 +875,18 @@ const routerFunction = function(db) {
             var memberNumber = Math.floor(1000000000 + Math.random() * 9000000000);
 
             //getting the date when the user signed up
-            var today = new Date();
-            var date = new Date(today.getTime() + 1000 * 60 * 30);
+            var milliseconds = 0; //amount of time from current date/time
+            var sec = 0; //(+): future
+            var min = 0; //(-): past
+            var hours = 1;
+            var days = 0;
+            var startDate = new Date();
+            var date = new Date(startDate.getTime() + milliseconds + 1000 * (sec + 60 * (min + 60 * (hours + 24 * days)))); //adding one hour to the current date and time it was made 
+            console.log("date: " + date);
+            // var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+            // var time = today.getHours() + ":" + today.getMinutes();
 
+            // var dateTime = date + " " + time;
 
             // inserting to db
             let user = {
@@ -915,8 +956,7 @@ const routerFunction = function(db) {
                         transporter.sendMail(mailOptions, (error, info) => {
                             if (error) {
                                 return console.log(error);
-                            }
-                            else {
+                            } else {
                                 console.log('Message sent: %s', info.messageID);
                             }
                             transporter.close();

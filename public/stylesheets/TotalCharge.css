@@ -192,8 +192,9 @@ header{
     font-size: 15px;
     padding-left: 17px;
     padding-right: 17px;
-    padding-top: 6.5px;
-    padding-bottom: 6.5px;
+    padding-top: 6px;
+    padding-bottom: 7px;
+    opacity: 100%;
     /*    font-weight: bold;*/
 }
 
@@ -236,6 +237,7 @@ header{
     padding-right: 15px;
     padding-top:5px;
     text-decoration: none;
+    opacity: 100%;
 }
 
 .modal-content{

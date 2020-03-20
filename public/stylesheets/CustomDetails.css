@@ -134,6 +134,7 @@ footer {
 }
 
 /*FOR MODALS*/
+
 .modal-footer a {
     border-radius: 0;
     color: white;
@@ -142,8 +143,9 @@ footer {
     font-size: 15px;
     padding-left: 17px;
     padding-right: 17px;
-    padding-top: 7px;
+    padding-top: 6px;
     padding-bottom: 7px;
+    opacity: 100%;
     /*    font-weight: bold;*/
 }
 
@@ -153,10 +155,10 @@ footer {
 
 .modal-footer a:hover {
     color: white;
-    opacity: 80%;
     background-color: #A9A9A9;
     border-color: #A9A9A9;
     font-size: 15px;
+    opacity: 80%;
     /*    font-weight: bold;*/
     text-decoration: none;
 }
@@ -175,8 +177,7 @@ footer {
     padding-top:5px;
 }
 
-.modal-footer .btn:hover{
-   
+.modal-footer .btn:hover{  
     border-radius: 0;
     color: white;
     border-color: #EFA07E;
@@ -185,6 +186,7 @@ footer {
     padding-left: 15px;
     padding-right: 15px;
     padding-top:5px;
+    opacity: 100%;
     text-decoration: none;
 }
 
