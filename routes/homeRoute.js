@@ -111,7 +111,7 @@ const routerFunction = function(db) {
 
         var todayDate = new Date();
 
-        db.collection('booking').deleteMany({ signInDate: { $lte: todayDate } })
+        db.collection('users').deleteMany({ signInDate: { $lte: todayDate }, verified: false })
             .then(resDel => {
                 db.collection('users').findOne(adminuser)
                     .then(resp => {
