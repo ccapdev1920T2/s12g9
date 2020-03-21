@@ -118,12 +118,12 @@ const routerFunction = function(db) {
                     email:user[0].email,
                     checkInDate: {$gte:today.toString()},
                     status:"Booked"
-                }).toArray().then(r=> {
+                }).sort({checkInDate:1}).toArray().then(r=> {
                     db.collection('booking').find({ 
                         email:user[0].email,
                         checkInDate: {$lt:today.toString()},
                         status:"Check Out"
-                    }).toArray().then(r2 =>{
+                    }).sort({checkInDate:-1}).toArray().then(r2 =>{
                         res.render('profile', {
                             name: user[0].fname+" "+ user[0].lname,
                             membershipNumber: user[0].membershipNumber,
@@ -150,31 +150,29 @@ const routerFunction = function(db) {
     });   
 
     // Post for Cancel Reservation
-    // TODO: FINISH THIS
     router.post('/',function(req, res) {
-        // add delete from db code here
         db.collection('booking').updateOne(
             {
                 checkInDate: req.body.checkIn,
                 checkOutDate: req.body.checkOut,
                 roomtype: req.body.roomType,
-                rooms: req.body.numRooms,
-                adults: req.body.numAdults,
-                kids:req.body.numKids,
+                rooms: Number(req.body.numRooms),
+                adults: Number(req.body.numAdults),
+                kids:Number(req.body.numKids),
                 email:req.body.email,
                 status:"Booked"
             },
             {
-                $set:{ status: 'Cancelled' }
+                $set:{ status: "Cancelled" }
             }
         ). then(resp=>{
-            var points= req.payment/10;
+            var subPoints = Number(Number(req.body.payment)/Number(10)*Number(-1))
             db.collection('users').updateOne(
                 {email:req.body.email},
                 {
                     $inc: {
                         cancellationCount:1,
-                        membershipPoints:-points
+                        membershipPoints:subPoints
                     }
                 }
             ).then(r=>
@@ -182,7 +180,7 @@ const routerFunction = function(db) {
                     email:req.body.email
                 }).then(re=>{
                     if(re.cancellationCount<5){
-                        res.redirect("/user");
+                        res.redirect('back');
                     }
                     else{
                         db.collection('users').updateOne(
@@ -191,12 +189,10 @@ const routerFunction = function(db) {
                                 $set:{banned:true}
                             }
                         );
-                        // TODO: SEND EMAIL
                         var transporter = nodemailer.createTransport({
                             host: 'smtp.gmail.com',
-                            //port: 3000,
                             secure: false,
-                            port: 25,
+                            port: 587,
                             pool: true,
                             auth: {
                                 user: 'paraisohotelscorp@gmail.com',
@@ -237,8 +233,7 @@ const routerFunction = function(db) {
                     }
                 })
             ).catch(er=>console.log(er));
-        }).catch(err=> console.log(err))
-        
+        }).catch(err=> console.log(err));
     });
 
     return router;
