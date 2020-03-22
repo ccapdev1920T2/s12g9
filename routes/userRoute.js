@@ -130,6 +130,7 @@ const routerFunction = function(db) {
                             email: user[0].email,
                             creditCard: user[0].creditcardNumber,
                             points:user[0].membershipPoints,
+                            cancelCount: user[0].cancellationCount,
                             whichfooter: footertype,
                             logging: loggingstring,
                             tab2:r,
