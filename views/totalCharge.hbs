@@ -122,10 +122,23 @@
             $("#codayweek").text(codayweek);
         }
 
+        function setBeds(){
+            $.each($("input[type='radio']:checked"), function(){
+                if ($(this).val() === 'firstchoice'){
+                    $("#typebed").val($("#firstbed").text());
+                } else if ($(this).val() === 'secondchoice'){
+                    $("#typebed").val($("#secondbed").text());
+                }
+            });
+        }
+
         $(document).ready(function(){
             setRoomFee();
             calculate();
             displayDate();
+
+            $("#defaultbed").attr("checked", true);
+            setBeds();
         });
     </script>
 </head>
