@@ -609,7 +609,6 @@ const routerFunction = function(db) {
                                                         Paid using credit card:<br>
                                                         <span style="font-weight:600">Credit Card Owner</span>: ${respfind.payment.creditcardOwner}<br>
                                                         <span style="font-weight:600">Credit Card Number</span>: ${respfind.payment.creditcardNumber}<br>
-                                                        <span style="font-weight:600">CVV</span>: ${respfind.payment.cvv}<br>
                                                         <span style="font-weight:600">Credit Card Provider</span>: ${respfind.payment.ccprovider}<br>
                                                         <span style="font-weight:600">Credit Card Expiry Date</span>: ${cardmonth}  20${respfind.payment.year}<br>
                                                         <br>
@@ -837,7 +836,6 @@ const routerFunction = function(db) {
                                     Paid using credit card:<br>
                                     <span style="font-weight:600">Credit Card Owner</span>: ${respfind.payment.creditcardOwner}<br>
                                     <span style="font-weight:600">Credit Card Number</span>: ${respfind.payment.creditcardNumber}<br>
-                                    <span style="font-weight:600">CVV</span>: ${respfind.payment.cvv}<br>
                                     <span style="font-weight:600">Credit Card Provider</span>: ${respfind.payment.ccprovider}<br>
                                     <span style="font-weight:600">Credit Card Expiry Date</span>: ${cardmonth}  20${respfind.payment.year}<br>
                                     <br>
