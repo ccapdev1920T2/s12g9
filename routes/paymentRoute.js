@@ -390,11 +390,11 @@ const routerFunction = function(db) {
                 adults : parseInt(adults),
                 kids : parseInt(kids),
                 roomtype,
-                pricePerRoom : { $toDouble: parseFloat(pricePerRoom).toFixed(2)},
+                pricePerRoom : parseFloat(pricePerRoom),
                 bookingDate: formattedDate,
                 status: "Booked",
                 payment: {
-                    total,
+                    total: parseFloat(total),
                     status: "Not Paid",
                     creditcardNumber: "",
                     creditcardOwner: "",
@@ -537,11 +537,11 @@ const routerFunction = function(db) {
                                 adults : parseInt(adults),
                                 kids : parseInt(kids),
                                 roomtype,
-                                pricePerRoom : parseFloat(pricePerRoom).toFixed(2),
+                                pricePerRoom : parseFloat(pricePerRoom),
                                 bookingDate: formattedDate,
                                 status: "Booked",
                                 payment: {
-                                    total,
+                                    total: parseFloat(total),
                                     status: "Not Paid",
                                     creditcardNumber: resp.creditcardNumber,
                                     creditcardOwner: resp.creditcardOwner,
@@ -608,7 +608,7 @@ const routerFunction = function(db) {
                                                         <span style="font-weight:600">Requests</span>: ${addrequests}<br>
                                                         <br>
                                                         Here is your <b>payment details</b>.<br><br>
-                                                        <span style="font-weight:600">Total Amount</span>: PHP ${respfind.payment.total}<br><br>
+                                                        <span style="font-weight:600">Total Amount</span>: PHP ${respfind.payment.total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}<br><br>
                                                         Paid using credit card:<br>
                                                         <span style="font-weight:600">Credit Card Owner</span>: ${respfind.payment.creditcardOwner}<br>
                                                         <span style="font-weight:600">Credit Card Number</span>: ${respfind.payment.creditcardNumber}<br>
@@ -690,7 +690,8 @@ const routerFunction = function(db) {
                     data: resp,
                     source: '/images/Rooms/' + imagesource + '.jpg',
                     whichfooter: footertype,
-                    whichheader: headertype
+                    whichheader: headertype,
+                    TOTAL: resp.payment.total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
                 })
             }).catch(err=>{
                 console.log(err);
@@ -835,7 +836,7 @@ const routerFunction = function(db) {
                                     <span style="font-weight:600">Requests</span>: ${addrequests}<br>
                                     <br>
                                     Here is your <b>payment details</b>.<br><br>
-                                    <span style="font-weight:600">Total Amount</span>: PHP ${respfind.payment.total}<br><br>
+                                    <span style="font-weight:600">Total Amount</span>: PHP ${respfind.payment.total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}<br><br>
                                     Paid using credit card:<br>
                                     <span style="font-weight:600">Credit Card Owner</span>: ${respfind.payment.creditcardOwner}<br>
                                     <span style="font-weight:600">Credit Card Number</span>: ${respfind.payment.creditcardNumber}<br>
@@ -866,7 +867,8 @@ const routerFunction = function(db) {
                             data: respfind,
                             source: '/images/Rooms/' + imagesource + '.jpg',
                             whichfooter: footertype,
-                            whichheader: headertype
+                            whichheader: headertype,
+                            TOTAL: respfind.payment.total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
                         })
 
                     }).catch(errfind => {
