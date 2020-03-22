@@ -425,7 +425,7 @@ router.post('/customerDetails/:bookid', notLoggedInAdmin, function(req, res) {
                     var total = 0;
                     var count = 0;
                     for (var i=0;i<respbook.length;i++){
-                        var year = respbook[i].bookingDate;
+                        var year = respbook[i].cancelledDate;
                         year = year.substring(0,4);
                         var today = new Date();
 
