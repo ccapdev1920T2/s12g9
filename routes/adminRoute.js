@@ -394,14 +394,14 @@ router.post('/customerDetails/:bookid', notLoggedInAdmin, function(req, res) {
                         var start=  new Date(year+'-01-01');
                         var end = new Date (year+'-12-31');
 
-                        console.log(start);
-                        console.log(end);
+                        // console.log(start);
+                        // console.log(end);
 
-                        var startDate = start.getFullYear().toString() + '-' + start.toString().padStart(2, 0) + '-' + start.getDate().toString().padStart(2, 0);
-                        var endDate = end.getFullYear().toString() + '-' + end.toString().padStart(2, 0) + '-' + end.getDate().toString().padStart(2, 0);
+                        var startDate = start.getFullYear().toString() + '-' + (start.getMonth() + 1).toString().padStart(2, 0) + '-' + start.getDate().toString().padStart(2, 0);
+                        var endDate = end.getFullYear().toString() + '-' + (end.getMonth() + 1).toString().padStart(2, 0) + '-' + end.getDate().toString().padStart(2, 0);
 
-                        console.log(startDate);
-                        console.log(endDate);
+                        // console.log(startDate);
+                        // console.log(endDate);
 
                         var newquery = {$set : {status: "Fee Paid"}};
                         db.collection('booking').updateMany({
