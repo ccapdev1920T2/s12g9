@@ -152,6 +152,8 @@ const routerFunction = function(db) {
 
     // Post for Cancel Reservation
     router.post('/',function(req, res) {
+        var today = new Date();
+        var formattedDate = today.getFullYear().toString()+'-'+(today.getMonth()+1).toString().padStart(2,0)+'-'+today.getDate().toString().padStart(2,0);
         db.collection('booking').updateOne(
             {
                 checkInDate: req.body.checkIn,
@@ -164,7 +166,7 @@ const routerFunction = function(db) {
                 status:"Booked"
             },
             {
-                $set:{ status: "Cancelled" }
+                $set:{ status : "Cancelled" , cancelledDate : formattedDate.toString()}
             }
         ). then(resp=>{
             var subPoints = Number(Number(req.body.payment)/Number(10)*Number(-1))
