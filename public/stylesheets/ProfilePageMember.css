@@ -307,11 +307,6 @@ body{
     display: block;
 }
 
-.modal { 
-    background-color: rgba(000, 000, 000, 0.8); 
-    /* min-height:1000000px;  */
-}
-
 /*FOOTER*/
 .figure-2 {
     background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("../images/tropicalLeaves.jpeg");
