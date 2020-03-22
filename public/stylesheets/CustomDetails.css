@@ -133,6 +133,7 @@ footer {
     padding-right: 10px;
 }
 
+
 /*FOR MODALS*/
 
 .modal-footer a {
@@ -149,6 +150,7 @@ footer {
     /*    font-weight: bold;*/
 }
 
+
 /* .modal-footer a:focus {
     outline: none;
 } */
@@ -163,7 +165,7 @@ footer {
     text-decoration: none;
 }
 
-.modal-footer .btn{
+.modal-footer .btn {
     border-radius: 0;
     color: white;
     opacity: 80%;
@@ -174,10 +176,10 @@ footer {
     text-decoration: none;
     padding-left: 15px;
     padding-right: 15px;
-    padding-top:5px;
+    padding-top: 5px;
 }
 
-.modal-footer .btn:hover{  
+.modal-footer .btn:hover {
     border-radius: 0;
     color: white;
     border-color: #EFA07E;
@@ -185,17 +187,33 @@ footer {
     font-size: 15px;
     padding-left: 15px;
     padding-right: 15px;
-    padding-top:5px;
+    padding-top: 5px;
     opacity: 100%;
     text-decoration: none;
 }
 
-.modal-content{
+.modal-content {
     background-color: whitesmoke;
     font-family: 'Open Sans';
     color: #2E4106;
     letter-spacing: 1px;
 }
+
+.backSource a,
+i {
+    color: #2E4106;
+    text-decoration: none;
+    margin-bottom: 20px;
+}
+
+.backSource i {
+    margin-left: 30px;
+}
+
+.backSource a:hover {
+    text-decoration: underline;
+}
+
 
 /* .modal-footer .btn:focus {
     outline: none;
