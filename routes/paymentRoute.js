@@ -390,7 +390,7 @@ const routerFunction = function(db) {
                 adults : parseInt(adults),
                 kids : parseInt(kids),
                 roomtype,
-                pricePerRoom : parseFloat(pricePerRoom).toFixed(2),
+                pricePerRoom : { $toDouble: parseFloat(pricePerRoom).toFixed(2)},
                 bookingDate: formattedDate,
                 status: "Booked",
                 payment: {
@@ -483,7 +483,10 @@ const routerFunction = function(db) {
                             });       
                     }
                     else {
-                        database = 'You are a registered member based on your email address. Please book using your account. Click here to <a href="/signIn">sign in</a>';
+                        if (respuser.admin == false)
+                            database = 'You are a registered member based on your email address. Please book using your account. Click here to <a href="/signIn">sign in</a>';
+                        else    
+                            database = 'You are an admin. Please book using the admin account. Click here to <a href="/signIn">sign in</a>';
                         return res.status(500).redirect('/totalCharge');
                     }
                 }).catch(erruser=>{
