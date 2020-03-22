@@ -111,11 +111,7 @@ const routerFunction = function(db) {
 
         var todayDate = new Date();
 
-<<<<<<< HEAD
-
-=======
         //TODO: Check
->>>>>>> 50b92a5893fd98101be6f5263403a2d592674469
         db.collection('users').deleteMany({ signUpDate: { $lte: todayDate }, verified: false })
             .then(resDel => {
                 db.collection('users').findOne(adminuser)
@@ -448,7 +444,7 @@ const routerFunction = function(db) {
                             message: "No rooms found! Please try other dates.",
                             data: req.body,
                             whichfooter: footertype,
-                            logging: loggingstring
+                            logging: loggingstring,
                         });
                     }
                 });
@@ -499,7 +495,7 @@ const routerFunction = function(db) {
                             message: "No rooms found! Please try other dates.",
                             data: req.body,
                             whichfooter: footertype,
-                            logging: loggingstring
+                            logging: loggingstring,
                         });
                     }
                 });
@@ -509,14 +505,17 @@ const routerFunction = function(db) {
                     message: "Too many guests per room. Please add more rooms",
                     data: req.body,
                     whichfooter: footertype,
-                    logging: loggingstring
+                    logging: loggingstring,
                 });
             }
         } else {
+            req.body.checkIn = null;
+            req.body.checkOut = null;
             res.render('viewRooms', {
                 message: "Date entered invalid! Please change the dates entered.",
                 whichfooter: footertype,
-                logging: loggingstring
+                logging: loggingstring,
+                data:req.body
             })
         }
     });
