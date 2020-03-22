@@ -111,7 +111,8 @@ const routerFunction = function(db) {
 
         var todayDate = new Date();
 
-        db.collection('users').deleteMany({ signInDate: { $lte: todayDate }, verified: false })
+        TODO: Check
+        db.collection('users').deleteMany({ signUpDate: { $lte: todayDate }, verified: false })
             .then(resDel => {
                 db.collection('users').findOne(adminuser)
                     .then(resp => {
@@ -275,7 +276,7 @@ const routerFunction = function(db) {
                             ]
                         },
                         {
-                            $and: [{ checkInDate: { $lt: req.body.checkOut} },
+                            $and: [{ checkInDate: { $lt: req.body.checkOut } },
                                 { checkOutDate: { $gt: req.body.checkIn } }
                             ]
                         },
@@ -371,7 +372,7 @@ const routerFunction = function(db) {
                             ]
                         },
                         {
-                            $and: [{ checkInDate: { $lt: req.body.checkOut} },
+                            $and: [{ checkInDate: { $lt: req.body.checkOut } },
                                 { checkOutDate: { $gt: req.body.checkIn } }
                             ]
                         },
@@ -451,7 +452,7 @@ const routerFunction = function(db) {
                 db.collection('booking').find({
                     $and: [{ $or: [{ roomtype: 'Grand Suite' }, ] },
                         {
-                            $and: [{ checkInDate: { $lt: req.body.checkOut} },
+                            $and: [{ checkInDate: { $lt: req.body.checkOut } },
                                 { checkOutDate: { $gt: req.body.checkIn } }
                             ]
                         },
@@ -903,7 +904,7 @@ const routerFunction = function(db) {
                 membershipNumber: memberNumber,
                 membershipPoints: 0,
                 admin: false,
-                signInDate: date,
+                signUpDate: date,
                 verificationKey,
                 verified,
                 cancellationCount: 0,
