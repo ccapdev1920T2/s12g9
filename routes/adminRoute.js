@@ -3,6 +3,7 @@ const router = express();
 const { ObjectId } = require('mongodb');
 var imagesource;
 var checkIn, checkOut, formatCheckInDate, formatCheckOutDate, price;
+var bookedYear = [];
 
 const routerFunction = function(db) {
 const notLoggedInAdmin = (req, res, next) => {
@@ -164,8 +165,8 @@ router.get('/', notLoggedInAdmin, function(req, res) {
                         }
                     }
 
-                    console.log('hello');
-                    console.log("date:" + todayFormat);
+                    // console.log('hello');
+                    // console.log("date:" + todayFormat);
                     db.collection('booking').find({
                             $and: [
                                     { checkInDate: { $lte: todayFormat } },
@@ -385,7 +386,47 @@ router.post('/customerDetails/:bookid', notLoggedInAdmin, function(req, res) {
 
         db.collection('users').updateOne(userID, update)
             .then(resp => {
-                return res.status(201).redirect('/admin');
+                db.collection('users').findOne(userID)
+                    .then(respfind => {
+
+                        var today = new Date();
+                        var year = today.getFullYear().toString();
+                        var startDate =  new Date(year+'-01-01').toString();
+                        var endDate = new Date (year+'-12-31').toString();
+
+                        // console.log(startDate);
+                        // console.log(endDate);
+
+                        var newquery = {$set : {status: "Fee Paid"}};
+                        db.collection('booking').updateMany({
+                            email: respfind.email, 
+                            status: "Cancelled", 
+                            $and: [
+                                { cancelledDate: { $lte: endDate} },
+                                { cancelledDate: { $gte: startDate } }
+                            ]
+                            }, newquery)
+                            .then(status => {
+                                console.log(status);
+                                return res.status(201).redirect('/admin');
+                            }).catch(errstat => {
+                                console.log(errstat);
+                                return res.status(500).render('Reactivate', {
+                                    databaseError: '*Bad Server',
+                                    whichheader: headertype,
+                                    whichfooter: footertype,
+                                    userid: req.params.userid
+                                });
+                            })     
+                    }).catch(errfind => {
+                        console.log(errfind);
+                        return res.status(500).render('Reactivate', {
+                            databaseError: '*Bad Server',
+                            whichheader: headertype,
+                            whichfooter: footertype,
+                            userid: req.params.userid
+                        });
+                    })
             }).catch(err=>{
                 console.log(err);
                 return res.status(500).render('Reactivate', {
@@ -421,7 +462,6 @@ router.post('/customerDetails/:bookid', notLoggedInAdmin, function(req, res) {
             db.collection('booking').find({email: resp.email, status: "Cancelled"}).toArray()
                 .then( respbook => {
 
-                    var bookedYear = []
                     var total = 0;
                     var count = 0;
                     for (var i=0;i<respbook.length;i++){
