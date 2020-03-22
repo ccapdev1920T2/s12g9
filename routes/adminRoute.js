@@ -258,13 +258,13 @@ router.get('/', notLoggedInAdmin, function(req, res) {
             });
         });
 
-}).catch(errbook => {
-    return res.status(500).render('admin', {
-        databaseError: '*Bad Server',
-        whichfooter: footertype,
-        logging: loggingstring
+    }).catch(errbook => {
+        return res.status(500).render('admin', {
+            databaseError: '*Bad Server',
+            whichfooter: footertype,
+            logging: loggingstring
+        });
     });
-});
 });
 
 //FOR CLEANILESS OF WEBSITE ONLY

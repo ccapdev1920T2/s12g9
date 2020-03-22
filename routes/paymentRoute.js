@@ -14,6 +14,18 @@ const routerFunction = function(db) {
         var footertype = 'footer';
         var totalChargetype = 'totalChargeGuest';
         var point = "";
+        var bedOne = "Two Twin Beds";
+        var bedTwo = "One King Bed"
+
+        if (req.body.roomtype === 'Classic Deluxe'){
+            bedOne = "Two Single Beds";
+            bedTwo = "One Queen Bed";  
+        }
+
+        else if (req.body.roomtype === 'Grand Suite'){
+            bedOne = "Two Queen Beds";
+            bedTwo = "One King Bed & One Single Bed";           
+        }
 
         // console.log(req.session.userId);
         if (req.session.userId) {
@@ -45,7 +57,9 @@ const routerFunction = function(db) {
                 whichheader: headertype,
                 whichfooter: footertype,
                 whichtotalCharge: totalChargetype,
-                memberPoints: point
+                memberPoints: point,
+                bedChoiceOne: bedOne,
+                bedChoiceTwo: bedTwo
             });
         }
 
@@ -57,7 +71,9 @@ const routerFunction = function(db) {
                 whichheader: headertype,
                 whichfooter: footertype,
                 whichtotalCharge: totalChargetype,
-                memberPoints: point
+                memberPoints: point,
+                bedChoiceOne: bedOne,
+                bedChoiceTwo: bedTwo
             });
         }
 
@@ -69,7 +85,9 @@ const routerFunction = function(db) {
                 whichheader: headertype,
                 whichfooter: footertype,
                 whichtotalCharge: totalChargetype,
-                memberPoints: point
+                memberPoints: point,
+                bedChoiceOne: bedOne,
+                bedChoiceTwo: bedTwo
             });
         }
 
@@ -81,7 +99,9 @@ const routerFunction = function(db) {
                 whichheader: headertype,
                 whichfooter: footertype,
                 whichtotalCharge: totalChargetype,
-                memberPoints: point
+                memberPoints: point,
+                bedChoiceOne: bedOne,
+                bedChoiceTwo: bedTwo
             });
         }
 
@@ -92,11 +112,11 @@ const routerFunction = function(db) {
                 whichheader: headertype,
                 whichfooter: footertype,
                 whichtotalCharge: totalChargetype,
-                memberPoints: point
+                memberPoints: point,
+                bedChoiceOne: bedOne,
+                bedChoiceTwo: bedTwo
             });
         }
-
-
     });
 
     router.get('/delete/:bookId', function(req,res){
@@ -125,6 +145,18 @@ const routerFunction = function(db) {
         var footertype = 'footer';
         var totalChargetype = 'totalChargeGuest';
         var point = "";
+        var bedOne = "Two Twin Beds";
+        var bedTwo = "One King Bed"
+
+        if (req.body.roomtype === 'Classic Deluxe'){
+            bedOne = "Two Single Beds";
+            bedTwo = "One Queen Bed";  
+        }
+
+        else if (req.body.roomtype === 'Grand Suite'){
+            bedOne = "Two Queen Beds";
+            bedTwo = "One King Bed & One Single Bed";           
+        }
 
         if (req.session.userId) {
             headertype = 'headerUser';
@@ -164,7 +196,9 @@ const routerFunction = function(db) {
                             whichfooter: footertype,
                             whichtotalCharge: totalChargetype,
                             memberPoints: point.toString(),
-                            checkboxDiv: checkBox
+                            checkboxDiv: checkBox,
+                            bedChoiceOne: bedOne,
+                            bedChoiceTwo: bedTwo
 
                         }); 
                     } else {
@@ -174,7 +208,9 @@ const routerFunction = function(db) {
                             whichheader:  headertype,
                             whichfooter: footertype,
                             whichtotalCharge: totalChargetype,
-                            memberPoints: point.toString()
+                            memberPoints: point.toString(),
+                            bedChoiceOne: bedOne,
+                            bedChoiceTwo: bedTwo
                         }); 
                     }    
                 }).catch (err => {
@@ -194,7 +230,9 @@ const routerFunction = function(db) {
                 whichheader:  headertype,
                 whichfooter: footertype,
                 whichtotalCharge: totalChargetype,
-                memberPoints: point
+                memberPoints: point,
+                bedChoiceOne: bedOne,
+                bedChoiceTwo: bedTwo
             }); 
     });
 
@@ -301,11 +339,13 @@ const routerFunction = function(db) {
             database = "";
 
             if (req.body.requests === "" && req.body.additionalrequest === "")
-                req.body.requests = 'None';
+                req.body.requests = req.body.bedtype;
             else if (req.body.requests === "")
-                req.body.requests = req.body.additionalrequest;
-            else if (req.body.additionalrequest !== "")
-                req.body.requests = req.body.requests + ', ' + req.body.additionalrequest;
+                req.body.requests = req.body.additionalrequest + ", " + req.body.bedtype;
+            else if (req.body.additionalrequest === "")
+                req.body.requests = req.body.requests + ', ' + req.body.bedtype;
+            else 
+                req.body.requests = req.body.requests + ', ' + req.body.additionalrequest + ", " + req.body.bedtype;
 
             // console.log('Hello');
             // console.log(req.body.requests);
@@ -460,11 +500,13 @@ const routerFunction = function(db) {
             var formattedDate = today.getFullYear().toString() + '-' + (today.getMonth() + 1).toString().padStart(2, 0) + '-' + today.getDate().toString().padStart(2, 0);
 
             if (req.body.requests === "" && req.body.additionalrequest === "")
-                req.body.requests = 'None';
+                req.body.requests = req.body.bedtype;
             else if (req.body.requests === "")
-                req.body.requests = req.body.additionalrequest;
-            else if (req.body.additionalrequest !== "")
-                req.body.requests = req.body.requests + ', ' + req.body.additionalrequest;
+                req.body.requests = req.body.additionalrequest + ", " + req.body.bedtype;
+            else if (req.body.additionalrequest === "")
+                req.body.requests = req.body.requests + ', ' + req.body.bedtype;
+            else 
+                req.body.requests = req.body.requests + ', ' + req.body.additionalrequest + ", " + req.body.bedtype;
 
             var userID = { _id: ObjectId(req.session.userId) };
 

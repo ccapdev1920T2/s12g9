@@ -290,6 +290,30 @@
 
 <body>
     <div class="row pt-3">
+        <div class="style">Type of Bed</div>
+    </div>
+    <div class="row pt-2">
+        <div class="subheader">Choose between two choices of bed.</div>
+    </div>
+    <div class="row">
+        <img src="/images/AboutUs/MP.svg" width="97%" height="1%">
+    </div>
+    <div class="form-check pt-2 pb-3">
+        <form>
+            <div class="row"></div>
+            <input class="form-check-input" type="radio" name="bedtype" onclick=setBeds() value="firstchoice" id="defaultbed">
+            <label class="form-check-label" for="gridCheck1">
+                <span id="firstbed">{{{bedChoiceOne}}}</span>
+            </label>
+            <br>
+            <div class="row pt-2"></div>
+            <input class="form-check-input" type="radio" name="bedtype" onclick=setBeds() value="secondchoice">
+            <label class="form-check-label" for="gridCheck1">
+                <span id="secondbed">{{{bedChoiceTwo}}}</span>
+            </label>
+        </form>
+    </div>
+    <div class="row pt-3">
         <div class="style">Additional Requests</div>
     </div>
     <div class="row pt-2">
@@ -418,6 +442,9 @@
             </div> 
             <div class="form-group">
                 <textarea class="form-control" rows="3" id="additionalrequest" name="additionalrequest" style="display: none;"></textarea>
+            </div> 
+            <div class="form-group">
+                <input type="hidden" name="bedtype" value="" id="typebed">
             </div> 
             <div class="form-group text-center">
                 <button type="button" class="btn" data-toggle="modal" data-target="#payMemberModal" id="charge"> Payment </button>
