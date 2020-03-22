@@ -16,6 +16,21 @@
     <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
     <link rel = "icon" href ="/images/logo1circle.png" type = "image/x-icon"> 
     <script>
+
+        function computeDateSpan () {
+            //computing how many days
+            var dateIn = new Date($('#checkIn').text());
+            var dateOut = new Date($('#checkOut').text());
+
+            var diffTime = dateOut.getTime() - dateIn.getTime(); 
+            var diffDay = diffTime / (1000 * 3600 * 24);
+
+            console.log(typeof diffDay);
+            console.log(diffTime);
+
+            $("#dateSpan").text(diffDay);
+        }
+
         function calculate(){
             var fees = 0;
             var room = $("#roomfees");
@@ -30,14 +45,19 @@
             var numrooms = $("#numrooms");
             var requestString ="";
             var additional = $("#additionalrequest");
+            var totalStay = $("#totalwholestay");
+            var daySpan = $("#dateSpan");
 
             var inputtotal = $("#inputtotal");
 
+            $("#airport").text(0.00);
+            
             if ($("input[name='extrafee']:checked").val() === undefined){
                 extra.text(parseFloat(0).toFixed(2));
                 var amount = parseFloat(room.text().trim()) + parseFloat(service.text().trim()) + parseFloat(extra.text());
-                total.text(amount);
-                inputtotal.attr("value",amount);
+                total.text(parseInt(daySpan.text()) * amount);
+                totalStay.text(parseFloat(total.text()) + parseFloat($("#airport").text()));
+                inputtotal.attr("value",parseFloat(total.text()) + parseFloat($("#airport").text()));
                 additional.val("");
 
             }
@@ -58,7 +78,8 @@
                         fees = parseFloat(fees) + parseFloat(allbuffet.text());
                         string = 'Daily Buffet';
                     } else if ($(this).val() === 'pickupprice'){
-                        fees = parseFloat(fees) + parseFloat(pickup.text());
+                        //fees = parseFloat(fees) + parseFloat(pickup.text());
+                        $("#airport").text(parseFloat(pickup.text()));
                         string = 'Arrival and Departure Airport Pick-Up';
                     }
 
@@ -66,8 +87,9 @@
 
                     extra.text(fees.toFixed(2));
                     var amount = parseFloat(room.text().trim()) + parseFloat(service.text().trim()) + parseFloat(fees);
-                    total.text(amount);
-                    inputtotal.attr("value",amount);
+                    total.text(parseInt(daySpan.text()) * amount);
+                    totalStay.text(parseFloat(total.text()) + parseFloat($("#airport").text()));
+                    inputtotal.attr("value",parseFloat(total.text()) + parseFloat($("#airport").text()));
                 });
 
                 if (requestString !== ""){
@@ -82,8 +104,8 @@
         function setRoomFee(){
             var room = $("#roomfees");
             var numrooms = $("#numrooms");
-
-            room.text(parseFloat(room.text().trim()) * parseFloat(numrooms.val().trim()));
+            var roomfee = parseFloat(room.text().trim()) * parseFloat(numrooms.val().trim());
+            room.text(roomfee.toFixed(2));
 
         }
 
@@ -133,10 +155,10 @@
         }
 
         $(document).ready(function(){
+            computeDateSpan();
             setRoomFee();
             calculate();
-            displayDate();
-
+            displayDate();    
             $("#defaultbed").attr("checked", true);
             setBeds();
         });
@@ -200,12 +222,29 @@
                                     PHP <span id="servicefees">1400.00</span>
                                 </div>
                             </div>
+                            <hr>
+                            <div class="row pb-3 pt-2">
+                                <div class="col-md-6 col-12 first">
+                                   <span style="font-size: 16px;">Total x <span id="dateSpan"></span> Day/s:</span>
+                                </div>
+                                <div class="col-md-6  col-12 second" style="font-size: 16px;">
+                                    PHP <span id="total">1400.00</span>
+                                </div>
+                            </div>
+                            <div class="row pb-3">
+                                <div class="col-md-6 col-12 first">
+                                   <span style="font-size: 16px;">Pick-Up Fees</span>
+                                </div>
+                                <div class="col-md-6  col-12 second" style="font-size: 16px;">
+                                    PHP <span id="airport">0.00</span>
+                                </div>
+                            </div>
                             <div class ="row pt-4 pb-2">
                                 <div class="col-md-6 col-12 first">
-                                    <span style="font-size: 18px;"><b>Total Amount:</b></span>
+                                    <span style="font-size: 18px;"><b>Total Amount</b></span>
                                 </div>
                                 <div class="col-md-6 col-12 second">
-                                    <span style="font-size: 18px;"><b>PHP <span id="total">9400.00</span></b></span>
+                                    <span style="font-size: 18px;"><b>PHP <span id="totalwholestay">9400.00</span></b></span>
                                 </div>
                             </div>
                             {{!-- <div class ="row pt-2">

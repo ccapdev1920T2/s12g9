@@ -58,8 +58,12 @@
             var allbuffet = $("#allbuffet");
             var pickup = $("#pickupprice");
             var numrooms = $("#numrooms");
+            var totalStay = $("#totalwholestay");
+            var daySpan = $("#dateSpan");
 
             var inputtotal = $("#inputtotal");
+
+            $("#airport").text(0.00);
 
             //console.log('calculate');
             //console.log($("input[class='form-check-input extrafee']:checked").length);
@@ -67,8 +71,9 @@
             if ($("input[class='form-check-input extrafee']:checked").val() === undefined){
                 extra.text(parseFloat(0).toFixed(2));
                 var amount = parseFloat(room.text().trim()) + parseFloat(service.text().trim()) + parseFloat(extra.text());
-                total.text(amount);
-                inputtotal.attr("value",amount);
+                total.text(parseInt(daySpan.text()) * amount);
+                totalStay.text(parseFloat(total.text()) + parseFloat($("#airport").text()));
+                inputtotal.attr("value",parseFloat(total.text()) + parseFloat($("#airport").text()));
             }
 
             if ($("input[class='form-check-input extrafee']:checked") != "undefined"){
@@ -83,13 +88,15 @@
                     } else if ($(this).val() === 'allbuffet'){
                         fees = parseFloat(fees) + parseFloat(allbuffet.text());
                     } else if ($(this).val() === 'pickupprice'){
-                        fees = parseFloat(fees) + parseFloat(pickup.text());
+                        //fees = parseFloat(fees) + parseFloat(pickup.text());
+                        $("#airport").text(parseFloat(pickup.text()));
                     }
 
                     extra.text(fees.toFixed(2));
                     var amount = parseFloat(room.text().trim()) + parseFloat(service.text().trim()) + parseFloat(fees);
-                    total.text(amount);
-                    inputtotal.attr("value",amount);
+                    total.text(parseInt(daySpan.text()) * amount);
+                    totalStay.text(parseFloat(total.text()) + parseFloat($("#airport").text()));
+                    inputtotal.attr("value",parseFloat(total.text()) + parseFloat($("#airport").text()));
 
                 });
             }
@@ -204,7 +211,7 @@
             var requestString ="";
 
             if ($("input[type='checkbox']:checked").val() === undefined){
-                console.log('hello');
+                //console.log('hello');
                 additional.val("");
             }
 
