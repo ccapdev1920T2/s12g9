@@ -263,7 +263,7 @@ const routerFunction = function(db) {
         //check if entered dates are valid
         if (!(checkout.getTime() <= checkin.getTime()) && !(checkin.getTime() < today.getTime())) {
             //check for number of guests
-            if (Number(req.body.nAdults) + (Number(req.body.nKids) / 2) / req.body.nRooms <= 3) {
+            if (Number(req.body.nAdults) + (Number(req.body.nKids) / 2) <= 3 * req.body.nRooms) {
                 db.collection('booking').find({
                     $and: [{
                             $or: [{ roomtype: 'Classic Deluxe' },
@@ -359,7 +359,7 @@ const routerFunction = function(db) {
                         });
                     }
                 });
-            } else if (Number(req.body.nAdults) + (Number(req.body.nKids) / 2) / req.body.nRooms <= 4) {
+            } else if (Number(req.body.nAdults) + (Number(req.body.nKids) / 2) <= 4 * req.body.nRooms) {
                 db.collection('booking').find({
                     $and: [{
                             $or: [
@@ -447,7 +447,7 @@ const routerFunction = function(db) {
                         });
                     }
                 });
-            } else if (Number(req.body.nAdults) + (Number(req.body.nKids) / 2) / req.body.nRooms <= 6) {
+            } else if (Number(req.body.nAdults) + (Number(req.body.nKids) / 2) <= 6 * req.body.nRooms) {
                 db.collection('booking').find({
                     $and: [{ $or: [{ roomtype: 'Grand Suite' }, ] },
                         {
