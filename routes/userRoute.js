@@ -42,6 +42,11 @@ const routerFunction = function(db) {
         }
         else return options.inverse(this);
     });
+
+    hbs.registerHelper('format', function(text) {
+        return parseFloat(text).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    });
+    
     //check if user is logged in, if not, he/she cannot access the page such as profile and admin， and log out
     const notLoggedInUser = (req, res, next) => {
         if (!req.session.userId) {
