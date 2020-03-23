@@ -3,7 +3,6 @@ const router = express();
 const { ObjectId } = require('mongodb');
 var imagesource;
 var checkIn, checkOut, formatCheckInDate, formatCheckOutDate, price;
-var bookedYear = [];
 
 const routerFunction = function(db) {
 const notLoggedInAdmin = (req, res, next) => {
@@ -417,7 +416,7 @@ router.post('/customerDetails/:bookid', notLoggedInAdmin, function(req, res) {
                                 return res.status(201).redirect('/admin');
                             }).catch(errstat => {
                                 console.log(errstat);
-                                return res.status(500).render('Reactivate', {
+                                return res.status(500).render('reactivate', {
                                     databaseError: '*Bad Server',
                                     whichheader: headertype,
                                     whichfooter: footertype,
@@ -426,7 +425,7 @@ router.post('/customerDetails/:bookid', notLoggedInAdmin, function(req, res) {
                             })     
                     }).catch(errfind => {
                         console.log(errfind);
-                        return res.status(500).render('Reactivate', {
+                        return res.status(500).render('reactivate', {
                             databaseError: '*Bad Server',
                             whichheader: headertype,
                             whichfooter: footertype,
@@ -435,7 +434,7 @@ router.post('/customerDetails/:bookid', notLoggedInAdmin, function(req, res) {
                     })
             }).catch(err=>{
                 console.log(err);
-                return res.status(500).render('Reactivate', {
+                return res.status(500).render('reactivate', {
                     databaseError: '*Bad Server',
                     whichheader: headertype,
                     whichfooter: footertype,
@@ -467,7 +466,7 @@ router.post('/customerDetails/:bookid', notLoggedInAdmin, function(req, res) {
 
             db.collection('booking').find({email: resp.email, status: "Cancelled"}).toArray()
                 .then( respbook => {
-
+                    var bookedYear = [];
                     var total = 0;
                     var count = 0;
                     for (var i=0;i<respbook.length;i++){
@@ -485,7 +484,7 @@ router.post('/customerDetails/:bookid', notLoggedInAdmin, function(req, res) {
                     
                     var total = total * 0.5;
 
-                    return res.render('Reactivate', {
+                    return res.render('reactivate', {
                         whichheader: headertype,
                         whichfooter: footertype,
                         userid: req.params.userid,
@@ -498,7 +497,7 @@ router.post('/customerDetails/:bookid', notLoggedInAdmin, function(req, res) {
                     });
                 }).catch(errbook => {
                     console.log(err);
-                    return res.status(500).render('Reactivate', {
+                    return res.status(500).render('reactivate', {
                         databaseError: '*Bad Server',
                         whichheader: headertype,
                         whichfooter: footertype,
@@ -507,7 +506,7 @@ router.post('/customerDetails/:bookid', notLoggedInAdmin, function(req, res) {
                 })        
         }).catch(err => {
             console.log(err);
-            return res.status(500).render('Reactivate', {
+            return res.status(500).render('reactivate', {
                 databaseError: '*Bad Server',
                 whichheader: headertype,
                 whichfooter: footertype,
