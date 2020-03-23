@@ -108,7 +108,7 @@ router.get('/', notLoggedInAdmin, function(req, res) {
                         numKids: resp[i].kids,
                         numRooms: resp[i].rooms,
                         requests: resp[i].requests,
-                        TOTAL: resp[i].payment.total,
+                        TOTAL: resp[i].payment.total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","),
                         bookingid: resp[i]._id
                     }
                     // console.log("booking");
@@ -154,7 +154,7 @@ router.get('/', notLoggedInAdmin, function(req, res) {
                                 numKids: respViewAll[i].kids,
                                 numRooms: respViewAll[i].rooms,
                                 requests: respViewAll[i].requests,
-                                TOTAL: respViewAll[i].payment.total,
+                                TOTAL: respViewAll[i].payment.total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","),
                                 bookingid: respViewAll[i]._id
                             }
                             // console.log("viewAll");
@@ -208,7 +208,7 @@ router.get('/', notLoggedInAdmin, function(req, res) {
                                             numKids: respCheckedIn[i].kids,
                                             numRooms: respCheckedIn[i].rooms,
                                             requests: respCheckedIn[i].requests,
-                                            TOTAL: respCheckedIn[i].payment.total,
+                                            TOTAL: respCheckedIn[i].payment.total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","),
                                             bookingid: respCheckedIn[i]._id
                                         }
                                         // console.log("checkIn");
