@@ -8,6 +8,40 @@ var imagesource;
 
 //totalCharge
 const routerFunction = function(db) {
+    const loggedIn = (req, res, next) => {
+        // console.log(req.session.userId);
+        if (req.session.userId || req.session.adminId) {
+            if (req.session.userId)
+                var user = { _id: ObjectId(req.session.userId) };
+            else {
+                var user = { _id: ObjectId(req.session.adminId) };
+            }
+            // console.log('1');
+            db.collection('users').findOne(user)
+                .then(resp => {
+                    // console.log(resp);
+                    if (resp === null) {
+                        return res.status(401).render('signIn', {
+                            generalError: `
+                            <div class="row ml-1">*No Such Account Registered in the System</div><div class="row ml-1">Click here to <a href="/signUp" class="ml-1"> be a member</a></div>
+                            `,
+                            whichfooter: 'footer'
+                        });
+                    } else {
+                        // console.log('4');
+                        if (resp.admin == false)
+                            return res.status(201).redirect('/user');
+                    }
+                }).catch(err => {
+                    console.log(err);
+                    return res.status(500).redirect('/signIn');
+                });
+        } else {
+            // console.log('6');
+            return next();
+        }
+    };
+
     router.get('/', function(req, res) {
 
         var headertype = 'header';
@@ -38,7 +72,7 @@ const routerFunction = function(db) {
             db.collection('users').findOne(userid)
                 .then(res => {
                     point = res.membershipPoints;
-                    console.log(point);
+                    // console.log(point);
                 }).catch(err => {
                     console.log(err);
                 })
@@ -50,7 +84,7 @@ const routerFunction = function(db) {
         }
 
         if (firstname) {
-            res.render('totalCharge', {
+            return res.render('totalCharge', {
                 data: totalChargeBody,
                 fnameError: firstname,
                 source: '/images/Rooms/' + imagesource + '.jpg',
@@ -64,7 +98,7 @@ const routerFunction = function(db) {
         }
 
         else if (lastname) {
-            res.render('totalCharge', {
+            return res.render('totalCharge', {
                 data: totalChargeBody,
                 lnameError: lastname,
                 source: '/images/Rooms/' + imagesource + '.jpg',
@@ -78,7 +112,7 @@ const routerFunction = function(db) {
         }
 
         else if (emailglobe) {
-            res.render('totalCharge', {
+            return res.render('totalCharge', {
                 data: totalChargeBody,
                 emailError: emailglobe,
                 source: '/images/Rooms/' + imagesource + '.jpg',
@@ -92,7 +126,7 @@ const routerFunction = function(db) {
         }
 
         else if (database) {
-            res.render('totalCharge', {
+            return res.render('totalCharge', {
                 data: totalChargeBody,
                 databaseError: database,
                 source: '/images/Rooms/' + imagesource + '.jpg',
@@ -106,7 +140,7 @@ const routerFunction = function(db) {
         }
 
         else{
-            res.render('totalCharge', {
+            return res.render('totalCharge', {
                 data: totalChargeBody,
                 source: '/images/Rooms/' + imagesource + '.jpg',
                 whichheader: headertype,
@@ -224,7 +258,7 @@ const routerFunction = function(db) {
         }
 
         if (!req.session.userId)
-            res.render('totalCharge', {
+            return res.render('totalCharge', {
                 data: req.body,
                 source: '/images/Rooms/'+ imagesource + '.jpg',
                 whichheader:  headertype,
@@ -236,7 +270,7 @@ const routerFunction = function(db) {
             }); 
     });
 
-    router.get('/pay', function(req, res) {
+    router.get('/pay', loggedIn, function(req, res) {
 
         var loggingstring = `
         <li class="nav-item">\
@@ -282,7 +316,7 @@ const routerFunction = function(db) {
         }
 
         if (cardowner) {
-            res.render('pay', {
+            return res.render('pay', {
                 data: payBody,
                 cardOwnerError: cardowner,
                 bookingid: idBook,
@@ -291,8 +325,8 @@ const routerFunction = function(db) {
             });
         }
 
-        if (card) {
-            res.render('pay', {
+        else if (card) {
+            return res.render('pay', {
                 data: payBody,
                 cardError: card,
                 bookingid: idBook,
@@ -301,8 +335,8 @@ const routerFunction = function(db) {
             });
         }
 
-        if (cardNum) {
-            res.render('pay', {
+        else if (cardNum) {
+            return res.render('pay', {
                 data: payBody,
                 cardNumError: cardNum,
                 bookingid: idBook,
@@ -311,8 +345,18 @@ const routerFunction = function(db) {
             });
         }
 
-        if (databasepay) {
-            res.render('pay', {
+        else if (databasepay) {
+            return res.render('pay', {
+                data: payBody,
+                databaseError: databasepay,
+                bookingid: idBook,
+                whichfooter: footertype,
+                logging: loggingstring
+            });
+        }
+
+        else{
+            return res.render('pay', {
                 data: payBody,
                 databaseError: databasepay,
                 bookingid: idBook,
@@ -463,7 +507,7 @@ const routerFunction = function(db) {
                                 db.collection('booking').findOne(reservation)
                                 .then(respfind => {
                                     // console.log(resp._id);
-                                    res.render('pay', {
+                                    return res.render('pay', {
                                         bookingid: respfind._id,
                                         whichfooter: footertype,
                                         logging: loggingstring
@@ -636,7 +680,7 @@ const routerFunction = function(db) {
                                                 transporter.close();
                                             })
 
-                                            res.redirect('/totalCharge/billingDetails/' + respfind._id);
+                                            return res.redirect('/totalCharge/billingDetails/' + respfind._id);
                                         }).catch(errfind => {
                                             console.log(errfind);
                                             database = '*Bad Server';
@@ -686,7 +730,7 @@ const routerFunction = function(db) {
                 // console.log(resp);
                 var imagesource = resp.roomtype;
                 imagesource = imagesource.replace(/\s/g, '');
-                res.render('billingDetails', {
+                return res.render('billingDetails', {
                     data: resp,
                     source: '/images/Rooms/' + imagesource + '.jpg',
                     whichfooter: footertype,
@@ -699,11 +743,11 @@ const routerFunction = function(db) {
     });
 
     router.post('/billingDetails', function(req, res) {
-        res.redirect('/');
+        return res.redirect('/');
     });
 
     router.get('/billingDetails', function(req, res) {
-        res.redirect('/');
+        return res.redirect('/');
     });
 
     router.post('/billingDetails/:bookId', function(req, res) {
@@ -779,7 +823,7 @@ const routerFunction = function(db) {
         //updating the collection of booking
         db.collection('booking').updateOne(bookingid, update)
             .then(resp => {
-                console.log(resp);
+                // console.log(resp);
 
                 db.collection('booking').findOne(bookingid)
                     .then(respfind => {

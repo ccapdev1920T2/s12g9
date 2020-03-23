@@ -8,9 +8,9 @@ const routerFunction = function(db) {
 const notLoggedInAdmin = (req, res, next) => {
     if (!req.session.adminId) {
         if (!req.session.userId)
-            res.redirect('/signIn');
+            return res.redirect('/signIn');
         else
-            res.redirect('/user');
+            return res.redirect('/user');
     }
     return next();
 };
@@ -270,11 +270,11 @@ router.get('/', notLoggedInAdmin, function(req, res) {
 //FOR CLEANILESS OF WEBSITE ONLY
 router.get('/customerDetails', function(req, res) {
     if (req.session.adminId) {
-        res.redirect('/');
+        return res.redirect('/');
     } else if (req.session.userId) {
-        res.redirect('/');
+        return res.redirect('/');
     } else {
-        res.redirect('/signIn');
+        return res.redirect('/signIn');
     }
 
 });
@@ -303,7 +303,7 @@ router.get('/customerDetails/:bookid', notLoggedInAdmin, function(req, res) {
 
     db.collection('booking').updateOne(bookingID, update)
         .then(resp => {
-            console.log(resp);
+            // console.log(resp);
             return res.status(201).redirect('/admin');
         }).catch(err => {
             console.log(err);
@@ -336,7 +336,7 @@ router.post('/customerDetails/:bookid', notLoggedInAdmin, function(req, res) {
     db.collection('booking').findOne(bookingID)
         .then(resp => {
             // console.log(resp._id);
-            res.render('customerDetails', {
+            return res.render('customerDetails', {
                 fname: resp.fname,
                 lname: resp.lname,
                 email: resp.email,
@@ -359,6 +359,16 @@ router.post('/customerDetails/:bookid', notLoggedInAdmin, function(req, res) {
         });
 });
 
+router.get('/reactivate', function(req, res) {
+    if (req.session.adminId) {
+        return res.redirect('/');
+    } else if (req.session.userId) {
+        return res.redirect('/');
+    } else {
+        return res.redirect('/signIn');
+    }
+
+});
 
     router.get('/reactivate/:userid',notLoggedInAdmin, function(req,res){
         var userID = { _id: ObjectId(req.params.userid) }; //use to find the id in the database, (const { ObjectId } = require('mongodb'); is needed on top of this file)
