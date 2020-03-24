@@ -63,7 +63,7 @@
 
             var inputtotal = $("#inputtotal");
 
-            $("#airport").text(0.00);
+            $("#airport").text(parseFloat(0).toFixed(2));
 
             //console.log('calculate');
             //console.log($("input[class='form-check-input extrafee']:checked").length);
@@ -71,9 +71,13 @@
             if ($("input[class='form-check-input extrafee']:checked").val() === undefined){
                 extra.text(parseFloat(0).toFixed(2));
                 var amount = parseFloat(room.text().trim()) + parseFloat(service.text().trim()) + parseFloat(extra.text());
-                total.text(parseInt(daySpan.text()) * amount);
-                totalStay.text(parseFloat(total.text()) + parseFloat($("#airport").text()));
-                inputtotal.attr("value",parseFloat(total.text()) + parseFloat($("#airport").text()));
+                var part = parseInt(daySpan.text()) * amount;
+                part = part.toFixed(2);
+                total.text(part);
+                var totalfinal = parseFloat(total.text()) + parseFloat($("#airport").text());
+                totalfinal = totalfinal.toFixed(2);
+                totalStay.text(totalfinal);
+                inputtotal.attr("value",totalfinal);
             }
 
             if ($("input[class='form-check-input extrafee']:checked") != "undefined"){
@@ -89,15 +93,18 @@
                         fees = parseFloat(fees) + parseFloat(allbuffet.text());
                     } else if ($(this).val() === 'pickupprice'){
                         //fees = parseFloat(fees) + parseFloat(pickup.text());
-                        $("#airport").text(parseFloat(pickup.text()));
+                        $("#airport").text(parseFloat(pickup.text().toFixed()));
                     }
 
                     extra.text(fees.toFixed(2));
                     var amount = parseFloat(room.text().trim()) + parseFloat(service.text().trim()) + parseFloat(fees);
-                    total.text(parseInt(daySpan.text()) * amount);
-                    totalStay.text(parseFloat(total.text()) + parseFloat($("#airport").text()));
-                    inputtotal.attr("value",parseFloat(total.text()) + parseFloat($("#airport").text()));
-
+                    var part = parseInt(daySpan.text()) * amount;
+                    part = part.toFixed(2);
+                    total.text(part);
+                    var totalfinal = parseFloat(total.text()) + parseFloat($("#airport").text());
+                    totalfinal = totalfinal.toFixed(2);
+                    totalStay.text(totalfinal);
+                    inputtotal.attr("value",totalfinal);
                 });
             }
             getRequestString();

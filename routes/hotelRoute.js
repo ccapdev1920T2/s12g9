@@ -45,7 +45,7 @@ router.get('/amenities', function(req, res) {
         footertype = 'footerAdmin';
     }
 
-    res.render('amenities', {
+    return res.render('amenities', {
         whichfooter: footertype,
         logging: loggingstring
     });
@@ -66,7 +66,7 @@ router.get('/gym', function(req, res) {
         footertype = 'footerAdmin';
     }
 
-    res.render('gym', {
+    return res.render('gym', {
         whichheader: headertype,
         whichfooter: footertype
     });
@@ -116,7 +116,7 @@ router.get('/memberBenefits', function(req, res) {
         footertype = 'footerAdmin';
     }
 
-    res.render('memberBenefits', {
+    return res.render('memberBenefits', {
         logging: loggingstring,
         whichfooter: footertype
     });
@@ -137,7 +137,7 @@ router.get('/pool', function(req, res) {
         footertype = 'footerAdmin';
     }
 
-    res.render('pool', {
+    return res.render('pool', {
         whichheader: headertype,
         whichfooter: footertype
     });
@@ -158,7 +158,7 @@ router.get('/restaurant', function(req, res) {
         footertype = 'footerAdmin';
     }
 
-    res.render('restaurant', {
+    return res.render('restaurant', {
         whichheader: headertype,
         whichfooter: footertype
     });
@@ -208,7 +208,7 @@ router.get('/rooms', function(req, res) {
         footertype = 'footerAdmin';
     }
 
-    res.render('rooms', {
+    return res.render('rooms', {
         whichfooter: footertype,
         logging: loggingstring
     });
@@ -229,7 +229,7 @@ router.get('/spa', function(req, res) {
         footertype = 'footerAdmin';
     }
 
-    res.render('spa', {
+    return res.render('spa', {
         whichheader: headertype,
         whichfooter: footertype
     });

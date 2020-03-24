@@ -42,13 +42,18 @@ const routerFunction = function(db) {
         }
         else return options.inverse(this);
     });
+
+    hbs.registerHelper('format', function(text) {
+        return parseFloat(text).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    });
+    
     //check if user is logged in, if not, he/she cannot access the page such as profile and admin， and log out
     const notLoggedInUser = (req, res, next) => {
         if (!req.session.userId) {
             if (!req.session.adminId)
-                res.redirect('/signIn'); 
+                return res.redirect('/signIn'); 
             else
-                res.redirect('/admin');
+                return res.redirect('/admin');
         } 
         return next();
     };
@@ -124,7 +129,7 @@ const routerFunction = function(db) {
                         checkInDate: {$lt:today.toString()},
                         status:"Check Out"
                     }).sort({checkInDate:-1}).toArray().then(r2 =>{
-                        res.render('profile', {
+                        return res.render('profile', {
                             name: user[0].fname+" "+ user[0].lname,
                             membershipNumber: user[0].membershipNumber,
                             email: user[0].email,
@@ -232,7 +237,7 @@ const routerFunction = function(db) {
                             console.log('Message sent: %s', info.messageID);
                             transporter.close();
                         });
-                        res.redirect("/logout");
+                        return res.redirect("/logout");
                     }
                 })
             ).catch(er=>console.log(er));

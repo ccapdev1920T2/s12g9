@@ -3,15 +3,14 @@ const router = express();
 const { ObjectId } = require('mongodb');
 var imagesource;
 var checkIn, checkOut, formatCheckInDate, formatCheckOutDate, price;
-var bookedYear = [];
 
 const routerFunction = function(db) {
 const notLoggedInAdmin = (req, res, next) => {
     if (!req.session.adminId) {
         if (!req.session.userId)
-            res.redirect('/signIn');
+            return res.redirect('/signIn');
         else
-            res.redirect('/user');
+            return res.redirect('/user');
     }
     return next();
 };
@@ -108,7 +107,7 @@ router.get('/', notLoggedInAdmin, function(req, res) {
                         numKids: resp[i].kids,
                         numRooms: resp[i].rooms,
                         requests: resp[i].requests,
-                        TOTAL: resp[i].payment.total,
+                        TOTAL: resp[i].payment.total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","),
                         bookingid: resp[i]._id
                     }
                     // console.log("booking");
@@ -154,7 +153,7 @@ router.get('/', notLoggedInAdmin, function(req, res) {
                                 numKids: respViewAll[i].kids,
                                 numRooms: respViewAll[i].rooms,
                                 requests: respViewAll[i].requests,
-                                TOTAL: respViewAll[i].payment.total,
+                                TOTAL: respViewAll[i].payment.total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","),
                                 bookingid: respViewAll[i]._id
                             }
                             // console.log("viewAll");
@@ -208,7 +207,7 @@ router.get('/', notLoggedInAdmin, function(req, res) {
                                             numKids: respCheckedIn[i].kids,
                                             numRooms: respCheckedIn[i].rooms,
                                             requests: respCheckedIn[i].requests,
-                                            TOTAL: respCheckedIn[i].payment.total,
+                                            TOTAL: respCheckedIn[i].payment.total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","),
                                             bookingid: respCheckedIn[i]._id
                                         }
                                         // console.log("checkIn");
@@ -271,11 +270,11 @@ router.get('/', notLoggedInAdmin, function(req, res) {
 //FOR CLEANILESS OF WEBSITE ONLY
 router.get('/customerDetails', function(req, res) {
     if (req.session.adminId) {
-        res.redirect('/');
+        return res.redirect('/');
     } else if (req.session.userId) {
-        res.redirect('/');
+        return res.redirect('/');
     } else {
-        res.redirect('/signIn');
+        return res.redirect('/signIn');
     }
 
 });
@@ -304,7 +303,7 @@ router.get('/customerDetails/:bookid', notLoggedInAdmin, function(req, res) {
 
     db.collection('booking').updateOne(bookingID, update)
         .then(resp => {
-            console.log(resp);
+            // console.log(resp);
             return res.status(201).redirect('/admin');
         }).catch(err => {
             console.log(err);
@@ -337,7 +336,7 @@ router.post('/customerDetails/:bookid', notLoggedInAdmin, function(req, res) {
     db.collection('booking').findOne(bookingID)
         .then(resp => {
             // console.log(resp._id);
-            res.render('customerDetails', {
+            return res.render('customerDetails', {
                 fname: resp.fname,
                 lname: resp.lname,
                 email: resp.email,
@@ -358,8 +357,18 @@ router.post('/customerDetails/:bookid', notLoggedInAdmin, function(req, res) {
                 bookingid: req.params.bookid
             });
         });
-});
+    });
 
+    router.get('/reactivate', function(req, res) {
+        if (req.session.adminId) {
+            return res.redirect('/');
+        } else if (req.session.userId) {
+            return res.redirect('/');
+        } else {
+            return res.redirect('/signIn');
+        }
+
+    });
 
     router.get('/reactivate/:userid',notLoggedInAdmin, function(req,res){
         var userID = { _id: ObjectId(req.params.userid) }; //use to find the id in the database, (const { ObjectId } = require('mongodb'); is needed on top of this file)
@@ -417,7 +426,7 @@ router.post('/customerDetails/:bookid', notLoggedInAdmin, function(req, res) {
                                 return res.status(201).redirect('/admin');
                             }).catch(errstat => {
                                 console.log(errstat);
-                                return res.status(500).render('Reactivate', {
+                                return res.status(500).render('reactivate', {
                                     databaseError: '*Bad Server',
                                     whichheader: headertype,
                                     whichfooter: footertype,
@@ -426,7 +435,7 @@ router.post('/customerDetails/:bookid', notLoggedInAdmin, function(req, res) {
                             })     
                     }).catch(errfind => {
                         console.log(errfind);
-                        return res.status(500).render('Reactivate', {
+                        return res.status(500).render('reactivate', {
                             databaseError: '*Bad Server',
                             whichheader: headertype,
                             whichfooter: footertype,
@@ -435,7 +444,7 @@ router.post('/customerDetails/:bookid', notLoggedInAdmin, function(req, res) {
                     })
             }).catch(err=>{
                 console.log(err);
-                return res.status(500).render('Reactivate', {
+                return res.status(500).render('reactivate', {
                     databaseError: '*Bad Server',
                     whichheader: headertype,
                     whichfooter: footertype,
@@ -467,7 +476,7 @@ router.post('/customerDetails/:bookid', notLoggedInAdmin, function(req, res) {
 
             db.collection('booking').find({email: resp.email, status: "Cancelled"}).toArray()
                 .then( respbook => {
-
+                    var bookedYear = [];
                     var total = 0;
                     var count = 0;
                     for (var i=0;i<respbook.length;i++){
@@ -485,7 +494,7 @@ router.post('/customerDetails/:bookid', notLoggedInAdmin, function(req, res) {
                     
                     var total = total * 0.5;
 
-                    return res.render('Reactivate', {
+                    return res.render('reactivate', {
                         whichheader: headertype,
                         whichfooter: footertype,
                         userid: req.params.userid,
@@ -498,7 +507,7 @@ router.post('/customerDetails/:bookid', notLoggedInAdmin, function(req, res) {
                     });
                 }).catch(errbook => {
                     console.log(err);
-                    return res.status(500).render('Reactivate', {
+                    return res.status(500).render('reactivate', {
                         databaseError: '*Bad Server',
                         whichheader: headertype,
                         whichfooter: footertype,
@@ -507,7 +516,7 @@ router.post('/customerDetails/:bookid', notLoggedInAdmin, function(req, res) {
                 })        
         }).catch(err => {
             console.log(err);
-            return res.status(500).render('Reactivate', {
+            return res.status(500).render('reactivate', {
                 databaseError: '*Bad Server',
                 whichheader: headertype,
                 whichfooter: footertype,

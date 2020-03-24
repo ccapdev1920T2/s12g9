@@ -10,7 +10,7 @@ const routerFunction = function(db) {
     const notLoggedIn = (req, res, next) => {
         if (!req.session.userId && !req.session.adminId) {
             // console.log('hi');
-            res.redirect('/signIn');
+            return res.redirect('/signIn');
         }
 
         return next();
@@ -55,7 +55,7 @@ const routerFunction = function(db) {
 
     router.get('/logout', notLoggedIn, function(req, res) {
         req.session.destroy();
-        res.redirect('/signIn');
+        return res.redirect('/signIn');
     });
 
     router.get('/', function(req, res) {
@@ -329,17 +329,16 @@ const routerFunction = function(db) {
                         // TODO: for testing console.log(resp);
                         return res.status(201);
                     }).catch(err => {
-                    res.render('viewRooms', {
+                    return res.render('viewRooms', {
                         message: "An error occured! Please try again.",
                         data: req.body,
                         // whichheader: 'header',
                         whichfooter: 'footer',
                         logging: loggingstring
                     });
-                    return res.status(500);
                 }).finally(function() {
                     if (classicD || famD || execD || juniorS || execS || grandS) {
-                        res.render('viewRooms', {
+                        return res.render('viewRooms', {
                             cd: classicD,
                             fd: famD,
                             ed: execD,
@@ -352,7 +351,7 @@ const routerFunction = function(db) {
                             logging: loggingstring
                         });
                     } else {
-                        res.render('viewRooms', {
+                        return res.render('viewRooms', {
                             message: "No rooms found! Please try other dates.",
                             data: req.body,
                             whichfooter: footertype,
@@ -419,16 +418,16 @@ const routerFunction = function(db) {
                         // TODO: for testing console.log(resp);
                         return res.status(201);
                     }).catch(err => {
-                    res.render('viewRooms', {
+                    return res.render('viewRooms', {
                         message: "An error occured! Please try again.",
                         data: req.body,
                         whichfooter: footertype,
                         logging: loggingstring
                     });
-                    return res.status(500);
+                    // return res.status(500);
                 }).finally(function() {
                     if (famD || execD || juniorS || execS || grandS) {
-                        res.render('viewRooms', {
+                        return res.render('viewRooms', {
                             cd: classicD,
                             fd: famD,
                             ed: execD,
@@ -440,11 +439,11 @@ const routerFunction = function(db) {
                             logging: loggingstring
                         });
                     } else {
-                        res.render('viewRooms', {
+                        return res.render('viewRooms', {
                             message: "No rooms found! Please try other dates.",
                             data: req.body,
                             whichfooter: footertype,
-                            logging: loggingstring
+                            logging: loggingstring,
                         });
                     }
                 });
@@ -475,44 +474,47 @@ const routerFunction = function(db) {
                         // TODO: for testing console.log(resp);
                         return res.status(201);
                     }).catch(err => {
-                    res.render('viewRooms', {
+                    return res.render('viewRooms', {
                         message: "An error occured! Please try again.",
                         data: req.body,
                         whichfooter: footertype,
                         logging: loggingstring
                     });
-                    return res.status(500);
+                    // return res.status(500);
                 }).finally(function() {
                     if (grandS) {
-                        res.render('viewRooms', {
+                        return res.render('viewRooms', {
                             gs: grandS,
                             data: req.body,
                             whichfooter: footertype,
                             logging: loggingstring
                         });
                     } else {
-                        res.render('viewRooms', {
+                        return res.render('viewRooms', {
                             message: "No rooms found! Please try other dates.",
                             data: req.body,
                             whichfooter: footertype,
-                            logging: loggingstring
+                            logging: loggingstring,
                         });
                     }
                 });
 
             } else {
-                res.render('viewRooms', {
+                return res.render('viewRooms', {
                     message: "Too many guests per room. Please add more rooms",
                     data: req.body,
                     whichfooter: footertype,
-                    logging: loggingstring
+                    logging: loggingstring,
                 });
             }
         } else {
-            res.render('viewRooms', {
+            req.body.checkIn = null;
+            req.body.checkOut = null;
+            return res.render('viewRooms', {
                 message: "Date entered invalid! Please change the dates entered.",
                 whichfooter: footertype,
-                logging: loggingstring
+                logging: loggingstring,
+                data:req.body
             })
         }
     });
@@ -562,7 +564,7 @@ const routerFunction = function(db) {
             footertype = 'footerAdmin';
         }
 
-        res.render('aboutUs', {
+        return res.render('aboutUs', {
             whichfooter: footertype,
             logging: loggingstring
 
@@ -721,7 +723,7 @@ const routerFunction = function(db) {
             footertype = 'footerAdmin';
         }
 
-        res.render('signUp', {
+        return res.render('signUp', {
             whichfooter: footertype
         });
     });
@@ -1016,7 +1018,7 @@ const routerFunction = function(db) {
     });
 
     router.get('/verify', loggedIn, function(req, res) {
-        res.render('verificationKey', {
+        return res.render('verificationKey', {
             whichheadertype: 'header',
             whichfooter: 'footer',
             verificationKey: req.body.verificationKey
@@ -1026,12 +1028,22 @@ const routerFunction = function(db) {
     router.post('/verify', function(req, res) {
         var verificationkey = { verificationKey: req.body.verification };
 
-        console.log(req.body.verificationKey);
+        // console.log(req.body.verificationKey);
         // res.render('verificationKey', {
         //     whichheadertype: 'header',
         //     whichfooter: 'footer',
         //     verificationKey: req.body.verificationKey
         // });
+
+        var verification = req.body.verification.trim();
+
+        if (!verification){
+            return res.render('verificationKey', {
+                verificationError: '*Please fill up missing field',
+                whichheadertype: 'header',
+                whichfooter: 'footer',
+            })
+        }
 
         db.collection('users').findOne(verificationkey)
             .then(resp => {
@@ -1045,13 +1057,14 @@ const routerFunction = function(db) {
 
                     db.collection('users').updateOne(verificationkey, update)
                         .then(respupdate => {
-                            res.redirect('/');
+                            return res.redirect('/');
                         }).catch(errfind => {
                             console.log(errfind);
                             database = '*Bad Server';
                             return res.status(500).redirect('/');
                         });
                 } else {
+
                     return res.render('verificationKey', {
                         verificationError: 'Wrong verfication key.',
                         whichheadertype: 'header',

@@ -24,9 +24,10 @@
 
             var diffTime = dateOut.getTime() - dateIn.getTime(); 
             var diffDay = diffTime / (1000 * 3600 * 24);
+            diffDay++;
 
-            console.log(typeof diffDay);
-            console.log(diffTime);
+           //console.log(typeof diffDay);
+            //console.log(diffTime);
 
             $("#dateSpan").text(diffDay);
         }
@@ -50,14 +51,18 @@
 
             var inputtotal = $("#inputtotal");
 
-            $("#airport").text(0.00);
+             $("#airport").text(parseFloat(0).toFixed(2));
             
             if ($("input[name='extrafee']:checked").val() === undefined){
                 extra.text(parseFloat(0).toFixed(2));
                 var amount = parseFloat(room.text().trim()) + parseFloat(service.text().trim()) + parseFloat(extra.text());
-                total.text(parseInt(daySpan.text()) * amount);
-                totalStay.text(parseFloat(total.text()) + parseFloat($("#airport").text()));
-                inputtotal.attr("value",parseFloat(total.text()) + parseFloat($("#airport").text()));
+                var part = parseInt(daySpan.text()) * amount;
+                part = part.toFixed(2);
+                total.text(part);
+                var totalfinal = parseFloat(total.text()) + parseFloat($("#airport").text());
+                totalfinal = totalfinal.toFixed(2);
+                totalStay.text(totalfinal);
+                inputtotal.attr("value",totalfinal);
                 additional.val("");
 
             }
@@ -79,7 +84,7 @@
                         string = 'Daily Buffet';
                     } else if ($(this).val() === 'pickupprice'){
                         //fees = parseFloat(fees) + parseFloat(pickup.text());
-                        $("#airport").text(parseFloat(pickup.text()));
+                        $("#airport").text(parseFloat(pickup.text().toFixed()));
                         string = 'Arrival and Departure Airport Pick-Up';
                     }
 
@@ -87,9 +92,13 @@
 
                     extra.text(fees.toFixed(2));
                     var amount = parseFloat(room.text().trim()) + parseFloat(service.text().trim()) + parseFloat(fees);
-                    total.text(parseInt(daySpan.text()) * amount);
-                    totalStay.text(parseFloat(total.text()) + parseFloat($("#airport").text()));
-                    inputtotal.attr("value",parseFloat(total.text()) + parseFloat($("#airport").text()));
+                    var part = parseInt(daySpan.text()) * amount;
+                    part = part.toFixed(2);
+                    total.text(part);
+                    var totalfinal = parseFloat(total.text()) + parseFloat($("#airport").text());
+                    totalfinal = totalfinal.toFixed(2);
+                    totalStay.text(totalfinal);
+                    inputtotal.attr("value",totalfinal);
                 });
 
                 if (requestString !== ""){

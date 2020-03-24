@@ -8,6 +8,40 @@ var imagesource;
 
 //totalCharge
 const routerFunction = function(db) {
+    const loggedIn = (req, res, next) => {
+        // console.log(req.session.userId);
+        if (req.session.userId || req.session.adminId) {
+            if (req.session.userId)
+                var user = { _id: ObjectId(req.session.userId) };
+            else {
+                var user = { _id: ObjectId(req.session.adminId) };
+            }
+            // console.log('1');
+            db.collection('users').findOne(user)
+                .then(resp => {
+                    // console.log(resp);
+                    if (resp === null) {
+                        return res.status(401).render('signIn', {
+                            generalError: `
+                            <div class="row ml-1">*No Such Account Registered in the System</div><div class="row ml-1">Click here to <a href="/signUp" class="ml-1"> be a member</a></div>
+                            `,
+                            whichfooter: 'footer'
+                        });
+                    } else {
+                        // console.log('4');
+                        if (resp.admin == false)
+                            return res.status(201).redirect('/user');
+                    }
+                }).catch(err => {
+                    console.log(err);
+                    return res.status(500).redirect('/signIn');
+                });
+        } else {
+            // console.log('6');
+            return next();
+        }
+    };
+
     router.get('/', function(req, res) {
 
         var headertype = 'header';
@@ -36,7 +70,7 @@ const routerFunction = function(db) {
             db.collection('users').findOne(userid)
                 .then(res => {
                     point = res.membershipPoints;
-                    console.log(point);
+                    // console.log(point);
                 }).catch(err => {
                     console.log(err);
                 })
@@ -48,7 +82,7 @@ const routerFunction = function(db) {
         }
 
         if (firstname) {
-            res.render('totalCharge', {
+            return res.render('totalCharge', {
                 data: totalChargeBody,
                 fnameError: firstname,
                 source: '/images/Rooms/' + imagesource + '.jpg',
@@ -59,8 +93,15 @@ const routerFunction = function(db) {
                 bedChoiceOne: bedOne,
                 bedChoiceTwo: bedTwo
             });
+<<<<<<< HEAD
         } else if (lastname) {
             res.render('totalCharge', {
+=======
+        }
+
+        else if (lastname) {
+            return res.render('totalCharge', {
+>>>>>>> a53df706a6274a240b1f3417bcbb4765714cda7a
                 data: totalChargeBody,
                 lnameError: lastname,
                 source: '/images/Rooms/' + imagesource + '.jpg',
@@ -71,8 +112,15 @@ const routerFunction = function(db) {
                 bedChoiceOne: bedOne,
                 bedChoiceTwo: bedTwo
             });
+<<<<<<< HEAD
         } else if (emailglobe) {
             res.render('totalCharge', {
+=======
+        }
+
+        else if (emailglobe) {
+            return res.render('totalCharge', {
+>>>>>>> a53df706a6274a240b1f3417bcbb4765714cda7a
                 data: totalChargeBody,
                 emailError: emailglobe,
                 source: '/images/Rooms/' + imagesource + '.jpg',
@@ -83,8 +131,15 @@ const routerFunction = function(db) {
                 bedChoiceOne: bedOne,
                 bedChoiceTwo: bedTwo
             });
+<<<<<<< HEAD
         } else if (database) {
             res.render('totalCharge', {
+=======
+        }
+
+        else if (database) {
+            return res.render('totalCharge', {
+>>>>>>> a53df706a6274a240b1f3417bcbb4765714cda7a
                 data: totalChargeBody,
                 databaseError: database,
                 source: '/images/Rooms/' + imagesource + '.jpg',
@@ -95,8 +150,15 @@ const routerFunction = function(db) {
                 bedChoiceOne: bedOne,
                 bedChoiceTwo: bedTwo
             });
+<<<<<<< HEAD
         } else {
             res.render('totalCharge', {
+=======
+        }
+
+        else{
+            return res.render('totalCharge', {
+>>>>>>> a53df706a6274a240b1f3417bcbb4765714cda7a
                 data: totalChargeBody,
                 source: '/images/Rooms/' + imagesource + '.jpg',
                 whichheader: headertype,
@@ -212,7 +274,7 @@ const routerFunction = function(db) {
         }
 
         if (!req.session.userId)
-            res.render('totalCharge', {
+            return res.render('totalCharge', {
                 data: req.body,
                 source: '/images/Rooms/' + imagesource + '.jpg',
                 whichheader: headertype,
@@ -224,7 +286,7 @@ const routerFunction = function(db) {
             });
     });
 
-    router.get('/pay', function(req, res) {
+    router.get('/pay', loggedIn, function(req, res) {
 
         var loggingstring = `
         <li class="nav-item">\
@@ -270,7 +332,7 @@ const routerFunction = function(db) {
         }
 
         if (cardowner) {
-            res.render('pay', {
+            return res.render('pay', {
                 data: payBody,
                 cardOwnerError: cardowner,
                 bookingid: idBook,
@@ -279,8 +341,8 @@ const routerFunction = function(db) {
             });
         }
 
-        if (card) {
-            res.render('pay', {
+        else if (card) {
+            return res.render('pay', {
                 data: payBody,
                 cardError: card,
                 bookingid: idBook,
@@ -289,8 +351,8 @@ const routerFunction = function(db) {
             });
         }
 
-        if (cardNum) {
-            res.render('pay', {
+        else if (cardNum) {
+            return res.render('pay', {
                 data: payBody,
                 cardNumError: cardNum,
                 bookingid: idBook,
@@ -299,14 +361,18 @@ const routerFunction = function(db) {
             });
         }
 
-        if (databasepay) {
-            res.render('pay', {
+        else if (databasepay) {
+            return res.render('pay', {
                 data: payBody,
                 databaseError: databasepay,
                 bookingid: idBook,
                 whichfooter: footertype,
                 logging: loggingstring
             });
+        }
+
+        else{
+            return res.redirect('/');
         }
 
     });
@@ -379,11 +445,15 @@ const routerFunction = function(db) {
                 adults: parseInt(adults),
                 kids: parseInt(kids),
                 roomtype,
+<<<<<<< HEAD
                 pricePerRoom: { looksLike: 'float', value: pricePerRoom },
+=======
+                pricePerRoom : parseFloat(pricePerRoom),
+>>>>>>> a53df706a6274a240b1f3417bcbb4765714cda7a
                 bookingDate: formattedDate,
                 status: "Booked",
                 payment: {
-                    total,
+                    total: parseFloat(total),
                     status: "Not Paid",
                     creditcardNumber: "",
                     creditcardOwner: "",
@@ -450,6 +520,7 @@ const routerFunction = function(db) {
                                 // return res.status(201).send('Good');
                                 //Use to find in database
                                 db.collection('booking').findOne(reservation)
+<<<<<<< HEAD
                                     .then(respfind => {
                                         // console.log(resp._id);
                                         db.collection('booking').aggregate({
@@ -473,6 +544,20 @@ const routerFunction = function(db) {
                                         database = '*Bad Server';
                                         return res.status(500).redirect('/totalCharge');
                                     })
+=======
+                                .then(respfind => {
+                                    // console.log(resp._id);
+                                    return res.render('pay', {
+                                        bookingid: respfind._id,
+                                        whichfooter: footertype,
+                                        logging: loggingstring
+                                    });
+                                }).catch(errfind => {
+                                    console.log(errfind);
+                                    database = '*Bad Server';
+                                    return res.status(500).redirect('/totalCharge');
+                                })
+>>>>>>> a53df706a6274a240b1f3417bcbb4765714cda7a
                             }).catch(err => {
                                 console.log(err);
                                 database = '*Bad Server';
@@ -535,11 +620,15 @@ const routerFunction = function(db) {
                                 adults: parseInt(adults),
                                 kids: parseInt(kids),
                                 roomtype,
+<<<<<<< HEAD
                                 pricePerRoom: parseFloat(pricePerRoom).toFixed(2),
+=======
+                                pricePerRoom : parseFloat(pricePerRoom),
+>>>>>>> a53df706a6274a240b1f3417bcbb4765714cda7a
                                 bookingDate: formattedDate,
                                 status: "Booked",
                                 payment: {
-                                    total,
+                                    total: parseFloat(total),
                                     status: "Not Paid",
                                     creditcardNumber: resp.creditcardNumber,
                                     creditcardOwner: resp.creditcardOwner,
@@ -607,7 +696,7 @@ const routerFunction = function(db) {
                                                         <span style="font-weight:600">Requests</span>: ${addrequests}<br>
                                                         <br>
                                                         Here is your <b>payment details</b>.<br><br>
-                                                        <span style="font-weight:600">Total Amount</span>: PHP ${respfind.payment.total}<br><br>
+                                                        <span style="font-weight:600">Total Amount</span>: PHP ${respfind.payment.total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}<br><br>
                                                         Paid using credit card:<br>
                                                         <span style="font-weight:600">Credit Card Owner</span>: ${respfind.payment.creditcardOwner}<br>
                                                         <span style="font-weight:600">Credit Card Number</span>: ${respfind.payment.creditcardNumber}<br>
@@ -635,7 +724,7 @@ const routerFunction = function(db) {
                                                 transporter.close();
                                             })
 
-                                            res.redirect('/totalCharge/billingDetails/' + respfind._id);
+                                            return res.redirect('/totalCharge/billingDetails/' + respfind._id);
                                         }).catch(errfind => {
                                             console.log(errfind);
                                             database = '*Bad Server';
@@ -685,11 +774,12 @@ const routerFunction = function(db) {
                 // console.log(resp);
                 var imagesource = resp.roomtype;
                 imagesource = imagesource.replace(/\s/g, '');
-                res.render('billingDetails', {
+                return res.render('billingDetails', {
                     data: resp,
                     source: '/images/Rooms/' + imagesource + '.jpg',
                     whichfooter: footertype,
-                    whichheader: headertype
+                    whichheader: headertype,
+                    TOTAL: resp.payment.total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
                 })
             }).catch(err => {
                 console.log(err);
@@ -697,11 +787,11 @@ const routerFunction = function(db) {
     });
 
     router.post('/billingDetails', function(req, res) {
-        res.redirect('/');
+        return res.redirect('/');
     });
 
     router.get('/billingDetails', function(req, res) {
-        res.redirect('/');
+        return res.redirect('/');
     });
 
     router.post('/billingDetails/:bookId', function(req, res) {
@@ -777,7 +867,7 @@ const routerFunction = function(db) {
         //updating the collection of booking
         db.collection('booking').updateOne(bookingid, update)
             .then(resp => {
-                console.log(resp);
+                // console.log(resp);
 
                 db.collection('booking').findOne(bookingid)
                     .then(respfind => {
@@ -835,7 +925,7 @@ const routerFunction = function(db) {
                                     <span style="font-weight:600">Requests</span>: ${addrequests}<br>
                                     <br>
                                     Here is your <b>payment details</b>.<br><br>
-                                    <span style="font-weight:600">Total Amount</span>: PHP ${respfind.payment.total}<br><br>
+                                    <span style="font-weight:600">Total Amount</span>: PHP ${respfind.payment.total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}<br><br>
                                     Paid using credit card:<br>
                                     <span style="font-weight:600">Credit Card Owner</span>: ${respfind.payment.creditcardOwner}<br>
                                     <span style="font-weight:600">Credit Card Number</span>: ${respfind.payment.creditcardNumber}<br>
@@ -866,7 +956,8 @@ const routerFunction = function(db) {
                             data: respfind,
                             source: '/images/Rooms/' + imagesource + '.jpg',
                             whichfooter: footertype,
-                            whichheader: headertype
+                            whichheader: headertype,
+                            TOTAL: respfind.payment.total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
                         })
 
                     }).catch(errfind => {
