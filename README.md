@@ -18,7 +18,7 @@ Last would be the admin where he/she can check the reservations for the given da
 3. Open the folder in your command line and run **npm install** to install all packages needed for the application
 4. After installation, run **node index.js** in the same command line
 5. Open a browser and go to the link **localhost:3000** 
-6. Congrats the website for Paraiso Hotel is now running in you PC
+6. Congrats the website for Paraiso Hotel is now running in your PC
 
 ### Group Members:
 ANG, Gwyneth
