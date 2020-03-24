@@ -10,7 +10,7 @@ First, users can register to be a member. They can use membership points to avai
 
 Second, users can be a guest but points would not be applicable for them.
 
-Last would be the admin where he/she can check the reservations for the given day and see its correspoding customer who booked it. 
+Last would be the admin where he/she can check the reservations for the given day and see the corresponding customer who booked it. 
 
 ### How to set up the application
 1. Make sure you have MongoDB, NodeJS, and git installed in your PC
@@ -19,6 +19,10 @@ Last would be the admin where he/she can check the reservations for the given da
 4. After installation, run **node index.js** in the same command line
 5. Open a browser and go to the link **localhost:3000** 
 6. Congrats the website for Paraiso Hotel is now running in your PC
+#### Extra Note:
+##### Admin Account Credentials: 
+###### Email: admin@paraisohotels.com"
+###### Password: para1soHotels
 
 ### Group Members:
 ANG, Gwyneth
