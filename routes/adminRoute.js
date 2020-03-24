@@ -357,18 +357,18 @@ router.post('/customerDetails/:bookid', notLoggedInAdmin, function(req, res) {
                 bookingid: req.params.bookid
             });
         });
-});
+    });
 
-router.get('/reactivate', function(req, res) {
-    if (req.session.adminId) {
-        return res.redirect('/');
-    } else if (req.session.userId) {
-        return res.redirect('/');
-    } else {
-        return res.redirect('/signIn');
-    }
+    router.get('/reactivate', function(req, res) {
+        if (req.session.adminId) {
+            return res.redirect('/');
+        } else if (req.session.userId) {
+            return res.redirect('/');
+        } else {
+            return res.redirect('/signIn');
+        }
 
-});
+    });
 
     router.get('/reactivate/:userid',notLoggedInAdmin, function(req,res){
         var userID = { _id: ObjectId(req.params.userid) }; //use to find the id in the database, (const { ObjectId } = require('mongodb'); is needed on top of this file)
