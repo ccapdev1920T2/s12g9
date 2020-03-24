@@ -356,13 +356,7 @@ const routerFunction = function(db) {
         }
 
         else{
-            return res.render('pay', {
-                data: payBody,
-                databaseError: databasepay,
-                bookingid: idBook,
-                whichfooter: footertype,
-                logging: loggingstring
-            });
+            return res.redirect('/');
         }
 
     });
