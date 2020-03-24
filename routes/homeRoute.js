@@ -111,11 +111,7 @@ const routerFunction = function(db) {
 
         var todayDate = new Date();
 
-<<<<<<< HEAD
-
-=======
         //TODO: Check
->>>>>>> 50b92a5893fd98101be6f5263403a2d592674469
         db.collection('users').deleteMany({ signUpDate: { $lte: todayDate }, verified: false })
             .then(resDel => {
                 db.collection('users').findOne(adminuser)

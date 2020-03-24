@@ -17,14 +17,12 @@ const routerFunction = function(db) {
         var bedOne = "Two Twin Beds";
         var bedTwo = "One King Bed"
 
-        if (req.body.roomtype === 'Classic Deluxe'){
+        if (req.body.roomtype === 'Classic Deluxe') {
             bedOne = "Two Single Beds";
-            bedTwo = "One Queen Bed";  
-        }
-
-        else if (req.body.roomtype === 'Grand Suite'){
+            bedTwo = "One Queen Bed";
+        } else if (req.body.roomtype === 'Grand Suite') {
             bedOne = "Two Queen Beds";
-            bedTwo = "One King Bed & One Single Bed";           
+            bedTwo = "One King Bed & One Single Bed";
         }
 
         // console.log(req.session.userId);
@@ -61,9 +59,7 @@ const routerFunction = function(db) {
                 bedChoiceOne: bedOne,
                 bedChoiceTwo: bedTwo
             });
-        }
-
-        else if (lastname) {
+        } else if (lastname) {
             res.render('totalCharge', {
                 data: totalChargeBody,
                 lnameError: lastname,
@@ -75,9 +71,7 @@ const routerFunction = function(db) {
                 bedChoiceOne: bedOne,
                 bedChoiceTwo: bedTwo
             });
-        }
-
-        else if (emailglobe) {
+        } else if (emailglobe) {
             res.render('totalCharge', {
                 data: totalChargeBody,
                 emailError: emailglobe,
@@ -89,9 +83,7 @@ const routerFunction = function(db) {
                 bedChoiceOne: bedOne,
                 bedChoiceTwo: bedTwo
             });
-        }
-
-        else if (database) {
+        } else if (database) {
             res.render('totalCharge', {
                 data: totalChargeBody,
                 databaseError: database,
@@ -103,9 +95,7 @@ const routerFunction = function(db) {
                 bedChoiceOne: bedOne,
                 bedChoiceTwo: bedTwo
             });
-        }
-
-        else{
+        } else {
             res.render('totalCharge', {
                 data: totalChargeBody,
                 source: '/images/Rooms/' + imagesource + '.jpg',
@@ -119,13 +109,13 @@ const routerFunction = function(db) {
         }
     });
 
-    router.get('/delete/:bookId', function(req,res){
-        var bookingid = { _id: ObjectId(req.params.bookId)};
+    router.get('/delete/:bookId', function(req, res) {
+        var bookingid = { _id: ObjectId(req.params.bookId) };
 
         db.collection('booking').deleteOne(bookingid)
             .then(resp => {
                 return res.redirect('/totalCharge');
-            }).catch(err =>{
+            }).catch(err => {
                 return res.render('pay', {
                     data: payBody,
                     databaseError: '*Bad Server',
@@ -140,7 +130,7 @@ const routerFunction = function(db) {
 
         imagesource = req.body.roomtype;
         imagesource = imagesource.replace(/\s/g, '');
-        
+
         var headertype = 'header';
         var footertype = 'footer';
         var totalChargetype = 'totalChargeGuest';
@@ -148,14 +138,12 @@ const routerFunction = function(db) {
         var bedOne = "Two Twin Beds";
         var bedTwo = "One King Bed"
 
-        if (req.body.roomtype === 'Classic Deluxe'){
+        if (req.body.roomtype === 'Classic Deluxe') {
             bedOne = "Two Single Beds";
-            bedTwo = "One Queen Bed";  
-        }
-
-        else if (req.body.roomtype === 'Grand Suite'){
+            bedTwo = "One Queen Bed";
+        } else if (req.body.roomtype === 'Grand Suite') {
             bedOne = "Two Queen Beds";
-            bedTwo = "One King Bed & One Single Bed";           
+            bedTwo = "One King Bed & One Single Bed";
         }
 
         if (req.session.userId) {
@@ -169,7 +157,7 @@ const routerFunction = function(db) {
                 .then(resp => {
                     point = resp.membershipPoints;
 
-                    if (req.body.roomtype === 'Classic Deluxe'){
+                    if (req.body.roomtype === 'Classic Deluxe') {
 
                         var checkBox = `
                             <div class="row pt-3">\
@@ -188,11 +176,11 @@ const routerFunction = function(db) {
                                 </label>\
                             </div>\
                         `
-                        
+
                         return res.render('totalCharge', {
                             data: req.body,
-                            source: '/images/Rooms/'+ imagesource + '.jpg',
-                            whichheader:  headertype,
+                            source: '/images/Rooms/' + imagesource + '.jpg',
+                            whichheader: headertype,
                             whichfooter: footertype,
                             whichtotalCharge: totalChargetype,
                             memberPoints: point.toString(),
@@ -200,20 +188,20 @@ const routerFunction = function(db) {
                             bedChoiceOne: bedOne,
                             bedChoiceTwo: bedTwo
 
-                        }); 
+                        });
                     } else {
                         return res.render('totalCharge', {
                             data: req.body,
-                            source: '/images/Rooms/'+ imagesource + '.jpg',
-                            whichheader:  headertype,
+                            source: '/images/Rooms/' + imagesource + '.jpg',
+                            whichheader: headertype,
                             whichfooter: footertype,
                             whichtotalCharge: totalChargetype,
                             memberPoints: point.toString(),
                             bedChoiceOne: bedOne,
                             bedChoiceTwo: bedTwo
-                        }); 
-                    }    
-                }).catch (err => {
+                        });
+                    }
+                }).catch(err => {
                     console.log(err);
                 })
         }
@@ -226,14 +214,14 @@ const routerFunction = function(db) {
         if (!req.session.userId)
             res.render('totalCharge', {
                 data: req.body,
-                source: '/images/Rooms/'+ imagesource + '.jpg',
-                whichheader:  headertype,
+                source: '/images/Rooms/' + imagesource + '.jpg',
+                whichheader: headertype,
                 whichfooter: footertype,
                 whichtotalCharge: totalChargetype,
                 memberPoints: point,
                 bedChoiceOne: bedOne,
                 bedChoiceTwo: bedTwo
-            }); 
+            });
     });
 
     router.get('/pay', function(req, res) {
@@ -326,8 +314,8 @@ const routerFunction = function(db) {
     router.post('/pay', function(req, res) {
         // console.log(req.body);    
 
-        if (!req.session.userId){
-            let { fname, lname, email, total, checkInDate, checkOutDate, rooms, adults, kids, roomtype, pricePerRoom} = req.body;
+        if (!req.session.userId) {
+            let { fname, lname, email, total, checkInDate, checkOutDate, rooms, adults, kids, roomtype, pricePerRoom } = req.body;
 
             fname = fname.trim();
             lname = lname.trim();
@@ -344,7 +332,7 @@ const routerFunction = function(db) {
                 req.body.requests = req.body.additionalrequest + ", " + req.body.bedtype;
             else if (req.body.additionalrequest === "")
                 req.body.requests = req.body.requests + ', ' + req.body.bedtype;
-            else 
+            else
                 req.body.requests = req.body.requests + ', ' + req.body.additionalrequest + ", " + req.body.bedtype;
 
             // console.log('Hello');
@@ -378,6 +366,7 @@ const routerFunction = function(db) {
 
             var today = new Date();
             var formattedDate = today.getFullYear().toString() + '-' + (today.getMonth() + 1).toString().padStart(2, 0) + '-' + today.getDate().toString().padStart(2, 0);
+            //TODO: pricePerRoom
 
             var reservation = {
                 fname,
@@ -386,11 +375,11 @@ const routerFunction = function(db) {
                 requests: req.body.requests,
                 checkInDate,
                 checkOutDate,
-                rooms : parseInt(rooms),
-                adults : parseInt(adults),
-                kids : parseInt(kids),
+                rooms: parseInt(rooms),
+                adults: parseInt(adults),
+                kids: parseInt(kids),
                 roomtype,
-                pricePerRoom : { $toDouble: parseFloat(pricePerRoom).toFixed(2)},
+                pricePerRoom: { looksLike: 'float', value: pricePerRoom },
                 bookingDate: formattedDate,
                 status: "Booked",
                 payment: {
@@ -452,8 +441,8 @@ const routerFunction = function(db) {
                 email
             }
             db.collection('users').findOne(useremail)
-                .then(respuser =>{
-                    if (respuser === null){
+                .then(respuser => {
+                    if (respuser === null) {
                         db.collection('booking').insertOne(reservation)
                             .then(resp => {
                                 // console.log(resp);
@@ -461,18 +450,29 @@ const routerFunction = function(db) {
                                 // return res.status(201).send('Good');
                                 //Use to find in database
                                 db.collection('booking').findOne(reservation)
-                                .then(respfind => {
-                                    // console.log(resp._id);
-                                    res.render('pay', {
-                                        bookingid: respfind._id,
-                                        whichfooter: footertype,
-                                        logging: loggingstring
-                                    });
-                                }).catch(errfind => {
-                                    console.log(errfind);
-                                    database = '*Bad Server';
-                                    return res.status(500).redirect('/totalCharge');
-                                })
+                                    .then(respfind => {
+                                        // console.log(resp._id);
+                                        db.collection('booking').aggregate({
+                                            $convert: {
+                                                input: $pricePerRoom,
+                                                to: double
+                                            }
+                                        }).then(respchange => {
+                                            res.render('pay', {
+                                                bookingid: respfind._id,
+                                                whichfooter: footertype,
+                                                logging: loggingstring
+                                            });
+                                        }).catch(errchange => {
+                                            console.log(errchange);
+                                            database = '*Bad Server';
+                                            return res.status(500).redirect('totalCharge');
+                                        })
+                                    }).catch(errfind => {
+                                        console.log(errfind);
+                                        database = '*Bad Server';
+                                        return res.status(500).redirect('/totalCharge');
+                                    })
                             }).catch(err => {
                                 console.log(err);
                                 database = '*Bad Server';
@@ -480,24 +480,22 @@ const routerFunction = function(db) {
                                 // return res.status(500).render('totalCharge',
                                 //     {databaseError: '*Bad Server'}
                                 // );
-                            });       
-                    }
-                    else {
+                            });
+                    } else {
                         if (respuser.admin == false)
                             database = 'You are a registered member based on your email address. Please book using your account. Click here to <a href="/signIn">sign in</a>';
-                        else    
+                        else
                             database = 'You are an admin. Please book using the admin account. Click here to <a href="/signIn">sign in</a>';
                         return res.status(500).redirect('/totalCharge');
                     }
-                }).catch(erruser=>{
+                }).catch(erruser => {
                     console.log(err);
                     database = 'Bad server';
                     return res.status(500).redirect('/totalCharge');
                 });
-          
-        }
-        else {
-            let {total, checkInDate, checkOutDate, rooms, adults, kids, roomtype, pricePerRoom, points} = req.body;
+
+        } else {
+            let { total, checkInDate, checkOutDate, rooms, adults, kids, roomtype, pricePerRoom, points } = req.body;
 
             var today = new Date();
             var formattedDate = today.getFullYear().toString() + '-' + (today.getMonth() + 1).toString().padStart(2, 0) + '-' + today.getDate().toString().padStart(2, 0);
@@ -508,36 +506,36 @@ const routerFunction = function(db) {
                 req.body.requests = req.body.additionalrequest + ", " + req.body.bedtype;
             else if (req.body.additionalrequest === "")
                 req.body.requests = req.body.requests + ', ' + req.body.bedtype;
-            else 
+            else
                 req.body.requests = req.body.requests + ', ' + req.body.additionalrequest + ", " + req.body.bedtype;
 
             var userID = { _id: ObjectId(req.session.userId) };
 
             db.collection('users').findOne(userID)
-                .then(resp=>{
+                .then(resp => {
 
                     var allpoints = resp.membershipPoints - parseInt(points);
                     allpoints = allpoints + parseInt(total) * 0.10;
-                    var update ={
+                    var update = {
                         $set: {
                             'membershipPoints': parseInt(allpoints)
                         }
                     }
 
-                    db.collection('users').updateOne(userID,update)
-                        .then(resppoints=>{
+                    db.collection('users').updateOne(userID, update)
+                        .then(resppoints => {
                             var reservationMember = {
-                                fname : resp.fname,
-                                lname : resp.lname,
-                                email : resp.email,
+                                fname: resp.fname,
+                                lname: resp.lname,
+                                email: resp.email,
                                 requests: req.body.requests,
                                 checkInDate,
                                 checkOutDate,
-                                rooms : parseInt(rooms),
-                                adults : parseInt(adults),
-                                kids : parseInt(kids),
+                                rooms: parseInt(rooms),
+                                adults: parseInt(adults),
+                                kids: parseInt(kids),
                                 roomtype,
-                                pricePerRoom : parseFloat(pricePerRoom).toFixed(2),
+                                pricePerRoom: parseFloat(pricePerRoom).toFixed(2),
                                 bookingDate: formattedDate,
                                 status: "Booked",
                                 payment: {
@@ -551,16 +549,16 @@ const routerFunction = function(db) {
                                     year: resp.year
                                 }
                             };
-                        
+
                             db.collection('booking').insertOne(reservationMember)
                                 .then(respbook => {
-                                        db.collection('booking').findOne(reservationMember)
+                                    db.collection('booking').findOne(reservationMember)
                                         .then(respfind => {
                                             // console.log("bookid");
                                             // console.log(respfind._id);
                                             var transporter = nodemailer.createTransport({
                                                 service: 'gmail',
-                                                secure: false,//true
+                                                secure: false, //true
                                                 port: 587,
                                                 pool: true,
                                                 auth: {
@@ -572,15 +570,16 @@ const routerFunction = function(db) {
                                                 }
                                             });
 
-                                            var months = [ "January", "February", "March", "April", "May", "June",
-                                    "July", "August", "September", "October", "November", "December"];
+                                            var months = ["January", "February", "March", "April", "May", "June",
+                                                "July", "August", "September", "October", "November", "December"
+                                            ];
 
                                             var cardmonth = parseInt(respfind.payment.month) - 1;
                                             cardmonth = months[cardmonth];
 
                                             var addrequests;
 
-                                            if (respfind.requests==="")
+                                            if (respfind.requests === "")
                                                 addrequests = 'None';
                                             else
                                                 addrequests = respfind.requests;
@@ -588,8 +587,8 @@ const routerFunction = function(db) {
                                             var mailOptions = {
                                                 from: 'Paraiso Hotel', // sender address
                                                 to: respfind.email, // list of receivers
-                                                subject: 'Paraiso Hotel Reservation Details [BOOKING ID: ' + respfind._id + ']', 
-                                                html:  `
+                                                subject: 'Paraiso Hotel Reservation Details [BOOKING ID: ' + respfind._id + ']',
+                                                html: `
                                                     <head>
                                                     <link href="https://fonts.googleapis.com/css?family=Open+Sans:200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
                                                     
@@ -626,7 +625,7 @@ const routerFunction = function(db) {
                                                     `
                                             };
 
-                                            transporter.sendMail(mailOptions,(error, response) => {
+                                            transporter.sendMail(mailOptions, (error, response) => {
                                                 if (error) {
                                                     console.log(error);
                                                 } else {
@@ -641,8 +640,8 @@ const routerFunction = function(db) {
                                             console.log(errfind);
                                             database = '*Bad Server';
                                             return res.status(500).redirect('/totalCharge');
-                                        })   
-                                }).catch((errbook=>{
+                                        })
+                                }).catch((errbook => {
                                     console.log(errbook);
                                     database = '*Bad Server';
                                     return res.status(500).redirect('/totalCharge');
@@ -655,7 +654,7 @@ const routerFunction = function(db) {
 
                         });
 
-                }).catch(err=>{
+                }).catch(err => {
                     console.log(err);
                     database = '*Bad Server';
                     return res.status(500).redirect('/totalCharge');
@@ -677,12 +676,12 @@ const routerFunction = function(db) {
             headertype = 'headerAdmin';
             footertype = 'footerAdmin';
         }
-        
-        var bookingid = { _id: ObjectId(req.params.bookId) }; 
+
+        var bookingid = { _id: ObjectId(req.params.bookId) };
         // console.log(req.params.bookId);
 
         db.collection('booking').findOne(bookingid)
-            .then(resp=>{
+            .then(resp => {
                 // console.log(resp);
                 var imagesource = resp.roomtype;
                 imagesource = imagesource.replace(/\s/g, '');
@@ -692,7 +691,7 @@ const routerFunction = function(db) {
                     whichfooter: footertype,
                     whichheader: headertype
                 })
-            }).catch(err=>{
+            }).catch(err => {
                 console.log(err);
             });
     });
@@ -734,16 +733,16 @@ const routerFunction = function(db) {
             cardNum = '*Please fill up missing field';
             return res.status(401).redirect('/totalCharge/pay');
         }
-        
+
         var today = new Date();
         var monthToday = today.getMonth() + 1;
         var yearToday = today.getFullYear();
         yearToday = yearToday.toString();
-        yearToday= yearToday.substring(yearToday.length - 2, yearToday.length);
+        yearToday = yearToday.substring(yearToday.length - 2, yearToday.length);
 
-        
-        if (parseInt(year) == parseInt(yearToday) ){
-            if (parseInt(month) <= monthToday){
+
+        if (parseInt(year) == parseInt(yearToday)) {
+            if (parseInt(month) <= monthToday) {
                 databasepay = '*Card is not accepted because of the expiration date';
                 return res.status(500).redirect('/totalCharge/pay');
             }
@@ -787,7 +786,7 @@ const routerFunction = function(db) {
 
                         var transporter = nodemailer.createTransport({
                             service: 'gmail',
-                            secure: false,//true
+                            secure: false, //true
                             port: 587,
                             pool: true,
                             tls: {
@@ -798,16 +797,17 @@ const routerFunction = function(db) {
                                 pass: 'para1soHotels'
                             }
                         });
-                        
-                        var months = [ "January", "February", "March", "April", "May", "June",
-                                    "July", "August", "September", "October", "November", "December"];
+
+                        var months = ["January", "February", "March", "April", "May", "June",
+                            "July", "August", "September", "October", "November", "December"
+                        ];
 
                         var cardmonth = parseInt(respfind.payment.month) - 1;
                         cardmonth = months[cardmonth];
 
                         var addrequests;
 
-                        if (respfind.requests==="")
+                        if (respfind.requests === "")
                             addrequests = 'None';
                         else
                             addrequests = respfind.requests;
@@ -815,8 +815,8 @@ const routerFunction = function(db) {
                         var mailOptions = {
                             from: 'Paraiso Hotel', // sender address
                             to: respfind.email, // list of receivers
-                            subject: 'Paraiso Hotel Reservation Details [BOOKING ID: ' + respfind._id + ']', 
-                            html:  `
+                            subject: 'Paraiso Hotel Reservation Details [BOOKING ID: ' + respfind._id + ']',
+                            html: `
                                 <head>
                                 <link href="https://fonts.googleapis.com/css?family=Open+Sans:200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
                                 
@@ -851,7 +851,7 @@ const routerFunction = function(db) {
                                 `
                         };
 
-                        transporter.sendMail(mailOptions,(error, response) => {
+                        transporter.sendMail(mailOptions, (error, response) => {
                             if (error) {
                                 console.log(error);
                             } else {
@@ -879,9 +879,9 @@ const routerFunction = function(db) {
                 database = '*Bad Server';
                 return res.status(500).redirect('/totalCharge/pay');
             });
-        });
+    });
 
-        
+
     return router;
 };
 
