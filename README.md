@@ -15,4 +15,4 @@ Last would be the admin where he/she can check the reservations for the given da
 ### Group Members:
 ANG, Gwyneth
 TAN, Ivy
-VINCO, Chrsitianne
+VINCO, Christianne
