@@ -93,15 +93,10 @@ const routerFunction = function(db) {
                 bedChoiceOne: bedOne,
                 bedChoiceTwo: bedTwo
             });
-<<<<<<< HEAD
-        } else if (lastname) {
-            res.render('totalCharge', {
-=======
         }
 
         else if (lastname) {
             return res.render('totalCharge', {
->>>>>>> a53df706a6274a240b1f3417bcbb4765714cda7a
                 data: totalChargeBody,
                 lnameError: lastname,
                 source: '/images/Rooms/' + imagesource + '.jpg',
@@ -112,15 +107,10 @@ const routerFunction = function(db) {
                 bedChoiceOne: bedOne,
                 bedChoiceTwo: bedTwo
             });
-<<<<<<< HEAD
-        } else if (emailglobe) {
-            res.render('totalCharge', {
-=======
         }
 
         else if (emailglobe) {
             return res.render('totalCharge', {
->>>>>>> a53df706a6274a240b1f3417bcbb4765714cda7a
                 data: totalChargeBody,
                 emailError: emailglobe,
                 source: '/images/Rooms/' + imagesource + '.jpg',
@@ -131,15 +121,10 @@ const routerFunction = function(db) {
                 bedChoiceOne: bedOne,
                 bedChoiceTwo: bedTwo
             });
-<<<<<<< HEAD
-        } else if (database) {
-            res.render('totalCharge', {
-=======
         }
 
         else if (database) {
             return res.render('totalCharge', {
->>>>>>> a53df706a6274a240b1f3417bcbb4765714cda7a
                 data: totalChargeBody,
                 databaseError: database,
                 source: '/images/Rooms/' + imagesource + '.jpg',
@@ -150,15 +135,10 @@ const routerFunction = function(db) {
                 bedChoiceOne: bedOne,
                 bedChoiceTwo: bedTwo
             });
-<<<<<<< HEAD
-        } else {
-            res.render('totalCharge', {
-=======
         }
 
         else{
             return res.render('totalCharge', {
->>>>>>> a53df706a6274a240b1f3417bcbb4765714cda7a
                 data: totalChargeBody,
                 source: '/images/Rooms/' + imagesource + '.jpg',
                 whichheader: headertype,
@@ -445,11 +425,7 @@ const routerFunction = function(db) {
                 adults: parseInt(adults),
                 kids: parseInt(kids),
                 roomtype,
-<<<<<<< HEAD
-                pricePerRoom: { looksLike: 'float', value: pricePerRoom },
-=======
                 pricePerRoom : parseFloat(pricePerRoom),
->>>>>>> a53df706a6274a240b1f3417bcbb4765714cda7a
                 bookingDate: formattedDate,
                 status: "Booked",
                 payment: {
@@ -520,31 +496,6 @@ const routerFunction = function(db) {
                                 // return res.status(201).send('Good');
                                 //Use to find in database
                                 db.collection('booking').findOne(reservation)
-<<<<<<< HEAD
-                                    .then(respfind => {
-                                        // console.log(resp._id);
-                                        db.collection('booking').aggregate({
-                                            $convert: {
-                                                input: $pricePerRoom,
-                                                to: double
-                                            }
-                                        }).then(respchange => {
-                                            res.render('pay', {
-                                                bookingid: respfind._id,
-                                                whichfooter: footertype,
-                                                logging: loggingstring
-                                            });
-                                        }).catch(errchange => {
-                                            console.log(errchange);
-                                            database = '*Bad Server';
-                                            return res.status(500).redirect('totalCharge');
-                                        })
-                                    }).catch(errfind => {
-                                        console.log(errfind);
-                                        database = '*Bad Server';
-                                        return res.status(500).redirect('/totalCharge');
-                                    })
-=======
                                 .then(respfind => {
                                     // console.log(resp._id);
                                     return res.render('pay', {
@@ -557,7 +508,6 @@ const routerFunction = function(db) {
                                     database = '*Bad Server';
                                     return res.status(500).redirect('/totalCharge');
                                 })
->>>>>>> a53df706a6274a240b1f3417bcbb4765714cda7a
                             }).catch(err => {
                                 console.log(err);
                                 database = '*Bad Server';
@@ -620,11 +570,7 @@ const routerFunction = function(db) {
                                 adults: parseInt(adults),
                                 kids: parseInt(kids),
                                 roomtype,
-<<<<<<< HEAD
-                                pricePerRoom: parseFloat(pricePerRoom).toFixed(2),
-=======
                                 pricePerRoom : parseFloat(pricePerRoom),
->>>>>>> a53df706a6274a240b1f3417bcbb4765714cda7a
                                 bookingDate: formattedDate,
                                 status: "Booked",
                                 payment: {
