@@ -73,15 +73,15 @@ router.get('/', notLoggedInAdmin, function(req, res) {
     var noneMessageView = "";
     var noneMessageCheckin = "";
     var noneMessageBanned ="";
-    db.collection('booking').find({ bookingDate: formattedDate, status: 'Booked' }).toArray()
+    db.collection('booking').find({ bookingDate: formattedDate, status: 'Booked' }).sort({checkInDate:1}).toArray()
         .then(resp => {
-
+            var newArray = [];
             if (resp.length == 0) {
                 noneMessageTodayBooking = '<div class="row justify-content-center pb-5 pt-4">There are no reservations today to be displayed.</div>';
             }
             // console.log(resp.length);
             else {
-                var newArray = [];
+                
                 for (var i = 0; i < resp.length; i++) {
                     imagesource = resp[i].roomtype;
                     imagesource = imagesource.replace(/\s/g, '');
@@ -118,16 +118,16 @@ router.get('/', notLoggedInAdmin, function(req, res) {
                 }
             }
 
-            db.collection('booking').find({ status: 'Booked' }).toArray()
+            db.collection('booking').find({ status: 'Booked' }).sort({checkInDate:1}).toArray()
                 .then(respViewAll => {
-
+                    var viewAllArray = [];
                     // console.log(respViewAll);
                     if (respViewAll.length == 0) {
                         noneMessageView = '<div class="row justify-content-center pb-5 pt-4">There are no reservations to be displayed.</div>';
                     }
                     // console.log(resp.length);
                     else {
-                        var viewAllArray = [];
+                        
                         for (var i = 0; i < respViewAll.length; i++) {
                             imagesource = respViewAll[i].roomtype;
                             imagesource = imagesource.replace(/\s/g, '');
@@ -172,48 +172,47 @@ router.get('/', notLoggedInAdmin, function(req, res) {
                                     { checkOutDate: { $gte: todayFormat } }
                                 ],
                             status: 'Booked'
-                        }).toArray()
+                        }).sort({checkInDate:1}).toArray()
                         .then(respCheckedIn => {
-
+                            var CheckedInArray = [];
                                 // console.log(respCheckedIn);
-                                if (respCheckedIn.length == 0) {
-                                    noneMessageCheckin = '<div class="row justify-content-center pb-5 pt-4">There are no check-ins today to be displayed.</div>';
-                                }
-                                // console.log(resp.length);
-                                else {
-                                    var CheckedInArray = [];
-                                    for (var i = 0; i < respCheckedIn.length; i++) {
-                                        imagesource = respCheckedIn[i].roomtype;
-                                        imagesource = imagesource.replace(/\s/g, '');
-                                        imagesource = '/images/Rooms/' + imagesource + '.jpg'
-                                        checkIn = new Date(respCheckedIn[i].checkInDate);
-                                        formatCheckInDate = monthName[checkIn.getMonth()] + " " + checkIn.getDate() + ", " + checkIn.getFullYear();
-                                        formatCheckInDate = formatCheckInDate.toString();
-                                        checkOut = new Date(respCheckedIn[i].checkOutDate);
-                                        formatCheckOutDate = monthName[checkOut.getMonth()] + " " + checkOut.getDate() + ", " + checkOut.getFullYear();
-                                        formatCheckOutDate = formatCheckOutDate.toString();
-                                        // price = (Math.round(resp[i].pricePerRoom * 100) / 100).toFixed(2);
-                                        // console.log(resp[i]._id);
-                                        price = respCheckedIn[i].payment.total;
-                                        // console.log(price);
+                            if (respCheckedIn.length == 0) {
+                                noneMessageCheckin = '<div class="row justify-content-center pb-5 pt-4">There are no check-ins today to be displayed.</div>';
+                            }
+                            // console.log(resp.length);
+                            else {
+                                for (var i = 0; i < respCheckedIn.length; i++) {
+                                    imagesource = respCheckedIn[i].roomtype;
+                                    imagesource = imagesource.replace(/\s/g, '');
+                                    imagesource = '/images/Rooms/' + imagesource + '.jpg'
+                                    checkIn = new Date(respCheckedIn[i].checkInDate);
+                                    formatCheckInDate = monthName[checkIn.getMonth()] + " " + checkIn.getDate() + ", " + checkIn.getFullYear();
+                                    formatCheckInDate = formatCheckInDate.toString();
+                                    checkOut = new Date(respCheckedIn[i].checkOutDate);
+                                    formatCheckOutDate = monthName[checkOut.getMonth()] + " " + checkOut.getDate() + ", " + checkOut.getFullYear();
+                                    formatCheckOutDate = formatCheckOutDate.toString();
+                                    // price = (Math.round(resp[i].pricePerRoom * 100) / 100).toFixed(2);
+                                    // console.log(resp[i]._id);
+                                    price = respCheckedIn[i].payment.total;
+                                    // console.log(price);
 
 
-                                        var CheckedInObject = {
-                                            img_src: imagesource,
-                                            roomType: respCheckedIn[i].roomtype,
-                                            checkInDate: formatCheckInDate,
-                                            checkOutDate: formatCheckOutDate,
-                                            numAdults: respCheckedIn[i].adults,
-                                            numKids: respCheckedIn[i].kids,
-                                            numRooms: respCheckedIn[i].rooms,
-                                            requests: respCheckedIn[i].requests,
-                                            TOTAL: respCheckedIn[i].payment.total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","),
-                                            bookingid: respCheckedIn[i]._id
-                                        }
-                                        // console.log("checkIn");
-                                        // console.log(respCheckedIn[i]);
-                                        CheckedInArray[i] = CheckedInObject;
+                                    var CheckedInObject = {
+                                        img_src: imagesource,
+                                        roomType: respCheckedIn[i].roomtype,
+                                        checkInDate: formatCheckInDate,
+                                        checkOutDate: formatCheckOutDate,
+                                        numAdults: respCheckedIn[i].adults,
+                                        numKids: respCheckedIn[i].kids,
+                                        numRooms: respCheckedIn[i].rooms,
+                                        requests: respCheckedIn[i].requests,
+                                        TOTAL: respCheckedIn[i].payment.total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","),
+                                        bookingid: respCheckedIn[i]._id
                                     }
+                                    // console.log("checkIn");
+                                    // console.log(respCheckedIn[i]);
+                                    CheckedInArray[i] = CheckedInObject;
+                                }
                             }
                             db.collection('users').find({banned: true}).toArray()
                                 .then(respaccount => {
