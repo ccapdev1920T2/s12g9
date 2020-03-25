@@ -59,7 +59,7 @@ app.use(bodyParser.json());
 //The client using the url, will connect to the database
 client.connect().then(() => {
     //making a new collection -- name of the db is test and the name of the collection is devices
-    const db = client.db('test');
+    const db = client.db('HotelParaiso');
 
     //use to create session
     app.use(session({
