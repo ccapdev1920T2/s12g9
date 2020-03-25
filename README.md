@@ -36,27 +36,42 @@ http://localhost:3000
 
 5. Congrats the website for Paraiso Hotel is now running in your PC
 
-### Features
-They are three main users of this web app. 
+### Running the tests
 
-First, users can register to be a member. They can use membership points to avail the services provided by the hotel.
-
-Second, users can be a guest but points would not be applicable for them.
-
-Last would be the admin where he/she can check the reservations for the given day and see the corresponding customer who booked it. 
-
-### How to set up the application
+#### User Account
 
 
+#### Guest Account
 
-#### Extra Note:
-##### Admin Account Credentials: 
-###### Email: admin@paraisohotels.com"
-###### Password: para1soHotels
+#### Admin Account
+Email: admin@paraisohotels.com
+Password: para1soHotels
 
-### Group Members:
-ANG, Gwyneth
+### Deployment
 
-TAN, Ivy
+### Built With
 
-VINCO, Christianne
+* [Node js](https://nodejs.org/en/) - 
+* [Mongodb](https://www.mongodb.com/) - Database Program
+
+### Contributing
+
+Please email us or message us if there is something you would like to change in this project.
+
+### Versioning
+
+### Authors 
+* **ANG, Gwyneth** - Viewing available rooms and profile page
+
+* **TAN, Ivy** - Booking, payment and sign in
+
+* **VINCO, Christianne** - Sign up and admin page
+
+### License
+
+### Acknowledgments
+
+* Professors who taught us 
+
+* Classmates who helped us
+
