@@ -3,12 +3,12 @@
 ## Paraiso Hotel
 A web application of a virtual hotel located in El Nido, Palawan.
 
-### Getting Started
+## Getting Started
 
-#### Prerequisites
+### Prerequisites
 Make sure you have MongoDB, NodeJS, and git installed in your PC
 
-#### Installing
+### Installing
 
 1. Create a clone of this repository into your PC
 
@@ -36,40 +36,40 @@ http://localhost:3000
 
 5. Congrats the website for Paraiso Hotel is now running in your PC
 
-### Running the tests
+## Running the tests
 
-#### User Account
+### User Account
 
 
-#### Guest Account
+### Guest Account
 
-#### Admin Account
+### Admin Account
 Email: admin@paraisohotels.com
 Password: para1soHotels
 
-### Deployment
+## Deployment
 
-### Built With
+## Built With
 
 * [Node js](https://nodejs.org/en/) - 
 * [Mongodb](https://www.mongodb.com/) - Database Program
 
-### Contributing
+## Contributing
 
 Please email us or message us if there is something you would like to change in this project.
 
-### Versioning
+## Versioning
 
-### Authors 
+## Authors 
 * **ANG, Gwyneth** - Viewing available rooms and profile page
 
 * **TAN, Ivy** - Booking, payment and sign in
 
 * **VINCO, Christianne** - Sign up and admin page
 
-### License
+## License
 
-### Acknowledgments
+## Acknowledgments
 
 * Professors who taught us 
 
