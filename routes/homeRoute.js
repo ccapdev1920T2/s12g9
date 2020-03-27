@@ -126,6 +126,7 @@ const routerFunction = function(db) {
                                 })
                                 .then(resp => {
                                     // console.log(resp);
+                                    var todayDate = new Date();
                                     var countUpdate = { $set: { cancellationCount: 0 } };
 
                                     if ((todayDate.getMonth() + 1) == 1 && todayDate.getDate() == 1) {
