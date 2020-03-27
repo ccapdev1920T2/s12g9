@@ -39,15 +39,20 @@ http://localhost:3000
 ## Running the tests
 
 ### User Account
+1. Create an account by clicking Be a Member in the navigation bar.
 
+2. Afterwards, a verification key would be sent to the email you used to sign up.
+
+3. Use this verification key in order to verify the account.
+
+4. Sign in using the email and password you just provided.
 
 ### Guest Account
+Navigate through the website with our signing in.
 
 ### Admin Account
 Email: admin@paraisohotels.com
 Password: para1soHotels
-
-## Deployment
 
 ## Built With
 
@@ -58,8 +63,6 @@ Password: para1soHotels
 
 Please email us or message us if there is something you would like to change in this project.
 
-## Versioning
-
 ## Authors 
 * **ANG, Gwyneth** - Viewing available rooms and profile page
 
@@ -67,11 +70,11 @@ Please email us or message us if there is something you would like to change in 
 
 * **VINCO, Christianne** - Sign up and admin page
 
-## License
-
 ## Acknowledgments
 
-* Professors who taught us 
+* Professors (Sir Arren) who taught us 
 
 * Classmates who helped us
+
+* PTS who were really patient with us
 
