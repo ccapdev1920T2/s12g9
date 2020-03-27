@@ -39,7 +39,7 @@ http://localhost:3000
 ## Running the tests
 
 ### User Account
-1. Create an account by clicking Be a Member in the navigation bar.
+1. Create an account by clicking **Be a Member** in the navigation bar.
 
 2. Afterwards, a verification key would be sent to the email you used to sign up.
 
@@ -48,11 +48,14 @@ http://localhost:3000
 4. Sign in using the email and password you just provided.
 
 ### Guest Account
-Navigate through the website with our signing in.
+Navigate through the website without signing in.
 
 ### Admin Account
 Email: admin@paraisohotels.com
+
 Password: para1soHotels
+
+1. Use this email address and password to sign in as an admin.
 
 ## Built With
 
