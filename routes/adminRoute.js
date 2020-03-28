@@ -421,7 +421,7 @@ router.post('/customerDetails/:bookid', notLoggedInAdmin, function(req, res) {
                             ]
                             }, newquery)
                             .then(status => {
-                                console.log(status);
+                                // console.log(status);
                                 return res.status(201).redirect('/admin');
                             }).catch(errstat => {
                                 console.log(errstat);
@@ -505,7 +505,7 @@ router.post('/customerDetails/:bookid', notLoggedInAdmin, function(req, res) {
                         book: bookedYear
                     });
                 }).catch(errbook => {
-                    console.log(err);
+                    console.log(errbook);
                     return res.status(500).render('reactivate', {
                         databaseError: '*Bad Server',
                         whichheader: headertype,

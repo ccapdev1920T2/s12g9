@@ -8,40 +8,6 @@ var imagesource;
 
 //totalCharge
 const routerFunction = function(db) {
-    const loggedIn = (req, res, next) => {
-        // console.log(req.session.userId);
-        if (req.session.userId || req.session.adminId) {
-            if (req.session.userId)
-                var user = { _id: ObjectId(req.session.userId) };
-            else {
-                var user = { _id: ObjectId(req.session.adminId) };
-            }
-            // console.log('1');
-            db.collection('users').findOne(user)
-                .then(resp => {
-                    // console.log(resp);
-                    if (resp === null) {
-                        return res.status(401).render('signIn', {
-                            generalError: `
-                            <div class="row ml-1">*No Such Account Registered in the System</div><div class="row ml-1">Click here to <a href="/signUp" class="ml-1"> be a member</a></div>
-                            `,
-                            whichfooter: 'footer'
-                        });
-                    } else {
-                        // console.log('4');
-                        if (resp.admin == false)
-                            return res.status(201).redirect('/user');
-                    }
-                }).catch(err => {
-                    console.log(err);
-                    return res.status(500).redirect('/signIn');
-                });
-        } else {
-            // console.log('6');
-            return next();
-        }
-    };
-
     router.get('/', function(req, res) {
 
         var headertype = 'header';
@@ -266,7 +232,7 @@ const routerFunction = function(db) {
             });
     });
 
-    router.get('/pay', loggedIn, function(req, res) {
+    router.get('/pay', function(req, res) {
 
         var loggingstring = `
         <li class="nav-item">\
@@ -524,7 +490,7 @@ const routerFunction = function(db) {
                         return res.status(500).redirect('/totalCharge');
                     }
                 }).catch(erruser => {
-                    console.log(err);
+                    console.log(erruser);
                     database = 'Bad server';
                     return res.status(500).redirect('/totalCharge');
                 });

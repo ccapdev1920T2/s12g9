@@ -58,7 +58,6 @@ const routerFunction = function(db) {
         return next();
     };
     
-    // TODO: all tabs done- double check for errors
     router.get('/',notLoggedInUser ,function(req, res) {
         var loggingstring = `
         <li class="nav-item">\

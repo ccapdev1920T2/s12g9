@@ -885,7 +885,7 @@ const routerFunction = function(db) {
             var days = 0;
             var startDate = new Date();
             var date = new Date(startDate.getTime() + milliseconds + 1000 * (sec + 60 * (min + 60 * (hours + 24 * days)))); //adding one hour to the current date and time it was made 
-            console.log("date: " + date);
+            // console.log("date: " + date);
             // var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
             // var time = today.getHours() + ":" + today.getMinutes();
 
@@ -969,7 +969,7 @@ const routerFunction = function(db) {
 
                         db.collection('users').insertOne(user)
                             .then(respinsert => {
-                                console.log(respinsert);
+                                // console.log(respinsert);
                                 // for debugging and for production
                                 return res.status(201).redirect('/verify');
 
@@ -1013,7 +1013,7 @@ const routerFunction = function(db) {
             footertype = 'footerAdmin';
         }
 
-        res.render('viewRooms', {
+        return res.render('viewRooms', {
             whichfooter: footertype
         });
     });
@@ -1058,11 +1058,14 @@ const routerFunction = function(db) {
 
                     db.collection('users').updateOne(verificationkey, update)
                         .then(respupdate => {
-                            return res.redirect('/');
+                            return res.redirect('/signIn');
                         }).catch(errfind => {
                             console.log(errfind);
-                            database = '*Bad Server';
-                            return res.status(500).redirect('/');
+                            return res.status(500).render('verificationKey', {
+                                verificationError: 'Bad Server',
+                                whichheadertype: 'header',
+                                whichfooter: 'footer',
+                            });
                         });
                 } else {
 
@@ -1070,12 +1073,15 @@ const routerFunction = function(db) {
                         verificationError: 'Wrong verfication key.',
                         whichheadertype: 'header',
                         whichfooter: 'footer',
-                    })
+                    });
                 }
             }).catch(errverify => {
                 console.log(errverify);
-                database = '*Bad Server';
-                return res.status(500).redirect('/verify');
+                return res.status(500).render('verificationKey', {
+                    verificationError: 'Bad Server',
+                    whichheadertype: 'header',
+                    whichfooter: 'footer',
+                })
             });
     });
 
