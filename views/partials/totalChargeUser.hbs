@@ -93,7 +93,7 @@
                         fees = parseFloat(fees) + parseFloat(allbuffet.text());
                     } else if ($(this).val() === 'pickupprice'){
                         //fees = parseFloat(fees) + parseFloat(pickup.text());
-                        $("#airport").text(parseFloat(pickup.text().toFixed()));
+                        $("#airport").text(parseFloat(pickup.text()).toFixed(2));
                     }
 
                     extra.text(fees.toFixed(2));

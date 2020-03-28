@@ -84,7 +84,7 @@
                         string = 'Daily Buffet';
                     } else if ($(this).val() === 'pickupprice'){
                         //fees = parseFloat(fees) + parseFloat(pickup.text());
-                        $("#airport").text(parseFloat(pickup.text().toFixed()));
+                        $("#airport").text(parseFloat(pickup.text()).toFixed(2));
                         string = 'Arrival and Departure Airport Pick-Up';
                     }
 
