@@ -863,7 +863,7 @@ const routerFunction = function(db) {
                 });
             }
 
-            if (cardNumber.length < 13 || cardNumber.length > 16) {
+            if (creditcardNumber.length < 13 || creditcardNumber.length > 16) {
                 return res.status(401).render('signUp', {
                     cardError: "*Credit card number invalid format",
                     data: req.body,
