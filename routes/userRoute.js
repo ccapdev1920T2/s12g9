@@ -173,13 +173,14 @@ const routerFunction = function(db) {
                 $set:{ status : "Cancelled" , cancelledDate : formattedDate.toString()}
             }
         ). then(resp=>{
-            var subPoints = Number(Number(req.body.payment)/Number(10)*Number(-1))
+
+            var subPoints = Number(parseInt(req.body.payment)/Number(10)*Number(-1));
             db.collection('users').updateOne(
                 {email:req.body.email},
                 {
                     $inc: {
                         cancellationCount:1,
-                        membershipPoints:subPoints
+                        membershipPoints: parseInt(subPoints)
                     }
                 }
             ).then(r=>
