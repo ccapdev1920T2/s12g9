@@ -233,7 +233,7 @@ const routerFunction = function(db) {
                                 return console.log(error);
                             }
 
-                            console.log('Message sent: %s', info.messageID);
+                            console.log('Email Sent Successfully!');
                             transporter.close();
                         });
                         return res.redirect("/logout");

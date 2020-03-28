@@ -960,7 +960,7 @@ const routerFunction = function(db) {
                             if (error) {
                                 return console.log(error);
                             } else {
-                                console.log('Message sent: %s', info.messageID);
+                                console.log('Verification Email Sent Successfully!');
                             }
                             transporter.close();
                         });
