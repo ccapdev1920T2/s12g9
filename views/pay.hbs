@@ -82,14 +82,14 @@
                         </div>
                         <div class="form-group CVV">
                             <label for="cvv">CVV</label>
-                            <input type="text" pattern="\d*" minlength="3" maxlength="3" class="form-control" id="cvv" name="cvv" value="{{data.cvv}}">
+                            <input type="number" max="999" pattern="([0-9]|[0-9]|[0-9])" class="form-control" id="cvv" name="cvv" value="{{data.cvv}}">
                             <span class="error-label mr-auto">
                                 {{cardError}}
                             </span>
                         </div>
                         <div class="form-group" id="card-number-field">
                             <label for="cardNumber">Card Number</label>
-                            <input type=text pattern="[0-9]{13,16}" id="credit-number" name="cardNumber" value="{{data.cardNumber}}">
+                            <input type="number" pattern="[0-9]{13,16}" id="credit-number" name="cardNumber" value="{{data.cardNumber}}">
                             <span class="error-label mr-auto" id="cardNum-error">
                                 {{cardNumError}}
                             </span>

@@ -736,6 +736,16 @@ const routerFunction = function(db) {
             return res.status(401).redirect('/totalCharge/pay');
         }
 
+        if (cvv.length != 3){
+            card = '*CVV number invalid format';
+            return res.status(401).redirect('/totalCharge/pay');
+        }
+
+        if (cardNumber.length < 13 || cardNumber.length > 16) {
+            cardNum = '*Credit card number invalid format';
+            return res.status(401).redirect('/totalCharge/pay');
+        }
+
         var today = new Date();
         var monthToday = today.getMonth() + 1;
         var yearToday = today.getFullYear();

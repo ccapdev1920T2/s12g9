@@ -105,10 +105,10 @@
                                     <input type="text" class="form-control" id="owner" name="creditcardOwner" placeholder="Name of Card Owner" value="{{{data.creditcardOwner}}}">
                                 </div>
                                 <div class="form-group CVV">
-                                    <input type="text" pattern="\d*" minlength="3" maxlength="3" class="form-control" id="cvv" name="cvv" placeholder="CVV" value="{{{data.cvv}}}">
+                                    <input type="number" max="999" pattern="([0-9]|[0-9]|[0-9])" class="form-control" id="cvv" name="cvv" placeholder="CVV" value="{{{data.cvv}}}">
                                 </div>
                                 <div class="form-group" id="card-number-field">
-                                    <input type="text" pattern="[0-9]{13,16}" id="credit-number" name="creditcardNumber" placeholder="Card Number" value="{{{data.creditcardNumber}}}">
+                                    <input type="number" pattern="[0-9]{13,16}" id="credit-number" name="creditcardNumber" placeholder="Card Number" value="{{{data.creditcardNumber}}}">
                                 </div>
                                 <div class="form-group" id="expiration-date">
                                     <label>Expiration Date</label>

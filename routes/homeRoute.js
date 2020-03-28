@@ -855,6 +855,22 @@ const routerFunction = function(db) {
                 });
             }
 
+            if (cvv.length != 3){
+                return res.status(401).render('signUp', {
+                    cardError: "*CVV number invalid format",
+                    data: req.body,
+                    whichfooter: footertype
+                });
+            }
+
+            if (cardNumber.length < 13 || cardNumber.length > 16) {
+                return res.status(401).render('signUp', {
+                    cardError: "*Credit card number invalid format",
+                    data: req.body,
+                    whichfooter: footertype
+                });
+            }
+
             var cardtoday = new Date();
             var monthToday = cardtoday.getMonth() + 1;
             var yearToday = cardtoday.getFullYear();
