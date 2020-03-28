@@ -59,7 +59,7 @@ Password: para1soHotels
 
 ## Built With
 
-* [Node js](https://nodejs.org/en/) - 
+* [Node js](https://nodejs.org/en/) 
 * [Mongodb](https://www.mongodb.com/) - Database Program
 
 ## Contributing
