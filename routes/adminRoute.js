@@ -492,6 +492,7 @@ router.post('/customerDetails/:bookid', notLoggedInAdmin, function(req, res) {
                     }
                     
                     var total = total * 0.5;
+                    total = total.toFixed(2);
 
                     return res.render('reactivate', {
                         whichheader: headertype,
