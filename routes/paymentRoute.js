@@ -541,7 +541,7 @@ const routerFunction = function(db) {
                                 status: "Booked",
                                 payment: {
                                     total: parseFloat(total),
-                                    status: "Not Paid",
+                                    status: "Paid",
                                     creditcardNumber: resp.creditcardNumber,
                                     creditcardOwner: resp.creditcardOwner,
                                     cvv: resp.cvv,
