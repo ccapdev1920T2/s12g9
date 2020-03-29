@@ -13,6 +13,11 @@ const homeController = {
         return next();
     },
 
+    loggedout: function(req, res) {
+        req.session.destroy();
+        return res.redirect('/signIn');
+    },
+
     //check if user is logged in, if yes, he/she cannot access the pages of signIn and Be a Member
     loggedIn: function(req, res, next) {
         // console.log(req.session.userId);

@@ -3,7 +3,7 @@ const router = express();
 
 const homeController = require('../controllers/homeController.js')
 
-router.get('/logout', homeController.notLoggedIn);
+router.get('/logout', homeController.notLoggedIn, homeController.loggedout);
 
 router.get('/', homeController.viewHomePage);
 
