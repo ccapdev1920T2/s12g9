@@ -3,6 +3,8 @@ const router = express();
 const { ObjectId } = require('mongodb');
 const nodemailer = require('nodemailer');
 
+const db = require('../models/db.js');
+
 const homeController = {
     //check if user is logged in, if not, he/she cannot access the page such as profile and admin， and log out
     notLoggedIn: function(req, res, next) {
