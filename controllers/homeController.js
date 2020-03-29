@@ -2,7 +2,6 @@ const express = require('express');
 const router = express();
 const { ObjectId } = require('mongodb');
 const nodemailer = require('nodemailer');
-
 const db = require('../models/db.js');
 
 const homeController = {
@@ -26,27 +25,23 @@ const homeController = {
                 var user = { _id: ObjectId(req.session.adminId) };
             }
             // console.log('1');
-            db.collection('users').findOne(user)
-                .then(resp => {
-                    // console.log(resp);
-                    if (resp === null) {
-                        return res.status(401).render('signIn', {
-                            generalError: `
-                            <div class="row ml-1">*No Such Account Registered in the System</div><div class="row ml-1">Click here to <a href="/signUp" class="ml-1"> be a member</a></div>
-                            `,
-                            whichfooter: 'footer'
-                        });
-                    } else {
-                        // console.log('4');
-                        if (resp.admin == true)
-                            return res.status(201).redirect('/admin');
-                        else
-                            return res.status(201).redirect('/user');
-                    }
-                }).catch(err => {
-                    console.log(err);
-                    return res.status(500).redirect('/signIn');
-                });
+
+            db.findOne('users', user, function(resp) {
+                if (resp === null) {
+                    return res.status(401).render('signIn', {
+                        generalError: `
+                        <div class="row ml-1">*No Such Account Registered in the System</div><div class="row ml-1">Click here to <a href="/signUp" class="ml-1"> be a member</a></div>
+                        `,
+                        whichfooter: 'footer'
+                    });
+                } else {
+                    // console.log('4');
+                    if (resp.admin == true)
+                        return res.status(201).redirect('/admin');
+                    else
+                        return res.status(201).redirect('/user');
+                }
+            });
         } else {
             // console.log('6');
             return next();
@@ -107,100 +102,42 @@ const homeController = {
         var todayDate = new Date();
 
         //TODO: Check
-        db.collection('users').deleteMany({ signUpDate: { $lte: todayDate }, verified: false })
-            .then(resDel => {
-                db.collection('users').findOne(adminuser)
-                    .then(resp => {
-                        if (resp === null) {
-                            db.collection('users').insertOne({
-                                    email: "admin@paraisohotels.com",
-                                    password: "para1soHotels",
-                                    verified: true,
-                                    admin: true,
-                                    banned: false
-                                })
-                                .then(resp => {
-                                    // console.log(resp);
-                                    var todayDate = new Date();
-                                    var countUpdate = { $set: { cancellationCount: 0 } };
 
-                                    if ((todayDate.getMonth() + 1) == 1 && todayDate.getDate() == 1) {
-                                        db.collection('users').updateMany({}, countUpdate)
-                                            .then(resset => {
-                                                return res.render('home', {
-                                                    logging: loggingstring,
-                                                    // whichheader: 'header',
-                                                    whichfooter: footertype
-                                                })
-                                            }).catch(errset => {
-                                                console.log(errset);
-                                                return res.render('home', {
-                                                    logging: loggingstring,
-                                                    // whichheader: 'header',
-                                                    whichfooter: footertype
-                                                })
-                                            })
-                                    } else {
-                                        return res.render('home', {
-                                                logging: loggingstring,
-                                                // whichheader: 'header',
-                                                whichfooter: footertype
-                                            }) //function when rendering the webpage
-                                    }
-                                }).catch(err => {
-                                    console.log(err);
-                                    return res.render('home', {
-                                        logging: loggingstring,
-                                        // whichheader: 'header',
-                                        whichfooter: footertype
-                                    })
-                                });
-                        } else {
-                            var todayDate = new Date();
-                            var countUpdate = { $set: { cancellationCount: 0 } };
+        db.deleteMany('users', { signUpDate: { $lte: todayDate }, verified: false }, function(resDel) {
+            db.findOne('users', adminuser, function(resp) {
+                if (resp === null) {
+                    db.insertOne('users', {
+                        email: "admin@paraisohotels.com",
+                        password: "para1soHotels",
+                        verified: true,
+                        admin: true,
+                        banned: false
+                    }, function(resd) {})
+                } else {
+                    var todayDate = new Date();
+                    var countUpdate = { $set: { cancellationCount: 0 } };
 
-                            if ((todayDate.getMonth() + 1) == 1 && todayDate.getDate() == 1) {
-                                db.collection('users').updateMany({}, countUpdate)
-                                    .then(resset => {
-                                        return res.render('home', {
-                                            logging: loggingstring,
-                                            // whichheader: 'header',
-                                            whichfooter: footertype
-                                        })
-                                    }).catch(errset => {
-                                        console.log(errset);
-                                        return res.render('home', {
-                                            logging: loggingstring,
-                                            // whichheader: 'header',
-                                            whichfooter: footertype
-                                        })
-                                    })
-                            } else {
-                                return res.render('home', {
-                                        logging: loggingstring,
-                                        // whichheader: 'header',
-                                        whichfooter: footertype
-                                    }) //function when rendering the webpage
-                            }
-                        }
-                    }).catch(errsec => {
-                        console.log(errsec);
-                        return res.render('home', {
-                            logging: loggingstring,
-                            // whichheader: 'header',
-                            whichfooter: footertype
+                    if ((todayDate.getMonth() + 1) == 1 && todayDate.getDate() == 1) {
+                        db.updateMany('users', {}, countUpdate, function(resset) {
+                            return res.render('home', {
+                                logging: loggingstring,
+                                // whichheader: 'header',
+                                whichfooter: footertype
+                            })
                         })
-                    })
-            }).catch(errDel => {
-                console.log(errDel);
-                return res.render('home', {
-                    logging: loggingstring,
-                    whichfooter: fottertype
-                })
-            })
+                    } else {
+                        return res.render('home', {
+                                logging: loggingstring,
+                                // whichheader: 'header',
+                                whichfooter: footertype
+                            }) //function when rendering the webpage
+                    }
+                }
+            });
+        })
     },
 
-    viewAvailableRoomsPage: function(rew, res) {
+    viewAvailableRoomsPage: function(req, res) {
         var footertype = 'footer';
 
         // console.log(req.session.userId);
@@ -270,11 +207,12 @@ const homeController = {
             footertype = 'footerAdmin';
         }
 
+
         //check if entered dates are valid
         if (!(checkout.getTime() <= checkin.getTime()) && !(checkin.getTime() < today.getTime())) {
             //check for number of guests
             if (Number(req.body.nAdults) + (Number(req.body.nKids) / 2) <= 3 * req.body.nRooms) {
-                db.collection('booking').find({
+                db.findMany('booking', {
                     $and: [{
                             $or: [{ roomtype: 'Classic Deluxe' },
                                 { roomtype: 'Family Deluxe' },
@@ -293,58 +231,49 @@ const homeController = {
                             status: "Booked"
                         }
                     ]
-                }).toArray().then(
-                    resp => {
-                        // count rooms 
-                        var cd = 0;
-                        var fd = 0;
-                        var ed = 0;
-                        var js = 0;
-                        var es = 0;
-                        var gs = 0;
-                        for (var i = 0; i < resp.length; i++) {
-                            if (resp[i].roomtype == "Classic Deluxe") {
-                                cd += resp[i].rooms;
-                            } else if (resp[i].roomtype == "Family Deluxe") {
-                                fd += resp[i].rooms;
-                            } else if (resp[i].roomtype == "Executive Deluxe") {
-                                ed += resp[i].rooms;
-                            } else if (resp[i].roomtype == "Junior Suite") {
-                                js += resp[i].rooms;
-                            } else if (resp[i].roomtype == "Executive Suite") {
-                                es += resp[i].rooms;
-                            } else if (resp[i].roomtype == "Grand Suite") {
-                                gs += resp[i].rooms;
-                            }
+                }, function(resp) {
+                    // count rooms 
+                    var cd = 0;
+                    var fd = 0;
+                    var ed = 0;
+                    var js = 0;
+                    var es = 0;
+                    var gs = 0;
+                    for (var i = 0; i < resp.length; i++) {
+                        if (resp[i].roomtype == "Classic Deluxe") {
+                            cd += resp[i].rooms;
+                        } else if (resp[i].roomtype == "Family Deluxe") {
+                            fd += resp[i].rooms;
+                        } else if (resp[i].roomtype == "Executive Deluxe") {
+                            ed += resp[i].rooms;
+                        } else if (resp[i].roomtype == "Junior Suite") {
+                            js += resp[i].rooms;
+                        } else if (resp[i].roomtype == "Executive Suite") {
+                            es += resp[i].rooms;
+                        } else if (resp[i].roomtype == "Grand Suite") {
+                            gs += resp[i].rooms;
                         }
-                        if (cd < 5 && (5 - cd) >= req.body.nRooms) {
-                            classicD = true;
-                        }
-                        if (fd < 5 && (5 - fd) >= req.body.nRooms) {
-                            famD = true;
-                        }
-                        if (ed < 5 && (5 - ed) >= req.body.nRooms) {
-                            execD = true;
-                        }
-                        if (js < 5 && (5 - js) >= req.body.nRooms) {
-                            juniorS = true;
-                        }
-                        if (es < 5 && (5 - es) >= req.body.nRooms) {
-                            execS = true;
-                        }
-                        if (gs < 5 && (5 - gs) >= req.body.nRooms) {
-                            grandS = true;
-                        }
-                        // TODO: for testing console.log(resp);
-                        return res.status(201);
-                    }).catch(err => {
-                    return res.render('viewRooms', {
-                        message: "An error occured! Please try again.",
-                        data: req.body,
-                        // whichheader: 'header',
-                        whichfooter: 'footer',
-                        logging: loggingstring
-                    });
+                    }
+                    if (cd < 5 && (5 - cd) >= req.body.nRooms) {
+                        classicD = true;
+                    }
+                    if (fd < 5 && (5 - fd) >= req.body.nRooms) {
+                        famD = true;
+                    }
+                    if (ed < 5 && (5 - ed) >= req.body.nRooms) {
+                        execD = true;
+                    }
+                    if (js < 5 && (5 - js) >= req.body.nRooms) {
+                        juniorS = true;
+                    }
+                    if (es < 5 && (5 - es) >= req.body.nRooms) {
+                        execS = true;
+                    }
+                    if (gs < 5 && (5 - gs) >= req.body.nRooms) {
+                        grandS = true;
+                    }
+                    // TODO: for testing console.log(resp);
+                    return res.status(201);
                 }).finally(function() {
                     if (classicD || famD || execD || juniorS || execS || grandS) {
                         return res.render('viewRooms', {
@@ -369,7 +298,7 @@ const homeController = {
                     }
                 });
             } else if (Number(req.body.nAdults) + (Number(req.body.nKids) / 2) <= 4 * req.body.nRooms) {
-                db.collection('booking').find({
+                db.findMany('booking', {
                     $and: [{
                             $or: [
                                 { roomtype: 'Family Deluxe' },
@@ -388,52 +317,43 @@ const homeController = {
                             status: "Booked"
                         }
                     ]
-                }).toArray().then(
-                    resp => {
-                        // count rooms 
-                        var fd = 0;
-                        var ed = 0;
-                        var js = 0;
-                        var es = 0;
-                        var gs = 0;
-                        for (var i = 0; i < resp.length; i++) {
-                            if (resp[i].roomtype == "Family Deluxe") {
-                                fd += resp[i].rooms;
-                            } else if (resp[i].roomtype == "Executive Deluxe") {
-                                ed += resp[i].rooms;
-                            } else if (resp[i].roomtype == "Junior Suite") {
-                                js += resp[i].rooms;
-                            } else if (resp[i].roomtype == "Executive Suite") {
-                                es += resp[i].rooms;
-                            } else if (resp[i].roomtype == "Grand Suite") {
-                                gs += resp[i].rooms;
-                            }
+                }, function(resp) {
+                    // count rooms 
+                    var fd = 0;
+                    var ed = 0;
+                    var js = 0;
+                    var es = 0;
+                    var gs = 0;
+                    for (var i = 0; i < resp.length; i++) {
+                        if (resp[i].roomtype == "Family Deluxe") {
+                            fd += resp[i].rooms;
+                        } else if (resp[i].roomtype == "Executive Deluxe") {
+                            ed += resp[i].rooms;
+                        } else if (resp[i].roomtype == "Junior Suite") {
+                            js += resp[i].rooms;
+                        } else if (resp[i].roomtype == "Executive Suite") {
+                            es += resp[i].rooms;
+                        } else if (resp[i].roomtype == "Grand Suite") {
+                            gs += resp[i].rooms;
                         }
-                        if (fd < 5 && (5 - fd) >= req.body.nRooms) {
-                            famD = true;
-                        }
-                        if (ed < 5 && (5 - ed) >= req.body.nRooms) {
-                            execD = true;
-                        }
-                        if (js < 5 && (5 - js) >= req.body.nRooms) {
-                            juniorS = true;
-                        }
-                        if (es < 5 && (5 - es) >= req.body.nRooms) {
-                            execS = true;
-                        }
-                        if (gs < 5 && (5 - gs) >= req.body.nRooms) {
-                            grandS = true;
-                        }
-                        // TODO: for testing console.log(resp);
-                        return res.status(201);
-                    }).catch(err => {
-                    return res.render('viewRooms', {
-                        message: "An error occured! Please try again.",
-                        data: req.body,
-                        whichfooter: footertype,
-                        logging: loggingstring
-                    });
-                    // return res.status(500);
+                    }
+                    if (fd < 5 && (5 - fd) >= req.body.nRooms) {
+                        famD = true;
+                    }
+                    if (ed < 5 && (5 - ed) >= req.body.nRooms) {
+                        execD = true;
+                    }
+                    if (js < 5 && (5 - js) >= req.body.nRooms) {
+                        juniorS = true;
+                    }
+                    if (es < 5 && (5 - es) >= req.body.nRooms) {
+                        execS = true;
+                    }
+                    if (gs < 5 && (5 - gs) >= req.body.nRooms) {
+                        grandS = true;
+                    }
+                    // TODO: for testing console.log(resp);
+                    return res.status(201);
                 }).finally(function() {
                     if (famD || execD || juniorS || execS || grandS) {
                         return res.render('viewRooms', {
@@ -457,7 +377,7 @@ const homeController = {
                     }
                 });
             } else if (Number(req.body.nAdults) + (Number(req.body.nKids) / 2) <= 6 * req.body.nRooms) {
-                db.collection('booking').find({
+                db.findMany('booking', {
                     $and: [{ $or: [{ roomtype: 'Grand Suite' }, ] },
                         {
                             $and: [{ checkInDate: { $lt: req.body.checkOut } },
@@ -468,28 +388,18 @@ const homeController = {
                             status: "Booked"
                         }
                     ]
-                }).toArray().then(
-                    resp => {
-                        // count rooms 
-                        var gs = 0;
-                        for (var i = 0; i < resp.length; i++) {
-                            if (resp[i].roomtype == "Grand Suite") {
-                                gs += resp[i].rooms;
-                            }
+                }, function(resp) {
+                    var gs = 0;
+                    for (var i = 0; i < resp.length; i++) {
+                        if (resp[i].roomtype == "Grand Suite") {
+                            gs += resp[i].rooms;
                         }
-                        if (gs < 5 && (5 - gs) >= req.body.nRooms) {
-                            grandS = true;
-                        }
-                        // TODO: for testing console.log(resp);
-                        return res.status(201);
-                    }).catch(err => {
-                    return res.render('viewRooms', {
-                        message: "An error occured! Please try again.",
-                        data: req.body,
-                        whichfooter: footertype,
-                        logging: loggingstring
-                    });
-                    // return res.status(500);
+                    }
+                    if (gs < 5 && (5 - gs) >= req.body.nRooms) {
+                        grandS = true;
+                    }
+                    // TODO: for testing console.log(resp);
+                    return res.status(201);
                 }).finally(function() {
                     if (grandS) {
                         return res.render('viewRooms', {
@@ -507,7 +417,6 @@ const homeController = {
                         });
                     }
                 });
-
             } else {
                 return res.render('viewRooms', {
                     message: "Too many guests per room. Please add more rooms",
@@ -645,74 +554,66 @@ const homeController = {
             email
         }
 
-        db.collection('users').findOne(useremail)
-            .then(resp => {
-                // console.log(resp);
-                if (resp === null) {
-                    return res.status(401).render('signIn', {
-                        generalError: `
-                        <div class="row ml-1">*No Such Account Registered in the System</div><div class="row ml-1">Click here to <a href="/signUp" class="ml-1"> be a member</a></div>
-                        `,
-                        whichfooter: footertype
-                    });
-                } else {
-                    if (resp.banned === false) {
-                        if (resp.verified === true) {
-                            var user = {
-                                email,
-                                password
-                            }
-
-                            db.collection('users').findOne(user)
-                                .then(found => {
-                                    if (found === null) {
-                                        return res.status(401).render('signIn', {
-                                            generalError: `
-                                            <div class="row ml-1">*Incorrect password entered.</div>
-                                            `,
-                                            whichfooter: footertype,
-                                            email: email
-                                        });
-                                    } else {
-                                        if (found.admin == true)
-                                            req.session.adminId = found._id;
-                                        else
-                                            req.session.userId = found._id;
-                                        // console.log(req.session.userId);
-                                        return res.status(201).redirect('/');
-                                    }
-                                }).catch(errfound => {
-                                    console.log(errfound);
-                                    return res.status(401).render('signIn', {
-                                        generalError: "*Bad Server",
-                                        whichfooter: footertype
-                                    });
-                                });
-                        } else if (resp.verified === false) {
-                            return res.status(401).render('signIn', {
-                                generalError: `
-                                <div class="row ml-1">*Account not yet verified</div><div class="row ml-1">Click here to <a href="/verify" class="ml-1"> verify your email address.</a></div>
-                                `,
-                                whichfooter: footertype
-                            });
+        db.findOne('users', useremail, function(resp) {
+            if (resp === null) {
+                return res.status(401).render('signIn', {
+                    generalError: `
+                    <div class="row ml-1">*No Such Account Registered in the System</div><div class="row ml-1">Click here to <a href="/signUp" class="ml-1"> be a member</a></div>
+                    `,
+                    whichfooter: footertype
+                });
+            } else {
+                if (resp.banned === false) {
+                    if (resp.verified === true) {
+                        var user = {
+                            email,
+                            password
                         }
 
-                    } else if (resp.banned === true) {
+                        db.collection('users').findOne(user)
+                            .then(found => {
+                                if (found === null) {
+                                    return res.status(401).render('signIn', {
+                                        generalError: `
+                                        <div class="row ml-1">*Incorrect password entered.</div>
+                                        `,
+                                        whichfooter: footertype,
+                                        email: email
+                                    });
+                                } else {
+                                    if (found.admin == true)
+                                        req.session.adminId = found._id;
+                                    else
+                                        req.session.userId = found._id;
+                                    // console.log(req.session.userId);
+                                    return res.status(201).redirect('/');
+                                }
+                            }).catch(errfound => {
+                                console.log(errfound);
+                                return res.status(401).render('signIn', {
+                                    generalError: "*Bad Server",
+                                    whichfooter: footertype
+                                });
+                            });
+                    } else if (resp.verified === false) {
                         return res.status(401).render('signIn', {
                             generalError: `
-                            <div class="row ml-1">*Account is banned. Please contact the admin to have your account reactivated.</div>
+                            <div class="row ml-1">*Account not yet verified</div><div class="row ml-1">Click here to <a href="/verify" class="ml-1"> verify your email address.</a></div>
                             `,
                             whichfooter: footertype
                         });
                     }
+
+                } else if (resp.banned === true) {
+                    return res.status(401).render('signIn', {
+                        generalError: `
+                        <div class="row ml-1">*Account is banned. Please contact the admin to have your account reactivated.</div>
+                        `,
+                        whichfooter: footertype
+                    });
                 }
-            }).catch(err => {
-                console.log(err);
-                return res.status(500).render('signIn', {
-                    generalError: "*Bad Server",
-                    whichfooter: footertype
-                });
-            });
+            }
+        })
     },
 
     viewSignUpPage: function(req, res) {
@@ -931,84 +832,65 @@ const homeController = {
         };
 
         // promises
-        db.collection('users').findOne({ email })
-            .then(resp => {
-                if (resp === null) {
+        db.findOne('users', { email }, function(resp) {
+            if (resp === null) {
 
-                    //EMAIL VERIFICATION
+                //EMAIL VERIFICATION
 
-                    var transporter = nodemailer.createTransport({
-                        host: 'smtp.gmail.com',
-                        //port: 3000,
-                        secure: false,
-                        port: 587,
-                        pool: true,
-                        auth: {
-                            user: 'paraisohotelscorp@gmail.com',
-                            pass: 'para1soHotels'
-                        },
-                        tls: {
-                            rejectUnauthorized: false
-                        }
-                    });
+                var transporter = nodemailer.createTransport({
+                    host: 'smtp.gmail.com',
+                    //port: 3000,
+                    secure: false,
+                    port: 587,
+                    pool: true,
+                    auth: {
+                        user: 'paraisohotelscorp@gmail.com',
+                        pass: 'para1soHotels'
+                    },
+                    tls: {
+                        rejectUnauthorized: false
+                    }
+                });
 
-                    let mailOptions = {
-                        from: 'Hotel Paraiso',
-                        to: email,
-                        subject: 'Verify Email Address - Hotel Paraiso',
-                        html: `
-                                <head>
-                                <link href="https://fonts.googleapis.com/css?family=Open+Sans:200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
-                                
-                                </head>
-                                <p style="font-family: 'Open Sans'; letter-spacing: 1px; color: #2E4106; font-size:12px;">
-                                    <span style="font-size: 14px">Good day <b>${req.body.fname} ${req.body.lname}</b>!</span><br><br>
-                                    Please click <a href="http://localhost:3000/verify">Verify Email</a> to have your email verified. Your verification key is: <b>${verificationKey}</b><br> You only have one hour to verify your account.<br>
-                                    <br>
-                                    Best Regards,<br>
-                                    <b>Paraiso Hotel<br>
-                                </p>
+                let mailOptions = {
+                    from: 'Hotel Paraiso',
+                    to: email,
+                    subject: 'Verify Email Address - Hotel Paraiso',
+                    html: `
+                            <head>
+                            <link href="https://fonts.googleapis.com/css?family=Open+Sans:200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
                             
-                            `
-                    };
+                            </head>
+                            <p style="font-family: 'Open Sans'; letter-spacing: 1px; color: #2E4106; font-size:12px;">
+                                <span style="font-size: 14px">Good day <b>${req.body.fname} ${req.body.lname}</b>!</span><br><br>
+                                Please click <a href="http://localhost:3000/verify">Verify Email</a> to have your email verified. Your verification key is: <b>${verificationKey}</b><br> You only have one hour to verify your account.<br>
+                                <br>
+                                Best Regards,<br>
+                                <b>Paraiso Hotel<br>
+                            </p>
+                        
+                        `
+                };
 
-                    transporter.sendMail(mailOptions, (error, info) => {
-                        if (error) {
-                            return console.log(error);
-                        } else {
-                            console.log('Verification Email Sent Successfully!');
-                        }
-                        transporter.close();
-                    });
+                transporter.sendMail(mailOptions, (error, info) => {
+                    if (error) {
+                        return console.log(error);
+                    } else {
+                        console.log('Verification Email Sent Successfully!');
+                    }
+                    transporter.close();
+                });
 
-
-
-                    db.collection('users').insertOne(user)
-                        .then(respinsert => {
-                            // console.log(respinsert);
-                            // for debugging and for production
-                            return res.status(201).redirect('/verify');
-
-                        }).catch(errsec => {
-                            console.log(errsec);
-                            return res.status(500).render('signUp', {
-                                generalError: "*Bad Server",
-                                whichfooter: footertype
-                            });
-                        });
-                } else {
-                    return res.status(500).render('signUp', {
-                        generalError: "*Email address is already used. Please use another one.",
-                        whichfooter: footertype
-                    });
-                }
-            }).catch(err => {
-                console.log(err);
+                db.insertOne('users', user, function(respinsert) {
+                    return res.status(201).redirect('/verify');
+                })
+            } else {
                 return res.status(500).render('signUp', {
-                    generalError: "*Bad Server",
+                    generalError: "*Email address is already used. Please use another one.",
                     whichfooter: footertype
                 });
-            });
+            }
+        })
     },
 
     verificationInput: function(req, res) {
@@ -1032,43 +914,34 @@ const homeController = {
             })
         }
 
-        db.collection('users').findOne(verificationkey)
-            .then(resp => {
-
-                if (resp !== null) {
-                    var update = {
-                        $set: {
-                            'verified': true
-                        }
+        db.findOne('users', verificationKey, function(resp) {
+            if (resp !== null) {
+                var update = {
+                    $set: {
+                        'verified': true
                     }
-
-                    db.collection('users').updateOne(verificationkey, update)
-                        .then(respupdate => {
-                            return res.redirect('/signIn');
-                        }).catch(errfind => {
-                            console.log(errfind);
-                            return res.status(500).render('verificationKey', {
-                                verificationError: 'Bad Server',
-                                whichheadertype: 'header',
-                                whichfooter: 'footer',
-                            });
-                        });
-                } else {
-
-                    return res.render('verificationKey', {
-                        verificationError: 'Wrong verfication key.',
-                        whichheadertype: 'header',
-                        whichfooter: 'footer',
-                    });
                 }
-            }).catch(errverify => {
-                console.log(errverify);
-                return res.status(500).render('verificationKey', {
-                    verificationError: 'Bad Server',
+
+                db.collection('users').updateOne(verificationkey, update)
+                    .then(respupdate => {
+                        return res.redirect('/signIn');
+                    }).catch(errfind => {
+                        console.log(errfind);
+                        return res.status(500).render('verificationKey', {
+                            verificationError: 'Bad Server',
+                            whichheadertype: 'header',
+                            whichfooter: 'footer',
+                        });
+                    });
+            } else {
+
+                return res.render('verificationKey', {
+                    verificationError: 'Wrong verfication key.',
                     whichheadertype: 'header',
                     whichfooter: 'footer',
-                })
-            });
+                });
+            }
+        })
     }
 }
 
