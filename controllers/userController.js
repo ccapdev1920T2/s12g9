@@ -101,7 +101,7 @@ const userController = {
             status:"Booked"
         }, {
             $set:{ status : "Cancelled" , cancelledDate : formattedDate.toString()}
-        }).then(function(){
+        }, function(){
             var subPoints = Number(parseInt(req.body.payment)/Number(10)*Number(-1));
             db.updateOne('booking', {
                 email:req.body.email
@@ -110,10 +110,10 @@ const userController = {
                     cancellationCount:1,
                     membershipPoints: parseInt(subPoints)
                }
-            }). then(function(){
+            }, function(){
                 db.findOne('users',{
                     email:req.body.email
-                }, function(resp){
+                }, function(re){
                     if(re.cancellationCount<5){
                         res.redirect('back');
                     }
