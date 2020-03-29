@@ -101,7 +101,6 @@ const homeController = {
         //TODO: Check
 
         db.deleteMany('users', { signUpDate: { $lte: todayDate }, verified: false }, function(resDel) {
-            // console.log('Hello');
             db.findOne('users', adminuser, function(resp) {
                 if (resp === null) {
                     db.insertOne('users', {
@@ -110,6 +109,23 @@ const homeController = {
                         verified: true,
                         admin: true,
                         banned: false
+                    }, function(admin){
+                        var todayDate = new Date();
+                        if ((todayDate.getMonth() + 1) == 1 && todayDate.getDate() == 1) {
+                            db.updateMany('users', {}, countUpdate, function(resset) {
+                                return res.render('home', {
+                                    logging: loggingstring,
+                                    // whichheader: 'header',
+                                    whichfooter: footertype
+                                })
+                            });
+                        } else {
+                            return res.render('home', {
+                                    logging: loggingstring,
+                                    // whichheader: 'header',
+                                    whichfooter: footertype
+                            }); //function when rendering the webpage
+                        }
                     });
                 } else {
                     var todayDate = new Date();
