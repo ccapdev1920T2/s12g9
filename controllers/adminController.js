@@ -72,7 +72,7 @@ const adminController = {
         var noneMessageView = "";
         var noneMessageCheckin = "";
         var noneMessageBanned ="";
-        db.findMany('booking', { bookingDate: formattedDate, status: 'Booked' }, {checkInDate:1}, function(resp) {
+        db.findMany('booking', { bookingDate: formattedDate, status: 'Booked' }, {checkInDate:1}, null,function(resp) {
             var newArray = [];
             if (resp.length == 0) {
                 noneMessageTodayBooking = '<div class="row justify-content-center pb-5 pt-4">There are no reservations today to be displayed.</div>';
@@ -116,7 +116,7 @@ const adminController = {
                 }
             }
 
-            db.findMany('booking', { status: 'Booked' },{checkInDate:1}, function(respViewAll){
+            db.findMany('booking', { status: 'Booked' },{checkInDate:1}, null, function(respViewAll){
                 var viewAllArray = [];
                 // console.log(respViewAll);
                 if (respViewAll.length == 0) {
@@ -169,7 +169,7 @@ const adminController = {
                             { checkOutDate: { $gte: todayFormat } }
                         ],
                     status: 'Booked'
-                }, {checkInDate:1}, function (respCheckedIn){
+                }, {checkInDate:1}, null, function (respCheckedIn){
                     var CheckedInArray = [];
                         // console.log(respCheckedIn);
                     if (respCheckedIn.length == 0) {
@@ -210,7 +210,7 @@ const adminController = {
                             CheckedInArray[i] = CheckedInObject;
                         }
                     }
-                    db.findMany('users',{banned: true}, function (respaccount){
+                    db.findMany('users',{banned: true}, null, null, function (respaccount){
                         if (respaccount.length == 0){
                             noneMessageBanned= '<div class="row justify-content-center pb-5 pt-4">There are no banned accounts.</div>';
                         }
