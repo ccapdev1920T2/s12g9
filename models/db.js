@@ -32,7 +32,7 @@ const database = {
         });
     },
 
-    insertOne: function(collection, doc) {
+    insertOne: function(collection, doc, callback) {
         client.connect(url, options, function(err, db) {
             if (err) throw err;
             var database = db.db(dbName);
@@ -40,11 +40,12 @@ const database = {
                 if (err) throw err;
                 // console.log('1 document inserted');
                 db.close();
+                return callback(res);
             });
         });
     },
 
-    insertMany: function(collection, docs) {
+    insertMany: function(collection, docs, callback) {
         client.connect(url, options, function(err, db) {
             if (err) throw err;
             var database = db.db(dbName);
@@ -52,6 +53,7 @@ const database = {
                 if (err) throw err;
                 // console.log('Documents inserted: ' + res.insertedCount);
                 db.close();
+                return callback(res);
             });
         });
     },
@@ -84,7 +86,7 @@ const database = {
 
     // deletes a single document in the collection `collection`
     // based on the object `filter`
-    deleteOne: function(collection, filter) {
+    deleteOne: function(collection, filter, callback) {
         client.connect(url, options, function(err, db) {
             if (err) throw err;
             var database = db.db(dbName);
@@ -92,13 +94,14 @@ const database = {
                 if (err) throw err;
                 // console.log('1 document deleted');
                 db.close();
+                return callback(res);
             });
         });
     },
 
     // deletes multiple documents in the collection `collection`
     // based on the object `filter`
-    deleteMany: function(collection, filter) {
+    deleteMany: function(collection, filter, callback) {
         client.connect(url, options, function(err, db) {
             if (err) throw err;
             var database = db.db(dbName);
@@ -106,6 +109,7 @@ const database = {
                 if (err) throw err;
                 // console.log('Documents deleted: ' + res.deletedCount);
                 db.close();
+                return callback(res);
             });
         });
     },
@@ -124,27 +128,29 @@ const database = {
     },
 
 
-    updateOne: function(collection, filter, update) {
+    updateOne: function(collection, filter, update, callback) {
         client.connect(url, options, function(err, db) {
             if (err) throw err;
             var database = db.db(dbName);
             database.collection(collection).updateOne(filter, update, function(err, res) {
                 if (err) throw err;
-                console.log('1 document updated');
+                // console.log('1 document updated');
                 db.close();
+                return callback(res);
             });
         });
     },
 
 
-    updateMany: function(collection, filter, update) {
+    updateMany: function(collection, filter, update, callback) {
         client.connect(url, options, function(err, db) {
             if (err) throw err;
             var database = db.db(dbName);
             database.collection(collection).updateMany(filter, update, function(err, res) {
                 if (err) throw err;
-                console.log('Documents updated: ' + res.modifiedCount);
+                // console.log('Documents updated: ' + res.modifiedCount);
                 db.close();
+                return callback(res);
             });
         });
     }
