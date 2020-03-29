@@ -229,7 +229,7 @@ const homeController = {
                             status: "Booked"
                         }
                     ]
-                }, function(resp) {
+                }, null, null, function(resp) {
                     // count rooms 
                     var cd = 0;
                     var fd = 0;
@@ -270,9 +270,6 @@ const homeController = {
                     if (gs < 5 && (5 - gs) >= req.body.nRooms) {
                         grandS = true;
                     }
-                    // TODO: for testing console.log(resp);
-                    return res.status(201);
-                }).finally(function() {
                     if (classicD || famD || execD || juniorS || execS || grandS) {
                         return res.render('viewRooms', {
                             cd: classicD,
@@ -294,7 +291,7 @@ const homeController = {
                             logging: loggingstring
                         });
                     }
-                });
+                })
             } else if (Number(req.body.nAdults) + (Number(req.body.nKids) / 2) <= 4 * req.body.nRooms) {
                 db.findMany('booking', {
                     $and: [{
@@ -315,7 +312,7 @@ const homeController = {
                             status: "Booked"
                         }
                     ]
-                }, function(resp) {
+                },null,null,function(resp) {
                     // count rooms 
                     var fd = 0;
                     var ed = 0;
@@ -350,9 +347,6 @@ const homeController = {
                     if (gs < 5 && (5 - gs) >= req.body.nRooms) {
                         grandS = true;
                     }
-                    // TODO: for testing console.log(resp);
-                    return res.status(201);
-                }).finally(function() {
                     if (famD || execD || juniorS || execS || grandS) {
                         return res.render('viewRooms', {
                             cd: classicD,
@@ -373,7 +367,7 @@ const homeController = {
                             logging: loggingstring,
                         });
                     }
-                });
+                })
             } else if (Number(req.body.nAdults) + (Number(req.body.nKids) / 2) <= 6 * req.body.nRooms) {
                 db.findMany('booking', {
                     $and: [{ $or: [{ roomtype: 'Grand Suite' }, ] },
@@ -386,7 +380,7 @@ const homeController = {
                             status: "Booked"
                         }
                     ]
-                }, function(resp) {
+                }, null, null, function(resp) {
                     var gs = 0;
                     for (var i = 0; i < resp.length; i++) {
                         if (resp[i].roomtype == "Grand Suite") {
@@ -396,9 +390,6 @@ const homeController = {
                     if (gs < 5 && (5 - gs) >= req.body.nRooms) {
                         grandS = true;
                     }
-                    // TODO: for testing console.log(resp);
-                    return res.status(201);
-                }).finally(function() {
                     if (grandS) {
                         return res.render('viewRooms', {
                             gs: grandS,
@@ -414,7 +405,7 @@ const homeController = {
                             logging: loggingstring,
                         });
                     }
-                });
+                })
             } else {
                 return res.render('viewRooms', {
                     message: "Too many guests per room. Please add more rooms",
