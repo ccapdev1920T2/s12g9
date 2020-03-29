@@ -101,7 +101,6 @@ const homeController = {
         //TODO: Check
 
         db.deleteMany('users', { signUpDate: { $lte: todayDate }, verified: false }, function(resDel) {
-            // console.log('Hello');
             db.findOne('users', adminuser, function(resp) {
                 if (resp === null) {
                     db.insertOne('users', {
