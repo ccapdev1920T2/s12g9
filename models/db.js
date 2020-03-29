@@ -1,52 +1,13 @@
-const { MongoClient } = require('mongodb');
+const mongodb = require('mongodb');
+
+const client = mongodb.MongoClient;
 
 //URL OF THE DATABASE
 // const uri = "mongodb+srv://user:pass1234@database-ourwj.mongodb.net/test?retryWrites=true&w=majority";
-const uri = `mongodb://localhost:27017/test`;
-const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+const url = `mongodb://localhost:27017`;
+const options = { useUnifiedTopology: true, useNewUrlParser: true};
 
-const dbName = HotelParaiso;
-
-const options = { useUnifiedTopology: true };
-
-client.connect().then(() => {
-    //making a new collection -- name of the db is test and the name of the collection is devices
-    const db = client.db('HotelParaiso');
-
-    //use to create session
-    // app.use(session({
-    //     resave: false,
-    //     saveUninitialized: false,
-    //     secret: "secret",
-    // }));
-
-    // admin router
-    const adminRouter = require('./routes/adminRoute')(db);
-    app.use('/admin', adminRouter);
-
-    //home router
-    const homeRouter = require('./routes/homeRoute')(db); //passing db to the file homeRoute.js
-    app.use('/', homeRouter);
-
-    // user router
-    const userRouter = require('./routes/userRoute')(db);
-    app.use('/user', userRouter);
-
-    // payments router
-    const paymentRouter = require('./routes/paymentRoute')(db);
-    app.use('/totalCharge', paymentRouter);
-
-    // hotel router << normal users and guest
-    const hotelRouter = require('./routes/hotelRoute');
-    app.use('/hotel', hotelRouter);
-
-    app.listen(port, hostname, () => {
-        console.log(`Server running at http://${hostname}:${port}/`);
-    });
-}).catch(err => {
-    console.log(err);
-});
-
+const dbName = 'HotelParaiso';
 
 const database = {
 
@@ -54,7 +15,7 @@ const database = {
     createDatabase: function() {
         client.connect(url, options, function(err, db) {
             if (err) throw err;
-            console.log('Database created!');
+            // console.log('Database created!');
             db.close();
         });
     },
@@ -65,7 +26,7 @@ const database = {
             var database = db.db(dbName);
             database.createCollection(collection, function(err, res) {
                 if (err) throw err;
-                console.log('Collection ' + collection + ' created');
+                // console.log('Collection ' + collection + ' created');
                 db.close();
             });
         });
@@ -77,7 +38,7 @@ const database = {
             var database = db.db(dbName);
             database.collection(collection).insertOne(doc, function(err, res) {
                 if (err) throw err;
-                console.log('1 document inserted');
+                // console.log('1 document inserted');
                 db.close();
             });
         });
@@ -89,7 +50,7 @@ const database = {
             var database = db.db(dbName);
             database.collection(collection).insertMany(docs, function(err, res) {
                 if (err) throw err;
-                console.log('Documents inserted: ' + res.insertedCount);
+                // console.log('Documents inserted: ' + res.insertedCount);
                 db.close();
             });
         });
@@ -128,7 +89,7 @@ const database = {
             var database = db.db(dbName);
             database.collection(collection).deleteOne(filter, function(err, res) {
                 if (err) throw err;
-                console.log('1 document deleted');
+                // console.log('1 document deleted');
                 db.close();
             });
         });
@@ -142,7 +103,7 @@ const database = {
             var database = db.db(dbName);
             database.collection(collection).deleteMany(filter, function(err, res) {
                 if (err) throw err;
-                console.log('Documents deleted: ' + res.deletedCount);
+                // console.log('Documents deleted: ' + res.deletedCount);
                 db.close();
             });
         });
@@ -155,7 +116,7 @@ const database = {
             var database = db.db(dbName);
             database.collection(collection).drop(function(err, res) {
                 if (err) throw err;
-                console.log('Collection ' + collection + ' deleted');
+                // console.log('Collection ' + collection + ' deleted');
                 db.close();
             });
         });
