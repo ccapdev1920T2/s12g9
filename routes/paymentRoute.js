@@ -34,8 +34,8 @@ const routerFunction = function(db) {
             var userid = { _id: ObjectId(req.session.userId) }
 
             db.collection('users').findOne(userid)
-                .then(res => {
-                    point = res.membershipPoints;
+                .then(resp => {
+                    point = resp.membershipPoints;
                     // console.log(point);
                 }).catch(err => {
                     console.log(err);
