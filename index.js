@@ -31,6 +31,25 @@ app.use(session({
     secret: "secret",
 }));
 
+const adminRouter = require('./routes/adminRoute');
+app.use('/admin', adminRouter);
+
+//home router
+const homeRouter = require('./routes/homeRoute'); //passing db to the file homeRoute.js
+app.use('/', homeRouter);
+
+// user router
+const userRouter = require('./routes/userRoute');
+app.use('/user', userRouter);
+
+// payments router
+const paymentRouter = require('./routes/paymentRoute');
+app.use('/totalCharge', paymentRouter);
+
+// hotel router << normal users and guest
+const hotelRouter = require('./routes/hotelRoute');
+app.use('/hotel', hotelRouter);
+
 app.listen(port, hostname, () => {
     console.log(`Server running at http://${hostname}:${port}/`);
 });
