@@ -911,7 +911,7 @@ const homeController = {
             })
         }
 
-        db.findOne('users', verificationKey, function(resp) {
+        db.findOne('users', verificationkey, function(resp) {
             if (resp !== null) {
                 var update = {
                     $set: {
