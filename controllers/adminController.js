@@ -289,7 +289,7 @@ const adminController = {
             footertype = 'footerAdmin';
         }
     
-        db.findOne('booking', function (resp){
+        db.findOne('booking', bookingID, function (resp){
             // console.log(resp._id);
             return res.render('customerDetails', {
                 fname: resp.fname,
@@ -379,7 +379,7 @@ const adminController = {
         
     
         db.findOne('users', userID, function (resp){
-            db.findMany('booking',{email: resp.email, status: "Cancelled"}, function (respbook){
+            db.findMany('booking',{email: resp.email, status: "Cancelled"}, null, null, function (respbook){
                 var bookedYear = [];
                 var total = 0;
                 var count = 0;
