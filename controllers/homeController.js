@@ -1,5 +1,3 @@
-const express = require('express');
-const router = express();
 const { ObjectId } = require('mongodb');
 const nodemailer = require('nodemailer');
 
