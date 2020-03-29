@@ -1,6 +1,6 @@
 const express = require('express');
 
-const hotelController = require('../controllers/hotelController.js')
+const hotelController = require('../controllers/hotelController.js');
 
 const router = express();
 
