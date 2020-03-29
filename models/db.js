@@ -5,7 +5,7 @@ const { MongoClient } = require('mongodb');
 const uri = `mongodb://localhost:27017/test`;
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 
-const dbName = database;
+const dbName = HotelParaiso;
 
 const options = { useUnifiedTopology: true };
 
@@ -14,11 +14,11 @@ client.connect().then(() => {
     const db = client.db('HotelParaiso');
 
     //use to create session
-    app.use(session({
-        resave: false,
-        saveUninitialized: false,
-        secret: "secret",
-    }));
+    // app.use(session({
+    //     resave: false,
+    //     saveUninitialized: false,
+    //     secret: "secret",
+    // }));
 
     // admin router
     const adminRouter = require('./routes/adminRoute')(db);

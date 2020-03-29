@@ -25,6 +25,12 @@ app.use(express.static(path.join(__dirname, '/public')));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
+app.use(session({
+    resave: false,
+    saveUninitialized: false,
+    secret: "secret",
+}));
+
 //partials for hbs
 const hbs = require('hbs');
 hbs.registerPartials(__dirname + '/views/partials')
