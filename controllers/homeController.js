@@ -33,7 +33,7 @@ const homeController = {
                         whichfooter: 'footer'
                     });
                 } else {
-                    // console.log('4');
+                    // console.log('4');n
                     if (resp.admin == true)
                         return res.status(201).redirect('/admin');
                     else
@@ -98,10 +98,10 @@ const homeController = {
         }
 
         var todayDate = new Date();
-
         //TODO: Check
 
         db.deleteMany('users', { signUpDate: { $lte: todayDate }, verified: false }, function(resDel) {
+            // console.log('Hello');
             db.findOne('users', adminuser, function(resp) {
                 if (resp === null) {
                     db.insertOne('users', {
@@ -110,7 +110,7 @@ const homeController = {
                         verified: true,
                         admin: true,
                         banned: false
-                    }, function(resd) {})
+                    });
                 } else {
                     var todayDate = new Date();
                     var countUpdate = { $set: { cancellationCount: 0 } };
@@ -122,17 +122,17 @@ const homeController = {
                                 // whichheader: 'header',
                                 whichfooter: footertype
                             })
-                        })
+                        });
                     } else {
                         return res.render('home', {
                                 logging: loggingstring,
                                 // whichheader: 'header',
                                 whichfooter: footertype
-                            }) //function when rendering the webpage
+                        }); //function when rendering the webpage
                     }
                 }
             });
-        })
+        });
     },
 
     viewAvailableRoomsPage: function(req, res) {
