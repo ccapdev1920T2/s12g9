@@ -125,9 +125,9 @@ const homeController = {
                         });
                     } else {
                         return res.render('home', {
-                                logging: loggingstring,
-                                // whichheader: 'header',
-                                whichfooter: footertype
+                            logging: loggingstring,
+                            // whichheader: 'header',
+                            whichfooter: footertype
                         }); //function when rendering the webpage
                     }
                 }
@@ -312,7 +312,7 @@ const homeController = {
                             status: "Booked"
                         }
                     ]
-                },null,null,function(resp) {
+                }, null, null, function(resp) {
                     // count rooms 
                     var fd = 0;
                     var ed = 0;
@@ -559,31 +559,23 @@ const homeController = {
                             password
                         }
 
-                        db.collection('users').findOne(user)
-                            .then(found => {
-                                if (found === null) {
-                                    return res.status(401).render('signIn', {
-                                        generalError: `
-                                        <div class="row ml-1">*Incorrect password entered.</div>
-                                        `,
-                                        whichfooter: footertype,
-                                        email: email
-                                    });
-                                } else {
-                                    if (found.admin == true)
-                                        req.session.adminId = found._id;
-                                    else
-                                        req.session.userId = found._id;
-                                    // console.log(req.session.userId);
-                                    return res.status(201).redirect('/');
-                                }
-                            }).catch(errfound => {
-                                console.log(errfound);
+                        db.findOne('users', user, function(found) {
+                            if (found === null) {
                                 return res.status(401).render('signIn', {
-                                    generalError: "*Bad Server",
-                                    whichfooter: footertype
+                                    generalError: `
+                                    <div class="row ml-1">*Incorrect password entered.</div>`,
+                                    whichfooter: footertype,
+                                    email: email
                                 });
-                            });
+                            } else {
+                                if (found.admin == true) {
+                                    req.session.adminId = found._id;
+                                } else
+                                    req.session.userId = found._id;
+                                // console.log(req.session.userId);
+                                return res.status(201).redirect('/');
+                            }
+                        })
                     } else if (resp.verified === false) {
                         return res.status(401).render('signIn', {
                             generalError: `
@@ -911,19 +903,10 @@ const homeController = {
                     }
                 }
 
-                db.collection('users').updateOne(verificationkey, update)
-                    .then(respupdate => {
-                        return res.redirect('/signIn');
-                    }).catch(errfind => {
-                        console.log(errfind);
-                        return res.status(500).render('verificationKey', {
-                            verificationError: 'Bad Server',
-                            whichheadertype: 'header',
-                            whichfooter: 'footer',
-                        });
-                    });
+                db.updateOne('users', verificationkey, update, function(respupdate) {
+                    return res.redirect('/signIn');
+                })
             } else {
-
                 return res.render('verificationKey', {
                     verificationError: 'Wrong verfication key.',
                     whichheadertype: 'header',
