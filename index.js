@@ -31,6 +31,10 @@ app.use(session({
     secret: "secret",
 }));
 
+app.listen(port, hostname, () => {
+    console.log(`Server running at http://${hostname}:${port}/`);
+});
+
 //partials for hbs
 const hbs = require('hbs');
 hbs.registerPartials(__dirname + '/views/partials')
