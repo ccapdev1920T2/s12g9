@@ -56,9 +56,10 @@ const database = {
         });
     },
 
+    // TODO: try db error thing 
     findOne: function(collection, query, callback) {
         client.connect(url, options, function(err, db) {
-            if (err) throw err;
+            if (err) throw err; //return "error" 
             var database = db.db(dbName);
             database.collection(collection).findOne(query, function(err, result) {
                 if (err) throw err;
