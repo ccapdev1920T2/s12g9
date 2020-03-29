@@ -527,7 +527,7 @@ const homeController = {
     },
 
     viewAboutUs: function(req, res) {
-        ar loggingstring = `
+        var loggingstring = `
         <li class="nav-item">\
             <a class="nav-link" href="/signUp">Be a Member</a>\
         </li>\
