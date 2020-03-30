@@ -611,7 +611,7 @@ const homeController = {
                 } else if (resp.banned === true) {
                     return res.status(401).render('signIn', {
                         generalError: `
-                        <div class="row ml-1">*Account is banned. Please contact the admin to have your account reactivated.</div>
+                        <div class="row">*Account is banned. </div><div class="row">Please contact the admin to have your account reactivated.</div>
                         `,
                         whichfooter: footertype
                     });
@@ -811,90 +811,92 @@ const homeController = {
         // var time = today.getHours() + ":" + today.getMinutes();
 
         // var dateTime = date + " " + time;
-        bcrypt.hash(password, 10, function(err, hash){
+        bcrypt.hash(password, 10, function(errpass, hash){
+            bcrypt.hash(cvv, 10, function(errcvv, hashcvv){
                 // inserting to db
-            let user = {
-                fname,
-                lname,
-                email,
-                password: hash,
-                cpassword: hash,
-                creditcardOwner,
-                cvv,
-                creditcardNumber,
-                month,
-                year,
-                ccprovider,
-                membershipNumber: memberNumber,
-                membershipPoints: 0,
-                admin: false,
-                signUpDate: date,
-                verificationKey,
-                verified,
-                cancellationCount: 0,
-                banned: false
-            };
+                let user = {
+                    fname,
+                    lname,
+                    email,
+                    password: hash,
+                    cpassword: hash,
+                    creditcardOwner,
+                    cvv: hashcvv,
+                    creditcardNumber,
+                    month,
+                    year,
+                    ccprovider,
+                    membershipNumber: memberNumber,
+                    membershipPoints: 0,
+                    admin: false,
+                    signUpDate: date,
+                    verificationKey,
+                    verified,
+                    cancellationCount: 0,
+                    banned: false
+                };
 
-            // promises
-            db.findOne('users', { email }, function(resp) {
-                if (resp === null) {
+                // promises
+                db.findOne('users', { email }, function(resp) {
+                    if (resp === null) {
 
-                    //EMAIL VERIFICATION
+                        //EMAIL VERIFICATION
 
-                    var transporter = nodemailer.createTransport({
-                        host: 'smtp.gmail.com',
-                        //port: 3000,
-                        secure: false,
-                        port: 587,
-                        pool: true,
-                        auth: {
-                            user: 'paraisohotelscorp@gmail.com',
-                            pass: 'para1soHotels'
-                        },
-                        tls: {
-                            rejectUnauthorized: false
-                        }
-                    });
+                        var transporter = nodemailer.createTransport({
+                            host: 'smtp.gmail.com',
+                            //port: 3000,
+                            secure: false,
+                            port: 587,
+                            pool: true,
+                            auth: {
+                                user: 'paraisohotelscorp@gmail.com',
+                                pass: 'para1soHotels'
+                            },
+                            tls: {
+                                rejectUnauthorized: false
+                            }
+                        });
 
-                    let mailOptions = {
-                        from: 'Hotel Paraiso',
-                        to: email,
-                        subject: 'Verify Email Address - Hotel Paraiso',
-                        html: `
-                                <head>
-                                <link href="https://fonts.googleapis.com/css?family=Open+Sans:200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
+                        let mailOptions = {
+                            from: 'Hotel Paraiso',
+                            to: email,
+                            subject: 'Verify Email Address - Hotel Paraiso',
+                            html: `
+                                    <head>
+                                    <link href="https://fonts.googleapis.com/css?family=Open+Sans:200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
+                                    
+                                    </head>
+                                    <p style="font-family: 'Open Sans'; letter-spacing: 1px; color: #2E4106; font-size:12px;">
+                                        <span style="font-size: 14px">Good day <b>${req.body.fname} ${req.body.lname}</b>!</span><br><br>
+                                        Please click <a href="http://localhost:3000/verify">Verify Email</a> to have your email verified. Your verification key is: <b>${verificationKey}</b><br> You only have one hour to verify your account.<br>
+                                        <br>
+                                        Best Regards,<br>
+                                        <b>Paraiso Hotel<br>
+                                    </p>
                                 
-                                </head>
-                                <p style="font-family: 'Open Sans'; letter-spacing: 1px; color: #2E4106; font-size:12px;">
-                                    <span style="font-size: 14px">Good day <b>${req.body.fname} ${req.body.lname}</b>!</span><br><br>
-                                    Please click <a href="http://localhost:3000/verify">Verify Email</a> to have your email verified. Your verification key is: <b>${verificationKey}</b><br> You only have one hour to verify your account.<br>
-                                    <br>
-                                    Best Regards,<br>
-                                    <b>Paraiso Hotel<br>
-                                </p>
-                            
-                            `
-                    };
+                                `
+                        };
 
-                    transporter.sendMail(mailOptions, (error, info) => {
-                        if (error) {
-                            return console.log(error);
-                        } else {
-                            console.log('Verification Email Sent Successfully!');
-                        }
-                        transporter.close();
-                    });
+                        transporter.sendMail(mailOptions, (error, info) => {
+                            if (error) {
+                                return console.log(error);
+                            } else {
+                                console.log('Verification Email Sent Successfully!');
+                            }
+                            transporter.close();
+                        });
 
-                    db.insertOne('users', user, function(respinsert) {
-                        return res.status(201).redirect('/verify');
-                    })
-                } else {
-                    return res.status(500).render('signUp', {
-                        generalError: "*Email address is already used. Please use another one.",
-                        whichfooter: footertype
-                    });
-                }
-            })
+                        db.insertOne('users', user, function(respinsert) {
+                            return res.status(201).redirect('/verify');
+                        })
+                    } else {
+                        return res.status(500).render('signUp', {
+                            generalError: "*Email address is already used. Please use another one.",
+                            whichfooter: footertype
+                        });
+                    }
+                })
+            });
         });
     },
 
