@@ -1,8 +1,38 @@
 const { ObjectId } = require('mongodb');
 const nodemailer = require('nodemailer');
-const bcrypt = require('bcrypt');
+const crypto = require('crypto');
 
 const db = require('../models/db.js');
+
+var genRandomString = function(length){
+    return crypto.randomBytes(Math.ceil(length/2)).toString('hex').slice(0,length);
+};
+
+var sha256 = function(password, salt){
+    var hash = crypto.createHmac('sha256', salt); 
+    hash.update(password);
+    var value = hash.digest('hex');
+    return {
+        salt:salt,
+        passwordHash:value
+    };
+};
+
+function saltHashPassword(userpassword) {
+    var salt = genRandomString(16); 
+    var passwordData = sha256(userpassword, salt);
+    // console.log('UserPassword = '+userpassword);
+    var temp = [];
+    temp[0] = passwordData.passwordHash;
+    temp[1] = passwordData.salt;
+    return temp;
+}
+
+function validPassword(inputpassword, salt, hashdb){ 
+    var hash = sha256(inputpassword, salt);
+    // console.log(hash.passwordHash);
+    return hash.passwordHash === hashdb;
+}; 
 
 const homeController = {
     //check if user is logged in, if not, he/she cannot access the page such as profile and admin， and log out
@@ -109,31 +139,32 @@ const homeController = {
         db.deleteMany('users', { signUpDate: { $lte: todayDate }, verified: false }, function(resDel) {
             db.findOne('users', adminuser, function(resp) {
                 if (resp === null) {
-                    bcrypt.hash('para1soHotels', 10, function(err, hashPass){
-                        db.insertOne('users', {
-                            email: "admin@paraisohotels.com",
-                            password: hashPass,
-                            verified: true,
-                            admin: true,
-                            banned: false
-                        }, function(admin){
-                            var todayDate = new Date();
-                            if ((todayDate.getMonth() + 1) == 1 && todayDate.getDate() == 1) {
-                                db.updateMany('users', {}, countUpdate, function(resset) {
-                                    return res.render('home', {
-                                        logging: loggingstring,
-                                        // whichheader: 'header',
-                                        whichfooter: footertype
-                                    })
-                                });
-                            } else {
+                    
+                    var newpass = saltHashPassword('para1soHotels');
+                    db.insertOne('users', {
+                        email: "admin@paraisohotels.com",
+                        password: newpass[0],
+                        saltpass: newpass[1],
+                        verified: true,
+                        admin: true,
+                        banned: false
+                    }, function(admin){
+                        var todayDate = new Date();
+                        if ((todayDate.getMonth() + 1) == 1 && todayDate.getDate() == 1) {
+                            db.updateMany('users', {}, countUpdate, function(resset) {
                                 return res.render('home', {
-                                        logging: loggingstring,
-                                        // whichheader: 'header',
-                                        whichfooter: footertype
-                                }); //function when rendering the webpage
-                            }
-                        });
+                                    logging: loggingstring,
+                                    // whichheader: 'header',
+                                    whichfooter: footertype
+                                })
+                            });
+                        } else {
+                            return res.render('home', {
+                                    logging: loggingstring,
+                                    // whichheader: 'header',
+                                    whichfooter: footertype
+                            }); //function when rendering the webpage
+                        }
                     });
                 } else {
                     var todayDate = new Date();
@@ -579,26 +610,22 @@ const homeController = {
             } else {
                 if (resp.banned === false) {
                     if (resp.verified === true) {
-                        var hash = resp.password;
-                        bcrypt.compare(password, hash, function(err,isMatch){
-                            if (err) {
-                                throw err;
-                            } else if (isMatch){
-                                if (resp.admin == true) {
-                                    req.session.adminId = resp._id;
-                                } else
-                                    req.session.userId = resp._id;
-                                // console.log(req.session.userId);
-                                return res.status(201).redirect('/');
-                            } else if (!isMatch){
-                                return res.status(401).render('signIn', {
-                                    generalError: `
-                                    <div class="row ml-1">*Incorrect password entered.</div>`,
-                                    whichfooter: footertype,
-                                    email: email
-                                });
-                            }
-                        });
+
+                        if (validPassword(password, resp.saltpass, resp.password)){
+                            if (resp.admin == true) {
+                                req.session.adminId = resp._id;
+                            } else
+                                req.session.userId = resp._id;
+                            // console.log(req.session.userId);
+                            return res.status(201).redirect('/');
+                        } else {
+                            return res.status(401).render('signIn', {
+                                generalError: `
+                                <div class="row ml-1">*Incorrect password entered.</div>`,
+                                whichfooter: footertype,
+                                email: email
+                            });
+                        }
                     } else if (resp.verified === false) {
                         return res.status(401).render('signIn', {
                             generalError: `
@@ -811,93 +838,93 @@ const homeController = {
         // var time = today.getHours() + ":" + today.getMinutes();
 
         // var dateTime = date + " " + time;
-        bcrypt.hash(password, 10, function(errpass, hash){
-            bcrypt.hash(cvv, 10, function(errcvv, hashcvv){
-                // inserting to db
-                let user = {
-                    fname,
-                    lname,
-                    email,
-                    password: hash,
-                    cpassword: hash,
-                    creditcardOwner,
-                    cvv: hashcvv,
-                    creditcardNumber,
-                    month,
-                    year,
-                    ccprovider,
-                    membershipNumber: memberNumber,
-                    membershipPoints: 0,
-                    admin: false,
-                    signUpDate: date,
-                    verificationKey,
-                    verified,
-                    cancellationCount: 0,
-                    banned: false
+        // inserting to db
+        var hashpass = saltHashPassword(password);
+        var hashcvv = saltHashPassword(cvv);
+        let user = {
+            fname,
+            lname,
+            email,
+            password: hashpass[0],
+            cpassword: hashpass[0],
+            saltpass: hashpass[1],
+            creditcardOwner,
+            cvv: hashcvv[0],
+            cvvsalt: hashcvv[1],
+            creditcardNumber,
+            month,
+            year,
+            ccprovider,
+            membershipNumber: memberNumber,
+            membershipPoints: 0,
+            admin: false,
+            signUpDate: date,
+            verificationKey,
+            verified,
+            cancellationCount: 0,
+            banned: false
+        };
+
+        // promises
+        db.findOne('users', { email }, function(resp) {
+            if (resp === null) {
+
+                //EMAIL VERIFICATION
+
+                var transporter = nodemailer.createTransport({
+                    host: 'smtp.gmail.com',
+                    //port: 3000,
+                    secure: false,
+                    port: 587,
+                    pool: true,
+                    auth: {
+                        user: 'paraisohotelscorp@gmail.com',
+                        pass: 'para1soHotels'
+                    },
+                    tls: {
+                        rejectUnauthorized: false
+                    }
+                });
+
+                let mailOptions = {
+                    from: 'Hotel Paraiso',
+                    to: email,
+                    subject: 'Verify Email Address - Hotel Paraiso',
+                    html: `
+                            <head>
+                            <link href="https://fonts.googleapis.com/css?family=Open+Sans:200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
+                            
+                            </head>
+                            <p style="font-family: 'Open Sans'; letter-spacing: 1px; color: #2E4106; font-size:12px;">
+                                <span style="font-size: 14px">Good day <b>${req.body.fname} ${req.body.lname}</b>!</span><br><br>
+                                Please click <a href="http://localhost:3000/verify">Verify Email</a> to have your email verified. Your verification key is: <b>${verificationKey}</b><br> You only have one hour to verify your account.<br>
+                                <br>
+                                Best Regards,<br>
+                                <b>Paraiso Hotel<br>
+                            </p>
+                        
+                        `
                 };
 
-                // promises
-                db.findOne('users', { email }, function(resp) {
-                    if (resp === null) {
-
-                        //EMAIL VERIFICATION
-
-                        var transporter = nodemailer.createTransport({
-                            host: 'smtp.gmail.com',
-                            //port: 3000,
-                            secure: false,
-                            port: 587,
-                            pool: true,
-                            auth: {
-                                user: 'paraisohotelscorp@gmail.com',
-                                pass: 'para1soHotels'
-                            },
-                            tls: {
-                                rejectUnauthorized: false
-                            }
-                        });
-
-                        let mailOptions = {
-                            from: 'Hotel Paraiso',
-                            to: email,
-                            subject: 'Verify Email Address - Hotel Paraiso',
-                            html: `
-                                    <head>
-                                    <link href="https://fonts.googleapis.com/css?family=Open+Sans:200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
-                                    
-                                    </head>
-                                    <p style="font-family: 'Open Sans'; letter-spacing: 1px; color: #2E4106; font-size:12px;">
-                                        <span style="font-size: 14px">Good day <b>${req.body.fname} ${req.body.lname}</b>!</span><br><br>
-                                        Please click <a href="http://localhost:3000/verify">Verify Email</a> to have your email verified. Your verification key is: <b>${verificationKey}</b><br> You only have one hour to verify your account.<br>
-                                        <br>
-                                        Best Regards,<br>
-                                        <b>Paraiso Hotel<br>
-                                    </p>
-                                
-                                `
-                        };
-
-                        transporter.sendMail(mailOptions, (error, info) => {
-                            if (error) {
-                                return console.log(error);
-                            } else {
-                                console.log('Verification Email Sent Successfully!');
-                            }
-                            transporter.close();
-                        });
-
-                        db.insertOne('users', user, function(respinsert) {
-                            return res.status(201).redirect('/verify');
-                        })
+                transporter.sendMail(mailOptions, (error, info) => {
+                    if (error) {
+                        return console.log(error);
                     } else {
-                        return res.status(500).render('signUp', {
-                            generalError: "*Email address is already used. Please use another one.",
-                            whichfooter: footertype
-                        });
+                        console.log('Verification Email Sent Successfully!');
                     }
+                    transporter.close();
+                });
+
+                db.insertOne('users', user, function(respinsert) {
+                    return res.status(201).redirect('/verify');
                 })
-            });
-        });
+            } else {
+                return res.status(500).render('signUp', {
+                    generalError: "*Email address is already used. Please use another one.",
+                    whichfooter: footertype
+                });
+            }
+        })
     },
 
     verificationInput: function(req, res) {
