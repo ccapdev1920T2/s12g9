@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express();
-const { ObjectId } = require('mongodb');
+const { ObjectId } = require('mongodb').ObjectID;
 const hbs = require('hbs');
 const nodemailer = require('nodemailer');
 
@@ -160,20 +160,14 @@ const routerFunction = function(db) {
         var formattedDate = today.getFullYear().toString()+'-'+(today.getMonth()+1).toString().padStart(2,0)+'-'+today.getDate().toString().padStart(2,0);
         db.collection('booking').updateOne(
             {
-                checkInDate: req.body.checkIn,
-                checkOutDate: req.body.checkOut,
-                roomtype: req.body.roomType,
-                rooms: Number(req.body.numRooms),
-                adults: Number(req.body.numAdults),
-                kids:Number(req.body.numKids),
-                email:req.body.email,
+                // email:req.body.email,
+                _id:ObjectId(req.body.ID),
                 status:"Booked"
             },
             {
                 $set:{ status : "Cancelled" , cancelledDate : formattedDate.toString()}
             }
         ). then(resp=>{
-
             var subPoints = Number(parseInt(req.body.payment)/Number(10)*Number(-1));
             db.collection('users').updateOne(
                 {email:req.body.email},
