@@ -160,7 +160,7 @@ const routerFunction = function(db) {
         var formattedDate = today.getFullYear().toString()+'-'+(today.getMonth()+1).toString().padStart(2,0)+'-'+today.getDate().toString().padStart(2,0);
         db.collection('booking').updateOne(
             {
-                // email:req.body.email,
+                email:req.body.email,
                 _id:ObjectId(req.body.ID),
                 status:"Booked"
             },
