@@ -103,7 +103,7 @@ const userController = {
             $set:{ status : "Cancelled" , cancelledDate : formattedDate.toString()}
         }, function(){
             var subPoints = Number(parseInt(req.body.payment)/Number(10)*Number(-1));
-            db.updateOne('booking', {
+            db.updateOne('users', {
                 email:req.body.email
             }, {
                 $inc: {
