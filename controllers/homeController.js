@@ -1,5 +1,7 @@
 const { ObjectId } = require('mongodb');
 const nodemailer = require('nodemailer');
+const bcrypt = require('bcrypt');
+
 const db = require('../models/db.js');
 
 const homeController = {
@@ -98,7 +100,6 @@ const homeController = {
         //TODO: CHECK
         var adminuser = {
             email: "admin@paraisohotels.com",
-            password: "para1soHotels",
             admin: true
         }
 
@@ -108,29 +109,31 @@ const homeController = {
         db.deleteMany('users', { signUpDate: { $lte: todayDate }, verified: false }, function(resDel) {
             db.findOne('users', adminuser, function(resp) {
                 if (resp === null) {
-                    db.insertOne('users', {
-                        email: "admin@paraisohotels.com",
-                        password: "para1soHotels",
-                        verified: true,
-                        admin: true,
-                        banned: false
-                    }, function(admin){
-                        var todayDate = new Date();
-                        if ((todayDate.getMonth() + 1) == 1 && todayDate.getDate() == 1) {
-                            db.updateMany('users', {}, countUpdate, function(resset) {
+                    bcrypt.hash('para1soHotels', 10, function(err, hashPass){
+                        db.insertOne('users', {
+                            email: "admin@paraisohotels.com",
+                            password: hashPass,
+                            verified: true,
+                            admin: true,
+                            banned: false
+                        }, function(admin){
+                            var todayDate = new Date();
+                            if ((todayDate.getMonth() + 1) == 1 && todayDate.getDate() == 1) {
+                                db.updateMany('users', {}, countUpdate, function(resset) {
+                                    return res.render('home', {
+                                        logging: loggingstring,
+                                        // whichheader: 'header',
+                                        whichfooter: footertype
+                                    })
+                                });
+                            } else {
                                 return res.render('home', {
-                                    logging: loggingstring,
-                                    // whichheader: 'header',
-                                    whichfooter: footertype
-                                })
-                            });
-                        } else {
-                            return res.render('home', {
-                                    logging: loggingstring,
-                                    // whichheader: 'header',
-                                    whichfooter: footertype
-                            }); //function when rendering the webpage
-                        }
+                                        logging: loggingstring,
+                                        // whichheader: 'header',
+                                        whichfooter: footertype
+                                }); //function when rendering the webpage
+                            }
+                        });
                     });
                 } else {
                     var todayDate = new Date();
@@ -153,6 +156,7 @@ const homeController = {
                     }
                 }
             });
+
         });
     },
 
@@ -575,28 +579,26 @@ const homeController = {
             } else {
                 if (resp.banned === false) {
                     if (resp.verified === true) {
-                        var user = {
-                            email,
-                            password
-                        }
-
-                        db.findOne('users', user, function(found) {
-                            if (found === null) {
+                        var hash = resp.password;
+                        bcrypt.compare(password, hash, function(err,isMatch){
+                            if (err) {
+                                throw err;
+                            } else if (isMatch){
+                                if (resp.admin == true) {
+                                    req.session.adminId = resp._id;
+                                } else
+                                    req.session.userId = resp._id;
+                                // console.log(req.session.userId);
+                                return res.status(201).redirect('/');
+                            } else if (!isMatch){
                                 return res.status(401).render('signIn', {
                                     generalError: `
                                     <div class="row ml-1">*Incorrect password entered.</div>`,
                                     whichfooter: footertype,
                                     email: email
                                 });
-                            } else {
-                                if (found.admin == true) {
-                                    req.session.adminId = found._id;
-                                } else
-                                    req.session.userId = found._id;
-                                // console.log(req.session.userId);
-                                return res.status(201).redirect('/');
                             }
-                        })
+                        });
                     } else if (resp.verified === false) {
                         return res.status(401).render('signIn', {
                             generalError: `
@@ -809,90 +811,91 @@ const homeController = {
         // var time = today.getHours() + ":" + today.getMinutes();
 
         // var dateTime = date + " " + time;
+        bcrypt.hash(password, 10, function(err, hash){
+                // inserting to db
+            let user = {
+                fname,
+                lname,
+                email,
+                password: hash,
+                cpassword: hash,
+                creditcardOwner,
+                cvv,
+                creditcardNumber,
+                month,
+                year,
+                ccprovider,
+                membershipNumber: memberNumber,
+                membershipPoints: 0,
+                admin: false,
+                signUpDate: date,
+                verificationKey,
+                verified,
+                cancellationCount: 0,
+                banned: false
+            };
 
-        // inserting to db
-        let user = {
-            fname,
-            lname,
-            email,
-            password,
-            cpassword,
-            creditcardOwner,
-            cvv,
-            creditcardNumber,
-            month,
-            year,
-            ccprovider,
-            membershipNumber: memberNumber,
-            membershipPoints: 0,
-            admin: false,
-            signUpDate: date,
-            verificationKey,
-            verified,
-            cancellationCount: 0,
-            banned: false
-        };
+            // promises
+            db.findOne('users', { email }, function(resp) {
+                if (resp === null) {
 
-        // promises
-        db.findOne('users', { email }, function(resp) {
-            if (resp === null) {
+                    //EMAIL VERIFICATION
 
-                //EMAIL VERIFICATION
+                    var transporter = nodemailer.createTransport({
+                        host: 'smtp.gmail.com',
+                        //port: 3000,
+                        secure: false,
+                        port: 587,
+                        pool: true,
+                        auth: {
+                            user: 'paraisohotelscorp@gmail.com',
+                            pass: 'para1soHotels'
+                        },
+                        tls: {
+                            rejectUnauthorized: false
+                        }
+                    });
 
-                var transporter = nodemailer.createTransport({
-                    host: 'smtp.gmail.com',
-                    //port: 3000,
-                    secure: false,
-                    port: 587,
-                    pool: true,
-                    auth: {
-                        user: 'paraisohotelscorp@gmail.com',
-                        pass: 'para1soHotels'
-                    },
-                    tls: {
-                        rejectUnauthorized: false
-                    }
-                });
-
-                let mailOptions = {
-                    from: 'Hotel Paraiso',
-                    to: email,
-                    subject: 'Verify Email Address - Hotel Paraiso',
-                    html: `
-                            <head>
-                            <link href="https://fonts.googleapis.com/css?family=Open+Sans:200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
+                    let mailOptions = {
+                        from: 'Hotel Paraiso',
+                        to: email,
+                        subject: 'Verify Email Address - Hotel Paraiso',
+                        html: `
+                                <head>
+                                <link href="https://fonts.googleapis.com/css?family=Open+Sans:200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
+                                
+                                </head>
+                                <p style="font-family: 'Open Sans'; letter-spacing: 1px; color: #2E4106; font-size:12px;">
+                                    <span style="font-size: 14px">Good day <b>${req.body.fname} ${req.body.lname}</b>!</span><br><br>
+                                    Please click <a href="http://localhost:3000/verify">Verify Email</a> to have your email verified. Your verification key is: <b>${verificationKey}</b><br> You only have one hour to verify your account.<br>
+                                    <br>
+                                    Best Regards,<br>
+                                    <b>Paraiso Hotel<br>
+                                </p>
                             
-                            </head>
-                            <p style="font-family: 'Open Sans'; letter-spacing: 1px; color: #2E4106; font-size:12px;">
-                                <span style="font-size: 14px">Good day <b>${req.body.fname} ${req.body.lname}</b>!</span><br><br>
-                                Please click <a href="http://localhost:3000/verify">Verify Email</a> to have your email verified. Your verification key is: <b>${verificationKey}</b><br> You only have one hour to verify your account.<br>
-                                <br>
-                                Best Regards,<br>
-                                <b>Paraiso Hotel<br>
-                            </p>
-                        
-                        `
-                };
+                            `
+                    };
 
-                transporter.sendMail(mailOptions, (error, info) => {
-                    if (error) {
-                        return console.log(error);
-                    } else {
-                        console.log('Verification Email Sent Successfully!');
-                    }
-                    transporter.close();
-                });
+                    transporter.sendMail(mailOptions, (error, info) => {
+                        if (error) {
+                            return console.log(error);
+                        } else {
+                            console.log('Verification Email Sent Successfully!');
+                        }
+                        transporter.close();
+                    });
 
-                db.insertOne('users', user, function(respinsert) {
-                    return res.status(201).redirect('/verify');
-                })
-            } else {
-                return res.status(500).render('signUp', {
-                    generalError: "*Email address is already used. Please use another one.",
-                    whichfooter: footertype
-                });
-            }
-        })
+                    db.insertOne('users', user, function(respinsert) {
+                        return res.status(201).redirect('/verify');
+                    })
+                } else {
+                    return res.status(500).render('signUp', {
+                        generalError: "*Email address is already used. Please use another one.",
+                        whichfooter: footertype
+                    });
+                }
+            })
+        });
     },
 
     verificationInput: function(req, res) {
