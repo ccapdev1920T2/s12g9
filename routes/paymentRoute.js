@@ -615,7 +615,7 @@ const routerFunction = function(db) {
                                                         <span style="font-weight:600">Credit Card Provider</span>: ${respfind.payment.ccprovider}<br>
                                                         <span style="font-weight:600">Credit Card Expiry Date</span>: ${cardmonth}  20${respfind.payment.year}<br>
                                                         <br>
-                                                        <span style="font-weight:600">Your Remaining Membership Points</span>: ${allpoints}<br>
+                                                        <span style="font-weight:600">Your Remaining Membership Points</span>: ${parseInt(allpoints)}<br>
                                                         <br>
                                                         If there are any problems, feel free to send us an email or go to our website: <a href="http://localhost:3000/aboutUs">(Contact Us)</a> and email us your concern.<br><br>
                                                         We hope to see you on ${respfind.checkInDate}, and enjoy the amenities and services of Paraiso Hotel. <br>Have a good day!<br>
