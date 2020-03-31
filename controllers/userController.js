@@ -1,6 +1,16 @@
 const db = require('../models/db.js');
 const {ObjectId} = require('mongodb');
 const userController = {
+    notLoggedInUser: function (req, res, next){
+        if (!req.session.userId) {
+            if (!req.session.adminId)
+                return res.redirect('/signIn'); 
+            else
+                return res.redirect('/admin');
+        } 
+        return next();
+    },
+    
     getHome:  function(req, res) {
         var loggingstring = `
         <li class="nav-item">\
