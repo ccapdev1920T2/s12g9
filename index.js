@@ -4,6 +4,9 @@ const express = require('express');
 //Create a session middleware 
 var session = require('express-session');
 
+//for basic website security
+var helmet = require('helmet');
+
 //Calling the express function 
 const app = express();
 //THE PORT OF THE WEBSITE
@@ -30,6 +33,9 @@ app.use(session({
     saveUninitialized: false,
     secret: "secret",
 }));
+
+//calling helmet
+app.use(helmet());
 
 const adminRouter = require('./routes/adminRoute.js');
 app.use('/admin', adminRouter);
