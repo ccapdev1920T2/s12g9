@@ -58,4 +58,8 @@ app.listen(port, hostname, () => {
 const hbs = require('hbs');
 hbs.registerPartials(__dirname + '/views/partials')
 
+//hbs helpers
+const hbsHelpers = require(__dirname +'/controllers/hbsController.js');
+hbs.registerHelper(hbsHelpers);
+
 module.exports = app;
