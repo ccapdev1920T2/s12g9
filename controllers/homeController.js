@@ -109,13 +109,8 @@ const homeController = {
         db.deleteMany('users', { signUpDate: { $lte: todayDate }, verified: false }, function(resDel) {
             db.findOne('users', adminuser, function(resp) {
                 if (resp === null) {
-<<<<<<< HEAD
-
-                    var newpass = saltHashPassword('para1soHotels');
-=======
                     
                     var newpass = hashController.saltHashPassword('para1soHotels');
->>>>>>> df75955ae83f1096371fd02788d540e10a0fb5ac
                     db.insertOne('users', {
                         email: "admin@paraisohotels.com",
                         password: newpass[0],
@@ -586,11 +581,7 @@ const homeController = {
                 if (resp.banned === false) {
                     if (resp.verified === true) {
 
-<<<<<<< HEAD
-                        if (validPassword(password, resp.saltpass, resp.password)) {
-=======
                         if (hashController.validPassword(password, resp.saltpass, resp.password)){
->>>>>>> df75955ae83f1096371fd02788d540e10a0fb5ac
                             if (resp.admin == true) {
                                 req.session.adminId = resp._id;
                             } else
