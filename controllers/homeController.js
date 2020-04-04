@@ -4,22 +4,22 @@ const crypto = require('crypto');
 
 const db = require('../models/db.js');
 
-var genRandomString = function(length){
-    return crypto.randomBytes(Math.ceil(length/2)).toString('hex').slice(0,length);
+var genRandomString = function(length) {
+    return crypto.randomBytes(Math.ceil(length / 2)).toString('hex').slice(0, length);
 };
 
-var sha256 = function(password, salt){
-    var hash = crypto.createHmac('sha256', salt); 
+var sha256 = function(password, salt) {
+    var hash = crypto.createHmac('sha256', salt);
     hash.update(password);
     var value = hash.digest('hex');
     return {
-        salt:salt,
-        passwordHash:value
+        salt: salt,
+        passwordHash: value
     };
 };
 
 function saltHashPassword(userpassword) {
-    var salt = genRandomString(16); 
+    var salt = genRandomString(16);
     var passwordData = sha256(userpassword, salt);
     // console.log('UserPassword = '+userpassword);
     var temp = [];
@@ -28,11 +28,11 @@ function saltHashPassword(userpassword) {
     return temp;
 }
 
-function validPassword(inputpassword, salt, hashdb){ 
+function validPassword(inputpassword, salt, hashdb) {
     var hash = sha256(inputpassword, salt);
     // console.log(hash.passwordHash);
     return hash.passwordHash === hashdb;
-}; 
+};
 
 const homeController = {
     //check if user is logged in, if not, he/she cannot access the page such as profile and admin， and log out
@@ -139,7 +139,7 @@ const homeController = {
         db.deleteMany('users', { signUpDate: { $lte: todayDate }, verified: false }, function(resDel) {
             db.findOne('users', adminuser, function(resp) {
                 if (resp === null) {
-                    
+
                     var newpass = saltHashPassword('para1soHotels');
                     db.insertOne('users', {
                         email: "admin@paraisohotels.com",
@@ -148,7 +148,7 @@ const homeController = {
                         verified: true,
                         admin: true,
                         banned: false
-                    }, function(admin){
+                    }, function(admin) {
                         var todayDate = new Date();
                         if ((todayDate.getMonth() + 1) == 1 && todayDate.getDate() == 1) {
                             db.updateMany('users', {}, countUpdate, function(resset) {
@@ -160,9 +160,9 @@ const homeController = {
                             });
                         } else {
                             return res.render('home', {
-                                    logging: loggingstring,
-                                    // whichheader: 'header',
-                                    whichfooter: footertype
+                                logging: loggingstring,
+                                // whichheader: 'header',
+                                whichfooter: footertype
                             }); //function when rendering the webpage
                         }
                     });
@@ -611,7 +611,7 @@ const homeController = {
                 if (resp.banned === false) {
                     if (resp.verified === true) {
 
-                        if (validPassword(password, resp.saltpass, resp.password)){
+                        if (validPassword(password, resp.saltpass, resp.password)) {
                             if (resp.admin == true) {
                                 req.session.adminId = resp._id;
                             } else
