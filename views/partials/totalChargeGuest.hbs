@@ -6,6 +6,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="/stylesheets/totalCharge.css">
     <script>
+
+        function submitWhenYes(){
+            $("#yes").submit();
+            $("#chargeBtn").attr("disabled", true);
+        }
+
+        $(document).ready(function(){
+            $("#chargeBtn").attr("disabled", false);    
+        })
+
     </script>
 </head>
 
@@ -20,7 +30,7 @@
         <img src="/images/AboutUs/MP.svg" width="97%" height="1%">
     </div>
     <div class="container" id="guest">
-        <form method="POST" action="/totalCharge/pay">
+        <form method="POST" action="/totalCharge/pay" id="yes">
             <div class="form-row">
                 <div class="form-group col-md-6">
                     <label for="fname">First Name*</label>
@@ -79,7 +89,7 @@
                 <input type="hidden" name="bedtype" value="" id="typebed">
             </div> 
             <div class="form-group text-center">
-                <input class="btn" type="submit" value="Payment" id="charge">
+                <button class="btn" id="chargeBtn" onclick="submitWhenYes()"> Payment </button>
             </div>        
         </form>
     </div>

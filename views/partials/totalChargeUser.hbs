@@ -262,7 +262,8 @@
         }
 
         function submitWhenYes(){
-             $("#yes").submit();
+            $("#yes").submit();
+            $("#yesbtn").attr("disabled", true);
         }
 
         $(document).ready(function(){
@@ -297,7 +298,9 @@
                 else if ($(this).val() === 'classicDeluxe' && parseInt(currentpoints) < parseInt(classic.text())){
                     $(this).attr('disabled', true);
                 }
-            })         
+            })     
+
+            $("#yesbtn").attr("disabled", false);    
         })
     </script>
 </head>
@@ -422,7 +425,7 @@
     </div>
      {{{checkboxDiv}}}
     <div class="container pb-4" id="guest">
-        <form method="POST" action="/totalCharge/pay" id="yes">
+        <form method="POST" action="/totalCharge/pay" id="yes" >
             <div class="form-group">
                 <label for="comment">Additional Comments/Special Requests</label>
                 <textarea class="form-control" id="comment" rows="3" name="requests" value="{{data.requests}}"></textarea>
@@ -461,7 +464,7 @@
                 <input type="hidden" name="bedtype" value="" id="typebed">
             </div> 
             <div class="form-group text-center">
-                <button type="button" class="btn" data-toggle="modal" data-target="#payMemberModal" id="charge"> Payment </button>
+                <button type="button" class="btn" data-toggle="modal" data-target="#payMemberModal" id="chargeBtn"> Payment </button>
                 {{!-- <input class="btn" type="submit" value="Payment" id="charge"> --}}
             </div> 
 
