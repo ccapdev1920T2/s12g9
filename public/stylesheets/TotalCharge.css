@@ -88,7 +88,7 @@ header{
     font-size: 13px;
 }
 
-#charge.btn{
+#chargeBtn.btn{
     letter-spacing: 1px;
     border-radius: 30px;
     color: black;
@@ -97,7 +97,7 @@ header{
 }
 
 
-#charge.btn:hover{
+#chargeBtn.btn:hover{
     letter-spacing: 1px;
     border-radius: 30px;
     color: black;
