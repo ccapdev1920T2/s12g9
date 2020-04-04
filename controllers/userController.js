@@ -1,5 +1,6 @@
 const db = require('../models/db.js');
 const {ObjectId} = require('mongodb');
+const nodemailer = require('nodemailer');
 const userController = {
     notLoggedInUser: function (req, res, next){
         if (!req.session.userId) {
@@ -102,7 +103,7 @@ const userController = {
         var formattedDate = today.getFullYear().toString()+'-'+(today.getMonth()+1).toString().padStart(2,0)+'-'+today.getDate().toString().padStart(2,0);
         db.updateOne('booking', {
             email:req.body.email,
-            _id:ObjectId(req.body.ID),
+            _id:ObjectId(req.session.userId),
             status:"Booked"
         }, {
             $set:{ status : "Cancelled" , cancelledDate : formattedDate.toString()}
@@ -123,53 +124,54 @@ const userController = {
                         res.redirect('back');
                     }
                     else{
-                        db.collection('users').updateOne(
+                        db.updateOne('users',
                             {email:req.body.email},
                             {
                                 $set:{banned:true}
                             }
-                        );
-                        var transporter = nodemailer.createTransport({
-                            host: 'smtp.gmail.com',
-                            secure: false,
-                            port: 587,
-                            pool: true,
-                            auth: {
-                                user: 'paraisohotelscorp@gmail.com',
-                                pass: 'para1soHotels'
-                            },
-                            tls: {
-                                rejectUnauthorized: false
-                            }
-                        });
-                        let mailOptions = {
-                            from: 'Hotel Paraiso',
-                            to: req.body.email,
-                            subject: 'Banned Account - Hotel Paraiso',
-                            html: `
-                                <head>
-                                <link href="https://fonts.googleapis.com/css?family=Open+Sans:200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
+                        , function(){
+                            var transporter = nodemailer.createTransport({
+                                host: 'smtp.gmail.com',
+                                secure: false,
+                                port: 587,
+                                pool: true,
+                                auth: {
+                                    user: 'paraisohotelscorp@gmail.com',
+                                    pass: 'para1soHotels'
+                                },
+                                tls: {
+                                    rejectUnauthorized: false
+                                }
+                            });
+                            let mailOptions = {
+                                from: 'Hotel Paraiso',
+                                to: req.body.email,
+                                subject: 'Banned Account - Hotel Paraiso',
+                                html: `
+                                    <head>
+                                    <link href="https://fonts.googleapis.com/css?family=Open+Sans:200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
+                                 
+                                    </head>
+                                    <p style="font-family: 'Open Sans'; letter-spacing: 1px; color: #2E4106; font-size:12px;">
+                                        <span style="font-size: 14px">Good day <b>${re.fname} ${re.lname}</b>!</span><br><br>
+                                        Your account is currently banned due to excess cancellations for this year. Please contact us through email at paraisohotelscorp@gmail.com or call us through +63 912 345 6789 to reactivate your account.<br>
+                                        <br>
+                                        Best Regards,<br>
+                                        <b>Paraiso Hotel<br>
+                                    </p>
                              
-                                </head>
-                                <p style="font-family: 'Open Sans'; letter-spacing: 1px; color: #2E4106; font-size:12px;">
-                                    <span style="font-size: 14px">Good day <b>${re.fname} ${re.lname}</b>!</span><br><br>
-                                    Your account is currently banned due to excess cancellations for this year. Please contact us through email at paraisohotelscorp@gmail.com or call us through +63 912 345 6789 to reactivate your account.<br>
-                                    <br>
-                                    Best Regards,<br>
-                                    <b>Paraiso Hotel<br>
-                                </p>
-                         
-                            `
-                        };
-                        transporter.sendMail(mailOptions, (error, info) => {
-                            if (error) {
-                                return console.log(error);
-                            }
-                
-                            console.log('Email Sent Successfully!');
-                            transporter.close();
-                        });
-                        return res.redirect("/logout");
+                                `
+                            };
+                            transporter.sendMail(mailOptions, (error, info) => {
+                                if (error) {
+                                    return console.log(error);
+                                }
+                    
+                                console.log('Email Sent Successfully!');
+                                transporter.close();
+                            });
+                            return res.redirect("/logout");
+                        });          
                     }
                 })
             })
