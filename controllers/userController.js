@@ -103,7 +103,7 @@ const userController = {
         var formattedDate = today.getFullYear().toString()+'-'+(today.getMonth()+1).toString().padStart(2,0)+'-'+today.getDate().toString().padStart(2,0);
         db.updateOne('booking', {
             email:req.body.email,
-            _id:ObjectId(req.session.userId),
+            _id:ObjectId(req.body.ID),
             status:"Booked"
         }, {
             $set:{ status : "Cancelled" , cancelledDate : formattedDate.toString()}
