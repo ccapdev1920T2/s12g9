@@ -4,6 +4,9 @@ const express = require('express');
 //Create a session middleware 
 var session = require('express-session');
 
+//for basic website security
+var helmet = require('helmet');
+
 //Calling the express function 
 const app = express();
 //THE PORT OF THE WEBSITE
@@ -31,6 +34,9 @@ app.use(session({
     secret: "secret",
 }));
 
+//calling helmet
+app.use(helmet());
+
 const adminRouter = require('./routes/adminRoute.js');
 app.use('/admin', adminRouter);
 
@@ -57,5 +63,9 @@ app.listen(port, hostname, () => {
 //partials for hbs
 const hbs = require('hbs');
 hbs.registerPartials(__dirname + '/views/partials')
+
+//hbs helpers
+const hbsHelpers = require(__dirname +'/controllers/hbsController.js');
+hbs.registerHelper(hbsHelpers);
 
 module.exports = app;

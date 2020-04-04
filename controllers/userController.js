@@ -1,6 +1,16 @@
 const db = require('../models/db.js');
 const {ObjectId} = require('mongodb');
 const userController = {
+    notLoggedInUser: function (req, res, next){
+        if (!req.session.userId) {
+            if (!req.session.adminId)
+                return res.redirect('/signIn'); 
+            else
+                return res.redirect('/admin');
+        } 
+        return next();
+    },
+    
     getHome:  function(req, res) {
         var loggingstring = `
         <li class="nav-item">\
@@ -91,13 +101,8 @@ const userController = {
         var today = new Date();
         var formattedDate = today.getFullYear().toString()+'-'+(today.getMonth()+1).toString().padStart(2,0)+'-'+today.getDate().toString().padStart(2,0);
         db.updateOne('booking', {
-            checkInDate: req.body.checkIn,
-            checkOutDate: req.body.checkOut,
-            roomtype: req.body.roomType,
-            rooms: Number(req.body.numRooms),
-            adults: Number(req.body.numAdults),
-            kids:Number(req.body.numKids),
             email:req.body.email,
+            _id:ObjectId(req.body.ID),
             status:"Booked"
         }, {
             $set:{ status : "Cancelled" , cancelledDate : formattedDate.toString()}

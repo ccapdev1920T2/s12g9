@@ -4,7 +4,8 @@ const client = mongodb.MongoClient;
 
 //URL OF THE DATABASE
 // const uri = "mongodb+srv://user:pass1234@database-ourwj.mongodb.net/test?retryWrites=true&w=majority";
-const url = `mongodb://localhost:27017`;
+// const url = `mongodb://localhost:27017`;
+const url = `mongodb+srv://user:pass123@database-ourwj.mongodb.net/test?retryWrites=true&w=majority`;
 const options = { useUnifiedTopology: true, useNewUrlParser: true};
 
 const dbName = 'HotelParaiso';

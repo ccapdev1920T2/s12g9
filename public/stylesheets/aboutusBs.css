@@ -146,7 +146,7 @@ body{
     letter-spacing: 1px;
     color: #737470;
     font-family: 'Open Sans';
-    font-size: 13px;
+    font-size: 15px;
 }
 
 .triangle {
@@ -160,7 +160,7 @@ body{
     margin-right: auto;
     position: sticky;
     position: -webkit-sticky;
-    top: 13%;
+    top: 11%;
     z-index: 2;
 }
 
@@ -373,4 +373,8 @@ input:-webkit-autofill:active  {
 #image .row{
     margin-left: 0px;
     margin-right: 0px;
+}
+
+#npm .textDecorate{
+    text-decoration: underline;
 }

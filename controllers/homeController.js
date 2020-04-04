@@ -1,9 +1,8 @@
 const { ObjectId } = require('mongodb');
 const nodemailer = require('nodemailer');
-const crypto = require('crypto');
-
 const db = require('../models/db.js');
 
+<<<<<<< HEAD
 var genRandomString = function(length) {
     return crypto.randomBytes(Math.ceil(length / 2)).toString('hex').slice(0, length);
 };
@@ -33,6 +32,9 @@ function validPassword(inputpassword, salt, hashdb) {
     // console.log(hash.passwordHash);
     return hash.passwordHash === hashdb;
 };
+=======
+const hashController = require('../controllers/hashController.js');
+>>>>>>> df75955ae83f1096371fd02788d540e10a0fb5ac
 
 const homeController = {
     //check if user is logged in, if not, he/she cannot access the page such as profile and admin， and log out
@@ -139,8 +141,13 @@ const homeController = {
         db.deleteMany('users', { signUpDate: { $lte: todayDate }, verified: false }, function(resDel) {
             db.findOne('users', adminuser, function(resp) {
                 if (resp === null) {
+<<<<<<< HEAD
 
                     var newpass = saltHashPassword('para1soHotels');
+=======
+                    
+                    var newpass = hashController.saltHashPassword('para1soHotels');
+>>>>>>> df75955ae83f1096371fd02788d540e10a0fb5ac
                     db.insertOne('users', {
                         email: "admin@paraisohotels.com",
                         password: newpass[0],
@@ -611,7 +618,11 @@ const homeController = {
                 if (resp.banned === false) {
                     if (resp.verified === true) {
 
+<<<<<<< HEAD
                         if (validPassword(password, resp.saltpass, resp.password)) {
+=======
+                        if (hashController.validPassword(password, resp.saltpass, resp.password)){
+>>>>>>> df75955ae83f1096371fd02788d540e10a0fb5ac
                             if (resp.admin == true) {
                                 req.session.adminId = resp._id;
                             } else
@@ -839,8 +850,8 @@ const homeController = {
 
         // var dateTime = date + " " + time;
         // inserting to db
-        var hashpass = saltHashPassword(password);
-        var hashcvv = saltHashPassword(cvv);
+        var hashpass = hashController.saltHashPassword(password);
+        var hashcvv = hashController.saltHashPassword(cvv);
         let user = {
             fname,
             lname,

@@ -1,35 +1,13 @@
 const db = require('../models/db.js');
 const { ObjectId } = require('mongodb');
 const nodemailer = require('nodemailer');
-const crypto = require('crypto');
+
+const hashController = require('../controllers/hashController.js');
 
 var totalChargeBody, lastname, firstname, emailglobe, database;
 var payBody, cardowner, idBook, card, cardNum, databasepay;
 var imagesource;
 
-var genRandomString = function(length){
-    return crypto.randomBytes(Math.ceil(length/2)).toString('hex').slice(0,length);
-};
-
-var sha256 = function(password, salt){
-    var hash = crypto.createHmac('sha256', salt); 
-    hash.update(password);
-    var value = hash.digest('hex');
-    return {
-        salt:salt,
-        passwordHash:value
-    };
-};
-
-function saltHashPassword(userpassword) {
-    var salt = genRandomString(16); 
-    var passwordData = sha256(userpassword, salt);
-    // console.log('UserPassword = '+userpassword);
-    var temp = [];
-    temp[0] = passwordData.passwordHash;
-    temp[1] = passwordData.salt;
-    return temp;
-}
 
 const paymentController = {
     viewTotalCharge: function(req, res) {
@@ -722,7 +700,7 @@ const paymentController = {
 
         var bookingid = { _id: ObjectId(req.params.bookId) }; //use to find the id in the database, (const { ObjectId } = require
 
-        var hashcvv = saltHashPassword(cvv);
+        var hashcvv = hashController.saltHashPassword(cvv);
         var update = {
             $set: {
                 'payment.status': 'Paid',
