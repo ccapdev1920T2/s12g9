@@ -47,7 +47,8 @@ http://localhost:3000
 
 4. Sign in using the email and password you just provided.
 
-Dummy User Accounts:
+**Dummy User Accounts:**
+
 Email: gwyneth_d_ang@dlsu.edu.ph
 
 Password: 1234
@@ -64,6 +65,7 @@ Password: Secret
 
 
 **Banned Account**
+
 Email: nadinelustre@gmail.com
 
 Password: iStillLoveJames
