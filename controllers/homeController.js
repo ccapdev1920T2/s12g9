@@ -2,39 +2,7 @@ const { ObjectId } = require('mongodb');
 const nodemailer = require('nodemailer');
 const db = require('../models/db.js');
 
-<<<<<<< HEAD
-var genRandomString = function(length) {
-    return crypto.randomBytes(Math.ceil(length / 2)).toString('hex').slice(0, length);
-};
-
-var sha256 = function(password, salt) {
-    var hash = crypto.createHmac('sha256', salt);
-    hash.update(password);
-    var value = hash.digest('hex');
-    return {
-        salt: salt,
-        passwordHash: value
-    };
-};
-
-function saltHashPassword(userpassword) {
-    var salt = genRandomString(16);
-    var passwordData = sha256(userpassword, salt);
-    // console.log('UserPassword = '+userpassword);
-    var temp = [];
-    temp[0] = passwordData.passwordHash;
-    temp[1] = passwordData.salt;
-    return temp;
-}
-
-function validPassword(inputpassword, salt, hashdb) {
-    var hash = sha256(inputpassword, salt);
-    // console.log(hash.passwordHash);
-    return hash.passwordHash === hashdb;
-};
-=======
 const hashController = require('../controllers/hashController.js');
->>>>>>> df75955ae83f1096371fd02788d540e10a0fb5ac
 
 const homeController = {
     //check if user is logged in, if not, he/she cannot access the page such as profile and admin， and log out
@@ -141,13 +109,8 @@ const homeController = {
         db.deleteMany('users', { signUpDate: { $lte: todayDate }, verified: false }, function(resDel) {
             db.findOne('users', adminuser, function(resp) {
                 if (resp === null) {
-<<<<<<< HEAD
 
-                    var newpass = saltHashPassword('para1soHotels');
-=======
-                    
                     var newpass = hashController.saltHashPassword('para1soHotels');
->>>>>>> df75955ae83f1096371fd02788d540e10a0fb5ac
                     db.insertOne('users', {
                         email: "admin@paraisohotels.com",
                         password: newpass[0],
@@ -618,11 +581,7 @@ const homeController = {
                 if (resp.banned === false) {
                     if (resp.verified === true) {
 
-<<<<<<< HEAD
-                        if (validPassword(password, resp.saltpass, resp.password)) {
-=======
-                        if (hashController.validPassword(password, resp.saltpass, resp.password)){
->>>>>>> df75955ae83f1096371fd02788d540e10a0fb5ac
+                        if (hashController.validPassword(password, resp.saltpass, resp.password)) {
                             if (resp.admin == true) {
                                 req.session.adminId = resp._id;
                             } else
@@ -981,4 +940,5 @@ const homeController = {
     }
 }
 
+module.exports = homeController;
 module.exports = homeController;
