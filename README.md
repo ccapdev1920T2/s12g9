@@ -82,7 +82,7 @@ Password: para1soHotels
 
 ### Dummy Data References
 
-[Dummy Data](https://docs.google.com/spreadsheets/d/1eq7aFnqP4r0pdBm5RfV8Cw6F0gC_0YWa73chDAya6dE/edit?usp=sharing)
+* [Dummy Data](https://docs.google.com/spreadsheets/d/1eq7aFnqP4r0pdBm5RfV8Cw6F0gC_0YWa73chDAya6dE/edit?usp=sharing)
 
 ## Built With
 
