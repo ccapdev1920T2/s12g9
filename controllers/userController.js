@@ -1,18 +1,18 @@
 const db = require('../models/db.js');
-const {ObjectId} = require('mongodb');
+const { ObjectId } = require('mongodb');
 const nodemailer = require('nodemailer');
 const userController = {
-    notLoggedInUser: function (req, res, next){
+    notLoggedInUser: function(req, res, next) {
         if (!req.session.userId) {
             if (!req.session.adminId)
-                return res.redirect('/signIn'); 
+                return res.redirect('/signIn');
             else
                 return res.redirect('/admin');
-        } 
+        }
         return next();
     },
-    
-    getHome:  function(req, res) {
+
+    getHome: function(req, res) {
         var loggingstring = `
         <li class="nav-item">\
             <a class="nav-link" href="/signUp">Be a Member</a>\
@@ -26,9 +26,9 @@ const userController = {
         `
         var footertype = 'footer';
 
-        if (req.session.userId){
-            loggingstring = 
-            `<li class="nav-item">\
+        if (req.session.userId) {
+            loggingstring =
+                `<li class="nav-item">\
                 <a class="nav-link" href="/hotel/memberBenefits">Member Benefits</a>\
             </li>\
             <li class="nav-item">\
@@ -41,9 +41,9 @@ const userController = {
             footertype = 'footerUser';
         }
 
-        if (req.session.adminId){
-            loggingstring = 
-            `<li class="nav-item">\
+        if (req.session.adminId) {
+            loggingstring =
+                `<li class="nav-item">\
                 <a class="nav-link" href="/hotel/memberBenefits">Member Benefits</a>\
             </li>\
             <li class="nav-item">\
@@ -55,81 +55,77 @@ const userController = {
             `;
             footertype = 'footerAdmin';
         }
-        var user=null;
+        var user = null;
         var today = new Date();
-        var year =  today.getFullYear();
-        var month=Number(today.getMonth())+1;
+        var year = today.getFullYear();
+        var month = Number(today.getMonth()) + 1;
         var day = today.getDate();
-        if (day< 10) { 
-            day = '0' + day; 
-        } 
-        if (month < 10) { 
-            month = '0' + month; 
-        } 
+        if (day < 10) {
+            day = '0' + day;
+        }
+        if (month < 10) {
+            month = '0' + month;
+        }
         var today = year + '-' + month + '-' + day;
-        db.findOne('users', { 
-                _id:ObjectId(req.session.userId)
-            }, function(resp){
-                user = resp;
-                db.findMany('booking', { 
-                    email:user.email,
-                    checkInDate: {$gte:today.toString()},
-                    status:"Booked"
-                }, {checkInDate:1},null,function(r){
-                    db.findMany('booking',{
-                        email:user.email,
-                        checkInDate: {$lt:today.toString()},
-                        status:"Check Out"
-                    }, {checkInDate:-1}, null, function(r2){
-                        res.render('profile', {
-                            name: user.fname+" "+ user.lname,
-                            membershipNumber: user.membershipNumber,
-                            email: user.email,
-                            creditCard: user.creditcardNumber,
-                            points:user.membershipPoints,
-                            cancelCount: user.cancellationCount,
-                            whichfooter: footertype,
-                            logging: loggingstring,
-                            tab2:r,
-                            tab3:r2
-                        });
-                    })
+        db.findOne('users', {
+            _id: ObjectId(req.session.userId)
+        }, function(resp) {
+            user = resp;
+            db.findMany('booking', {
+                email: user.email,
+                checkInDate: { $gte: today.toString() },
+                status: "Booked"
+            }, { checkInDate: 1 }, null, function(r) {
+                db.findMany('booking', {
+                    email: user.email,
+                    checkInDate: { $lt: today.toString() },
+                    status: "Check Out"
+                }, { checkInDate: -1 }, null, function(r2) {
+                    res.render('profile', {
+                        name: user.fname + " " + user.lname,
+                        membershipNumber: user.membershipNumber,
+                        email: user.email,
+                        creditCard: user.creditcardNumber,
+                        points: user.membershipPoints,
+                        cancelCount: user.cancellationCount,
+                        whichfooter: footertype,
+                        logging: loggingstring,
+                        tab2: r,
+                        tab3: r2
+                    });
                 })
-            });
+            })
+        });
     },
 
-    postCancel: function(req, res){
+    postCancel: function(req, res) {
         var today = new Date();
-        var formattedDate = today.getFullYear().toString()+'-'+(today.getMonth()+1).toString().padStart(2,0)+'-'+today.getDate().toString().padStart(2,0);
+        var formattedDate = today.getFullYear().toString() + '-' + (today.getMonth() + 1).toString().padStart(2, 0) + '-' + today.getDate().toString().padStart(2, 0);
         db.updateOne('booking', {
-            email:req.body.email,
-            _id:ObjectId(req.session.userId),
-            status:"Booked"
+            email: req.body.email,
+            _id: ObjectId(req.body.ID),
+            status: "Booked"
         }, {
-            $set:{ status : "Cancelled" , cancelledDate : formattedDate.toString()}
-        }, function(){
-            var subPoints = Number(parseInt(req.body.payment)/Number(10)*Number(-1));
+            $set: { status: "Cancelled", cancelledDate: formattedDate.toString() }
+        }, function() {
+            var subPoints = Number(parseInt(req.body.payment) / Number(10) * Number(-1));
             db.updateOne('users', {
-                email:req.body.email
+                email: req.body.email
             }, {
                 $inc: {
-                    cancellationCount:1,
+                    cancellationCount: 1,
                     membershipPoints: parseInt(subPoints)
-               }
-            }, function(){
-                db.findOne('users',{
-                    email:req.body.email
-                }, function(re){
-                    if(re.cancellationCount<5){
+                }
+            }, function() {
+                db.findOne('users', {
+                    email: req.body.email
+                }, function(re) {
+                    if (re.cancellationCount < 5) {
                         res.redirect('back');
-                    }
-                    else{
-                        db.updateOne('users',
-                            {email:req.body.email},
-                            {
-                                $set:{banned:true}
-                            }
-                        , function(){
+                    } else {
+                        db.updateOne('users', { email: req.body.email }, {
+                            $set: { banned: true }
+                        }, function() {
                             var transporter = nodemailer.createTransport({
                                 host: 'smtp.gmail.com',
                                 secure: false,
@@ -166,12 +162,12 @@ const userController = {
                                 if (error) {
                                     return console.log(error);
                                 }
-                    
+
                                 console.log('Email Sent Successfully!');
                                 transporter.close();
                             });
                             return res.redirect("/logout");
-                        });          
+                        });
                     }
                 })
             })
