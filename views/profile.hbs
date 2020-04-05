@@ -14,6 +14,17 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
     <link rel = "icon" href ="/images/logo1circle.png" type = "image/x-icon"> 
+    <script>
+        function submitWhenYes(){
+            $("#yes").submit();
+            $("#yesbtn").attr("disabled", true);
+        }
+
+
+        $(document).ready(function(){
+            $("#yesbtn").attr("disabled", false);    
+        })
+    </script>
 </head>
 <body class="profile-page">
     <header class="HomePageMain">
@@ -379,9 +390,9 @@
                                         <div class="modal-body">  
                                         </div>
                                         <div class="modal-footer">
-                                            <form method="POST" enctype="application/x-www-form-urlencoded" class="modalForm">
+                                            <form method="POST" enctype="application/x-www-form-urlencoded" class="modalForm" id="yes">
                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                <input class="btn reserve" type="submit" value="Cancel Reservation">
+                                                <button class="btn reserve" onclick ="submitWhenYes()"  id="yesbtn">Cancel Reservation</button>
                                             </form>
                                         </div>
                                     </div>
