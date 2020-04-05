@@ -6,7 +6,7 @@ const client = mongodb.MongoClient;
 // const uri = "mongodb+srv://user:pass1234@database-ourwj.mongodb.net/test?retryWrites=true&w=majority";
 // const url = `mongodb://localhost:27017`;
 // const url = `mongodb+srv://user:pass123@database-ourwj.mongodb.net/test?retryWrites=true&w=majority`;
-const url  = 'mongodb://user:pass123@database-shard-00-00-ourwj.mongodb.net:27017,database-shard-00-01-ourwj.mongodb.net:27017,database-shard-00-02-ourwj.mongodb.net:27017/test?ssl=true&replicaSet=Database-shard-0&authSource=admin&retryWrites=true&w=majority';
+const url = `mongodb://user:pass123@database-shard-00-00-ourwj.mongodb.net:27017,database-shard-00-01-ourwj.mongodb.net:27017,database-shard-00-02-ourwj.mongodb.net:27017/test?ssl=true&replicaSet=Database-shard-0&authSource=admin&retryWrites=true&w=majority`;
 const options = { useUnifiedTopology: true, useNewUrlParser: true};
 
 const dbName = 'HotelParaiso';
