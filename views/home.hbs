@@ -78,7 +78,7 @@
             </div>
 
             <div class="title mt-2">Discover a hotel that defines a new dimension of luxury.</div>
-            <div class="form-row mt-4">
+            <div class="form-row mt-4" id="bookingForm">
               <div class="form-group col-md-2 col-12">
                 <input type="text" style="font-size:12px;" class="form-control form-control-sm" placeholder="Check in" onfocus="(this.type='date')" onblur="(this.type='text')" id="checkIn" name="checkIn"required>
               </div>
@@ -95,8 +95,9 @@
                 <input type="number" style="font-size:12px;" class="form-control form-control-sm" placeholder="Kids" id="kid" min="0" name="nKids" required>
               </div>
               <div class="form-group col-md-2 col-12">
-                <input type="submit" class="btn btn-sm btn-outline-dark ml-md-2 ml-0 col-12 col-md-10" value="Book Now"></input>
+                <input type="submit" class="btn btn-sm btn-outline-dark ml-md-2 ml-0 col-12 col-md-10" value="Book Now" id="bookSubmit"></input>
               </div>
+              <p id="error" style ="color:red; margin: auto"></p>
             </div>
           </form>
         </div>
@@ -199,6 +200,40 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.min.js"></script>
 <script src="/javascripts/Home.js"></script>
 <script src="/javascripts/AnimateLetters.js"></script>
+<script type="text/javascript">
+  $(document).ready(function () {
+     $('#bookingForm').on("change","#checkIn",function() {
+          var checkin= $('#checkIn').val()
+          var checkout = $('#checkOut').val()
+          $.get('/checkInDate', {checkin: checkin, checkout:checkout}, function (result) {
+              // true  == valid
+              if(result == checkin){
+                 $("#error").text("")
+                  $("#bookSubmit").prop('disabled', false)
+              }
+              else{
+                $("#error").text("Invalid Check-In Date Entered!")
+                 $("#bookSubmit").prop('disabled', true)
+              }
+          });
+      });
+      $('#bookingForm').on("change","#checkOut",function() {
+          var checkin= $('#checkIn').val()
+          var checkout = $('#checkOut').val()
+          $.get('/checkOutDate', {checkin: checkin, checkout:checkout}, function (result) {
+              // true  == valid
+              if(result == checkin){
+                 $("#error").text("")
+                  $("#bookSubmit").prop('disabled', false)
+              }
+              else{
+                $("#error").text("Invalid Check-Out Date Entered!")
+                $("#bookSubmit").prop('disabled', true)
+              }
+          });
+      });
+  })
+</script>
 </body>
 
 </html>
