@@ -8,7 +8,7 @@ const client = mongodb.MongoClient;
 const url = `mongodb://user:pass123@database-shard-00-00-ourwj.mongodb.net:27017,database-shard-00-01-ourwj.mongodb.net:27017,database-shard-00-02-ourwj.mongodb.net:27017/test?ssl=true&replicaSet=Database-shard-0&authSource=admin&retryWrites=true&w=majority`;
 const options = { useUnifiedTopology: true, useNewUrlParser: true};
 
-const dbName = 'HotelParaiso';
+const dbName = 'test';
 
 const database = {
 
@@ -17,7 +17,7 @@ const database = {
         client.connect(url, options, function(err, db) {
             if (err) throw err;
             // console.log('Database created!');
-            db.close();
+            // db.close();
         });
     },
 
@@ -28,7 +28,7 @@ const database = {
             database.createCollection(collection, function(err, res) {
                 if (err) throw err;
                 // console.log('Collection ' + collection + ' created');
-                db.close();
+                // db.close();
             });
         });
     },
@@ -40,7 +40,7 @@ const database = {
             database.collection(collection).insertOne(doc, function(err, res) {
                 if (err) throw err;
                 // console.log('1 document inserted');
-                db.close();
+                // db.close();
                 return callback(res);
             });
         });
@@ -53,7 +53,7 @@ const database = {
             database.collection(collection).insertMany(docs, function(err, res) {
                 if (err) throw err;
                 // console.log('Documents inserted: ' + res.insertedCount);
-                db.close();
+                // db.close();
                 return callback(res);
             });
         });
@@ -66,7 +66,7 @@ const database = {
             var database = db.db(dbName);
             database.collection(collection).findOne(query, function(err, result) {
                 if (err) throw err;
-                db.close();
+                // db.close();
                 return callback(result);
             });
         });
@@ -79,7 +79,7 @@ const database = {
             database.collection(collection).find(query, { projection: projection })
                 .sort(sort).toArray(function(err, result) {
                     if (err) throw err;
-                    db.close();
+                    // db.close();
                     return callback(result);
                 });
         });
@@ -94,7 +94,7 @@ const database = {
             database.collection(collection).deleteOne(filter, function(err, res) {
                 if (err) throw err;
                 // console.log('1 document deleted');
-                db.close();
+                // db.close();
                 return callback(res);
             });
         });
@@ -109,7 +109,7 @@ const database = {
             database.collection(collection).deleteMany(filter, function(err, res) {
                 if (err) throw err;
                 // console.log('Documents deleted: ' + res.deletedCount);
-                db.close();
+                // db.close();
                 return callback(res);
             });
         });
@@ -123,7 +123,7 @@ const database = {
             database.collection(collection).drop(function(err, res) {
                 if (err) throw err;
                 // console.log('Collection ' + collection + ' deleted');
-                db.close();
+                // db.close();
             });
         });
     },
@@ -136,7 +136,7 @@ const database = {
             database.collection(collection).updateOne(filter, update, function(err, res) {
                 if (err) throw err;
                 // console.log('1 document updated');
-                db.close();
+                // db.close();
                 return callback(res);
             });
         });
@@ -150,7 +150,7 @@ const database = {
             database.collection(collection).updateMany(filter, update, function(err, res) {
                 if (err) throw err;
                 // console.log('Documents updated: ' + res.modifiedCount);
-                db.close();
+                // db.close();
                 return callback(res);
             });
         });
