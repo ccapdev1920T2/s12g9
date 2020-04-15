@@ -937,8 +937,33 @@ const homeController = {
                 });
             }
         })
+    },
+
+    checkOutDate: function(req, res){
+        var checkIn= new Date(req.query.checkin).getTime()
+        var checkOut = new Date(req.query.checkout).getTime()
+        var currDate = new Date().getTime()
+        if(checkIn<checkOut){
+            res.send(req.query.checkin)
+        }
+        else{
+            res.send("")
+        }
+    },
+    checkInDate: function(req, res){
+        var checkIn= new Date(req.query.checkin).getTime()
+        var checkOut = new Date(req.query.checkout).getTime()
+        var currDate = new Date().getTime()
+        if(checkIn > checkOut){
+            res.send('1')
+        }
+        else if(checkIn > currDate){
+            res.send(req.query.checkin)
+        }
+        else{
+            res.send("")
+        }
     }
 }
 
-module.exports = homeController;
 module.exports = homeController;

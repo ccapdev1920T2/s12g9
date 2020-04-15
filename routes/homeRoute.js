@@ -25,4 +25,8 @@ router.get('/verify', homeController.loggedIn, homeController.verificationInput)
 
 router.post('/verify', homeController.verificationKey);
 
+router.get('/checkOutDate', homeController.checkOutDate);
+
+router.get('/checkInDate', homeController.checkInDate);
+
 module.exports = router;
