@@ -3,6 +3,7 @@
 @import url('https://fonts.googleapis.com/css?family=Bungee+Shade|Satisfy&display=swap');
 @import url('https://fonts.googleapis.com/css?family=Ubuntu&display=swap');
 @import url('https://fonts.googleapis.com/css?family=Yeseva+One&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Open+Sans&display=swap');
 
 /* Navbar */
 
@@ -19,6 +20,7 @@ header {
 
 body {
     background-color: #EEE7E4;
+    font-family: 'Open Sans';
 }
 
 h2 {
