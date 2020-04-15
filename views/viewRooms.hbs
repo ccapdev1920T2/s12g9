@@ -186,6 +186,7 @@
                                 <input type="submit" class="btn btn-sm btn-outline-dark ml-md-2 ml-0 col-12 col-md-10" id="booknowbtn" value="Book Now">
                             </div>
                         </div>
+                        <p id="error" style ="color:red; text-align: center; font-weight:900; text-shadow: 1px 1px black;"></p>
                     </form>
                 </div>
             </div>
@@ -437,5 +438,39 @@
 
 <script src="https://unpkg.com/popper.js@1.12.6/dist/umd/popper.js" integrity="sha384-fA23ZRQ3G/J53mElWqVJEGJzU0sTs+SvzG8fXVWP+kJQ1lwFAOkcUOysnlKJC33U" crossorigin="anonymous"></script>
 <script src="https://unpkg.com/bootstrap-material-design@4.1.1/dist/js/bootstrap-material-design.js" integrity="sha384-CauSuKpEqAFajSpkdjv3z9t8E7RlpJ1UP0lKM/+NdtSarroVKu069AlsRPKkFBz9" crossorigin="anonymous"></script>
+<script type="text/javascript">
+  $(document).ready(function () {
+     $('#Book').on("change","#checkIn",function() {
+          var checkin= $('#checkIn').val()
+          var checkout = $('#checkOut').val()
+          $.get('/checkInDate', {checkin: checkin, checkout:checkout}, function (result) {
+              // true  == valid
+              if(result == checkin){
+                 $("#error").text("")
+                  $("#booknowbtn").prop('disabled', false)
+              }
+              else{
+                $("#error").text("Invalid Check-In Date Entered!")
+                 $("#booknowbtn").prop('disabled', true)
+              }
+          });
+      });
+      $('#Book').on("change","#checkOut",function() {
+          var checkin= $('#checkIn').val()
+          var checkout = $('#checkOut').val()
+          $.get('/checkOutDate', {checkin: checkin, checkout:checkout}, function (result) {
+              // true  == valid
+              if(result == checkin){
+                 $("#error").text("")
+                  $("#booknowbtn").prop('disabled', false)
+              }
+              else{
+                $("#error").text("Invalid Check-Out Date Entered!")
+                $("#booknowbtn").prop('disabled', true)
+              }
+          });
+      });
+  })
+</script>
 </body>
 </html>

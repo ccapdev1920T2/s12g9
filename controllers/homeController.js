@@ -942,7 +942,6 @@ const homeController = {
     checkOutDate: function(req, res){
         var checkIn= new Date(req.query.checkin).getTime()
         var checkOut = new Date(req.query.checkout).getTime()
-        var currDate = new Date().getTime()
         if(checkIn<checkOut){
             res.send(req.query.checkin)
         }
@@ -955,7 +954,7 @@ const homeController = {
         var checkOut = new Date(req.query.checkout).getTime()
         var currDate = new Date().getTime()
         if(checkIn > checkOut){
-            res.send('1')
+            res.send('')
         }
         else if(checkIn > currDate){
             res.send(req.query.checkin)
