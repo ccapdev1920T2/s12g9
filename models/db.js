@@ -8,7 +8,8 @@ const client = mongodb.MongoClient;
 const url = `mongodb://user:pass123@database-shard-00-00-ourwj.mongodb.net:27017,database-shard-00-01-ourwj.mongodb.net:27017,database-shard-00-02-ourwj.mongodb.net:27017/test?ssl=true&replicaSet=Database-shard-0&authSource=admin&retryWrites=true&w=majority`;
 const options = { useUnifiedTopology: true, useNewUrlParser: true};
 
-const dbName = 'test';
+const dbName = 'HotelParaiso';
+// const dbName = 'test';
 
 const database = {
 
