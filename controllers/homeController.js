@@ -179,15 +179,6 @@ const homeController = {
     },
 
     viewAvailableRooms: function(req, res) {
-        var classicD = false;
-        var famD = false;
-        var execD = false;
-        var juniorS = false;
-        var execS = false;
-        var grandS = false;
-        var today = new Date();
-        var checkin = new Date(req.body.checkIn);
-        var checkout = new Date(req.body.checkOut);
         var loggingstring = `
         <li class="nav-item">\
             <a class="nav-link" href="/signUp">Be a Member</a>\
@@ -231,6 +222,60 @@ const homeController = {
             footertype = 'footerAdmin';
         }
 
+        if (!req.body.checkIn.trim()){
+            return res.render('viewRooms', {
+                message: "Check-In date should not be empty ",
+                data: req.body,
+                whichfooter: footertype,
+                logging: loggingstring
+            });
+        }
+
+        if (!req.body.checkOut.trim()){
+            return res.render('viewRooms', {
+                message: "Check-Out date should not be empty ",
+                data: req.body,
+                whichfooter: footertype,
+                logging: loggingstring
+            });
+        }
+
+        if (!req.body.nRooms.trim()){
+            return res.render('viewRooms', {
+                message: "Number of rooms should not be empty ",
+                data: req.body,
+                whichfooter: footertype,
+                logging: loggingstring
+            });
+        }
+
+        if (!req.body.nAdults.trim()){
+            return res.render('viewRooms', {
+                message: "Number of adults should not be empty ",
+                data: req.body,
+                whichfooter: footertype,
+                logging: loggingstring
+            });
+        }
+
+        if (!req.body.nKids.trim()){
+            return res.render('viewRooms', {
+                message: "Number of kids should not be empty ",
+                data: req.body,
+                whichfooter: footertype,
+                logging: loggingstring
+            });
+        }
+
+        var classicD = false;
+        var famD = false;
+        var execD = false;
+        var juniorS = false;
+        var execS = false;
+        var grandS = false;
+        var today = new Date();
+        var checkin = new Date(req.body.checkIn);
+        var checkout = new Date(req.body.checkOut);
 
         //check if entered dates are valid
         if (!(checkout.getTime() <= checkin.getTime()) && !(checkin.getTime() < today.getTime())) {
