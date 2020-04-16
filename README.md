@@ -47,6 +47,29 @@ http://localhost:3000
 
 4. Sign in using the email and password you just provided.
 
+**Dummy User Accounts:**
+
+Email: gwyneth_d_ang@dlsu.edu.ph
+
+Password: 1234
+
+
+Email: ivy_tan_b@dlsu.edu.ph
+
+Password: as
+
+
+Email: christianne_marie_vinco@dlsu.edu.ph
+
+Password: Secret
+
+
+**Banned Account**
+
+Email: nadinelustre@gmail.com
+
+Password: iStillLoveJames
+
 ### Guest Account
 Navigate through the website without signing in.
 
@@ -56,6 +79,10 @@ Email: admin@paraisohotels.com
 Password: para1soHotels
 
 1. Use this email address and password to sign in as an admin.
+
+### Dummy Data References
+
+* [Dummy Data](https://docs.google.com/spreadsheets/d/1eq7aFnqP4r0pdBm5RfV8Cw6F0gC_0YWa73chDAya6dE/edit?usp=sharing)
 
 ## Built With
 

@@ -54,7 +54,7 @@
                 <div class="container" id="container">
                     <div class="form-container sign-up-container">
                         <!-- POST Adding to the db a new user -->
-                        <form method="POST">
+                        <form method="POST" id = "form">
                             <h1 class="mb-5">Create account</h1>
                             <br>
                             <span class="error-label mr-auto">
@@ -160,7 +160,13 @@
                                 </div>
                             </div>
                             <br>
-                            <input type="submit" value="Sign Up" id="signUp">
+                            <script type = "text/javascript">
+                                function disable(){
+                                    document.getElementById("signUp").disabled=true;
+                                    document.getElementById("form").submit();
+                                }                               
+                            </script>
+                            <input type="submit" value="Sign Up" id="signUp" onclick = "disable()">
                             <br>
                         </form>
                         <img src="/images/SignUp/Draw.jpg" id="illustrationImg">

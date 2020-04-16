@@ -12,7 +12,12 @@
     <script>
         function getData(){
             $("#basic-form").submit();
+            $("#payBtn").attr("disabled", true);
         }
+
+        $(document).ready(function(){
+            $("#payBtn").attr("disabled", false);    
+        })
     </script>
 </head>
 
@@ -143,7 +148,7 @@
                         </div>
                         <div class="footerNavWrap clearfix">
                             <a href="/totalCharge/delete/{{bookingid}}" class="btn btn-lg pull-left"><i class="fas fa-arrow-circle-left"></i> Back</a>
-                            <button class="btn btn-lg pull-right" onclick=getData()>Pay <i class="fas fa-arrow-circle-right"></i></button>
+                            <button class="btn btn-lg pull-right" onclick=getData() id="payBtn">Pay <i class="fas fa-arrow-circle-right"></i></button>
                         </div>
                     </form>
                     <br><br>
