@@ -10,7 +10,7 @@ var helmet = require('helmet');
 //Calling the express function 
 const app = express();
 //THE PORT OF THE WEBSITE
-const port = 3000;
+const port = process.env.PORT || 3000;
 
 //The localhost variable
 const hostname = 'localhost';
