@@ -11,9 +11,9 @@ var helmet = require('helmet');
 const app = express();
 //THE PORT OF THE WEBSITE
 const port = process.env.PORT || 3000;
-
 //The localhost variable
 const hostname = 'localhost';
+const LOCAL_ADDRESS='0.0.0.0'
 const path = require('path');
 
 //For forms 
@@ -56,7 +56,7 @@ app.use('/totalCharge', paymentRouter);
 const hotelRouter = require('./routes/hotelRoute.js');
 app.use('/hotel', hotelRouter);
 
-app.listen(port, hostname, () => {
+app.listen(port, LOCAL_ADDRESS, () => {
     console.log(`Server running at http://${hostname}:${port}/`);
 });
 
