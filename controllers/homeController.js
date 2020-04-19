@@ -109,7 +109,7 @@ const homeController = {
         db.deleteMany('users', { signUpDate: { $lte: todayDate }, verified: false }, function(resDel) {
             db.findOne('users', adminuser, function(resp) {
                 if (resp === null) {
-                    
+
                     var newpass = hashController.saltHashPassword('para1soHotels');
                     db.insertOne('users', {
                         email: "admin@paraisohotels.com",
@@ -222,7 +222,7 @@ const homeController = {
             footertype = 'footerAdmin';
         }
 
-        if (!req.body.checkIn.trim()){
+        if (!req.body.checkIn.trim()) {
             return res.render('viewRooms', {
                 message: "Check-In date should not be empty ",
                 data: req.body,
@@ -231,7 +231,7 @@ const homeController = {
             });
         }
 
-        if (!req.body.checkOut.trim()){
+        if (!req.body.checkOut.trim()) {
             return res.render('viewRooms', {
                 message: "Check-Out date should not be empty ",
                 data: req.body,
@@ -240,7 +240,7 @@ const homeController = {
             });
         }
 
-        if (!req.body.nRooms.trim()){
+        if (!req.body.nRooms.trim()) {
             return res.render('viewRooms', {
                 message: "Number of rooms should not be empty ",
                 data: req.body,
@@ -249,7 +249,7 @@ const homeController = {
             });
         }
 
-        if (!req.body.nAdults.trim()){
+        if (!req.body.nAdults.trim()) {
             return res.render('viewRooms', {
                 message: "Number of adults should not be empty ",
                 data: req.body,
@@ -258,7 +258,7 @@ const homeController = {
             });
         }
 
-        if (!req.body.nKids.trim()){
+        if (!req.body.nKids.trim()) {
             return res.render('viewRooms', {
                 message: "Number of kids should not be empty ",
                 data: req.body,
@@ -626,7 +626,7 @@ const homeController = {
                 if (resp.banned === false) {
                     if (resp.verified === true) {
 
-                        if (hashController.validPassword(password, resp.saltpass, resp.password)){
+                        if (hashController.validPassword(password, resp.saltpass, resp.password)) {
                             if (resp.admin == true) {
                                 req.session.adminId = resp._id;
                             } else
@@ -912,7 +912,7 @@ const homeController = {
                             </head>
                             <p style="font-family: 'Open Sans'; letter-spacing: 1px; color: #2E4106; font-size:12px;">
                                 <span style="font-size: 14px">Good day <b>${req.body.fname} ${req.body.lname}</b>!</span><br><br>
-                                Please click <a href="http://localhost:3000/verify">Verify Email</a> to have your email verified. Your verification key is: <b>${verificationKey}</b><br> You only have one hour to verify your account.<br>
+                                Please click <a href="https://paraiso-hotel.herokuapp.com/verify">Verify Email</a> to have your email verified. Your verification key is: <b>${verificationKey}</b><br> You only have one hour to verify your account.<br>
                                 <br>
                                 Best Regards,<br>
                                 <b>Paraiso Hotel<br>
@@ -984,27 +984,24 @@ const homeController = {
         })
     },
 
-    checkOutDate: function(req, res){
-        var checkIn= new Date(req.query.checkin).getTime()
+    checkOutDate: function(req, res) {
+        var checkIn = new Date(req.query.checkin).getTime()
         var checkOut = new Date(req.query.checkout).getTime()
-        if(checkIn<checkOut){
+        if (checkIn < checkOut) {
             res.send(req.query.checkin)
-        }
-        else{
+        } else {
             res.send("")
         }
     },
-    checkInDate: function(req, res){
-        var checkIn= new Date(req.query.checkin).getTime()
+    checkInDate: function(req, res) {
+        var checkIn = new Date(req.query.checkin).getTime()
         var checkOut = new Date(req.query.checkout).getTime()
         var currDate = new Date().getTime()
-        if(checkIn > checkOut){
+        if (checkIn > checkOut) {
             res.send('')
-        }
-        else if(checkIn > currDate){
+        } else if (checkIn > currDate) {
             res.send(req.query.checkin)
-        }
-        else{
+        } else {
             res.send("")
         }
     }
