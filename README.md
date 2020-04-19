@@ -8,7 +8,7 @@ A web application of a virtual hotel located in El Nido, Palawan.
 ### Prerequisites
 Make sure you have MongoDB, NodeJS, and git installed in your PC
 
-### Installing
+### Installing Locally
 
 1. Create a clone of this repository into your PC
 
@@ -35,6 +35,13 @@ http://localhost:3000
 ```
 
 5. Congrats the website for Paraiso Hotel is now running in your PC
+
+### Accessing Live Web Application
+This website is also deployed to the web using Heroku!
+
+Access the website through this link: [Paraiso Hotel Site](https://paraiso-hotel.herokuapp.com/)
+
+Navigate through the site as you would locally!!
 
 ## Running the tests
 
