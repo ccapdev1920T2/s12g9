@@ -1,6 +1,7 @@
 const { ObjectId } = require('mongodb');
 const nodemailer = require('nodemailer');
 const db = require('../models/db.js');
+const moment = require('moment');
 
 const hashController = require('../controllers/hashController.js');
 
@@ -261,6 +262,24 @@ const homeController = {
         if (!req.body.nKids.trim()) {
             return res.render('viewRooms', {
                 message: "Number of kids should not be empty ",
+                data: req.body,
+                whichfooter: footertype,
+                logging: loggingstring
+            });
+        }
+
+        if (!moment(req.body.checkIn, "YYYY-MM-DD", true).isValid()) {
+            return res.render('viewRooms', {
+                message: "Check-In date is invalid (Format: YYYY-MM-DD)",
+                data: req.body,
+                whichfooter: footertype,
+                logging: loggingstring
+            });
+        }
+
+        if (!moment(req.body.checkOut, "YYYY-MM-DD", true).isValid()) {
+            return res.render('viewRooms', {
+                message: "Check-Out date is invalid (Format: YYYY-MM-DD)",
                 data: req.body,
                 whichfooter: footertype,
                 logging: loggingstring
