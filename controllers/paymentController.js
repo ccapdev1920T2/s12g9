@@ -314,7 +314,7 @@ const paymentController = {
         // console.log(req.body);    
 
         if (!req.session.userId) {
-            let { fname, lname, email, total, checkInDate, checkOutDate, rooms, adults, kids, roomtype, pricePerRoom } = req.body;
+            let { fname, lname, email, total, checkInDate, checkOutDate, rooms, adults, kids, roomtype, pricePerRoom} = req.body;
 
             fname = fname.trim();
             lname = lname.trim();
@@ -366,9 +366,6 @@ const paymentController = {
             var today = new Date();
             var formattedDate = today.getFullYear().toString() + '-' + (today.getMonth() + 1).toString().padStart(2, 0) + '-' + today.getDate().toString().padStart(2, 0);
             //TODO: pricePerRoom
-
-            // total = total.toFixed(2);
-            // total = parseFloat(total);
 
             var reservation = {
                 fname,
@@ -495,9 +492,6 @@ const paymentController = {
                     }
                 }
 
-                // total = total.toFixed(2);
-                // total = parseFloat(total);
-
                 db.updateOne('users',userID, update, function(resppoints){
                     var reservationMember = {
                         fname: resp.fname,
@@ -550,6 +544,7 @@ const paymentController = {
                             cardmonth = months[cardmonth];
 
                             var addrequests;
+                            var totalpay = respfind.payment.total.toFixed(2);
 
                             if (respfind.requests === "")
                                 addrequests = 'None';
@@ -579,7 +574,7 @@ const paymentController = {
                                         <span style="font-weight:600">Requests</span>: ${addrequests}<br>
                                         <br>
                                         Here is your <b>payment details</b>.<br><br>
-                                        <span style="font-weight:600">Total Amount</span>: PHP ${respfind.payment.total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}<br><br>
+                                        <span style="font-weight:600">Total Amount</span>: PHP ${totalpay.replace(/\B(?=(\d{3})+(?!\d))/g, ",")}<br><br>
                                         Paid using credit card:<br>
                                         <span style="font-weight:600">Credit Card Owner</span>: ${respfind.payment.creditcardOwner}<br>
                                         <span style="font-weight:600">Credit Card Number</span>: ${respfind.payment.creditcardNumber}<br>
@@ -636,12 +631,13 @@ const paymentController = {
                 // console.log(resp);
             var imagesource = resp.roomtype;
             imagesource = imagesource.replace(/\s/g, '');
+            var totalpay = resp.payment.total.toFixed(2);
             return res.render('billingDetails', {
                 data: resp,
                 source: '/images/Rooms/' + imagesource + '.jpg',
                 whichfooter: footertype,
                 whichheader: headertype,
-                TOTAL: resp.payment.total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                TOTAL: totalpay.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
             })
         });
     },
@@ -762,6 +758,7 @@ const paymentController = {
                 cardmonth = months[cardmonth];
 
                 var addrequests;
+                var totalpay = respfind.payment.total.toFixed(2);
 
                 if (respfind.requests === "")
                     addrequests = 'None';
@@ -791,7 +788,7 @@ const paymentController = {
                             <span style="font-weight:600">Requests</span>: ${addrequests}<br>
                             <br>
                             Here is your <b>payment details</b>.<br><br>
-                            <span style="font-weight:600">Total Amount</span>: PHP ${respfind.payment.total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}<br><br>
+                            <span style="font-weight:600">Total Amount</span>: PHP ${totalpay.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}<br><br>
                             Paid using credit card:<br>
                             <span style="font-weight:600">Credit Card Owner</span>: ${respfind.payment.creditcardOwner}<br>
                             <span style="font-weight:600">Credit Card Number</span>: ${respfind.payment.creditcardNumber}<br>
@@ -817,13 +814,12 @@ const paymentController = {
                     transporter.close();
                 })
 
-
                 return res.render('billingDetails', {
                     data: respfind,
                     source: '/images/Rooms/' + imagesource + '.jpg',
                     whichfooter: footertype,
                     whichheader: headertype,
-                    TOTAL: respfind.payment.total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                    TOTAL: totalpay.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
                 })
             });
         });
