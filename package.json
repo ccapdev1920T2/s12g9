@@ -11,15 +11,15 @@
     "dependencies": {
         "crypto": "^1.0.1",
         "express": "^4.17.1",
-        "express-session": "^1.17.0",
-        "handlebars": "^4.7.3",
-        "hbs": "^4.1.0",
+        "express-session": "^1.17.1",
+        "handlebars": "^4.7.6",
+        "hbs": "^4.1.1",
         "helmet": "^3.22.0",
         "moment": "^2.24.0",
-        "mongodb": "^3.5.5",
-        "nodemailer": "^6.4.5"
+        "mongodb": "^3.5.6",
+        "nodemailer": "^6.4.6"
     },
     "devDependencies": {
-        "nodemon": "^2.0.2"
+        "nodemon": "^2.0.3"
     }
 }
