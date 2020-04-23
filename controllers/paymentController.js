@@ -367,6 +367,9 @@ const paymentController = {
             var formattedDate = today.getFullYear().toString() + '-' + (today.getMonth() + 1).toString().padStart(2, 0) + '-' + today.getDate().toString().padStart(2, 0);
             //TODO: pricePerRoom
 
+            total = total.toFixed(2);
+            total = parseFloat(total);
+
             var reservation = {
                 fname,
                 lname,
@@ -491,6 +494,9 @@ const paymentController = {
                         'membershipPoints': parseInt(allpoints)
                     }
                 }
+
+                total = total.toFixed(2);
+                total = parseFloat(total);
 
                 db.updateOne('users',userID, update, function(resppoints){
                     var reservationMember = {
